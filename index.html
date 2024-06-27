@@ -3,39 +3,414 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>My portfolio website / template website</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-      </head>
-      <body>
-        <header>
-          <nav>
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          <img src="/assets/img/logo-heart.png" alt="" />
+        </div>
+        <ul class="nav-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="burger-menu">&#9776;</div>
+      </nav>
+      <div class="decorative-break">
+        <p class="hoefler-ornaments">
+          AIBJAIBJAIBJAIBJAIBJAIBJAIBJAIBJAIBJA
+        </p>
+      </div>
+    </header>
+    <section id="home">
+      <h1 class="main-heading" id="dynamic-text">
+        I'm Marina Majdenic and I'm a front-end developer from Zagreb, Croatia.
+      </h1>
+      <h2 class="sub-heading">
+        Every business deserves a strong digital presence! <br />
+        With <em> a custom web design</em> tailored to your niche, <br />
+
+        aligned with your brand's visual identity and your core values, <br />
+        you can stand out in today's competitive market. <br />
+      </h2>
+      <h3 class="text-heading">
+        Hi, I'm Marina and I can design, develop and/or deploy your website, or
+        web-application, with as much customization and personalization as you
+        need. Checkout my services and projects, and let me know if you want to
+        collaborate! Don't hesitate to reach out; just send me message with the
+        subject "Help needed" <br />
+        and we will find out if our collaboration is the best solution for your
+        situation :)
+      </h3>
+      <button type="button" class="cta-button">Contact me</button>
+    </section>
+
+    <section class="hero-section">
+      <div class="hero-content">
+        <h2>Empowering Your Brand Online</h2>
+        <h3>Custom Web Design for a Distinct Digital Presence</h3>
+        <p>
+          I believe that every business deserves a strong digital presence. With
+          a focus on custom web design tailored to your niche, I work closely
+          with you to align your brand's visual identity with your core values.
+        </p>
+        <h2>Conceptualizing Brand Brilliance</h2>
+        <h3>Tailored Web Solutions for Success</h3>
+        <p>
+          Through concept clarity sessions, we delve deep into your brand
+          identity to create a user-friendly, responsive website that showcases
+          your products and services effectively.
+        </p>
+        <h2>From Design to Code, and then - Launch!</h2>
+        <h3>
+          Creating Interactive Websites from your Designs, as well as Crafting
+          Visually Stunning and Custom Designs for you
+        </h3>
+        <p>
+          You already have a design and need a developer to turn it into a
+          functional code and interactive website? Or maybe you want your ideas
+          brought to life, tailoring a fresh, brand new and custom design, and
+          only then developed and deployed? Whatever it may be, feel free to
+          contact me and we'll arrange a collaboration
+        </p>
+        <a href="#" class="cta-button">contact me</a>
+        <img
+          src="/assets/img/illustration-website-1.png"
+          alt="Illustration"
+          class="hero-illustration"
+        />
+      </div>
+
+      <h2>Slide in Overlay from the Bottom</h2>
+
+      <div class="overlay-container">
+        <img
+          src="/assets/img/illustration-desk.png"
+          alt="illustration-desk"
+          height="300"
+          width="300"
+          class="image"
+        />
+        <div class="overlay">
+          <div class="text">Hello World</div>
+        </div>
+      </div>
+    </section>
+    <div class="decorative-break">
+      <p class="bodoni-ornaments">
+        3789398748793789498737894978389747893789
+      </p>
+    </div>
+    <section id="services" class="services-section">
+      <h2 class="section-heading">Services</h2>
+      <p>
+        Depending on your needs and wants, I can be as involved in your project
+        as needed.
+      </p>
+      <div class="services-container">
+        <div class="service-card">
+          <div class="service-front">
+            <h3>
+              Website Development from Design
+            </h3>
+            <p>
+              Polished Landing Pages and Interactive Websites with Lasting
+              Performance and Precise Optimization
+            </p>
+
+            <h4>from 199 $</h4>
+            <div class="service-imgs">
+              <img src="/assets/img/illustration-build.png" alt="" />
+              <img src="/assets/img/illustration-design.png" alt="" />
+              <img src="/assets/img/illustration-seo.png" alt="" />
+            </div>
+          </div>
+          <div class="service-back">
+            <h3>Efficiency Landing Package</h3>
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#contact">Contact</a></li>
+              includes:
+              <li>Development based on client-provided designs</li>
+              <li>Responsive design implementation</li>
+              <li>Basic SEO optimization</li>
+              <li>Ideal for landing pages</li>
             </ul>
-          </nav>
-        </header>
-        <h1>Hello and welcome</h1>
-        <h2>I'm Marina Majdenić, a front-end / web / React developer</h2>
-        <h3>and if you need a website for yourself or your business</h3>
-        <h4>feel free to contact me here:</h4>
-        <button>Let's work together!</button>
-        <p>And now, cool.</p>
-        <section id="services"></section>
-        <section id="projects"></section>
-        <section id="contact"></section>
-        <footer></footer>
-      </body>
-    </html>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-front">
+            <h3>Custom Web Design and Development</h3>
+            <p>
+              Tailored and Cutting-Edge Online Presence and Captivating User
+              Experience
+            </p>
+            <h4>Starting at $800</h4>
+            <div class="service-imgs">
+              <img src="/assets/img/illustration-paint.png" alt="" />
+              <img src="/assets/img/illustration-design.png" alt="" />
+              <img src="/assets/img/illustration-build.png" alt="" />
+            </div>
+          </div>
+          <div class="service-back">
+            <h3>Tailored Vision Package</h3>
+            <ul>
+              includes
+              <li>Custom design creation</li>
+              <li>Responsive design implementation</li>
+              <li>SEO optimization</li>
+              <li>Visual identity services</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-front">
+            <h3>Web Design, Development and Deployment</h3>
+            <p>
+              Complete and conceptualized full-package, designed and adjusted
+              for target audience and transformative user experience into
+              interactive and functional website
+            </p>
+            <h4>Starting at $1,200</h4>
+            <div class="service-imgs">
+              <img src="/assets/img/illustration-design.png" alt="" />
+              <img src="/assets/img/illustration-build.png" alt="" />
+              <img src="/assets/img/illustration-deploy.png" alt="" />
+            </div>
+          </div>
+          <div class="service-back">
+            <h3>Full-package service</h3>
+            <ul>
+              includes:
+              <li>Custom design and development</li>
+              <li>Deployment to client's server</li>
+              <li>Training for site management</li>
+              <li>Responsive design across devices</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="decorative-break">
+      <p class="bodoni-ornaments">
+        3434343434343434343434343
+      </p>
+    </div>
+    <section id="projects" class="projects-section">
+      <h2 class="section-heading">Projects</h2>
+      <div class="project-carousel">
+        <div class="project-item">
+          <h3>Chatroom App</h3>
+          <ul>
+            <li>Real-time messaging</li>
+            <li>Private and secure login</li>
+            <li>In-browser app as well as mobile app installation</li>
+          </ul>
+          <img src="/assets/img/chatroom.png" alt="" />
+
+          <div class="technology-icons">
+            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
+            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
+            <img
+              class="icon"
+              src="/assets/svg/socialJavascript.png"
+              alt="JavaScript"
+            />
+            <img
+              class="icon"
+              src="/assets/svg/socialNodejs.png"
+              alt="Node.js"
+            />
+            <img
+              class="icon"
+              src="/assets/svg/netlify-icon.png"
+              alt="Netlify"
+            />
+          </div>
+        </div>
+        <!-- Repeat the structure for other projects -->
+        <div class="project-item">
+          <h3>Quiz Game App</h3>
+          <ul>
+            <li>
+              Full-stack project
+            </li>
+            <li>Online free quiz</li>
+            <li>Trivia questions from database</li>
+          </ul>
+          <img src="/assets/img/Untitled.jpg" alt="quiz" />
+          <div class="technology-icons">
+            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
+            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
+            <img
+              class="icon"
+              src="/assets/svg/socialJavascript.png"
+              alt="JavaScript"
+            />
+            <img
+              class="icon"
+              src="/assets/svg/socialNodejs.png"
+              alt="Node.js"
+            />
+            <img
+              class="icon"
+              src="/assets/svg/4691292_react native_react_icon.png"
+              alt="React"
+            />
+          </div>
+        </div>
+        <div class="project-item">
+          <h3>Song Finder App</h3>
+          <ul>
+            <li>Full-stack project</li>
+            <li>Real-time data fetching and playing</li>
+            <li>iTunes API integration</li>
+          </ul>
+          <img src="/assets/img/songfind.jpg" alt="songfinder" />
+
+          <div class="technology-icons">
+            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
+            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
+            <img
+              class="icon"
+              src="/assets/svg/socialJavascript.png"
+              alt="JavaScript"
+            />
+            <img src="/assets/svg/netlify-icon.png" alt="Netlify" />
+            <img src="/assets/svg/itunes.png alt=" alt="iTunes" />
+          </div>
+        </div>
+        <div class="project-item">
+          <h3>Website Template</h3>
+          <ul>
+            <li>Single Page Portfolio Website</li>
+            <li>
+              UI/UX design, development, and deployment
+            </li>
+            <li>
+              Clean code, responsive design, and SEO optimization
+            </li>
+            <li>Code versioning and performance monitoring</li>
+          </ul>
+          <img src="https://picsum.photos/id/234/600/400" alt="" />
+          <div class="technology-icons">
+            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
+            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
+            <img
+              class="icon"
+              src="/assets/svg/socialJavascript.png"
+              alt="JavaScript"
+            />
+            <img src="/assets/svg/github-square.png" alt="GitHub" />
+            <img src="/assets/svg/4691413_netlify_icon.png" alt="Netlify" />
+          </div>
+        </div>
+
+        <div class="project-item">
+          <h3>Webshop Website</h3>
+          <ul>
+            <li>Full-stack freelancing project</li>
+            <li>Modern business website with webshop</li>
+            <li>
+              Original and responsive UI/UX design, clean code and back-end
+              integration
+            </li>
+          </ul>
+          <img src="https://picsum.photos/id/674/600/400" alt="" />
+          <div class="technology-icons">
+            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
+            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
+            <img
+              class="icon"
+              src="/assets/svg/socialJavascript.png"
+              alt="JavaScript"
+            />
+            <img src="/assets/svg/github-square.png" alt="GitHub" />
+            <img
+              src="/assets/svg/10621351_code_monitor_desktop_coding_screen_icon (1).png"
+              alt="Medium"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="decorative-break">
+      <p class="bodoni-ornaments">
+        3434343434343434343434343
+      </p>
+    </div>
+    <section id="contact" class="contact-section">
+      <h2 class="section-heading">Contact</h2>
+      <form id="contact-form" class="contact-form">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Your Name"
+          required
+        />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Your Email"
+          required
+        />
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Your Message"
+          required
+        ></textarea>
+        <button type="submit" id="submit-btn">Submit</button>
+      </form>
+    </section>
+    <div class="decorative-break">
+      <p class="hoefler-ornaments">
+        44444444443212344444444444
+      </p>
+    </div>
+    <footer>
+      <div class="footer-content">
+        <p>2024. &copy; Marina Majdenic</p>
+        <ul class="social-links">
+          <li>
+            <a href="#"
+              ><img src="/assets/svg/github-square.png" alt="github-icon"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img
+                src="/assets/svg/bico-linkedin-rect.png"
+                alt="linkedin-icon"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/assets/svg/socialMedium.png" alt="medium-icon"
+            /></a>
+          </li>
+          <li>
+            <img
+              src="/assets/svg/webs-heart-empty.png"
+              alt="heart-fav-icon"
+            /><a href="#">Visit my webpage!</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    <div class="mobile-navbar">
+      <div class="close-btn">&times;</div>
+      <ul class="mobile-nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
   </body>
+  <script src="/assets/js/script.js"></script>
 </html>

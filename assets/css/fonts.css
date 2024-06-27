@@ -1,15 +1,74 @@
 @font-face {
   font-family: "Pharmacy";
-  src: url("/marina-majden.github.io/marina-majden.github.io/assets/fonts/Pharmacy.ttf")
-    format("truetype");
+  src: url("/assets/fonts/Pharmacy.ttf") format("truetype");
 }
 @font-face {
   font-family: "NewStandard";
-  src: url("/marina-majden.github.io/marina-majden.github.io/assets/fonts/NewStandard-Regular.otf")
-    format("opentype");
+  src: url("/assets/fonts/NewStandard-Regular.otf") format("opentype");
 }
 @font-face {
-  font-family: "Zezen";
-  src: url("/marina-majden.github.io/marina-majden.github.io/assets/fonts/Zezen.ttf")
-    format("truetype");
+  font-family: "Didot";
+  src: url("/assets/fonts/Didot.ttc");
+}
+@font-face {
+  font-family: "Saeada";
+  src: url("/assets/fonts/LTSaeada-Thin.otf") format("opentype");
+}
+@font-face {
+  font-family: "Superior";
+  src: url("/assets/fonts/LTSuperior-Thin.otf") format("opentype");
+}
+@font-face {
+  font-family: "Wave";
+  src: url("/assets/fonts/LTWaveText-Thin.otf") format("opentype");
+}
+@font-face {
+  font-family: "Plantagenet";
+  src: url("/assets/fonts/PlantagenetCherokee.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PTSerif";
+  src: url("/assets/fonts/PTSerif.ttc");
+}
+@font-face {
+  font-family: "SignPainter";
+  src: url("/assets/fonts/SignPainter.ttc");
+}
+@font-face {
+  font-family: "SuperClarendon";
+  src: url("/assets/fonts/SuperClarendon.ttc");
+}
+@font-face {
+  font-family: "BerbelSerif";
+  src: url("/assets/fonts/Berbel-Serif.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Migha";
+  src: url("/assets/fonts/Migha.otf") format("opentype");
+}
+@font-face {
+  font-family: "Redressed";
+  src: url("/assets/fonts/Redressed.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("/assets/fonts/Spectral-Light.ttf") format("truetype");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("/assets/fonts/Spectral-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "UnicaOne";
+  src: url("/assets/fonts/UnicaOne-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Bodoni";
+  src: url("/assets/fonts/Bodoni\ Ornaments.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Hoefler";
+  src: url("/assets/fonts/Hoefler\ Text\ Ornaments.ttf");
 }
