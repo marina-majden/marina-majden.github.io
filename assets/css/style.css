@@ -1,4 +1,5 @@
 @import url(".fonts.css");
+@import url("./reset.css");
 
 :root {
 
@@ -150,6 +151,13 @@ h2 {
 
 h3 {
   font-size: calc(1.5rem + 1vw - 1vh);
+}
+header h1{
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(90deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
+  
 }
 
 .navbar {
@@ -304,12 +312,14 @@ h3 {
 .services-container {
   display: flex;
   justify-content: space-evenly;
-  @media (max-width: 789px) {
-    flex-direction: column;
+  @media screen and (min-width: 768px) {
+  flex-direction: column;
     width: 90%;
     margin: 0 auto;
   }
 }
+
+
 
 
 .service-card {
@@ -335,9 +345,9 @@ h3 {
   position: absolute;
   backface-visibility: hidden;
   transition: transform 0.5s;
-  background-color: var(--clr-border);
-  background-image: linear-gradient(90deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
-  border: 3px solid var(--clr-border-alt);
+  background-color: var(--c2);
+
+  border: 3px solid var(--c4);
   border-radius: 10px;
   padding: 20px;
 }
@@ -421,7 +431,7 @@ h3 {
   padding: 20px;
   border: 1px solid var(--clr-border-alt);
   border-radius: 10px;
-  background-image: linear-gradient(90deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
+
 }
 
 .project-item img {
