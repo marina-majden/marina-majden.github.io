@@ -43,7 +43,7 @@ OSTAVI OVE DVIJE TAKVE KAKVE JESU, A AKO BUDU PREJAKE KORISTI NJIHOVE SVIJETLIJE
 --off-black: #030303;
 --primary: #496b83;
 --secondary: #420039;
---ternary: #5a3a31;
+--second: hsla(272, 21%, 24%, 1);
 
 --black: hsla(158, 8%, 20%, 1);
 --white: hsla(39, 100%, 88%, 1);
@@ -51,31 +51,24 @@ OSTAVI OVE DVIJE TAKVE KAKVE JESU, A AKO BUDU PREJAKE KORISTI NJIHOVE SVIJETLIJE
 --accent: hsla(336, 80%, 28%, 1);
 --second: hsla(272, 21%, 24%, 1);
 
---sunset: #e8ca89ff;
---dark-slate-gray: #405c64ff;
---dark-purple: #2d222fff;
---alabaster: #dfe5dcff;
---antique-white: #fdebd9ff;
---sage: #a5b295ff;
-
---clr-bg: var(--sunset);
---clr-bg-nav: var(var(--dark-purple))
---clr-bg-card: var(var(--dark-slate-gray));
+--clr-bg: var(--off-white);
+--clr-bg-nav: var(--prim)
+--clr-bg-card: var(--second);
 --clr-bg-card-hover: #F5F5F5;
---clr-bg-button: var(--dark-purple);
---clr-bg-button-hover: var(--dark-slate-gray);
---clr-border: var(--dark-purple);  
---clr-border-alt: var(--dark-slate-gray);
---clr-text: var(--off-black);
---clr-text-nav: var(--alabaster);
+--clr-bg-button: var(--prim);
+--clr-bg-button-hover: var(--ternary-dark);
+--clr-border: var(--black);  
+--clr-border-alt: var(--second);
+--clr-text: var(--black);
+--clr-text-nav: var(--white);
 --clr-heading: var(--secondary);
---clr-text-card: var(--off-black);
---clr-text-card-alt: var(--black);
---clr-text-card-heading: var(var(--sage);
+--clr-text-card: var(--accent);
+--clr-text-card-alt: var(--prim);
+--clr-text-card-heading: var(--second);
 --clr-text-link: var(--prim);
 --clr-text-link-hover: var(--primary-dark);
---clr-text-button: var(var(--sage));
---clr-text-button-hover: var(var(--alabaster));
+--clr-text-button: var(--white);
+--clr-text-button-hover: var(--gray-1);
 
 
   --ff-serif: "Spectral";
@@ -97,6 +90,7 @@ body {
   line-height: 1.6;
   color: var(--clr-text);
   background-color: var(--clr-bg);
+  background-image: linear-gradient(180deg, #303835ff, #ffeac2ff, #dd5540ff, #810e3cff, #3e304aff);
   
 }
 header {
@@ -316,9 +310,9 @@ h3 {
   position: absolute;
   backface-visibility: hidden;
   transition: transform 0.5s;
-  background-color: var(--clr-border);
+  background-color: var(--clr-bg-card);
   
-  border: 3px solid var(--clr-border-alt);
+  border: 3px solid var(--clr-border);
   border-radius: 10px;
   padding: 20px;
 }
@@ -377,7 +371,7 @@ h3 {
 }
 .section-heading {
   font-size: 2rem;
-  color: var(--clr-heading-dark);
+  color: var(--clr-heading);
   margin-bottom: 40px;
 }
 .project-carousel {
@@ -414,7 +408,7 @@ h3 {
 .project-item {
   flex: 0 0 60vw;
   scroll-snap-align: start;
-  background: var(--clr-bg-button);
+  background: var(--clr-bg-card);
   padding: 20px;
   border: 1px solid var(--clr-border-alt);
   border-radius: 10px;
@@ -507,7 +501,7 @@ textarea {
   width: 60px;
 
   margin: 0 auto;
-  border: 1px solid red;
+
 }
 /* OVERLAY */
 .overlay-container {
@@ -526,7 +520,7 @@ textarea {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: var(--primary);
+  background-color: var(--prim);
   overflow: hidden;
   width: 100%;
   height: 0;
