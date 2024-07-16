@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <link rel="stylesheet" href="slideshow.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="square left-gradient"></div>
+      <div class="square right-gradient"></div>
+      <div class="square diagonal-gradient"></div>
+      <div class="square angled-gradient"></div>
+      <div class="square rainbow-gradient"></div>
+      <div class="square transparent-gradient"></div>
+      <div class="square repeating-gradient"></div>
+      <div class="square conic-gradient"></div>
+      <div class="square radial-gradient"></div>
+      <div class="square multiple-gradient"></div>
+    </div>
+
+    <style>
+      .left-gradient {
+        background: linear-gradient(to left, red, green);
+      }
+
+      /* Right-to-left gradient */
+      .right-gradient {
+        background: linear-gradient(to right, red, green);
+      }
+
+      /* Diagonal gradient */
+      .diagonal-gradient {
+        background: linear-gradient(to top left, red, green);
+      }
+
+      /* Angled (33 degree) gradient */
+      .angled-gradient {
+        background: linear-gradient(33deg, red, green);
+      }
+
+      /* Multi-colored gradient */
+      .rainbow-gradient {
+        background: linear-gradient(
+          to left,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet
+        );
+      }
+
+      /* Partially transparent gradient */
+      .transparent-gradient {
+        background: linear-gradient(to left, red, green);
+        opacity: 0.5;
+      }
+
+      .radial-gradient {
+        background: radial-gradient(white, yellow, brown);
+      }
+
+      .conic-gradient {
+        background: conic-gradient(red, white, green, yellow, brown);
+        height: 400px;
+        width: 400px;
+      }
+
+      .repeating-gradient {
+        height: 400px;
+        background-image: repeating-linear-gradient(white, yellow, brown);
+      }
+
+      .multiple-gradient {
+        background-image: linear-gradient(to left, red, green),
+          radial-gradient(white, yellow, brown);
+      }
+    </style>
+    <div class="carousel">
+      <!-- Photo 1 -->
+      <div class="card">
+        <img src="./img/1.jpeg" alt="New York" class="" />
+        <p>1/4</p>
+      </div>
+
+      <!-- Photo 2 -->
+      <div class="card hidden-card">
+        <img src="./img/2.jpeg" alt="New York" class="" />
+        <p>2/4</p>
+      </div>
+
+      <!-- Photo 3 -->
+      <div class="card hidden-card">
+        <img src="./img/3.jpeg" alt="New York" class="" />
+        <p>3/4</p>
+      </div>
+
+      <!-- Photo 4 -->
+      <div class="card hidden-card">
+        <img src="./img/4.jpeg" alt="New York" class="" />
+        <p>4/4</p>
+      </div>
+
+      <div class="navigation">
+        <button class="prev nav-btn"><</button>
+        <button class="next nav-btn">></button>
+      </div>
+    </div>
+  </body>
+  <script src="slideshow.js"></script>
+</html>

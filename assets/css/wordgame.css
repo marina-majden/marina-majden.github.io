@@ -1,0 +1,88 @@
+
+CSS Templates
+Media Queries
+/* Styles for larger screens */
+@media screen and (min-width: 720px) {
+  
+  .flex {
+      display: -ms-flexbox;      /* TWEENER - IE 10 */
+      display: flex; 
+      max-width: 1200px;
+      -ms-flex-pack: distribute;
+      justify-content: space-around;
+      margin: 0 auto;
+  }
+
+  header {
+    min-height: 470px;
+  }
+
+  .nav {
+    max-width: 1200px;
+    padding: 0 30px;
+  }
+
+
+  main {
+    padding-top: 20px;
+  }
+
+  main p {
+    line-height: 1.6em;
+  }
+
+  footer {
+    font-size: 1.3em;
+    max-width: 1200px;
+    margin: 40px auto;
+  }
+
+}
+
+Try it out yourself: Basic Website with Media Query
+
+CSS Keyframes
+@keyframes roll-in-left {
+  0% {
+    transform: translateX(-100vw) rotate(-540deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes roll-out-right {
+  0% {
+    transform: translateX(0px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+	100% {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+}
+
+
