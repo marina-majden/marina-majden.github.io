@@ -7,40 +7,8 @@
   src: url("/assets/fonts/NewStandard-Regular.otf") format("opentype");
 }
 @font-face {
-  font-family: "Didot";
-  src: url("/assets/fonts/Didot.ttc");
-}
-@font-face {
-  font-family: "Saeada";
-  src: url("/assets/fonts/LTSaeada-Thin.otf") format("opentype");
-}
-@font-face {
-  font-family: "Superior";
-  src: url("/assets/fonts/LTSuperior-Thin.otf") format("opentype");
-}
-@font-face {
-  font-family: "Wave";
-  src: url("/assets/fonts/LTWaveText-Thin.otf") format("opentype");
-}
-@font-face {
-  font-family: "Plantagenet";
-  src: url("/assets/fonts/PlantagenetCherokee.ttf") format("truetype");
-}
-@font-face {
-  font-family: "PTSerif";
-  src: url("/assets/fonts/PTSerif.ttc");
-}
-@font-face {
   font-family: "SignPainter";
   src: url("/assets/fonts/SignPainter.ttc");
-}
-@font-face {
-  font-family: "SuperClarendon";
-  src: url("/assets/fonts/SuperClarendon.ttc");
-}
-@font-face {
-  font-family: "BerbelSerif";
-  src: url("/assets/fonts/Berbel-Serif.ttf") format("truetype");
 }
 @font-face {
   font-family: "Migha";
@@ -56,19 +24,105 @@
   font-weight: 400;
 }
 @font-face {
-  font-family: "Spectral";
-  src: url("/assets/fonts/Spectral-Medium.ttf") format("truetype");
-  font-weight: 500;
-}
-@font-face {
-  font-family: "UnicaOne";
-  src: url("/assets/fonts/UnicaOne-Regular.ttf") format("truetype");
-}
-@font-face {
   font-family: "Bodoni";
   src: url("/assets/fonts/Bodoni\ Ornaments.ttf") format("truetype");
 }
 @font-face {
   font-family: "Hoefler";
   src: url("/assets/fonts/Hoefler\ Text\ Ornaments.ttf");
+}
+@import url("https://fonts.googleapis.com/css2?family=Kreon:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tilt+Warp:XROT,YROT@-45..45,-45..45&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Imbue:opsz,wght@10..100,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wdth,wght@0,75,100..900;1,75,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap");
+
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosans/v36/o-0bIpQlx3QUlC5A4PNB6Ryti20_6n1iPCbc5a7duw.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Serif";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notoserif/v23/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf6D30.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans Condensed";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 75%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosans/v36/o-0bIpQlx3QUlC5A4PNB6Ryti20_6n1iPCbc5a7duw.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Serif Condensed";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 75%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notoserif/v23/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf6D30.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Kreon";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kreon/v37/t5tuIRIUKY-TFHXHc2g.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Arima";
+  font-style: normal;
+  font-weight: 100 700;
+  src: url("https://fonts.gstatic.com/s/arima/v5/neIFzCqmt4Aup9CE_oCsNKEyaJQ.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Tilt Warp";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/tiltwarp/v12/AlZy_zVDs5XpmO7yn3wRcn35.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Imbue";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/workbench/v1/FeV8S05Gp6Et7FcfbPFK1rynGd_MxtkvNFmoUDFhgF2VKTGQk6vapeOM2mM.woff2)
+    format("woff2");
+  src: url("https://fonts.gstatic.com/s/imbue/v27/RLpxK5P16Ki3fVJvzTQ.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Kalnia";
+  font-style: normal;
+  font-weight: 100 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalnia/v2/11hdGpPCwUbbYwZZP0RBuDY62BQZhjvO4N8XQQ.woff2)
+    format("woff2");
 }

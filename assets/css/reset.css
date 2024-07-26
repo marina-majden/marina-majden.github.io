@@ -30,11 +30,18 @@ button {
   outline: none;
   border: 0;
 }
-body {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1;
+ul,
+ol {
+  list-style: none;
 }
-a {
+a,
+a:link,
+a:active {
   text-decoration: none;
+  cursor: pointer;
+}
+a:hover,
+a:visited {
+  text-decoration: none;
+  cursor: pointer;
 }

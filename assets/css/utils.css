@@ -1,0 +1,166 @@
+header {
+  width: 90vw;
+  padding: 1%;
+  margin: 1% auto;
+  margin-top: 2%;
+}
+
+nav ul {
+  width: 100%;
+  padding: 0;
+  margin: 1rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+nav ul li {
+  width: 12%;
+  padding: 0.4rem;
+  margin: 0 auto;
+}
+
+nav ul li a,
+a:link,
+a:active {
+  font-family: "Imbue";
+  font-weight: 400;
+  font-size: calc(1.6rem + 1vw - 1vh);
+  text-align: center;
+  color: #0e0e1f;
+  text-transform: uppercase;
+  transition: all 0.6s;
+}
+
+a:hover {
+  color: #1a1a1a;
+  text-transform: lowercase;
+  text-decoration: none;
+}
+
+section h1,
+section h2,
+section h3 {
+  text-transform: unset;
+}
+
+section {
+  width: 90vh;
+  padding: 0 1%;
+  margin: 1% auto;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-image: radial-gradient(20deg, #646161, #7a7676, #867d7b);
+}
+
+section h2 {
+  font-family: "Tilt Warp";
+  font-weight: 500;
+  font-size: calc(2.4rem + 2vw - 2vh);
+  text-align: center;
+  text-transform: uppercase;
+}
+section p {
+  font-weight: 400;
+  font-size: calc(1.2rem + 2vw - 1.4vh);
+  text-align: left;
+}
+
+.cards {
+  width: 100vw;
+  padding: 1vw;
+  margin: 1vh auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  justify-content: space-around;
+  justify-items: center;
+  align-items: baseline;
+
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    padding: 2vh 1.8vw;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+}
+
+.card {
+  width: 30vw;
+  padding: 1vh 1vw;
+  margin: 0.4vw auto;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  background-image: linear-gradient(37deg, hsl(0, 0%, 95%), #ffffff);
+  box-shadow: 2px 3px 20px 2px #c3c3c3;
+
+  @media screen and (min-width: 1400px) {
+    width: 22vw;
+    padding: 1vh 1.6vw;
+    margin: 0.6vh auto;
+  }
+
+  @media screen and (max-width: 912px) {
+    width: 45vw;
+    padding: 0.4vh 1.6vw;
+    margin: 0.8vh auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 80vw;
+    padding: 1vw;
+    margin: 1vw auto;
+  }
+}
+
+.card > h2 {
+  padding: 1vw;
+  text-align: left;
+  font-size: calc(2rem + 1.2vw - 1vh);
+}
+
+.card > h3 {
+  padding: 0.2vw;
+  text-align: right;
+  font-size: calc(2rem + 1vw - 2vh);
+}
+
+.card > p {
+  padding: 1vw;
+  text-align: left;
+  font-size: calc(1rem + 0.8vw - 0.5vh);
+}
+
+.card > img {
+  padding: 0;
+  margin: 0 auto;
+  width: 60%;
+  height: auto;
+  border: 5px solid transparent;
+  border-radius: 10px;
+}
+
+.shelf {
+  width: 80vw;
+  max-width: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-items: flex-start;
+  align-items: flex-start;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+.shelf > .ion-icon {
+  width: fit-content;
+  font-size: 2rem;
+  padding: 0.2rem;
+  margin: 0.2rem;
+  text-align: center;
+  justify-self: center;
+  border: 1px dotted solid;
+  border-radius: 5px;
+}

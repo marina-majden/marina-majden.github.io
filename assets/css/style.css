@@ -1,5 +1,6 @@
-@import url(".fonts.css");
+@import url("./fonts.css");
 @import url("./reset.css");
+@import url("./utils.css");
 
 :root {
 
@@ -32,7 +33,7 @@
   --secondary-dark: hsl(308, 60%, 10%);
   --ternary: #5a3a31;
   --ternary-light: hsl(13, 25%, 35%);
-  --ternary-dark: hsl(13, 29%, 20%);
+  --ternary-dark: hsl(284, 29%, 20%);
 
   --off-white: #e9e4e2;
   --gray: #bdd1bd;
@@ -42,101 +43,81 @@
   --secondary: #420039;
   --ternary: #5a3a31;
 
+  --c1: var(--off-white-cold);
+  --c2: var(--off-black-warm);
+  --c3: var(--gray);
+  --c4: var(--off-white);
+  --c5: var(--primary-dark);
+  --c6: var(--ternary-dark);
+  --c7: var(--secondary-light);
+
   --a1: #F5F5DC;
   --a2: #FFC67D;
   --a3: #1ABC9C;
 
-  --b1: #333F4F;
+  --b1: #071529;
   --b2: #F7DC6F;
   --b3: #660066;
-
-  --c1: #cae6ec;
-  --c2: #faa4a0;
-  --c3: #39454e;
-  --c4: #ef4e89;
 
   --d1: #a490d3;
   --d2: #f5f8cc;
 
 
   --clr-bg: var(--c1);
-  --clr-bg-nav: var(--c3) --clr-bg-card: var(--c2);
-  --clr-bg-card-hover: var(--c1);
-  --clr-bg-button: var(--c4);
-  --clr-bg-button-hover: var(--c2);
-  --clr-border: var(--c4);
-  --clr-border-alt: var(--off-black);
-  --clr-text: var(--c3);
-  --clr-text-nav: var(--c1);
-  --clr-heading: var(--c2);
-  --clr-text-card: var(--c3);
+  --clr-bg-nav: var(--c7) 
+  --clr-bg-card: var(--c6);
+  --clr-bg-card-hover: var(--c7);
+  --clr-bg-button: var(--c7);
+  --clr-bg-button-hover: var(--c6);
+  --clr-border: var(--c7);
+  --clr-border-alt: var(--d1);
+  --clr-text: var(--c2);
+  --clr-text-nav: var(--c4);
+  --clr-heading: var(--c5);
+  --clr-text-card: var(--c4);
   --clr-text-card-alt: var(--c3);
-  --clr-text-card-heading: var(--c4);
-  --clr-text-link: var(--c4);
-  --clr-text-link-hover: var(--c2);
-  --clr-text-button: var(--c1);
-  --clr-text-button-hover: var(--c2);
+  --clr-text-card-heading: var(--c3);
+  --clr-text-link: var(--c5);
+  --clr-text-link-hover: var(--c6);
+  --clr-text-button: var(--c4);
+  --clr-text-button-hover: var(--c1);
 
+  --gradient-metallic: linear-gradient(120deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
 
+  --ff-sans: "Kreon";
   --ff-serif: "Spectral";
   --ff-serif-alt: "NewStandard";
-  --ff-sans-serif: "Superior";
+  --ff-half-serif: "Kreon";
   --ff-cursive: "Redressed";
   --ff-display: "Pharmacy";
-  --ff-display-alt: "UniquaOne";
   --ff-upper: "Migha";
-}
+  --ff-noto-sans: "Noto Sans";
+  --ff-noto-serif: "Noto Serif";
+  --ff-noto-sans-con: "Noto Sans Condensed";
+  --ff-noto-serif-con: "Noto Serif Condensed";
+  --ff-retro: "Kalnia";
+  --ff-floral: "Arima";
+  --ff-bold: "Tilt Warp";
+  --ff-condensed: "Imbue";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  --navbar-height: 15vh;
 }
 
 body {
-  font-family: var(--ff-sans-serif), Roboto, sans-serif;
-  font-size: 16px;
+  width: 100vw;
+  font-family: var(--ff-half-serif), system-ui, -apple-system, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
   line-height: 1.6;
   color: var(--clr-text);
   background-color: var(--clr-bg);
-
-}
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-
-  color: var(--clr-bg);
-  background-image: linear-gradient(90deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
-}
-
-/* ANIMATION: PART OF HEADER WILL "VANISH" ON SCROLL ANIMATION */
-/* CSS */
-header .decorative-break {
-  width: 100vw;
-  color: var(--off-black);
-  transition: opacity 1.5s;
-}
-
-header .decorative-break.hide {
-  opacity: 0;
-}
-
-header .decorative-break.small {
-  height: 11px;
-}
-
-header .sticky-part {
-  position: sticky;
-  top: 0;
+  
 }
 
 h1,
 h2,
 h3,
-h4 {
-  text-shadow: 1px 1px 1px black;
+h4, h5, h6 {
+
   padding: 1rem;
   margin: 1rem auto;
 }
@@ -151,32 +132,129 @@ h2 {
 
 h3 {
   font-size: calc(1.5rem + 1vw - 1vh);
+} 
+p {
+  font: 1.2rem;
+  padding: 1rem 2rem;
+  margin: 0 auto;
+  width: 80ch;
+  max-width: 90vw;
 }
-header h1{
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: linear-gradient(90deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
-  
+/* UTIL CLASSES */
+.ff-cursive {
+  font-family: var(--ff-cursive), fantasy;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-display {
+  font-family: var(--ff-display), fantasy;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-bold {
+  font-family: "Tilt Warp";
+  font-size: calc(1.5rem + 1vw - 1vh);
+  font-weight: 400;
+}
+.ff-sans {
+  font-family: var(--ff-sans), sans-serif;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-serif {
+  font-family: var(--ff-serif), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-retro {
+  font-family: var(--ff-retro), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+  font-weight: 500;
+}
+.ff-floral {
+  font-family: var(--ff-floral), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+  font-weight: 400;
+}
+.ff-uppercase {
+  font-family: var(--ff-upper), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-condensed {
+  font-family: var(--ff-condensed), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+  font-weight: 500;
+}
+.ff-noto-sans {
+  font-family: var(--ff-noto-sans), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-noto-serif {
+  font-family: var(--ff-noto-serif), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-noto-sans-con {
+  font-family: var(--ff-noto-sans-con), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-noto-serif-con {
+  font-family: var(--ff-noto-serif-con), cursive;
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-size-1 {
+  font-size: calc(1.5rem + 1vw - 1vh);
+}
+.ff-size-2 {
+  font-size: calc(1.5rem + 1vw + 1vh);
+}
+.ff-size-3 {
+  font-size: calc(1.5rem - 1vw + 1vh);
+}
+.ff-size-4 {
+  font-size: calc(4rem + 4vw - 3vh);
+}
+.ff-size-5 {
+  font-size: calc(5rem + 5vw - 4vh);
+}
+p.slidein {
+  animation-duration: 3s;
+  animation-name: slidein;
 }
 
+@keyframes slidein {
+  from {
+    translate: 150vw 0;
+    scale: 200% 1;
+  }
+
+  to {
+    translate: 0 0;
+    scale: 100% 1;
+  }
+}
+/* HEADER STYLING */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  color: var(--clr-text-nav);
+  background-color: var(--clr-bg-nav);
+}
+header .sticky-part {
+  position: sticky;
+  top: 0;
+}
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--navbar-height);
 }
-
 .logo img {
   width: 10vw;
 }
-
 .nav-links {
   display: flex;
   list-style: none;
 }
-
 .nav-links li a {
-  font-family: var(--ff-upper), monospace;
+  font-family: var(--ff-display-alt), monospace;
   font-size: 2rem;
   color: var(--clr-text-nav);
   text-decoration: none;
@@ -236,6 +314,28 @@ header h1{
   padding: 1rem 0;
 }
 
+.landscape-3d {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* HOME STYLING */
+
+#home h2{
+  width: 80%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(90deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
+}
+#home p {
+  width: 80%;
+  padding: 1rem;
+  margin: 1rem auto;
+  text-align: justify;
+
+}
+
 .main-heading {
   font-family: var(--ff-display), cursive;
   font-size: clamp(3em, calc(4em + 3vw - 2vh), 6rem);
@@ -247,6 +347,12 @@ header h1{
 
 .sub-heading {
   font-family: var(--ff-cursive), serif;
+}
+.text-heading {
+  font-family: var(--ff-retro), fantasy;
+  font-weight: 500;
+  font-size: calc(2.4rem + 2vw - 2vh);
+  text-align: justify;
 }
 
 .hero-section {
@@ -297,7 +403,7 @@ header h1{
   max-width: 300px;
   width: 100%;
 }
-
+/* SERVICES STYLING */
 .services-section {
   padding: 80px 20px;
   text-align: center;
@@ -318,8 +424,43 @@ header h1{
     margin: 0 auto;
   }
 }
-
-
+th, td {
+  border: 1px solid black;
+  border-radius: 10px;
+}
+.tab {
+  max-width: 500px;
+  margin: 25px auto;
+  }
+  .tab-list {
+  display: flex;
+  gap: 12px;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 5px;
+  margin-bottom: 20px;
+  }
+  .tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: inherit;
+  }
+  .tab-item:hover {
+  background-color: #fafafa;
+  }
+  .tab-item.is-active {
+  color: white;
+  background-color: #6a5af9;
+  }
+  .tab-content {
+  background-color: #eee;
+  padding: 20px;
+  border-radius: 6px;
+  }
 
 
 .service-card {
@@ -345,8 +486,7 @@ header h1{
   position: absolute;
   backface-visibility: hidden;
   transition: transform 0.5s;
-  background-color: var(--c2);
-
+  background-color: var(--clr-bg-card);
   border: 3px solid var(--c4);
   border-radius: 10px;
   padding: 20px;
@@ -371,6 +511,7 @@ header h1{
 }
 
 .service-front p {
+  width: 90%;
   font-size: 1rem;
   color: var(--clr-bg-card);
 }
@@ -409,6 +550,47 @@ header h1{
   text-align: center;
 }
 
+/* OVERLAY */
+.overlay-container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--primary);
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: 0.5s ease;
+}
+
+.overlay-container:hover .overlay {
+  height: 100%;
+}
+
+.text {
+  white-space: nowrap;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+/* PROJECTS STYLING */
 .section-heading {
   font-size: 2rem;
   color: var(--clr-heading-dark);
@@ -534,44 +716,4 @@ textarea {
 
   margin: 0 auto;
   border: 1px solid red;
-}
-
-/* OVERLAY */
-.overlay-container {
-  position: relative;
-  width: 50%;
-}
-
-.image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--primary);
-  overflow: hidden;
-  width: 100%;
-  height: 0;
-  transition: 0.5s ease;
-}
-
-.overlay-container:hover .overlay {
-  height: 100%;
-}
-
-.text {
-  white-space: nowrap;
-  color: white;
-  font-size: 20px;
-  position: absolute;
-  overflow: hidden;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
 }
