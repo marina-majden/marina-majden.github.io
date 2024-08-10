@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-@import url("fonts.css");
-:root {
-  
-/* cake palette */
-/* SVIJETLOZELENA I BEŽ SU JEDINE SVIJETLE BOJE U ORIGINALNOJ PALETI;
-NE TREBA IH SATURIRATI I POJAČAVATI JER SU OSTALE TRI BOJE VRLO INTENZIVNE I DOMINANTNE.
-OSTAVI OVE DVIJE TAKVE KAKVE JESU, A AKO BUDU PREJAKE KORISTI NJIHOVE SVIJETLIJE VARIJANTE ILI EVENUTALNO NAJTAMNIJE ZA DARK MODE
-*/
---off-white: hsl(22, 15%, 90%);
---off-white-cold: hsl(120, 15%, 95%);
---off-white-warm: hsl(20, 32%, 90%);
-=======
 @import url(".fonts.css");
 @import url("./reset.css");
 @import url("./utils.css");
@@ -104,8 +91,6 @@ OSTAVI OVE DVIJE TAKVE KAKVE JESU, A AKO BUDU PREJAKE KORISTI NJIHOVE SVIJETLIJE
   --ff-cursive: "Redressed";
   --ff-display: "Pharmacy";
   --ff-upper: "Migha";
-}
->>>>>>> refs/remotes/origin/main
 
 --gray: hsl(120, 18%, 78%);
 --gray-1: hsl(120, 5%, 70%);
@@ -168,11 +153,11 @@ OSTAVI OVE DVIJE TAKVE KAKVE JESU, A AKO BUDU PREJAKE KORISTI NJIHOVE SVIJETLIJE
 --clr-heading: var(--secondary);
 --clr-text-card: var(--off-black);
 --clr-text-card-alt: var(--black);
---clr-text-card-heading: var(var(--sage);
+--clr-text-card-heading: var(--sage);
 --clr-text-link: var(--prim);
 --clr-text-link-hover: var(--primary-dark);
---clr-text-button: var(var(--sage));
---clr-text-button-hover: var(var(--alabaster));
+--clr-text-button: var(--sage);
+--clr-text-button-hover: var(--alabaster);
 
 
   --ff-serif: "Spectral";
@@ -183,6 +168,7 @@ OSTAVI OVE DVIJE TAKVE KAKVE JESU, A AKO BUDU PREJAKE KORISTI NJIHOVE SVIJETLIJE
   --ff-display-alt: "UniquaOne";
   --ff-upper: "Migha";
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -196,10 +182,6 @@ body {
   line-height: 1.6;
   color: var(--clr-text);
   background-color: var(--clr-bg);
-<<<<<<< HEAD
-  
-}
-=======
 
 }
 
@@ -245,7 +227,6 @@ h4, h5, h6 {
 h1 {
   font-size: calc(3rem + 3vw - 2vh);
 }
-<<<<<<< HEAD
 h2 {
   font-size: calc(2rem + 2vw - 1vh);
 }
@@ -655,11 +636,6 @@ textarea {
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-=======
-
-h2 {
-  font-size: calc(2rem + 2vw - 1vh);
->>>>>>> refs/remotes/origin/main
 }
 
 h3 {
@@ -1081,11 +1057,10 @@ textarea {
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-=======
-
+}
 h2 {
   font-size: calc(2rem + 2vw - 1vh);
->>>>>>> refs/remotes/origin/main
+
 }
 
 h3 {
