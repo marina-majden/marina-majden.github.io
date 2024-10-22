@@ -2,398 +2,1155 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Web-developer Portfolio Website / Marina Majdenić</title>
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Marina Majdenić" />
+    <meta
+      name="keywords"
+      content="portfolio, front-end, developer, applications, web-applications, web-design"
+    />
+    <title>Marina Majdenić - Portfolio Website</title>
+    <!-- CSS  -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
   </head>
   <body>
-    <header>
-      <nav class="navbar">
-        <div class="logo">
-          <img src="./assets/img/logo-transparent-pink.png" alt="" />
-        </div>
-        <ul class="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="burger-menu">&#9776;</div>
-      </nav>
-    </header>
-    <section id="home">
-      <h1 class="main-heading" id="dynamic-text">
-        I'm Marina Majdenic and I'm a front-end developer from Zagreb, Croatia.
-      </h1>
-      <h2 class="sub-heading">
-        Every business deserves a strong digital presence! <br />
-        With <em> a custom web design</em> tailored to your niche, <br />
-
-        aligned with your brand's visual identity and your core values, <br />
-        you can stand out in today's competitive market. <br />
-      </h2>
-      <h3 class="text-heading">
-        Hi, I'm Marina and I can design, develop and/or deploy your website, or
-        web-application, with as much customization and personalization as you
-        need. Checkout my services and projects, and let me know if you want to
-        collaborate! Don't hesitate to reach out; just send me message with the
-        subject "Help needed" <br />
-        and we will find out if our collaboration is the best solution for your
-        situation :)
-      </h3>
-      <button type="button" class="cta-button">Contact me</button>
-    </section>
-
-    <section class="hero-section">
-      <div class="hero-content">
-        <script
-          type="text/javascript"
-          src="https://code.jquery.com/jquery-1.11.0.min.js"
-        ></script>
-        <script
-          type="text/javascript"
-          src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"
-        ></script>
-        <script
-          type="text/javascript"
-          src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
-        ></script>
-        <h2>Empowering Your Brand Online</h2>
-        <h3>Custom Web Design for a Distinct Digital Presence</h3>
-        <p>
-          I believe that every business deserves a strong digital presence. With
-          a focus on custom web design tailored to your niche, I work closely
-          with you to align your brand's visual identity with your core values.
-        </p>
-        <h2>Conceptualizing Brand Brilliance</h2>
-        <h3>Tailored Web Solutions for Success</h3>
-        <p>
-          Through concept clarity sessions, we delve deep into your brand
-          identity to create a user-friendly, responsive website that showcases
-          your products and services effectively.
-        </p>
-        <h2>From Design to Code, and then - Launch!</h2>
-        <h3>
-          Creating Interactive Websites from your Designs, as well as Crafting
-          Visually Stunning and Custom Designs for you
-        </h3>
-        <p>
-          You already have a design and need a developer to turn it into a
-          functional code and interactive website? Or maybe you want your ideas
-          brought to life, tailoring a fresh, brand new and custom design, and
-          only then developed and deployed? Whatever it may be, feel free to
-          contact me and we'll arrange a collaboration
-        </p>
-        <a href="#" class="cta-button">contact me</a>
+    <div class="main-container">
+      <!-- ============= PARALLAX ================-->
+      <div class="parallax-header">
         <img
-          src="/assets/img/illustration-website-1.png"
-          alt="Illustration"
-          class="hero-illustration"
+          src="https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg"
+          class="panorama background"
         />
+        <h1>Hello, world!</h1>
+        <br />
+        <h2>WELCOME TO MY SITE!</h2>
+        <img src="/assets/img/cloud.png" class="foreground" />
+        <img src="/assets/img/cloud.png" class="foreground" />
+        <img src="/assets/img/cloud.png" class="foreground" />
+
+        <!--   <img src="/assets/img/sci-fi-city-3.jpg" class="background" /> 
+        <img src="/assets/img/woman-futuristic-office.png" class="foreground" />-->
       </div>
+      <!-- =============== MAIN ================ -->
+      <main>
+        <!-- =============== NAVBAR ================ -->
+        <nav class="main-navbar">
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#hero">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <div class="logo" href="#">
+            <img src="/assets/img/logo-white.png" alt="logo" />
+          </div>
+        </nav>
 
-      <h2>Slide in Overlay from the Bottom</h2>
+        <!-- =============== HOME/HERO ================ -->
+        <div class="home" id="home">
+          <!---
+          <div class="container-laptop">
+            <div class="laptop">
+              <div class="screen">
+                <div class="browser">
+                  <div class="button-browser-3"></div>
+                  <div class="browser-window"></div>
+                  <div class="jumbo">
+                    <div class="text" id="text-inside">
+                      <p>
+                        <em class="center-align"
+                          >Looking for someone to design, develop and deploy
+                          web-sites / web-applications for your project, or you
+                          need a new developer on your IT team?</em
+                        ><br />
+                        Look no further! I'm a
+                        <em>Front-end </em>/<em> Web</em> /
+                        <em>React developer</em> that strives to deliver nothing
+                        less then excellence, but I'm happiest when clients love
+                        the results and when I manage to exceed their
+                        expectations.<br />
+                        My name is <em>Marina Majdenić</em> and I'm based in
+                        Zagreb, but available for remote work also. <br />
+                        Feel free to
+                        <em>contact me </em>without any obligations - I'm always
+                        in for a conversation! Or just take a look around my
+                        page and have fun!
+                      </p>
+                      <button class="call-to-action">
+                        <a href="#contact">Let's talk</a>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-      <div class="overlay-container">
-        <img
-          src="/assets/img/illustration-desk.png"
-          alt="illustration-desk"
-          height="300"
-          width="300"
-          class="image"
-        />
-        <div class="overlay">
-          <div class="text">Hello World</div>
-        </div>
-      </div>
-    </section>
+                <div class="editor">
+                  <div class="sidebar">
+                    <div class="file-1"></div>
+                    <div class="file-2"></div>
+                    <div class="file-3"></div>
+                    <div class="file-4"></div>
+                  </div>
+                  <div class="code-content">
+                    <div class="row-number-1"></div>
+                    <div class="row-text-1"></div>
+                    <div class="row-number-2"></div>
+                    <div class="row-text-2"></div>
+                    <div class="row-number-3"></div>
+                    <div class="row-text-3"></div>
+                    <div class="row-number-4"></div>
+                    <div class="row-text-4"></div>
+                    <div class="row-text-4a"></div>
+                    <div class="row-number-5"></div>
+                    <div class="row-text-5"></div>
+                    <div class="row-text-5a"></div>
+                    <div class="row-number-6"></div>
+                    <div class="row-text-6"></div>
+                    <div class="row-text-6a"></div>
+                    <div class="row-number-7"></div>
+                    <div class="row-text-7"></div>
+                    <div class="row-number-8"></div>
+                    <div class="row-text-8"></div>
+                  </div>
+                  <div class="button-editor-1"></div>
+                  <div class="button-editor-2"></div>
+                  <div class="button-editor-3"></div>
+                </div>
+              </div>
 
-    <section id="services" class="services-section">
-      <h2 class="section-heading">Services</h2>
-      <p>
-        Depending on your needs and wants, I can be as involved in your project
-        as needed.
-      </p>
-      <div class="services-container">
-        <div class="service-card">
-          <div class="service-front">
-            <h3>Website Development from Design</h3>
-            <p>
-              Polished Landing Pages and Interactive Websites with Lasting
-              Performance and Precise Optimization
-            </p>
-
-            <h4>from 199 $</h4>
-            <div class="service-imgs">
-              <img src="/assets/img/illustration-build.png" alt="" />
-              <img src="/assets/img/illustration-design.png" alt="" />
-              <img src="/assets/img/illustration-seo.png" alt="" />
+              <div class="laptop-base">
+                <div class="keyboard">
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                  <div class="item space"></div>
+                  <div class="item"></div>
+                  <div class="item"></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="service-back">
-            <h3>Efficiency Landing Package</h3>
-            <ul>
-              includes:
-              <li>Development based on client-provided designs</li>
-              <li>Responsive design implementation</li>
-              <li>Basic SEO optimization</li>
-              <li>Ideal for landing pages</li>
-            </ul>
+          -->
+          <!-- <div class="laptop">
+            <div class="upper">
+              <p data-content="data-content">
+                I am <span>Marina Majdenić</span>,
+                <em>Front-end and Web developer</em> from Zagreb, Croatia.
+                <br />
+                <br />
+                <strong
+                  >Looking for someone to design, develop and deploy
+                  <em>web-sites / web-applications</em> for your project, or you
+                  need a new developer on your IT team? </strong
+                ><br />
+                <br />
+                Feel free to <em>contact me </em>without any obligations - I'm
+                always in for a conversation!
+
+                <br />
+
+                Or just take a look around my page and have fun!
+              </p>
+            </div>
+            <div class="lower"></div>
           </div>
+          <button class="call-to-action">
+            <a href="#contact">Let's talk</a>
+          </button> -->
+          <!-- <div class="intro-text">
+              <p>
+                I am <span>Marina Majdenić</span>,
+                <em>Front-end and Web developer</em> from Zagreb, Croatia.
+                <br />
+                <br />
+                <strong
+                  >Looking for someone to design, develop and deploy
+                  <em>web-sites / web-applications</em> for your project, or you
+                  need a new developer on your IT team? </strong
+                ><br />
+                <br />
+                Feel free to <em>contact me </em>without any obligations - I'm
+                always in for a conversation!
+              </p>
+              <br />
+              <button class="call-to-action">
+                <a href="#contact">Let's talk</a>
+              </button>
+              <h2>Or just take a look around my page and have fun!</h2>
+            </div>
+            <div class="lap-illustration-logo"></div>
+          </div> -->
         </div>
-        <div class="service-card">
-          <div class="service-front">
-            <h3>Custom Web Design and Development</h3>
-            <p>
-              Tailored and Cutting-Edge Online Presence and Captivating User
-              Experience
-            </p>
-            <h4>Starting at $800</h4>
-            <div class="service-imgs">
-              <img src="/assets/img/illustration-paint.png" alt="" />
-              <img src="/assets/img/illustration-design.png" alt="" />
-              <img src="/assets/img/illustration-build.png" alt="" />
+        <!--
+         <div class="introduction">
+            <div class="circle">
+              <img
+                class="profile-pic"
+                src="/assets/img/profile-pic.png"
+                alt="profile-pic"
+              />
+            </div>
+            -->
+        <!--
+            <div class="intro-text">
+              <h2>
+                I am <span>Marina Majdenić</span>,
+                <em>Front-end and Web developer</em> from Zagreb, Croatia.
+                <br />
+                <br />
+                <strong
+                  >Looking for someone to design, develop and deploy
+                  <em>web-sites / web-applications</em> for your project, or you
+                  need a new developer on your IT team? </strong
+                ><br />
+                <br />
+                Feel free to <em>contact me </em>without any obligations - I'm
+                always in for a conversation!
+              </h2>
+              <br />
+              <button class="call-to-action">
+                <a href="#contact">Let's talk</a>
+              </button>
+              <h2>Or just take a look around my page and have fun!</h2>
+            </div>
+          </div> 
+        
+        </div>-->
+
+        <!-- =============== Services ============== -->
+        <section class="skills" id="skills">
+          <h2>SERVICES</h2>
+          <div class="container">
+            <div class="container-skill graphic">
+              <!-- WebDesign animation-->
+
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    font-size="20"
+                    transform="translate(50 150)"
+                    fill="#fff"
+                    stroke="none"
+                    font-family="RobotoMono-Medium,Roboto Mono"
+                    font-weight="500"
+                  >
+                    Web Design
+                  </text>
+                  <path class="graphic-shape2" d="M68.54 60.66h60v60h-60z" />
+                  <path
+                    class="graphic-middle"
+                    d="M68.54 91h.31a30 30 0 0 0 30-30v-.31H68.54z"
+                  />
+                  <path
+                    class="graphic-shape1"
+                    d="M68.85 31a30 30 0 0 1 30 30 30 30 0 0 1-30 30 30 30 0 0 1-30-30 30 30 0 0 1 30-30z"
+                  />
+                  <circle
+                    class="graphic-dot1"
+                    cx
+                    cy
+                    r="3"
+                    fill="#fff"
+                    stroke="transparent"
+                  />
+                  <circle
+                    class="graphic-dot2"
+                    cx
+                    cy
+                    r="3"
+                    fill="#fff"
+                    stroke="transparent"
+                  />
+                  <path
+                    class="typo-right-under"
+                    fill="#fff"
+                    d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z"
+                  />
+                  <path
+                    class="typo-left-under"
+                    fill="#fff"
+                    d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z"
+                  />
+
+                  <path
+                    class="typo-right-top"
+                    stroke="#fff"
+                    d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z"
+                  />
+                  <path
+                    class="typo-left-top"
+                    d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z"
+                  />
+                </g>
+              </svg>
+              <p>
+                If you don't have your own design ready, I can create a design
+                that will be visually appealing, user-friendly and responsive.
+              </p>
+            </div>
+            <!-- UI/UX animation-->
+            <div class="container-skill graphic ui">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    transform="translate(40 150)"
+                    font-size="16"
+                    fill="#fff"
+                    stroke="none"
+                    font-family="RobotoMono-Medium,Roboto Mono"
+                    font-weight="500"
+                  >
+                    UI/UX design
+                  </text>
+                  <path class="rectangle" d="M30.57 22.69h98.86v98.86H30.57z" />
+                  <path class="bar" d="M30.57 37.59h98.86" />
+                  <circle class="dot3" cx="58.76" cy="29.96" r="3.09" />
+                  <circle class="dot2" cx="49.19" cy="29.96" r="3.09" />
+                  <circle class="dot1" cx="39.62" cy="29.96" r="3.09" />
+                  <rect
+                    class="btn"
+                    x="55.28"
+                    y="67.21"
+                    width="49.43"
+                    height="24.72"
+                    rx="4"
+                  />
+                  <path
+                    class="heart"
+                    fill="#121212"
+                    d="M80 85.57l-1-.86c-3.37-3.06-5.59-5.07-5.59-7.54a3.56 3.56 0 0 1 3.6-3.6A3.9 3.9 0 0 1 80 74.94a3.9 3.9 0 0 1 2.94-1.37 3.56 3.56 0 0 1 3.6 3.6c0 2.47-2.22 4.48-5.59 7.54z"
+                  />
+                </g>
+              </svg>
+              <p>
+                Creating functional and pretty interfaces which can enrich
+                user-experience is my primary job, and I like to exceed
+                expectations.
+              </p>
+            </div>
+            <!-- WebDev animation-->
+            <div class="container-skill interactive ui">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    transform="translate(20 150)"
+                    fill="#fff"
+                    stroke="none"
+                    font-size="16"
+                    font-family="RobotoMono-Medium,Roboto Mono"
+                    font-weight="500"
+                  >
+                    Interactive Web-Apps
+                  </text>
+                  <path class="ellipse4" />
+                  <path class="ellipse3" />
+                  <path class="ellipse2" />
+                  <path class="ellipse1" />
+                  <path class="ellipse0" />
+                  <path
+                    class="ellipse"
+                    d="M68,61.83a12,12 0 1,0 24,0a12,12 0 1,0 -24,0"
+                    stroke-miterlimit="10"
+                    fill="#fff"
+                    opacity="0.87"
+                  />
+                  <path
+                    class="hand"
+                    d="M100.33 82.21a5.82 5.82 0 0 0-3.66.19c-.08-.93-.46-3.07-2.32-3.64a5.83 5.83 0 0 0-3.74.21 3.59 3.59 0 0 0-2.24-3 5.85 5.85 0 0 0-3.64.17v-7.68c0-2-.83-5.44-4-5.44-2.91 0-4 3.25-4 5.44v17.08C75.34 84.12 73 82.13 71.14 82c-3-.24-5.19 1.64-4.59 4.56s3.12 2.75 5 5.14 6.34 9.81 6.37 9.86c.67 1.26 2.49 4.74 2.79 5.62a12 12 0 0 1 .27 3.09.79.79 0 0 0 .22.55.76.76 0 0 0 .54.23h17.18a.77.77 0 0 0 .76-.68 17.08 17.08 0 0 0 0-2.73 5.5 5.5 0 0 1 1.32-3.84 11.61 11.61 0 0 0 1.63-4.52.41.41 0 0 0 0-.11V86.28c.04-.28-.01-3.35-2.3-4.07z"
+                    fill="#121212"
+                    stroke="#fff"
+                    stroke-miterlimit="10"
+                  />
+                  <path class="bar" d="M96.68 88.8v-6.4" />
+                  <path class="bar" d="M90.61 87.29v-8.36" />
+                  <path class="bar" d="M84.73 86.74V76.13" />
+                  <path class="bar" d="M76.79 87.94v-2.39" />
+                </g>
+              </svg>
+              <p>
+                Static websites are past time; bringing websites to life with
+                animations and interactive elements is my specialty.
+              </p>
+            </div>
+            <!-- Code Animation -->
+            <div class="container-skill code ui">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    transform="translate(20 150)"
+                    font-size="16"
+                    fill="#fff"
+                    stroke="none"
+                    font-family="RobotoMono-Medium,Roboto Mono"
+                    font-weight="500"
+                  >
+                    Backend integration
+                  </text>
+                  <path
+                    class="rectangle"
+                    transform="rotate(-90 80 72.12)"
+                    d="M30.57 22.69h98.86v98.86H30.57z"
+                  />
+                  <path class="bar" d="M45.46 121.55V22.69" />
+                </g>
+              </svg>
+              <span class="change-letter"></span>
+              <p>
+                Aside from front-end, I also do the back-end integration, work
+                with APIs and databases, and much more.
+              </p>
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <!-- Dots/bullets/indicators -->
+            <div class="dot-container">
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
+              <span class="dot" onclick="currentSlide(3)"></span>
             </div>
           </div>
-          <div class="service-back">
-            <h3>Tailored Vision Package</h3>
-            <ul>
-              includes
-              <li>Custom design creation</li>
-              <li>Responsive design implementation</li>
-              <li>SEO optimization</li>
-              <li>Visual identity services</li>
-            </ul>
-          </div>
-        </div>
-        <div class="service-card">
-          <div class="service-front">
-            <h3>Web Design, Development and Deployment</h3>
-            <p>
-              Complete and conceptualized full-package, designed and adjusted
-              for target audience and transformative user experience into
-              interactive and functional website
-            </p>
-            <h4>Starting at $1,200</h4>
-            <div class="service-imgs">
-              <img src="/assets/img/illustration-design.png" alt="" />
-              <img src="/assets/img/illustration-build.png" alt="" />
-              <img src="/assets/img/illustration-deploy.png" alt="" />
+          <div class="container">
+            <div class="icons">
+              <div class="icon-block">
+                <img
+                  class="center-align"
+                  src="https://img.icons8.com/nolan/256/html-5.png"
+                  alt="html-5"
+                />
+              </div>
+
+              <div class="icon-block">
+                <img
+                  src="https://img.icons8.com/nolan/256/css3.png"
+                  alt="css3"
+                  class="center-align"
+                />
+              </div>
+
+              <div class="icon-block">
+                <img
+                  src="https://img.icons8.com/nolan/256/javascript.png"
+                  alt="javascript"
+                  class="center-align"
+                />
+              </div>
+
+              <div class="icon-block">
+                <img
+                  src="https://img.icons8.com/nolan/256/react-native.png"
+                  alt="ReactJS"
+                  class="center-align"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-sass center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-node-js center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-npm center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-php center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-git center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-gitlab center-align"></i>
+              </div>
             </div>
           </div>
-          <div class="service-back">
-            <h3>Full-package service</h3>
-            <ul>
-              includes:
-              <li>Custom design and development</li>
-              <li>Deployment to client's server</li>
-              <li>Training for site management</li>
-              <li>Responsive design across devices</li>
-            </ul>
+        </section>
+        <!-- =============== HERO ================ -->
+        <section class="hero" id="hero">
+          <h2>SKILLS</h2>
+          <div class="container">
+            <div class="around-list">
+              <h3>If you need someone who can...</h3>
+            </div>
+            <div class="hero-list">
+              <ul role="list">
+                <li>
+                  <i class="fa-solid fa-paintbrush text-teal"></i>create
+                  interactive and intuitive UX
+                </li>
+                <li>
+                  <i class="fa-solid fa-wand-magic-sparkles text-orange"></i
+                  >design animated and pretty UI
+                </li>
+                <li>
+                  <i class="fa-solid fa-pen-ruler text-blue"></i>build
+                  responsive and scalabale websites
+                </li>
+                <li>
+                  <i class="fa-solid fa-images text-teal"></i>develop
+                  interactive web apps
+                </li>
+                <li>
+                  <i class="fa-solid fa-feather text-orange"></i>optimize
+                  websites for easy and lightweight use
+                </li>
+                <li>
+                  <i class="fa-solid fa-rocket text-pink"></i>
+                  deploy and manage websites
+                </li>
+                <li>
+                  <i class="fa-solid fa-code text-blue"></i>handle
+                  backend-integration
+                </li>
+                <li>
+                  <i class="fa-solid fa-network-wired text-orange"></i>work with
+                  APIs and third-party libraries
+                </li>
+                <li>
+                  <i class="fa-solid fa-database text-teal"></i>manage and
+                  maintain databases
+                </li>
+                <li>
+                  <i class="fa-solid fa-code-branch text-pink"></i>work with
+                  version control systems
+                </li>
+                <li>
+                  <i class="fa-solid fa-brain text-teal"></i>think creatively
+                  and critically
+                </li>
+                <li>
+                  <i class="fa-solid fa-circle-nodes text-pink"></i>
+                  take interdisciplinary aproach to problem-solving
+                </li>
+                <li>
+                  <i class="fa-solid fa-people-carry-box text-orange"></i
+                  >collaborate and work in a team
+                </li>
+                <li>
+                  <i class="fa-regular fa-comments text-blue"></i>actively
+                  listen and answer the needs of the clients
+                </li>
+                <li>
+                  <i class="fa-solid fa-newspaper text-orange"></i>stay
+                  up-to-date with new technologies
+                </li>
+                <li>
+                  <i class="fa-solid fa-file-signature text-teal"></i>write
+                  content and manage project documentation
+                </li>
+                <li>
+                  <i class="fa-regular fa-compass text-pink"></i>find the best
+                  solutions and directions
+                </li>
+              </ul>
+            </div>
+            <div class="around-list">
+              <h3>...don't hesitate to:</h3>
+            </div>
+            <button class="call-to-action">
+              <a href="#contact">Contact me!</a>
+            </button>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
+        <!--=============== PROJECTS ================ -->
+        <section class="projects" id="projects">
+          <h2>PROJECTS</h2>
 
-    <section id="projects" class="projects-section">
-      <h2 class="section-heading">Projects</h2>
-      <div class="project-carousel">
-        <div class="project-item">
-          <h3>Chatroom App</h3>
-          <ul>
-            <li>Real-time messaging</li>
-            <li>Private and secure login</li>
-            <li>In-browser app as well as mobile app installation</li>
-          </ul>
-          <img src="/assets/img/chatroom.png" alt="" />
+          <!-- =============== PROJECT ONE =============== -->
+          <div class="project-card">
+            <div class="project-card-image">
+              <img src="/assets/img/quizplay.png" alt="screenshot-quizz-app" />
+            </div>
+            <p class="project-card-title">Quiz Game</p>
+            <p class="project-card-body">
+              One of my first PWA projects; Progressive Web Apps are fabulous
+              because even though they are made for desktop browsers, they look
+              completely native on smartphones, and you can even install them as
+              a regular app and place its icon on your mobile screen. This quiz
+              game <i>per se</i> is lacking in questions, but I will add more
+              soon.
+            </p>
 
-          <div class="technology-icons">
-            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
-            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
-            <img
-              class="icon"
-              src="/assets/svg/socialJavascript.png"
-              alt="JavaScript"
-            />
-            <img
-              class="icon"
-              src="/assets/svg/socialNodejs.png"
-              alt="Node.js"
-            />
-            <img
-              class="icon"
-              src="/assets/svg/netlify-icon.png"
-              alt="Netlify"
-            />
+            <div class="project-card-footer">
+              <label for="codeQuizBtn">Check out the source code:</label>
+              <button type="button" id="codeQuizBtn" name="codeQuizBtn">
+                <a
+                  href="https://github.com/marina-majden/quiz-play"
+                  target="_blank"
+                ></a
+                >Code
+              </button>
+              <label for="demoQuizBtn">You can play the game for free:</label>
+              <button type="button" id="demoQuizBtn" name="codeQuizBtn">
+                <a
+                  href="https://song-finder-itunes.netlify.app"
+                  target="_blank"
+                ></a
+                >Play
+              </button>
+            </div>
           </div>
-        </div>
-        <!-- Repeat the structure for other projects -->
-        <div class="project-item">
-          <h3>Quiz Game App</h3>
-          <ul>
-            <li>Full-stack project</li>
-            <li>Online free quiz</li>
-            <li>Trivia questions from database</li>
-          </ul>
-          <img src="/assets/img/Untitled.jpg" alt="quiz" />
-          <div class="technology-icons">
-            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
-            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
-            <img
-              class="icon"
-              src="/assets/svg/socialJavascript.png"
-              alt="JavaScript"
-            />
-            <img
-              class="icon"
-              src="/assets/svg/socialNodejs.png"
-              alt="Node.js"
-            />
-            <img
-              class="icon"
-              src="/assets/svg/4691292_react native_react_icon.png"
-              alt="React"
-            />
-          </div>
-        </div>
-        <div class="project-item">
-          <h3>Song Finder App</h3>
-          <ul>
-            <li>Full-stack project</li>
-            <li>Real-time data fetching and playing</li>
-            <li>iTunes API integration</li>
-          </ul>
-          <img src="/assets/img/songfind.jpg" alt="songfinder" />
+          <!-- =============== PROJECT TWO =============== -->
+          <div class="project-card">
+            <div class="project-card-image">
+              <img src="/assets/img/songfinder.png" alt="songfinder-app" />
+            </div>
+            <p class="project-card-title">Song Finder</p>
+            <p class="project-card-body">
+              As you guessed correctly, it's an app that helps you find a song
+              on the iTunes, if you know what you're looking for. Or if you
+              don't, maybe you will find something nice, and you can listen a
+              sample for free.
+            </p>
 
-          <div class="technology-icons">
-            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
-            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
-            <img
-              class="icon"
-              src="/assets/svg/socialJavascript.png"
-              alt="JavaScript"
-            />
-            <img src="/assets/svg/netlify-icon.png" alt="Netlify" />
-            <img src="/assets/svg/itunes.png alt=" alt="iTunes" />
+            <div class="project-card-footer">
+              <label for="codeiTunesBtn">Check out the source code:</label>
+              <button type="button" id="codeiTunesBtn" name="codeiTunesBtn">
+                <a
+                  href="https://github.com/marina-majden/songfinder-app"
+                  target="_blank"
+                ></a
+                >Code
+              </button>
+              <label for="demoiTunesBtn">Try out the app here:</label>
+              <button type="button" id="demoiTunesBtn" name="codeQuizBtn">
+                <a
+                  href="https://marina-majden.github.io/song-finder"
+                  target="_blank"
+                ></a
+                >Open App
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="project-item">
-          <h3>Website Template</h3>
-          <ul>
-            <li>Single Page Portfolio Website</li>
-            <li>UI/UX design, development, and deployment</li>
-            <li>Clean code, responsive design, and SEO optimization</li>
-            <li>Code versioning and performance monitoring</li>
-          </ul>
-          <img src="https://picsum.photos/id/234/600/400" alt="" />
-          <div class="technology-icons">
-            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
-            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
-            <img
-              class="icon"
-              src="/assets/svg/socialJavascript.png"
-              alt="JavaScript"
-            />
-            <img src="/assets/svg/github-square.png" alt="GitHub" />
-            <img src="/assets/svg/4691413_netlify_icon.png" alt="Netlify" />
+          <!-- =============== PROJECT THREE =============== -->
+          <div class="project-card">
+            <div class="project-card-image">
+              <img
+                src="/assets/img/chatroom-horizontal.png"
+                alt="chatroom-app"
+              />
+            </div>
+            <p class="project-card-title">Chatroom App</p>
+            <p class="project-card-body">
+              Simple, fast, versatile and privacy friendly, <br />
+              this app enables you to access chat-window and talk to your
+              friends anywhere and anytime in a matter of seconds. Creative and
+              session-based usernames guarantee your privacy.
+            </p>
+            <div class="project-card-footer">
+              <label for="codeChatBtn">Check out the source code:</label>
+              <button type="button" id="codeChatBtn" name="codeChatBtn">
+                <a href="https://github.com/marina-majden/" target="_blank"
+                  >Code</a
+                >
+              </button>
+              <label for="demoChatBtn">Try out the app here:</label>
+              <button type="button" id="demoChatBtn" name="demoChatBtn">
+                <a
+                  href="https://oldschool-chatroom.netlify.app"
+                  target="_blank"
+                  delay="1000"
+                >
+                  Open App</a
+                >
+              </button>
+            </div>
           </div>
-        </div>
+        </section>
+        <!-- ================= PLAYGROUND ================ -->
+        <section class="playground" id="playground">
+          <h2>PLAYGROUND</h2>
+          <p>Explore objects by interacting with them and have fun!</p>
+          <div class="playground-container">
+            <div class="cards">
+              <div class="card">
+                <div class="character">
+                  <div class="profile">
+                    <div class="group">
+                      <div class="hairstyle">
+                        <div class="hair"></div>
+                      </div>
+                      <div class="ear"></div>
+                      <div class="ear right"></div>
+                      <div class="lice">
+                        <div class="face"></div>
+                        <div class="eyebrow"></div>
+                        <div class="closed-eyes"></div>
+                        <div class="eyes">
+                          <div class="eye"></div>
+                          <div class="eye"></div>
+                        </div>
+                        <div class="blush"></div>
+                        <div class="nose"></div>
+                        <div class="mouth">
+                          <div class="tongue"></div>
+                        </div>
+                      </div>
 
-        <div class="project-item">
-          <h3>Webshop Website</h3>
-          <ul>
-            <li>Full-stack freelancing project</li>
-            <li>Modern business website with webshop</li>
-            <li>
-              Original and responsive UI/UX design, clean code and back-end
-              integration
-            </li>
-          </ul>
-          <img src="https://picsum.photos/id/674/600/400" alt="" />
-          <div class="technology-icons">
-            <img class="icon" src="/assets/svg/socialHtml5.png" alt="HTML5" />
-            <img class="icon" src="/assets/svg/socialCss3.png" alt="CSS3" />
-            <img
-              class="icon"
-              src="/assets/svg/socialJavascript.png"
-              alt="JavaScript"
-            />
-            <img src="/assets/svg/github-square.png" alt="GitHub" />
-            <img
-              src="/assets/svg/10621351_code_monitor_desktop_coding_screen_icon (1).png"
-              alt="Medium"
-            />
+                      <div class="neck"></div>
+                      <div class="body"></div>
+                    </div>
+                  </div>
+                  <div class="character-bubble desktop">
+                    Hover over me to change my features!
+                  </div>
+                  <div class="character-bubble mobile">
+                    Tap me to change my features!
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="laptop-illustration">
+                  <div class="lap-illustration-screen"></div>
+                  <div class="lap-illustration-base"></div>
+                  <div class="lap-illustration-browser"></div>
+                  <div class="lap-illustration-codepen-main"></div>
+                  <div class="lap-illustration-lines"></div>
+                  <div class="lap-illustration-text"></div>
+                  <div class="lap-illustration-buttons"></div>
+                  <div class="lap-illustration-profile"></div>
+                  <div class="lap-illustration-image"></div>
+                  <div class="lap-illustration-logo"></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="cat-illustration">
+                  <h4>What's your favourite part of day?</h4>
+                  <div class="cat-illustration-options">
+                    <div
+                      class="cat-illustration-time active"
+                      data-option="dusk"
+                    >
+                      Dusk
+                    </div>
+                    <div class="cat-illustration-time" data-option="day">
+                      Day
+                    </div>
+                    <div class="cat-illustration-time" data-option="sunset">
+                      Sunset
+                    </div>
+                    <div class="cat-illustration-time" data-option="night">
+                      Night
+                    </div>
+                  </div>
+                  <div class="cat-illustration-window">
+                    <div class="cat-illustration-cat">
+                      <svg width="80px" viewBox="0 0 15.59 15.59">
+                        <path
+                          d="M14.42,11.993c-0.104-1.334-0.709-2.336-1.57-3.153c-0.479-0.449-0.906-0.563-1.414-0.563c0,0-0.204,0.005-0.041,0.212  c0.215,0.271,1.791,2.328,1.768,4.011c-0.029,1.948-1.958,1.837-1.958,1.837c0.812-1.542,0.402-3.001,0.276-3.512  c-0.238-0.943-0.709-1.857-1.417-2.738C9.191,6.988,8.312,6.468,7.425,6.523c-0.379-0.654-0.716-1.18-1.011-1.61  C8.02,3.479,6.974,2.787,6.063,0c-0.211,0.591-0.38,1.028-0.507,1.31c-0.644-0.08-2.071-0.08-2.714,0  C2.716,1.028,2.547,0.591,2.336,0C1.423,2.794,0.374,3.467,1.999,4.909c0.173,3.278,0.849,4.149,1.942,5.732  c0.9,1.304,0.675,1.768,1.098,3.569c-3.197,2.014,2.223,1.241,3.063,1.2C10.266,15.305,14.777,16.6,14.42,11.993z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div class="cat-illustration-picture">
+                      <div class="cat-illustration-time .cat-illustration-dusk">
+                        <div class="cat-illustration-sky">
+                          <svg width="250px" viewBox="0 0 113.39 99.21">
+                            <linearGradient
+                              id="sky_sunset"
+                              gradientUnits="userSpaceOnUse"
+                              x1="0%"
+                              y1="0%"
+                              x2="100%"
+                              y2="0%"
+                              gradientTransform="rotate(-25)"
+                            >
+                              <stop
+                                offset="0%"
+                                stop-color="#f7ffa9"
+                                stop-opacity="1"
+                              ></stop>
+                              <stop
+                                offset="40%"
+                                stop-color="#ffcc33"
+                                stop-opacity="1"
+                              ></stop>
+                              <stop
+                                offset="100%"
+                                stop-color="#ffbe1d"
+                                stop-opacity="1"
+                              ></stop>
+                            </linearGradient>
+                            <linearGradient
+                              id="sky_dusk"
+                              gradientUnits="userSpaceOnUse"
+                              x1="0%"
+                              y1="0%"
+                              x2="100%"
+                              y2="0%"
+                              gradientTransform="rotate(45)"
+                            >
+                              <stop
+                                offset="0%"
+                                stop-color="#ffd4fe"
+                                stop-opacity="1"
+                              ></stop>
+                              <stop
+                                offset="30%"
+                                stop-color="#ffd4fe"
+                                stop-opacity="1"
+                              ></stop>
+                              <stop
+                                offset="100%"
+                                stop-color="#ffd26a"
+                                stop-opacity="1"
+                              ></stop>
+                            </linearGradient>
+                            <polygon
+                              fill="#B3EFFF"
+                              id="sky"
+                              points="111.971,97.368 111.971,1.842 1.419,1.842 1.419,9.042 1.419,97.368"
+                            ></polygon>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-sun">
+                          <svg width="90px" viewBox="0 0 90.71 90.71">
+                            <g>
+                              <circle
+                                opacity="0.1"
+                                fill="#FFECDC"
+                                cx="45.355"
+                                cy="45.354"
+                                r="43.212"
+                              ></circle>
+                              <circle
+                                opacity="0.3"
+                                fill="#FFEBDE"
+                                cx="45.355"
+                                cy="45.354"
+                                r="31.131"
+                              ></circle>
+                              <circle
+                                id="sun"
+                                fill="#f9db5a"
+                                cx="45.355"
+                                cy="45.354"
+                                r="21.374"
+                              ></circle>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-clouds">
+                          <svg width="80px" viewBox="0 0 42.52 19.84">
+                            <g>
+                              <path
+                                fill="#fff"
+                                d="M38.582,8.005c1.865,0,3.393,1.673,3.393,3.717l0,0c0,2.042-1.527,3.716-3.393,3.716H24.039h-0.484   c-2.676,0-4.847-2.378-4.847-5.309c0-2.932,2.17-5.309,4.847-5.309c0,0,2.242-4.247,7.756-4.247c3.453,0,6.787,1.925,6.787,7.432   H38.582z"
+                              ></path>
+                              <path
+                                fill="#FCFCFC"
+                                d="M20.863,11.667c1.908,0,3.471,1.71,3.471,3.8l0,0c0,2.09-1.563,3.8-3.471,3.8H5.998H5.501   c-2.736,0-4.956-2.431-4.956-5.428s2.219-5.428,4.956-5.428c0,0,2.292-4.342,7.929-4.342c3.532,0,6.939,1.968,6.939,7.598H20.863z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-stars">
+                          <svg width="210px" viewBox="0 0 99.21 25.51">
+                            <g>
+                              <ellipse
+                                opacity="0.3"
+                                fill="#FFFFFF"
+                                cx="97.067"
+                                cy="11.361"
+                                rx="0.727"
+                                ry="0.832"
+                              ></ellipse>
+                              <ellipse
+                                opacity="0.3"
+                                fill="#FFFFFF"
+                                cx="2.144"
+                                cy="3.901"
+                                rx="0.728"
+                                ry="0.831"
+                              ></ellipse>
+                              <ellipse
+                                opacity="0.3"
+                                fill="#FFFFFF"
+                                cx="14.743"
+                                cy="10.455"
+                                rx="0.727"
+                                ry="0.831"
+                              ></ellipse>
+                              <ellipse
+                                opacity="0.3"
+                                fill="#FFFFFF"
+                                cx="66.439"
+                                cy="9.407"
+                                rx="0.728"
+                                ry="0.831"
+                              ></ellipse>
+                              <ellipse
+                                opacity="0.3"
+                                fill="#FFFFFF"
+                                cx="77.518"
+                                cy="1.332"
+                                rx="0.728"
+                                ry="0.831"
+                              ></ellipse>
+                              <ellipse
+                                opacity="0.3"
+                                fill="#FFFFFF"
+                                cx="82.514"
+                                cy="13.459"
+                                rx="0.728"
+                                ry="0.831"
+                              ></ellipse>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-moon">
+                          <svg width="35px" viewBox="0 0 15.59 19.28">
+                            <path
+                              opacity="0.8"
+                              fill="#FFFFFF"
+                              d="M13.718,16.993c-5.085,0-9.208-4.122-9.208-9.208c0-2.97,1.407-5.608,3.589-7.292  C3.722,1.205,0.381,5,0.381,9.579c0,5.086,4.123,9.208,9.209,9.208c2.116,0,4.063-0.716,5.619-1.916  C14.722,16.95,14.226,16.993,13.718,16.993z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-mountain">
+                          <svg width="250px" viewBox="0 0 113.39 36.85">
+                            <path
+                              id="mountain"
+                              fill="#87D6D6"
+                              d="M111.971,0.478C106.576,2.7,95.837,16.269,88.655,15C81.29,13.699,68.052,6.244,62.31,3.639  C56.566,1.036,41.955,16.42,36.835,15.948c-5.118-0.474-17.355-9.232-23.475-8.403c-3.964,0.537-8.932,4.276-11.941,6.844v21.983  h110.552V0.478z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-hill">
+                          <svg width="250px" viewBox="0 0 113.39 17.86">
+                            <path
+                              id="hill"
+                              fill="#38C6B1"
+                              d="M111.971,12.132c-4.609-0.766-8.889-1.889-12.432-3.579C86.127-0.36,71.48-3.606,43.082,6.31  c-6.086,0.811-7.853,0.51-17.234-2.951C18.487,0.644,8.764,1.176,1.419,2.621v15.017h110.551V12.132z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-land">
+                          <svg width="250px" viewBox="0 0 113.39 24.09">
+                            <path
+                              id="land"
+                              fill="#4CB5AB"
+                              d="M111.971,23.82V3.328C84.865-6.96,12.407,11.765,1.419,14.708v9.112H111.971z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="cat-illustration-trees">
+                          <svg width="210px" viewBox="0 0 85.04 41.1">
+                            <g>
+                              <rect
+                                class="cat-illustration-trunks"
+                                x="75.121"
+                                y="26.724"
+                                fill="#8C5F50"
+                                width="2.166"
+                                height="8.666"
+                              ></rect>
+                              <rect
+                                class="cat-illustration-trunks"
+                                x="67.539"
+                                y="28.89"
+                                fill="#8C5F50"
+                                width="2.168"
+                                height="6.5"
+                              ></rect>
+                            </g>
+                            <g>
+                              <path
+                                class="cat-illustration-trees"
+                                fill="#A0D755"
+                                d="M83.785,21.309c0,4.187-3.393,7.581-7.58,7.581s-7.582-3.395-7.582-7.581     c0-9.749,3.395-20.579,7.582-20.579S83.785,11.56,83.785,21.309z"
+                              ></path>
+                              <path
+                                class="cat-illustration-trees"
+                                fill="#A0D755"
+                                d="M75.121,24.933c0,3.382-2.91,6.125-6.5,6.125c-3.588,0-6.498-2.743-6.498-6.125     c0-7.873,2.91-16.622,6.498-16.622C72.211,8.311,75.121,17.06,75.121,24.933z"
+                              ></path>
+                            </g>
+                            <g opacity="0.2">
+                              <path
+                                fill="#FFFFFF"
+                                d="M72.955,21.309c0-8.892,1.883-18.68,4.332-20.333c-0.354-0.16-0.715-0.247-1.082-0.247     c-4.188,0-7.582,10.83-7.582,20.579c0,4.187,3.395,7.581,7.582,7.581c0.369,0,0.729-0.035,1.082-0.086     C74.84,28.277,72.955,25.127,72.955,21.309z"
+                              ></path>
+                              <path
+                                fill="#FFFFFF"
+                                d="M66.457,24.933c0-7.106,1.383-14.901,3.191-16.359c-0.334-0.157-0.676-0.263-1.025-0.263     c-3.588,0-6.5,8.749-6.5,16.622c0,3.382,2.912,6.125,6.5,6.125c0.35,0,0.691-0.034,1.025-0.084     C67.84,30.508,66.457,27.984,66.457,24.933z"
+                              ></path>
+                            </g>
+                            <g>
+                              <rect
+                                class="cat-illustration-trunks"
+                                x="3.466"
+                                y="35.946"
+                                fill="#8C5F50"
+                                width="1.475"
+                                height="4.424"
+                              ></rect>
+                              <path
+                                class="cat-illustration-trees"
+                                fill="#A0D755"
+                                d="M7.153,34.472c0,1.628-1.32,2.949-2.949,2.949S1.254,36.1,1.254,34.472c0-5.162,1.32-11.799,2.949-11.799     S7.153,29.31,7.153,34.472z"
+                              ></path>
+                              <path
+                                opacity="0.2"
+                                fill="#FCFCFC"
+                                d="M3.466,34.472c0-4.233,0.666-9.452,1.58-11.194c-0.267-0.383-0.55-0.604-0.842-0.604    c-1.629,0-2.949,6.637-2.949,11.799c0,1.628,1.32,2.949,2.949,2.949c0.295,0,0.573-0.057,0.842-0.137    C4.135,36.919,3.466,35.806,3.466,34.472z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section id="contact" class="contact-section">
-      <h2 class="section-heading">Contact</h2>
-      <form id="contact-form" class="contact-form">
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Your Name"
-          required
-        />
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Your Email"
-          required
-        />
-        <textarea
-          id="message"
-          name="message"
-          placeholder="Your Message"
-          required
-        ></textarea>
-        <button type="submit" id="submit-btn">Submit</button>
-      </form>
-    </section>
-
-    <footer>
-      <div class="footer-content">
-        <p>2024. &copy; Marina Majdenic</p>
-        <ul class="social-links">
-          <li>
-            <a href="#"
-              ><img src="/assets/svg/github-square.png" alt="github-icon"
-            /></a>
-          </li>
-          <li>
-            <a href="#"
-              ><img
-                src="/assets/svg/bico-linkedin-rect.png"
-                alt="linkedin-icon"
-            /></a>
-          </li>
-          <li>
-            <a href="#"
-              ><img src="/assets/svg/socialMedium.png" alt="medium-icon"
-            /></a>
-          </li>
-          <li>
-            <img
-              src="/assets/svg/webs-heart-empty.png"
-              alt="heart-fav-icon"
-            /><a href="#">Visit my webpage!</a>
-          </li>
-        </ul>
-      </div>
-    </footer>
-    <div class="mobile-navbar">
-      <div class="close-btn">&times;</div>
-      <ul class="mobile-nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+        <!-- ============= CONTACT ================-->
+        <section class="contact" id="contact">
+          <h2>CONTACT</h2>
+          <div class="container">
+            <form
+              id="contact-form"
+              name="contact-form"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              target="_blank"
+            >
+              <input
+                type="hidden"
+                name="access_key"
+                value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
+              />
+              <div class="form-group">
+                <label for="name" name="name">Name:</label><br />
+                <input type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label><br />
+                <input type="email" name="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="message" name="message">Message:</label><br />
+                <textarea
+                  name="message"
+                  id="message"
+                  cols="100"
+                  rows="10"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" name="submit">
+                <div class="svg-wrapper-1">
+                  <div class="svg-wrapper">
+                    <svg
+                      href="/assets/svg/regular/paper-plane.svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                    >
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path
+                        fill="currentColor"
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <span>Send</span>
+              </button>
+            </form>
+          </div>
+        </section>
+        <!-- =============== FOOTER ================ -->
+        <footer class="footer">
+          <div class="socials">
+            <h3>Links to my socials:</h3>
+            <a href="https://github.com/marina-majden" target="_blank"
+              ><i class="fa-brands fa-3x fa-square-github fa-spin"> </i
+            ></a>
+            <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
+              ><i class="fa-brands fa-3x fa-linkedin-in fa-flip"></i
+            ></a>
+            <a href="mailto:marina.majden@gmail.com" target="_blank"
+              ><i class="fa-brands fa-3x fa-google-plus-square fa-bounce"></i
+            ></a>
+            <a href="https://medium.com/@marina.majden" target="_blank"
+              ><i class="fa-brands fa-3x fa-medium fa-beat"></i
+            ></a>
+          </div>
+          <div class="copyright">
+            <p>
+              Copyright
+              <i class="fa-solid fa-copyright w3-hover-opacity"></i>
+              Marina Majdenić <br />
+              2024.
+            </p>
+          </div>
+        </footer>
+      </main>
     </div>
+    <!-- JS files -->
+    <script>
+      document.querySelector("body").addEventListener("mousemove", eyemove);
+      function eyemove() {
+        let eye = document.querySelectorAll(".eye");
+        eye.forEach(function (eye) {
+          let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
+          let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
+          let radian = Math.atan2(event.pageX - x, event.pageY - y);
+          let rot = radian * (180 / Math.PI) * -1 + 270;
+          eye.style.transform = "rotate(" + rot + "deg)";
+        });
+      }
+    </script>
+    <script
+      src="https://kit.fontawesome.com/677ac239ea.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/assets/js/init.js"></script>
+    <script src="/assets/js/cat-illustration.js"></script>
+    <script src="/assets/js/slider.js"></script>
+    <script src="/assets/js/materialize.js"></script>
   </body>
-  <script src="/assets/js/script.js"></script>
 </html>
