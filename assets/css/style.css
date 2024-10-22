@@ -25,18 +25,169 @@
   --off-white: #9e9e9e;
   --white: #efecec;
 
-  --text-body: "Dosis";
-  --text-sans: "Yanone";
-  --text-cursive: "Sacramento";
-  --text-handwritten: "Pecita";
-  --text-grafitti: "Xplor";
-  --text-urban: "Rock Salt";
-  --headings-big: "Palamecia";
-  --headings-neutral: "Piximisa";
-  --headings-alt: "Silkscreen";
-  --headings-main: "Bungee";
-  --headings-liga: "Pricedown";
-  --text-monofont: "Monofonto";
+  --off-white: hsl(22, 15%, 90%);
+  --off-white-cold: hsl(120, 15%, 95%);
+  --off-white-warm: hsl(20, 32%, 90%);
+
+  --gray: hsl(120, 18%, 78%);
+  --gray-1: hsl(120, 5%, 70%);
+  --gray-2: hsl(120, 5%, 80%);
+  --gray-3: hsl(120, 5%, 90%);
+
+  --neutral: hsl(22, 51%, 81%);
+  --neutral-1: hsl(22, 31%, 60%);
+  --neutral-2: hsl(22, 31%, 65%);
+  --neutral-3: hsl(22, 31%, 75%);
+
+  --neutral-dark: hsl(22, 31%, 5%);
+  --neutral-dark: hsl(22, 25%, 3%);
+
+  --off-black-lt: hsl(120, 1%, 3%);
+  --off-black: hsl(120, 1%, 1%);
+  --off-black-warm: hsl(22, 15%, 3%);
+
+  --primary: hsl(205, 28%, 40%);
+  --primary-light: hsl(205, 28%, 55%);
+  --primary-dark: hsl(205, 28%, 35%);
+  --secondary: #420039;
+  --secondary-light: hsl(308, 30%, 33%);
+  --secondary-dark: hsl(308, 60%, 10%);
+  --ternary: #5a3a31;
+  --ternary-light: hsl(13, 25%, 35%);
+  --ternary-dark: hsl(284, 29%, 20%);
+
+  --off-white: #e9e4e2;
+  --gray: #bdd1bd;
+  --neutral: #e7c8b6;
+  --off-black: #030303;
+  --primary: #496b83;
+  --secondary: #420039;
+  --ternary: #5a3a31;
+
+  --c1: var(--off-white-cold);
+  --c2: var(--off-black-warm);
+  --c3: var(--gray);
+  --c4: var(--off-white);
+  --c5: var(--primary-dark);
+  --c6: var(--ternary-dark);
+  --c7: var(--secondary-light);
+
+  --a1: #F5F5DC;
+  --a2: #FFC67D;
+  --a3: #1ABC9C;
+
+  --b1: #071529;
+  --b2: #F7DC6F;
+  --b3: #660066;
+
+  --d1: #a490d3;
+  --d2: #f5f8cc;
+
+
+  --clr-bg: var(--c1);
+  --clr-bg-nav: var(--c7) 
+  --clr-bg-card: var(--c6);
+  --clr-bg-card-hover: var(--c7);
+  --clr-bg-button: var(--c7);
+  --clr-bg-button-hover: var(--c6);
+  --clr-border: var(--c7);
+  --clr-border-alt: var(--d1);
+  --clr-text: var(--c2);
+  --clr-text-nav: var(--c4);
+  --clr-heading: var(--c5);
+  --clr-text-card: var(--c4);
+  --clr-text-card-alt: var(--c3);
+  --clr-text-card-heading: var(--c3);
+  --clr-text-link: var(--c5);
+  --clr-text-link-hover: var(--c6);
+  --clr-text-button: var(--c4);
+  --clr-text-button-hover: var(--c1);
+
+  --gradient-metallic: linear-gradient(120deg, #420039ff, #BDD1BDff, #E7C8B6ff, #496a81ff, #5a3a31ff);
+
+  --ff-sans: "Kreon";
+  --ff-serif: "Spectral";
+  --ff-serif-alt: "NewStandard";
+  --ff-half-serif: "Kreon";
+  --ff-cursive: "Redressed";
+  --ff-display: "Pharmacy";
+  --ff-upper: "Migha";
+
+--gray: hsl(120, 18%, 78%);
+--gray-1: hsl(120, 5%, 70%);
+--gray-2: hsl(120, 5%, 80%);
+--gray-3: hsl(120, 5%, 90%);
+
+--neutral: hsl(22, 51%, 81%);
+--neutral-1: hsl(22, 31%, 60%);
+--neutral-2: hsl(22, 31%, 65%);
+--neutral-3: hsl(22, 31%, 75%);
+
+--neutral-dark: hsl(22, 31%, 5%);
+--neutral-dark: hsl(22, 25%, 3%);
+
+--off-black-lt: hsl(120, 1%, 3%);
+--off-black: hsl(120, 1%, 1%);
+--off-black-warm: hsl(22, 15%, 3%);
+
+--primary: hsl(205, 28%, 40%);
+--primary-light: hsl(205, 28%, 55%);
+--primary-dark: hsl(205, 28%, 35%);
+--secondary: #420039;
+--secondary-light: hsl(308, 30%, 33%);
+--secondary-dark: hsl(308, 60%, 10%);
+--ternary: #5a3a31;
+--ternary-light: hsl(13, 25%, 35%);
+--ternary-dark: hsl(13, 29%, 20%);
+
+--off-white: #e9e4e2;
+--gray: #bdd1bd;
+--neutral: #e7c8b6;
+--off-black: #030303;
+--primary: #496b83;
+--secondary: #420039;
+--ternary: #5a3a31;
+
+--black: hsla(158, 8%, 20%, 1);
+--white: hsla(39, 100%, 88%, 1);
+--prim: hsla(8, 70%, 56%, 1);
+--accent: hsla(336, 80%, 28%, 1);
+--second: hsla(272, 21%, 24%, 1);
+
+--sunset: #e8ca89ff;
+--dark-slate-gray: #405c64ff;
+--dark-purple: #2d222fff;
+--alabaster: #dfe5dcff;
+--antique-white: #fdebd9ff;
+--sage: #a5b295ff;
+
+--clr-bg: var(--sunset);
+--clr-bg-nav: var(var(--dark-purple))
+--clr-bg-card: var(var(--dark-slate-gray));
+--clr-bg-card-hover: #F5F5F5;
+--clr-bg-button: var(--dark-purple);
+--clr-bg-button-hover: var(--dark-slate-gray);
+--clr-border: var(--dark-purple);  
+--clr-border-alt: var(--dark-slate-gray);
+--clr-text: var(--off-black);
+--clr-text-nav: var(--alabaster);
+--clr-heading: var(--secondary);
+--clr-text-card: var(--off-black);
+--clr-text-card-alt: var(--black);
+--clr-text-card-heading: var(--sage);
+--clr-text-link: var(--prim);
+--clr-text-link-hover: var(--primary-dark);
+--clr-text-button: var(--sage);
+--clr-text-button-hover: var(--alabaster);
+
+
+  --ff-serif: "Spectral";
+  --ff-serif-alt: "NewStandard";
+  --ff-sans-serif: "Superior";
+  --ff-cursive: "Redressed";
+  --ff-display: "Pharmacy";
+  --ff-display-alt: "UniquaOne";
+  --ff-upper: "Migha";
 }
 * {
   box-sizing: border-box;
