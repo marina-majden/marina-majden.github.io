@@ -1,0 +1,64 @@
+.stack {
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-top: 20px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.stack-card {
+  top: 30px;
+  position: sticky;
+
+  color: white;
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background: rgba(1, 3, 43, 0.56);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.9px);
+  -webkit-backdrop-filter: blur(8.9px);
+  border: 1px solid rgba(1, 3, 43, 0.01);
+}
+.stack-card h2 {
+  padding: 0;
+}
+.stack-card span {
+  display: block;
+  font-size: 14px;
+  color: #0c4eb9;
+}
+
+.stack-card:nth-child(1n) {
+  top: 20px;
+}
+
+.stack-card:nth-child(2n) {
+  top: 40px;
+}
+
+.stack-card:nth-child(3n) {
+  top: 60px;
+}
+
+.stack-card:nth-child(4n) {
+  top: 80px;
+}
+
+.stack-card:nth-child(5n) {
+  top: 100px;
+}
+
+.stack-card:nth-child(6n) {
+  top: 120px;
+}
+
+.stack-card:nth-child(7n) {
+  top: 140px;
+}
+
+.stack-card:nth-child(8n) {
+  top: 160px;
+} /*# sourceMappingURL=stackcards.css.map */

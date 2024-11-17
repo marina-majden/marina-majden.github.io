@@ -1,10 +1,8 @@
-// JavaScript
-// a function tha
+// JavaScript function that hides the decorative image on scroll
 window.addEventListener("scroll", function () {
   var decorativeBreak = document.querySelector("header .opening-img");
   if (window.scrollY > 100) {
     // adjust this value as needed
-
     decorativeBreak.classList.add("hide");
     decorativeBreak.classList.add("small");
   } else {
@@ -13,6 +11,7 @@ window.addEventListener("scroll", function () {
   }
 });
 
+// JS function that creates an animated dynamic text
 const dynamicText = document.getElementById("dynamic-text");
 const words = [
   "Web Designer",
@@ -33,7 +32,8 @@ let index = 0;
   setTimeout(changeWords, 1800);
 })();
 
-const burgerMenu = document.querySelector(".burger-menu");
+// JS function that handles the mobile navigation
+const burgerMenu = document.querySelector(".hamburger");
 const closeBtn = document.querySelector(".close-btn");
 const mobileNavbar = document.querySelector(".mobile-navbar");
 const navbar = document.querySelector(".nav-links");
@@ -57,8 +57,9 @@ window.addEventListener("resize", () => {
   }
 });
 
-const carousel = document.querySelector(".project-carousel");
-const projects = document.querySelectorAll(".project-item");
+// JS function that handles the carousel
+const carousel = document.querySelector(".carousel");
+const projects = document.querySelectorAll(".carousel-item");
 
 let isDown = false;
 let startX;
@@ -86,54 +87,39 @@ carousel.addEventListener("mousemove", (e) => {
   carousel.scrollLeft = scrollLeft - walk;
 });
 
-projects.forEach((project) => {
-  project.addEventListener("click", () => {
-    // Handle click event for project item
+carousel.addEventListener("touchstart", (e) => {
+  isDown = true;
+  startX = e.touches[0].pageX - carousel.offsetLeft;
+  scrollLeft = carousel.scrollLeft;
+});
+
+carousel.addEventListener("touchend", () => {
+  isDown = false;
+});
+
+carousel.addEventListener("touchmove", (e) => {
+  if (!isDown) return;
+  const x = e.touches[0].pageX - carousel.offsetLeft;
+  const walk = (x - startX) * 2; // Adjust the speed of scrolling here
+  carousel.scrollLeft = scrollLeft - walk;
+});
+
+// Handle scroll event for project carousel
+carousel.addEventListener("scroll", () => {
+  projects.forEach((project) => {
+    const rect = project.getBoundingClientRect();
+    if (rect.left >= 0 && rect.right <= window.innerWidth) {
+      project.classList.add("active");
+    } else {
+      project.classList.remove("active");
+    }
+    const projectRect = project.getBoundingClientRect();
+    const carouselRect = carousel.getBoundingClientRect();
+
+    if (projectRect.left < carouselRect.left) {
+      carousel.scrollLeft -= carouselRect.left - projectRect.left;
+    } else if (projectRect.right > carouselRect.right) {
+      carousel.scrollLeft += projectRect.right - carouselRect.right;
+    }
   });
-});
-const form = document.getElementById("contact-form");
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const messageInput = document.getElementById("message");
-const submitBtn = document.getElementById("submit-btn");
-
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  if (validateForm()) {
-    // Code to handle form submission (e.g., sending data to server)
-    form.reset();
-  }
-});
-
-function validateForm() {
-  if (
-    nameInput.value.trim() === "" ||
-    emailInput.value.trim() === "" ||
-    messageInput.value.trim() === ""
-  ) {
-    alert("Please, fill in all fields!");
-    return false;
-  }
-
-  if (!isValidEmail(emailInput.value)) {
-    alert("Please, enter a valid email address!");
-    return false;
-  }
-
-  return true;
-}
-
-function isValidEmail(email) {
-  // Simple email validation using regex
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(email);
-}
-
-submitBtn.addEventListener("click", function () {
-  submitBtn.classList.add("submit-animation");
-
-  setTimeout(() => {
-    submitBtn.classList.remove("submit-animation");
-  }, 1000); // Adjust the animation duration as needed
 });
