@@ -1,0 +1,125 @@
+/* NAVIGATION */
+.logo {
+  position: sticky;
+  top: 10vh;
+  contain: size;
+  z-index: 999;
+  width: 25%;
+  animation: logoGone;
+  animation-timeline: scroll();
+  animation-iteration-count: 1;
+}
+.logo img {
+  padding: 0;
+  margin: 0;
+  width: 15vw;
+}
+
+@keyframes logoGone {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  10% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+    transform: translateX(-95px) translateY(-60px) scale(0.3);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateX(-95px) translateY(-60px) scale(0.3);
+  }
+}
+
+@media screen and (max-width: 782px) {
+  .logo {
+    position: sticky;
+    isolation: isolate;
+    z-index: 999;
+    top: 10px;
+    left: 10px;
+    width: 10vw;
+    animation: logoGoneSM cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    animation-timeline: scroll();
+  }
+}
+
+@keyframes logoGoneSM {
+  0% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.1);
+    transform: translateX(-12px) translateY(-60px);
+  }
+}
+
+/* Horizontalna traka navigacije postat će sticky tijekom skrolanja, na velikim ekranima, a na malim ekranima bit će hamburger menu koji se otvara kao vertikalni menu */
+nav {
+  width: 10vw;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  right: 0;
+}
+nav ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+nav ul li {
+  padding: 1vh;
+  width: max-content;
+}
+nav ul li i {
+  color: var(--off-white);
+  font-size: 1.7rem;
+}
+nav ul li a {
+  position: relative;
+  font-family: var(--ff-accent);
+  color: var(--off-white);
+  text-shadow: 6px 6px 20px #131212f7;
+  font-size: clamp(1rem, 1.2rem + 1vw, 2rem);
+  text-decoration: none;
+
+  transform: translateX(0);
+  transition: all 1s ease;
+}
+nav ul li a::before {
+  content: "";
+  display: inline;
+  position: absolute;
+  right: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+nav ul li a:hover {
+  color: var(--pink);
+}
+nav ul li a:hover::before {
+  content: attr(data-content);
+  display: inline;
+  right: 3rem;
+  padding-right: 1rem;
+  font-size: inherit;
+  opacity: 1;
+
+  width: fit-content;
+  height: fit-content;
+  color: var(--off-white);
+  transition: all 1s ease;
+}
+nav ul li a:hover,
+a:active {
+  color: var(--pink);
+}

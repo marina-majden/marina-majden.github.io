@@ -32,22 +32,7 @@
   font-style: italic;
 }
 @font-face {
-  font-family: "Yanone";
-  src: url(/assets/fonts/Yanone/YanoneKaffeesatz-Thin.otf) format("opentype");
-  font-weight: 300;
-}
-@font-face {
-  font-family: "Yanone";
-  src: url(/assets/fonts/Yanone/YanoneKaffeesatz-Light.ttf) format("truetype");
-  font-weight: 400;
-}
-@font-face {
-  font-family: "Yanone";
-  src: url(/assets/fonts/Yanone/YanoneKaffeesatz-Regular.otf) format("opentype");
-  font-weight: 500;
-}
-@font-face {
-  font-family: "Yanone";
-  src: url(/assets/fonts/Yanone/YanoneKaffeesatz-Bold.ttf) format("truetype");
-  font-weight: 800;
+  font-family: "Encode Sans";
+  src: url(/assets/fonts/Encode_Sans/EncodeSans-VariableFont_wdth\,wght.ttf)
+    format("truetype");
 }

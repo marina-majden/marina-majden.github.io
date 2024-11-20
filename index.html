@@ -11,502 +11,592 @@
     <title>Marina Majdenić - Portfolio Website</title>
     <!-- CSS  -->
     <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" href="/assets/css/stackcards.css" />
-    <link rel="stylesheet" href="/assets/css/grid.css" />
+    <link href="/assets/css/image-compare-viewer.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="/assets/css/image-compare-viewer.min.css.map"
+      type="application/json"
+    />
   </head>
   <body>
-    <div class="main-container">
-      <!-- ============= PARALLAX ================-->
-      <!--  <div class="parallax-header">
-        <img
-          src="/assets/img/pexels-eberhardgross-1287142.jpg "
-          class="panorama background"
-        />
-        <h1>Hello, world!</h1>
-        <br />
-        <h2>Welcome!</h2>
-        <img src="/assets/img/cloud.png" class="foreground" />
-      </div> -->
-      <!-- =============== MAIN ================ -->
-      <main>
-        <!-- =============== NAVBAR ================ -->
+    <!-- =============== HOME ================ -->
+    <div class="home" id="home">
+      <!-- =============== NAVBAR ================ -->
 
-        <!-- =============== HOME/HERO ================ -->
-        <h1 class="headline">Love for frontend</h1>
-        <div id="split">
-          <div class="splitview skewed">
-            <div class="panel bottom">
-              <div class="content">
-                <div class="description">
-                  <h1>Minimalistic and functional interface</h1>
-                  <p>
-                    or sleek and spaceous design that focuses on the important
-                    message...
-                  </p>
-                </div>
-                <img
-                  src="/assets/img/Modern_Workspace_With_Multiple_Devices_Showcasing_Cohesive_Web_Design-removebg-preview.png"
-                  alt="Original"
-                />
-              </div>
-            </div>
-            <div class="panel top">
-              <div class="content">
-                <div class="description">
-                  <h1>Creative and interactive design</h1>
-                  <p>
-                    Whether you like colorful and vibrant design that catches
-                    the eye...
-                  </p>
-                </div>
+      <nav class="navbar">
+        <ul>
+          <li>
+            <a href="#home" data-content="Home"
+              ><i class="fa-solid fa-house"></i
+            ></a>
+          </li>
+          <li>
+            <a href="#hero" data-content="About"
+              ><i class="fa-solid fa-circle-info"></i
+            ></a>
+          </li>
+          <li>
+            <a href="#services" data-content="Services"
+              ><i class="fa-solid fa-laptop-file"></i
+            ></a>
+          </li>
+          <li>
+            <a href="#skills" data-content="Skills"
+              ><i class="fa-solid fa-code"></i
+            ></a>
+          </li>
+          <li>
+            <a href="#projects" data-content="Projects"
+              ><i class="fa-solid fa-folder-open"></i
+            ></a>
+          </li>
+          <li>
+            <a href="#contact" data-content="Contact"
+              ><i class="fa-solid fa-comment"></i
+            ></a>
+          </li>
+        </ul>
+      </nav>
+      <h1 class="headline">Love for frontend</h1>
 
-                <img
-                  src="/assets/img/Modern_Workspace_With_Digital_Devices_in_Vibrant_Dark_Mode-removebg-preview.png"
-                  alt="Duotone"
-                />
-              </div>
-            </div>
-
-            <div class="handle"></div>
-          </div>
+      <div id="compare">
+        <div id="example">
+          <img src="/assets/img/mini-removebg-preview.png" alt="BEFORE" />
+          <img src="/assets/img/maxi-removebg-preview.png" alt="AFTER" />
         </div>
+      </div>
+      <div class="intro">
+        <h3>
+          Need a <em>Minimalistic &amp; Elegant </em> or
+          <em>Vibrant &amp; Creative</em> website?
+        </h3>
+      </div>
 
-        <article class="grid">
-          <div class="grid-content item1">
-            <h1>Hover box Animation</h1>
-            <p>
-              By animating a few CSS paint composite properties, we can create
-              fun interactions on hover focus
-            </p>
-          </div>
-          <div class="box item2">
-            <h2>Hover the boxs</h2>
-          </div>
-          <div class="box item3"></div>
-          <div class="box item4"></div>
-          <div class="box item5">
-            <h2>because interactions make it more fun</h2>
-          </div>
-          <div class="box item7"></div>
-          <div class="box item8">
-            <h2>animating the shadow on the pseudo element makes it pop out</h2>
-          </div>
-          <div class="box item9"></div>
-          <div class="box item10"></div>
-          <div class="box item11">
-            <h2>add a :focus state too!</h2>
-          </div>
-        </article>
-
-        <a href="#services"><i class="fa-solid fa-arrow-down"></i></a>
-        <nav class="main-navbar">
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <div class="logo" href="#">
-            <img src="/assets/img/logo-white.png" alt="logo" />
-          </div>
-        </nav>
-        <section class="home" id="home">
-          <div class="container">
-            <h2 id="dynamic-text">Marina Majdenić Front-end developer</h2>
-            <h2>
-              I am <span>Marina Majdenić</span>,
-              <em>Front-end and Web developer</em> from Zagreb, Croatia.
-            </h2>
-            <h3>
-              <strong
-                >Looking for someone to design, develop and deploy
-                <em>web-sites / web-applications</em> for your project, or you
-                need a new developer on your IT team?
-              </strong>
-            </h3>
-            <h4>
-              Feel free to <em>contact me </em>without any obligations - I"m
-              always in for a conversation!
-            </h4>
-            <button class="call-to-action">
-              <a href="#contact">Let's talk</a>
-            </button>
-            <p>Or just take a look around my page and have fun!</p>
-          </div>
-        </section>
-
-        <!-- =============== Services ============== -->
-        <section id="services" class="services">
-          <h2>Services</h2>
-          <p>
-            Depending on your needs and wants, I can be as involved in your
-            project as needed.
-          </p>
-          <div class="container">
-            <div class="row stack">
-              <div class="col service-card stack-card">
-                <div class="service-front">
-                  <h3>Website Development from Design</h3>
-                  <p>
-                    Polished Landing Pages and Interactive Websites with Lasting
-                    Performance and Precise Optimization
-                  </p>
-
-                  <h4>from 199 $</h4>
-                  <div class="service-imgs">
-                    <img
-                      src="/assets/img/illustrations/typography.png"
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div class="service-back">
-                  <h3>Efficiency Landing Package</h3>
-                  <ul>
-                    includes:
-                    <li>Development based on client-provided designs</li>
-                    <li>Responsive design implementation</li>
-                    <li>Basic SEO optimization</li>
-                    <li>Ideal for landing pages</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col service-card stack-card">
-                <div class="service-front">
-                  <h3>Custom Web Design and Development</h3>
-                  <p>
-                    Tailored and Cutting-Edge Online Presence and Captivating
-                    User Experience
-                  </p>
-                  <h4>Starting at $800</h4>
-                  <div class="service-imgs">
-                    <img src="/assets/img/illustrations/launch.png" alt="" />
-                  </div>
-                </div>
-                <div class="service-back">
-                  <h3>Tailored Vision Package</h3>
-                  <ul>
-                    includes
-                    <li>Custom design creation</li>
-                    <li>Responsive design implementation</li>
-                    <li>SEO optimization</li>
-                    <li>Visual identity services</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col service-card stack-card">
-                <div class="service-front">
-                  <h3>Web Design, Development and Deployment</h3>
-                  <p>
-                    Complete and conceptualized full-package, designed and
-                    adjusted for target audience and transformative user
-                    experience into interactive and functional website
-                  </p>
-                  <h4>Starting at $1,200</h4>
-                  <div class="service-imgs">
-                    <img src="/assets/img/illustrations/design.png" alt="" />
-                  </div>
-                </div>
-                <div class="service-back">
-                  <h3>Full-package service</h3>
-                  <ul>
-                    includes:
-                    <li>Custom design and development</li>
-                    <li>Deployment to client's server</li>
-                    <li>Training for site management</li>
-                    <li>Responsive design across devices</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- =============== SKILLS ================ -->
-
-        <section class="skills" id="skills">
-          <h2>Skills</h2>
-          <h3>If you need someone who can...</h3>
-
-          <div class="container">
-            <ul class="skill-list" id="skill-list">
-              <li class="skill-item animate fadeInUp" id="card-1">
-                <i class="fa-solid fa-paintbrush text-teal"></i>create
-                interactive and intuitive UX
-              </li>
-              <li class="skill-item animate" id="card-2">
-                <i class="fa-solid fa-wand-magic-sparkles text-orange"></i
-                >design animated and pretty UI
-              </li>
-              <li class="skill-item animate" id="card-3">
-                <i class="fa-solid fa-pen-ruler text-blue"></i>build responsive
-                and scalabale websites
-              </li>
-              <li class="skill-item animate" id="card-4">
-                <i class="fa-solid fa-images text-teal"></i>develop interactive
-                web apps
-              </li>
-              <li class="skill-item" id="card-5">
-                <i class="fa-solid fa-feather text-orange"></i>optimize websites
-                for easy and lightweight use
-              </li>
-              <li class="skill-item" id="card-6">
-                <i class="fa-solid fa-rocket text-pink"></i>
-                deploy and manage websites
-              </li>
-              <li class="skill-item" id="card-7">
-                <i class="fa-solid fa-code text-blue"></i>handle
-                backend-integration
-              </li>
-              <li class="skill-item" id="card-8">
-                <i class="fa-solid fa-network-wired text-orange"></i>work with
-                APIs and third-party libraries
-              </li>
-              <li class="skill-item" id="card-9">
-                <i class="fa-solid fa-newspaper text-orange"></i>stay up-to-date
-                with new technologies
-              </li>
-            </ul>
-          </div>
-          <h3>...don"t hesitate to:</h3>
-          <button class="call-to-action">
-            <a href="#contact">Contact me!</a>
-          </button>
-        </section>
-
-        <!--=============== PROJECTS ================ -->
-        <section class="projects" id="projects">
-          <h2>Projects</h2>
-
-          <!-- =============== PROJECT ONE =============== -->
-          <div class="row">
-            <div id="project-cards" class="project">
-              <div class="projec-card">
-                <figure>
-                  <div class="banner">
-                    <div class="tools">
-                      <i class="fa-brands fa-html5"></i>
-                      <i class="fa-brands fa-css3-alt"></i>
-                      <i class="fa-brands fa-square-js"></i>
-                      <i class="fa-brands fa-node-js"></i>
-                      <i class="fa-brands fa-react"></i>
-                    </div>
-                  </div>
-
-                  <img
-                    class="project-img"
-                    src="/assets/img/quiz-app-contrast.png"
-                    alt=""
-                  />
-                  <div class="footer">
-                    <h2>Song Finder</h2>
-                    <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
-                  </div>
-                  <figcaption>
-                    <p>
-                      As you guessed correctly, it"s an app that helps you find
-                      a song on the iTunes, if you know what you"re looking for.
-                      Or if you don"t, maybe you will find something nice, and
-                      you can listen a sample for free.
-                    </p>
-                    <div class="buttons">
-                      <button class="project-card__button">
-                        <a href="">Live Demo</a>
-                      </button>
-                      <button class="project-card__button secondary">
-                        <a href=""> Source Code</a>
-                      </button>
-                    </div>
-                  </figcaption>
-                </figure>
-              </div>
-              <!-- =============== PROJECT TWO =============== -->
-              <div class="projec-card">
-                <figure>
-                  <h1>Chat Room App</h1>
-                  <img src="/assets/img/chat-app-logo.png" alt="" />
-
-                  <figcaption>
-                    <p>
-                      Simple, fast, versatile and privacy friendly, this app
-                      enables you to access chat-window and talk to your friends
-                      anywhere and anytime in a matter of seconds. Creative and
-                      session-based usernames guarantee your privacy.
-                    </p>
-                    <button class="project-card__button">Live Demo</button>
-                    <button class="project-card__button secondary">
-                      Source Code
-                    </button>
-                  </figcaption>
-                </figure>
-              </div>
-              <!-- =============== PROJECT THREE =============== -->
-              <div class="projec-card">
-                <figure>
-                  <h1>Quiz game</h1>
-                  <img src="/assets/img/quote-interface.jpg" alt="" />
-
-                  <figcaption>
-                    <p>
-                      One of my first PWA projects; Progressive Web Apps are
-                      fabulous because even though they are made for desktop
-                      browsers, they look completely native on smartphones, and
-                      you can even install them as a regular app and place its
-                      icon on your mobile screen. This quiz game
-                      <i>per se</i> is lacking in questions, but I will add more
-                      soon.
-                    </p>
-                    <button class="project-card__button">Live Demo</button>
-                    <button class="project-card__button secondary">
-                      Source Code
-                    </button>
-                  </figcaption>
-                </figure>
-              </div>
-
-              <!-- =============== PROJECT FOUR =============== -->
-              <div class="projec-card">
-                <figure>
-                  <h1>Websites</h1>
-                  <img src="/assets/img/quote-interface.jpg" alt="" />
-
-                  <figcaption>
-                    <p>
-                      As a freelancer, I have worked on several websites,
-                      including design and deployment besides development. I
-                      also understand web-hosting and domain management, as well
-                      as maintenance, which you can see on this project.
-                    </p>
-                    <button class="project-card__button">Live Demo</button>
-                    <button class="project-card__button secondary">
-                      Source Code
-                    </button>
-                  </figcaption>
-                </figure>
-              </div>
-              <!-- =============== PROJECT FIVE =============== -->
-              <div class="projec-card">
-                <figure>
-                  <h1>Quiz game</h1>
-                  <img src="/assets/img/quiz-app-contrast.png" alt="" />
-
-                  <figcaption>
-                    <p>
-                      One of my first PWA projects; Progressive Web Apps are
-                      fabulous because even though they are made for desktop
-                      browsers, they look completely native on smartphones, and
-                      you can even install them as a regular app and place its
-                      icon on your mobile screen. This quiz game
-                      <i>per se</i> is lacking in questions, but I will add more
-                      soon.
-                    </p>
-                    <button class="project-card__button">Live Demo</button>
-                    <button class="project-card__button secondary">
-                      Source Code
-                    </button>
-                  </figcaption>
-                </figure>
-              </div>
-            </div>
-          </div>
-        </section>
-        <div id="toscroll">
-          <!-- Your Content Goes Here -->
-
-          <!-- ============= CONTACT ================-->
-          <section class="contact" id="contact">
-            <h2>Contact</h2>
-            <div class="container">
-              <form
-                id="contact-form"
-                name="contact-form"
-                action="https://api.web3forms.com/submit"
-                method="POST"
-                target="_blank"
-              >
-                <input
-                  type="hidden"
-                  name="access_key"
-                  value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
-                />
-                <div class="form-group">
-                  <label for="name" name="name">Name:</label><br />
-                  <input type="text" id="name" required />
-                </div>
-                <div class="form-group">
-                  <label for="email">Email:</label><br />
-                  <input type="email" name="email" id="email" required />
-                </div>
-                <div class="form-group">
-                  <label for="message" name="message">Message:</label><br />
-                  <textarea
-                    name="message"
-                    id="message"
-                    cols="100"
-                    rows="10"
-                    required
-                  ></textarea>
-                </div>
-                <div class="form-group">
-                  <input type="checkbox" name="agree" id="agree" required />
-                  <label for="agree" name="agree"
-                    >I allow you to use my information to contact me
-                    back.</label
-                  >
-                </div>
-                <button type="submit" name="submit">
-                  <div class="svg-wrapper-1">
-                    <div class="svg-wrapper">
-                      <svg
-                        href="/assets/svg/regular/paper-plane.svg"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        height="24"
-                      >
-                        <path fill="none" d="M0 0h24v24H0z"></path>
-                        <path
-                          fill="currentColor"
-                          d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <span>Send</span>
-                </button>
-              </form>
-            </div>
-          </section>
-        </div>
-
-        <!-- =============== FOOTER ================ -->
-        <footer class="footer">
-          <div class="socials">
-            <h3>Links to my socials:</h3>
-            <a href="https://github.com/marina-majden" target="_blank"
-              ><i class="fa-brands fa-2x fa-square-github fa-beat"> </i
-            ></a>
-            <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
-              ><i class="fa-brands fa-2x fa-linkedin-in fa-beat"></i
-            ></a>
-            <a href="mailto:marina.majden@gmail.com" target="_blank"
-              ><i class="fa-brands fa-2x fa-google-plus-square fa-beat"></i
-            ></a>
-            <a href="https://medium.com/@marina.majden" target="_blank"
-              ><i class="fa-brands fa-2x fa-medium fa-beat"></i
-            ></a>
-          </div>
-          <div class="copyright">
-            <p>
-              Copyright
-              <i class="fa-solid fa-copyright w3-hover-opacity"></i>
-              Marina Majdenić <br />
-              2024.
-            </p>
-          </div>
-        </footer>
-      </main>
+      <div class="scroll-btn">
+        <a href="#hero" class="home-scroll">
+          <i class="fa-solid fa-chevron-down"></i
+        ></a>
+      </div>
     </div>
+    <!-- <div id="split">
+    <div class="splitview skewed">
+        <div class="panel bottom">
+          <div class="content">
+            <div class="description">
+              <p class="accent">or you are looking for...</p>
+              <h1>Minimalistic Elegant Websites</h1>
+              <p class="accent">look no more!</p>
+            </div>
+
+            <img src="/assets/img/webdesign-mini.png" alt="Original" />
+          </div>
+        </div>
+        <div class="panel top">
+          <div class="content">
+            <div class="description">
+              <p class="accent">Whether you like</p>
+              <h1>Bold Innovative Websites</h1>
+              <p class="accent">that catch the eye...</p>
+            </div>
+
+            <img src="/assets/img/webdesign-maxi.png" alt="Duotone" />
+          </div>
+        </div>
+
+        <div class="handle"></div>
+      </div> </div>
+ -->
+
+    <!-- =============== HERO ================ -->
+    <section class="hero" id="hero">
+      <article class="grid">
+        <div class="box item1">
+          <h3 class="box-text">
+            If you're looking for a Front-end / Web developer for your project
+            or a new member to join your team, check me out and let me know!
+          </h3>
+        </div>
+        <div class="box item2"></div>
+        <!--  <div class="box item3"></div> -->
+        <div class="box item4">
+          <details>
+            <summary>Read more about me</summary>
+
+            I am Marina Majdenić, a freelancing Frontend / Web developer based
+            in Croatia and available for collaboration or hire. I enjoy creating
+            interactive and responsive websites and web applications, as well as
+            ensuring reliability, scalability and performance of the final
+            product.
+          </details>
+          <h3 class="box-text">
+            I am Marina Majdenić, a freelancing Frontend / Web developer based
+            in Croatia and available for collaboration or hire. I enjoy creating
+            interactive and responsive websites and web applications, as well as
+            ensuring reliability, scalability and performance of the final
+            product.
+          </h3>
+        </div>
+        <!-- <div class="box item5"></div> -->
+
+        <div class="box item7"></div>
+        <div class="box item8">
+          <a href="#projects">
+            <h4 class="box-text">Take a look at my projects</h4>
+            <i class="fa-solid fa-folder-open"></i
+          ></a>
+        </div>
+        <div class="box item9">
+          <a href="#skills">
+            <h4 class="box-text">Click here to see my skills</h4>
+            <i class="fa-solid fa-code"></i
+          ></a>
+        </div>
+        <div class="box item10">
+          <a href="#contact"
+            ><h4 class="box-text">Contact me here</h4>
+            <i class="fa-solid fa-comment"></i>
+          </a>
+        </div>
+        <div class="box item11">
+          <a href="#services">
+            <h4 class="box-text">Or check out my services</h4>
+
+            <i class="fa-solid fa-laptop-file"></i
+          ></a>
+        </div>
+      </article>
+    </section>
+
+    <!-- =============== MAIN ================ -->
+    <main>
+      <div class="logo" href="#">
+        <img src="/assets/img/logo-white.png" alt="logo" />
+      </div>
+      <!-- =============== Services ============== -->
+      <section id="services" class="services">
+        <h2>Services</h2>
+        <div class="row">
+          <div class="card">
+            <h4>Web Development based on existing design</h4>
+            <img src="/assets/svg/undraw_designer_girl_re_h54c.svg" alt="" />
+            <p class="card__description_front">
+              Polished and responsive website development based on your design,
+              ideal for landing pages and small business websites.
+            </p>
+
+            <div class="card__content">
+              <div class="card__description_back">
+                <h4>Includes:</h4>
+                <ul>
+                  <li>Development based on client-provided designs</li>
+                  <li>Responsive design across devices</li>
+                  <li>Basic SEO optimization</li>
+                  <li>Updating old websites possible</li>
+                </ul>
+                <button><a href="#contact">Ask for more info</a></button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Custom Web Design and Development</h4>
+            <img src="/assets/svg/undraw_web_development_0l6v.svg" alt="" />
+            <p class="card__description_front">
+              Tailored design based on your needs and target audience, full
+              development of the website, deployment and maintenance.
+            </p>
+
+            <div class="card__content">
+              <div class="card__description_back">
+                <h4>Includes:</h4>
+                <ul>
+                  <li>Custom design creation</li>
+                  <li>Responsive design across devices</li>
+                  <li>SEO optimization</li>
+                  <li>Visual identity services</li>
+                </ul>
+                <button><a href="#contact">Ask for more info</a></button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h4>Custom Web Design with Development and Deployment</h4>
+            <img src="/assets/svg/undraw_website_setup_re_d4y9.svg" alt="" />
+            <p class="card__description_front">
+              Complete and conceptualized full-package, designed and adjusted
+              for target audience and transformative user experience into
+              interactive and functional website.
+            </p>
+
+            <div class="card__content">
+              <div class="card__description_back">
+                <h4>Includes:</h4>
+                <ul>
+                  <li>Custom design and development</li>
+                  <li>Deployment to client's server</li>
+                  <li>Responsive design across devices</li>
+                  <li>Maintenance and updating</li>
+                </ul>
+                <button><a href="#contact">Ask for more info</a></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============== SKILLS ================ -->
+
+      <section class="skills" id="skills">
+        <h2>Skills</h2>
+
+        <div class="container-responsive transparent-bg">
+          <h3>If you need someone who can...</h3>
+          <ul class="skill-list" id="skill-list">
+            <li class="skill-item" id="card-1">
+              <i class="fa-solid fa-paintbrush text-teal"></i>create interactive
+              and intuitive UX
+            </li>
+            <li class="skill-item animate" id="card-2">
+              <i class="fa-solid fa-wand-magic-sparkles text-orange"></i>design
+              animated and pretty UI
+            </li>
+            <li class="skill-item animate" id="card-3">
+              <i class="fa-solid fa-pen-ruler text-blue"></i>build responsive
+              and scalabale websites
+            </li>
+            <li class="skill-item animate" id="card-4">
+              <i class="fa-solid fa-images text-teal"></i>develop interactive
+              web apps
+            </li>
+            <li class="skill-item" id="card-5">
+              <i class="fa-solid fa-feather text-orange"></i>optimize websites
+              for easy and lightweight use
+            </li>
+            <li class="skill-item" id="card-6">
+              <i class="fa-solid fa-rocket text-pink"></i>
+              deploy and manage websites
+            </li>
+            <li class="skill-item" id="card-7">
+              <i class="fa-solid fa-code text-blue"></i>handle
+              backend-integration
+            </li>
+            <li class="skill-item" id="card-8">
+              <i class="fa-solid fa-network-wired text-orange"></i>work with
+              APIs and third-party libraries
+            </li>
+            <li class="skill-item" id="card-9">
+              <i class="fa-solid fa-newspaper text-orange"></i>stay up-to-date
+              with new technologies
+            </li>
+          </ul>
+          <h3>feel free to</h3>
+          <button><a href="#contact">Contact me</a></button>
+        </div>
+      </section>
+
+      <!--=============== PROJECTS ================ -->
+      <section class="projects" id="projects">
+        <h2>Projects</h2>
+
+        <!-- =============== PROJECT ONE =============== -->
+
+        <div id="project-cards" class="container-responsive">
+          <div class="project-card">
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+              <img
+                class="project-img"
+                src="/assets/img/quiz-app-contrast.png"
+                alt=""
+              />
+              <div class="footer">
+                <h2>Song Finder</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  This is an app that helps you find a song on the iTunes, if
+                  you know what you"re looking for. As for copyright rules, you
+                  can listen a sample for free.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a
+                      href="https://song-finder-itunes.netlify.app/"
+                      target="_blank"
+                      >Live Demo</a
+                    >
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a
+                      href="https://github.com/marina-majden/song-finder"
+                      target="_blank"
+                    >
+                      Source Code</a
+                    >
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+          <!-- =============== PROJECT TWO ===============-->
+          <div class="project-card">
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+
+              <img
+                class="project-img"
+                src="/assets/img/chat-app-logo.png"
+                alt=""
+              />
+              <div class="footer">
+                <h2>Chat Room App</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  Simple, fast, versatile and privacy friendly, this app enables
+                  you to access chat-window and talk to your friends anywhere
+                  and anytime in a matter of seconds. Creative and session-based
+                  usernames guarantee your privacy.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a
+                      href="https://oldschool-chatroom.netlify.app/"
+                      target="_blank"
+                      >Live Demo</a
+                    >
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a
+                      href="https://github.com/marina-majden/chat-room-app"
+                      target="_blank"
+                    >
+                      Source Code</a
+                    >
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+
+          <!-- =============== PROJECT THREE =============== -->
+          <div class="project-card">
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+
+              <img
+                class="project-img"
+                src="/assets/img/quiz-app-colorful.png"
+                alt=""
+              />
+              <div class="footer">
+                <h2>Quiz game</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  One of my first PWA projects; Progressive Web Apps are
+                  fabulous because even though they are made for desktop
+                  browsers, they look completely native on smartphones, and you
+                  can even install them as a regular app and place its icon on
+                  your mobile screen. This quiz game
+                  <i>per se</i> is lacking in questions, but I will add more
+                  soon.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a
+                      href="https://marina-majden.github.io/quizzy/"
+                      target="_blank"
+                      >Live Demo</a
+                    >
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a
+                      href="https://github.com/marina-majden/quizzy"
+                      target="_blank"
+                    >
+                      Source Code</a
+                    >
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+          <!-- =============== PROJECT FOUR =============== -->
+          <div class="project-card">
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+              <img
+                class="project-img"
+                src="/assets/img/quote-interface.jpg"
+                alt=""
+              />
+              <div class="footer">
+                <h2>Quotes</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  As you guessed correctly, it"s an app that helps you find a
+                  song on the iTunes, if you know what you"re looking for. Or if
+                  you don"t, maybe you will find something nice, and you can
+                  listen a sample for free.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a
+                      href="https://cute-quote-today.netlify.app/"
+                      target="_blank"
+                      >Live Demo</a
+                    >
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a
+                      href="https://github.com/marina-majden/song-finder"
+                      target="_blank"
+                    >
+                      Source Code</a
+                    >
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+      <!-- ============= CONTACT ================-->
+      <section class="contact" id="contact">
+        <h2>Contact</h2>
+        <div class="container">
+          <form
+            id="contact-form"
+            name="contact-form"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            target="_blank"
+          >
+            <input
+              type="hidden"
+              name="access_key"
+              value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
+            />
+            <div class="form-group">
+              <label for="name">Name:</label><br />
+              <input type="text" name="name" id="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail:</label><br />
+              <input type="email" name="email" id="email" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message:</label><br />
+              <textarea
+                name="message"
+                id="message"
+                cols="100"
+                rows="10"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" name="agree" id="agree" required />
+              <label for="agree" name="agree">
+                I allow you to use my information to contact me back.
+              </label>
+            </div>
+            <button type="submit" name="submit">
+              <div class="svg-wrapper-1">
+                <div class="svg-wrapper">
+                  <svg
+                    href="/assets/svg/regular/paper-plane.svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path
+                      fill="currentColor"
+                      d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <span>Send</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- =============== FOOTER ================ -->
+      <footer class="footer">
+        <div class="socials">
+          <h3>Links to my socials:</h3>
+          <a href="https://github.com/marina-majden" target="_blank"
+            ><i class="fa-brands fa-2x fa-square-github fa-beat"> </i
+          ></a>
+          <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
+            ><i class="fa-brands fa-2x fa-linkedin-in fa-beat"></i
+          ></a>
+          <a href="mailto:marina.majden@gmail.com" target="_blank"
+            ><i class="fa-brands fa-2x fa-google-plus-square fa-beat"></i
+          ></a>
+          <a href="https://medium.com/@marina.majden" target="_blank"
+            ><i class="fa-brands fa-2x fa-medium fa-beat"></i
+          ></a>
+        </div>
+        <div class="copyright">
+          <p>
+            Copyright
+            <i class="fa-solid fa-copyright w3-hover-opacity"></i>
+            Marina Majdenić <br />
+            2024.
+          </p>
+        </div>
+        <div class="logo-copy">
+          <img
+            src="/assets/img/logo-white.png"
+            alt="logo"
+            width="50px"
+            height="50px"
+          />
+        </div>
+      </footer>
+    </main>
+
     <!-- JS files    -->
     <script
       src="https://kit.fontawesome.com/677ac239ea.js"
@@ -517,62 +607,19 @@
     <!--   <script src="/assets/js/main.js"></script> -->
     <script>
       /*     let colorbg = new Color4Bg.AestheticFluidBg({
-        dom: "box",
-        colors: [
-          "#07185a",
-          "#032b3f",
-          "#3c0958",
-          "#880262",
-          "#150024",
-          "#300066",
-        ],
-        loop: true,
-      }); */
-      /*  var theToggle = document.getElementById("toggle"); */
-
-      // based on Todd Motto functions
-      // https://toddmotto.com/labs/reusable-js/
-
-      /*  // hasClass
-      function hasClass(elem, className) {
-        return new RegExp(" " + className + " ").test(
-          " " + elem.className + " "
-        );
-      }
-      // addClass
-      function addClass(elem, className) {
-        if (!hasClass(elem, className)) {
-          elem.className += " " + className;
-        }
-      }
-      // removeClass
-      function removeClass(elem, className) {
-        var newClass = " " + elem.className.replace(/[\t\r\n]/g, " ") + " ";
-        if (hasClass(elem, className)) {
-          while (newClass.indexOf(" " + className + " ") >= 0) {
-            newClass = newClass.replace(" " + className + " ", " ");
-          }
-          elem.className = newClass.replace(/^\s+|\s+$/g, "");
-        }
-      }
-      // toggleClass
-      function toggleClass(elem, className) {
-        var newClass = " " + elem.className.replace(/[\t\r\n]/g, " ") + " ";
-        if (hasClass(elem, className)) {
-          while (newClass.indexOf(" " + className + " ") >= 0) {
-            newClass = newClass.replace(" " + className + " ", " ");
-          }
-          elem.className = newClass.replace(/^\s+|\s+$/g, "");
-        } else {
-          elem.className += " " + className;
-        }
-      }
-
-      theToggle.onclick = function () {
-        toggleClass(this, "on");
-        return false;
-      };
- */
+             dom: "box",
+             colors: [
+               "#07185a",
+               "#032b3f",
+               "#3c0958",
+               "#880262",
+               "#150024",
+               "#300066",
+             ],
+             loop: true,
+           }); */
     </script>
+    <script src="/assets/js/image-compare-viewer.min.js"></script>
+    <script src="/assets/js/comparison.js"></script>
   </body>
 </html>
