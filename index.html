@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,46 +19,46 @@
     />
   </head>
   <body>
+    <!-- =============== NAVBAR ================ -->
+
+    <nav class="navbar">
+      <ul>
+        <li>
+          <a href="#home" data-content="Home"
+            ><i class="fa-solid fa-house"></i
+          ></a>
+        </li>
+        <li>
+          <a href="#hero" data-content="About"
+            ><i class="fa-solid fa-circle-info"></i
+          ></a>
+        </li>
+        <li>
+          <a href="#services" data-content="Services"
+            ><i class="fa-solid fa-laptop-file"></i
+          ></a>
+        </li>
+        <li>
+          <a href="#skills" data-content="Skills"
+            ><i class="fa-solid fa-code"></i
+          ></a>
+        </li>
+        <li>
+          <a href="#projects" data-content="Projects"
+            ><i class="fa-solid fa-folder-open"></i
+          ></a>
+        </li>
+        <li>
+          <a href="#contact" data-content="Contact"
+            ><i class="fa-solid fa-comment"></i
+          ></a>
+        </li>
+      </ul>
+    </nav>
     <!-- =============== HOME ================ -->
     <div class="home" id="home">
-      <!-- =============== NAVBAR ================ -->
-
-      <nav class="navbar">
-        <ul>
-          <li>
-            <a href="#home" data-content="Home"
-              ><i class="fa-solid fa-house"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#hero" data-content="About"
-              ><i class="fa-solid fa-circle-info"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#services" data-content="Services"
-              ><i class="fa-solid fa-laptop-file"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#skills" data-content="Skills"
-              ><i class="fa-solid fa-code"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#projects" data-content="Projects"
-              ><i class="fa-solid fa-folder-open"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#contact" data-content="Contact"
-              ><i class="fa-solid fa-comment"></i
-            ></a>
-          </li>
-        </ul>
-      </nav>
-      <h1 class="headline">Love for frontend</h1>
-
+      <h1 class="headline">Frontend developer</h1>
+      <button onclick="toggleTheme()">Toggle Theme</button>
       <div id="compare">
         <div id="example">
           <img src="/assets/img/mini-removebg-preview.png" alt="BEFORE" />
@@ -67,8 +67,8 @@
       </div>
       <div class="intro">
         <h3>
-          Need a <em>Minimalistic &amp; Elegant </em> or
-          <em>Vibrant &amp; Creative</em> website?
+          Looking for a Front-end / Web developer for your project or a new
+          member to join your team? Check me out and let me know!
         </h3>
       </div>
 
@@ -110,24 +110,10 @@
     <!-- =============== HERO ================ -->
     <section class="hero" id="hero">
       <article class="grid">
-        <div class="box item1">
-          <h3 class="box-text">
-            If you're looking for a Front-end / Web developer for your project
-            or a new member to join your team, check me out and let me know!
-          </h3>
-        </div>
+        <div class="box item1"></div>
         <div class="box item2"></div>
         <!--  <div class="box item3"></div> -->
         <div class="box item4">
-          <details>
-            <summary>Read more about me</summary>
-
-            I am Marina Majdenić, a freelancing Frontend / Web developer based
-            in Croatia and available for collaboration or hire. I enjoy creating
-            interactive and responsive websites and web applications, as well as
-            ensuring reliability, scalability and performance of the final
-            product.
-          </details>
           <h3 class="box-text">
             I am Marina Majdenić, a freelancing Frontend / Web developer based
             in Croatia and available for collaboration or hire. I enjoy creating
@@ -142,8 +128,8 @@
         <div class="box item8">
           <a href="#projects">
             <h4 class="box-text">Take a look at my projects</h4>
-            <i class="fa-solid fa-folder-open"></i
-          ></a>
+            <i class="fa-solid fa-folder-open"></i>
+          </a>
         </div>
         <div class="box item9">
           <a href="#skills">
@@ -247,7 +233,91 @@
 
       <section class="skills" id="skills">
         <h2>Skills</h2>
-
+        <div class="card-container">
+          <div class="card">
+            <h3>HTML, CSS and JS</h3>
+            <div class="skill-description">
+              <p>
+                Although widely considered as the simplest technologies, they
+                are still irreplaceable in web development. I started designing
+                blogs and simple pages with HTML and CSS as a highschool
+                student. Starting college, I moved on to JavaScript, and had an
+                opportunity to work on web-sites, where I could learn the most.
+                I know how to use different CSS preprocessors, JS libraries and
+                framworks.
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>JavaScript libraries and React.js</h3>
+            <div class="skill-description">
+              <p>
+                While studying Frontend Development on Algebra, focus was mostly
+                on React. It is a JavaScript library extremly helpful in
+                building user-interfaces and creating interactive and responsive
+                web-applications. I have experience with React libraries like
+                Redux and Next.js, and I am currently learning more about
+                creating 3D content with Three.js and about animation with GSAP.
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Node.js</h3>
+            <div class="skill-description">
+              <p>
+                Node.js is an amazing technology as it allows us to use
+                JavaScript on the server side. I have some experience with
+                Express.js, a Node.js framework, and I am currently learning
+                more about backend development with Node.js
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Databases</h3>
+            <div class="skill-description">
+              <p>
+                As i usually use JSON for storing data, NoSQL databases are very
+                efficient. I have experience with MongoDB, and I am currently
+                learning more about MERN stack. I am also familiar with SQL
+                databases, and I have worked in MySQL.
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Testing, debugging and optimization</h3>
+            <div class="skill-description">
+              <p>
+                I always try to ensure that my code is bug-free and that it
+                works as expected. I have experience with testing libraries like
+                Jest and Enzyme, and I am currently learning more about testing
+                with Cypress. I am also familiar with debugging tools and I am
+                always trying to optimize my code for better performance.
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Version control and deployment</h3>
+            <div class="skill-description">
+              <p>
+                I have experience with version control systems like Git and
+                GitHub, and I am currently learning more about deployment with
+                Netlify and Vercel. I am also familiar with CI/CD pipelines and
+                I am always trying to automate my workflow.
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Web hosting and maintenance</h3>
+            <div class="skill-description">
+              <p>
+                I use hosting services like Netlify and Vercel for deploying my
+                projects, and I am currently learning more about serverless
+                architecture. I am also familiar with domain management and I am
+                always trying to keep my projects up-to-date.
+              </p>
+            </div>
+          </div>
+        </div>
         <div class="container-responsive transparent-bg">
           <h3>If you need someone who can...</h3>
           <ul class="skill-list" id="skill-list">
@@ -604,6 +674,7 @@
     ></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="/assets/js/split.js"></script>
+    <script src="/assets/js/themes.js"></script>
     <!--   <script src="/assets/js/main.js"></script> -->
     <script>
       /*     let colorbg = new Color4Bg.AestheticFluidBg({

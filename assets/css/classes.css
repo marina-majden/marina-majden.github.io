@@ -75,7 +75,7 @@ section {
   width: 100%;
   padding: 1rem;
   margin: 0 auto;
-  color: var(--text-light);
+  color: var(--text-color);
   @media (max-width: 783px) {
     flex-direction: column;
   }
@@ -85,10 +85,10 @@ section {
     height: 70vh;
     margin: 1rem auto;
     padding: 1rem;
-    background-color: var(--background);
-    border: 2px solid #232222;
+    background-color: var(--bg-card);
+    border: 2px solid var(--border);
     border-radius: 10px;
-    box-shadow: 3px 3px 6px 0 rgba(28, 28, 28, 0.834);
+    box-shadow: var(--box-shadow);
     overflow: hidden;
     @media screen and (max-width: 783px) {
       width: 90%;
@@ -97,12 +97,12 @@ section {
   }
 }
 .transparent-bg {
-  background: rgba(1, 3, 43, 0.56);
+  background: var(--bg-card-transp);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
   backdrop-filter: blur(8.9px);
   -webkit-backdrop-filter: blur(8.9px);
-  border: 1px solid rgba(1, 3, 43, 0.01);
+  border: 1px solid var(--border);
 }
 
 .row {

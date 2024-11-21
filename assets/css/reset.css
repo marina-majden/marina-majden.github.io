@@ -1,0 +1,61 @@
+/* RESET */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 1rem;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+}
+body {
+  width: 100vw;
+
+  font-size: 1rem;
+  scroll-behavior: smooth;
+}
+ul,
+ol {
+  list-style: none;
+}
+a,
+a:link,
+a:active {
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover,
+a:visited {
+  text-decoration: none;
+  cursor: pointer;
+}
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  background-color: transparent;
+  outline: none;
+}
+input {
+  line-height: normal;
+}
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}

@@ -80,14 +80,13 @@ nav ul li {
   width: max-content;
 }
 nav ul li i {
-  color: var(--off-white);
+  color: var(--link-color);
   font-size: 1.7rem;
 }
 nav ul li a {
   position: relative;
   font-family: var(--ff-accent);
-  color: var(--off-white);
-  text-shadow: 6px 6px 20px #131212f7;
+  color: var(--link-color);
   font-size: clamp(1rem, 1.2rem + 1vw, 2rem);
   text-decoration: none;
 
@@ -104,7 +103,7 @@ nav ul li a::before {
   opacity: 0;
 }
 nav ul li a:hover {
-  color: var(--pink);
+  color: var(--accent);
 }
 nav ul li a:hover::before {
   content: attr(data-content);
@@ -116,10 +115,10 @@ nav ul li a:hover::before {
 
   width: fit-content;
   height: fit-content;
-  color: var(--off-white);
+  color: var(--link-color);
   transition: all 1s ease;
 }
 nav ul li a:hover,
 a:active {
-  color: var(--pink);
+  color: var(--accent);
 }
