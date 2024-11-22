@@ -30,31 +30,31 @@
   }
   a:hover,
   i:hover {
-    color: var(--text-color);
+    color: var(--text-color-light);
   }
 
   .box:nth-child(even):not(:empty):hover,
   .box:nth-child(even):not(:empty):focus {
     z-index: 1;
     color: var(--text-color);
-    background: var(--bg-box-transp);
+    background: var(--accenty);
     opacity: 1;
     transform: scale(1.05) rotateZ(12deg);
     cursor: pointer;
     @media (max-width: 600px) {
-      transform: scale(1.05) rotateZ(0deg);
+      transform: scale(1) rotateZ(2deg);
     }
   }
   .box:nth-child(odd):not(:empty):hover,
   .box:nth-child(odd):not(:empty):focus {
     z-index: 1;
     color: var(--text-color);
-    background: var(--bg-box-transp);
+    background: var(--sec);
     opacity: 1;
     transform: scale(1.05) rotateZ(-10deg);
     cursor: pointer;
     @media (max-width: 600px) {
-      transform: scale(1.05) rotateZ(0deg);
+      transform: scale(1) rotateZ(-2deg);
     }
   }
   .box:not(:empty):hover:after,
@@ -71,11 +71,9 @@
     margin: 0.5rem;
     overflow: visible;
     border-radius: 0.5em;
-    background: var(--bg-box-transp);
+    background: var(--bg-trans);
     box-shadow: 0 4px 30px var(--box-shadow);
-    backdrop-filter: blur(8.9px);
-    -webkit-backdrop-filter: blur(8.9px);
-    border: 1px solid var(--border);
+    border: var(--border);
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
@@ -113,33 +111,30 @@
     overflow: visible;
 
     .box.item2 {
-      background-color: var(--bg-box-transp);
       background-image: url(/assets/img/wormhole-1731853681154.png);
       box-shadow: var(--box-shadow);
-      backdrop-filter: blur(8.9px);
-      -webkit-backdrop-filter: blur(8.9px);
-      border: 1px outset var(--border);
+      border: var(--border);
     }
 
     .box.item3 {
       grid-area: 1/2/1/2;
-      background: var(--bg-box-transp);
+      background: var(--bg-box);
       box-shadow: var(--box-shadow);
-      backdrop-filter: blur(8.9px);
-      -webkit-backdrop-filter: blur(8.9px);
-      border: 1px outset var(--border);
+      border: var(--border);
     }
 
     .box.item4 {
-      background: var(--bg-box-transp);
+      background: var(--bg-box);
       box-shadow: var(--box-shadow);
-      backdrop-filter: blur(8.9px);
-      -webkit-backdrop-filter: blur(8.9px);
-      border: 1px outset var(--border);
+      border: var(--border);
     }
     .box.item4.box:hover,
     .box.item4.box:focus {
-      background: var(--bg-box);
+      background: var(--prim);
+      color: var(--text-color-light);
+      transform: none;
+      cursor: pointer;
+      touch-action: none;
     }
 
     .box.item5 {
@@ -149,17 +144,15 @@
 
     .box.item7 {
       grid-area: 4/2/4/2;
-      background: var(--bg-box-transp);
       background-image: url(/assets/img/wormhole-1731853681154.png);
       box-shadow: var(--box-shadow);
-      backdrop-filter: blur(8.9px);
-      -webkit-backdrop-filter: blur(8.9px);
-      border: 1px outset var(--border);
+
+      border: var(--border);
     }
 
     .item8.box:hover,
     .item8.box:focus {
-      background-color: var(--primary);
+      background-color: var(--prim);
     }
 
     .item9.box:hover,
@@ -169,11 +162,11 @@
 
     .item10.box:hover,
     .item10.box:focus {
-      background-color: var(--secondary);
+      background-color: var(--sec);
     }
     .item11.box:hover,
     .item11.box:focus {
-      background-color: var(--tertiary);
+      background-color: var(--accenty);
     }
     @media (min-width: 1025px) {
       grid-template-columns: 3fr 2fr;
@@ -246,6 +239,7 @@
       }
     }
     @media (max-width: 600px) {
+      width: 96%;
       padding: 0.2rem;
       margin: 0 auto;
       h3 {
@@ -262,7 +256,6 @@
 
       .box-text {
         width: 100%;
-        font-size: 1.2rem;
       }
       .item1,
       .item2,

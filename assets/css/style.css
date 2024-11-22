@@ -21,6 +21,10 @@
   --text-color-light: hsl(196, 60%, 84%);
   --text-color-dark: hsl(180, 23%, 3%);
   --background-dark: hsla(230, 59%, 8%, 0.692);
+  --accent: hsl(324, 25%, 57%);
+  --prim: hsl(196, 47%, 45%);
+  --sec: hsl(170, 17%, 53%);
+  --accenty: hsl(262, 21%, 46%);
 }
 
 :root[data-theme="light"] {
@@ -50,55 +54,72 @@
     --bg-image: url(/assets/img/color4bg_light-vert.png);
   }
   @media (min-width: 601px) {
-    --bg-image: url(/assets/img/color4bg_light-horiz-lg.png);
+    --bg-image: url(/assets/img/color4bg_3.png);
   }
 }
 :root[data-theme="dark"] {
-  --oxford-blue: hsl(247, 84%, 10%);
-  --oxford-blue-2: hsl(238, 76%, 10%);
-  --oxford-blue-3: hsl(231, 74%, 9%);
-  --oxford-blue-4: hsl(229, 80%, 12%);
-  --oxford-blue-5: hsl(230, 79%, 11%);
-  --penn-blue: hsl(225, 94%, 12%);
-  --penn-blue-2: hsl(228, 90%, 12%);
-  --oxford-blue: hsl(232, 85%, 11%);
-  --oxford-blue-2: hsl(248, 87%, 9%);
-  --oxford-blue-3: hsl(228, 89%, 11%);
+  --rich-black: hsl(201, 91%, 9%);
+  --prussian-blue: hsl(205, 86%, 11%);
+  --prussian-blue-2: hsl(201, 84%, 13%);
+  --midnight-green: hsl(193, 78%, 16%);
+  --prussian-blue-3: hsl(202, 87%, 12%);
+  --oxford-blue: hsl(211, 58%, 14%);
+  --oxford-blue-2: hsl(212, 70%, 10%);
+  --oxford-blue-3: hsl(210, 72%, 11%);
+  --prussian-blue: hsl(201, 88%, 10%);
+  --oxford-blue-4: hsl(212, 65%, 11%);
+
   --background: hsl(231, 74%, 9%);
-  --bg-button: hsl(238, 50%, 25%);
+  --bg-button: hsl(238, 63%, 22%);
   --bg-button-hover: hsl(238, 55%, 28%);
+  --border-button: hsl(238, 63%, 22%);
+  --border-button-hover: hsl(238, 55%, 28%);
   --text-color: hsl(195, 33%, 86%);
   --link-color: hsl(201, 50%, 72%);
-  --heading: hsl(200, 52%, 61%);
+  --heading: hsl(196, 67%, 74%);
   --bg-trans: hsla(231, 74%, 9%, 0.575);
   --bg-box: hsl(225, 94%, 12%);
-  --bg-card: hsl(247, 84%, 10%);
+  --bg-card: hsla(247, 84%, 10%, 0.884);
   --border: 1px solid hsl(228, 90%, 15%);
+
+  --background: hsl(213, 69%, 10%);
+  --bg-button: hsl(205, 86%, 11%);
+  --bg-button-hover: hsl(213, 69%, 10%);
+  --border-button: hsl(205, 86%, 11%);
+  --border-button-hover: hsl(212, 70%, 10%);
+  --text-color: hsl(194, 11%, 77%);
+  --link-color: hsl(200, 30%, 68%);
+  --heading: hsl(200, 84%, 76%);
+  --bg-trans: hsla(213, 69%, 10%, 0.5);
+  --bg-box: hsla(213, 69%, 10%, 0.992);
+  --bg-card: hsla(213, 69%, 10%, 0.753);
+  --border: 1px solid hsl(213, 88%, 10%);
+
+  --backdrop-filter: blur(10px);
 
   --gradient-45: linear-gradient(
     90deg,
-    hsl(248, 87%, 10%),
-    hsl(225, 94%, 12%),
-    hsl(228, 90%, 15%),
-    hsl(232, 75%, 12%),
-    hsl(248, 87%, 9%)
+    hsla(212, 64%, 11%, 0.884),
+    hsla(211, 58%, 14%, 0.87),
+    hsla(205, 86%, 11%, 0.842),
+    hsla(213, 69%, 10%, 0.897)
   );
   --gradient-90: linear-gradient(
     90deg,
-    hsl(232, 75%, 12%),
-    hsl(248, 87%, 9%),
-    hsl(248, 87%, 9%),
-    hsl(225, 94%, 12%),
-    hsl(228, 90%, 15%)
+    hsla(205, 86%, 11%, 0.87),
+    hsla(213, 69%, 10%, 0.945),
+    hsla(212, 64%, 11%, 0.911),
+    hsla(211, 58%, 14%, 0.87)
   );
-  --box-shadow: 0 4px 5px rgba(3, 21, 48, 0.719);
-  --text-shadow: 1px 2px 2px rgba(1, 14, 22, 0.788);
+  --box-shadow: 1px 2px 3px hsla(206, 70%, 17%, 0.719),
+    -1px -2px 3px hsla(205, 87%, 12%, 0.808);
+  --text-shadow: 1px 1px 1px hsl(205, 85%, 44%);
 
   @media (max-width: 600px) {
-    --bg-image: url(/assets/img/color4bg_dark-vert.png);
+    --bg-image: url(/assets/img/colorbgDV.png);
   }
   @media (min-width: 601px) {
-    --bg-image: url(/assets/img/color4bg_dark-horiz-lg.png);
+    --bg-image: url(/assets/img/colorbgDH.png);
   }
 }
 
@@ -234,6 +255,15 @@ p.accent {
   text-align: center;
   color: var(--secondary);
 }
+@keyframes blink-down {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
 
 #home {
   height: 100%;
@@ -241,15 +271,11 @@ p.accent {
     height: auto;
   }
   h1.headline {
-    /*position: absolute;
-    top: 0;
-    left: 1rem;  
-    z-index: 999;*/
+    z-index: 999;
     width: 100%;
     max-width: 100vw;
     padding: 1rem;
     margin: 0 auto;
-
     text-align: left;
     text-shadow: var(--text-shadow);
     background: transparent;
@@ -258,29 +284,45 @@ p.accent {
     width: 90vw;
     padding: 1rem 2rem;
     margin: 0 auto;
-    color: var(--text-color);
-    text-align: center;
+
     @media (max-width: 600px) {
-      width: 100%;
-      padding: 0;
+      width: 96%;
     }
     h3 {
       font-size: clamp(1.4rem, 1.5rem + 1vw - 0.5vh, 2.5rem);
+      color: var(--text-color);
+      text-align: center;
+      font-weight: 500;
     }
   }
+
   .scroll-btn {
     width: max-content;
     padding: 1rem;
     margin: 0 auto;
-    a {
-      color: var(--text-color);
+    transform: rotate(90deg);
+    .home-scroll {
+      letter-spacing: -8px;
+      i {
+        color: var(--text-color);
+        font-size: 2rem;
+        animation-name: blink-down;
+        animation-duration: 0.8s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in;
+        &:first-child {
+          animation-delay: 0s;
+        }
+        &:last-child {
+          animation-delay: 0.4s;
+        }
+      }
     }
   }
   #compare {
     position: relative;
     padding: 2rem;
     margin: 0 auto;
-    margin-top: 20vh;
     #example {
       width: 100%;
       max-width: 600px;
@@ -300,22 +342,12 @@ p.accent {
 #hero {
   padding: 0.4rem;
   margin: 0 auto;
+  color: var(--text-color);
 }
 main {
-  background-image: linear-gradient(
-    bottom,
-    rgba(216, 213, 16, 0.76),
-    rgba(182, 75, 125, 0.87) 40%,
-    rgb(153, 14, 130) 50%,
-    rgb(122, 4, 133) 70%,
-    rgb(100, 4, 124) 75%,
-    rgb(60, 6, 92) 85%,
-    rgb(42, 7, 87) 90%
-  );
   width: 100vw;
   padding: 0;
   margin: 0 auto;
-  /*  position: relative; */
 }
 
 #services {
@@ -443,27 +475,32 @@ main {
 #skills {
   h3 {
     color: var(--heading);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 1.5rem + 2vw - 0.5vh, 2.8rem);
     text-align: center;
     padding: 1rem;
+  }
+  button {
+    margin: 1rem auto;
+    margin-bottom: 5rem;
   }
   #skill-list {
     list-style: none;
     padding: 1rem;
     margin: 0 auto;
     @media (max-width: 600px) {
-      padding: 0;
-      margin: 0;
+      padding: 1rem;
+      margin: 0 auto;
     }
   }
 
   li.skill-item {
-    padding: 0.4rem 1rem;
     margin: 1rem auto;
-    margin-left: 1rem;
     font-family: var(--ff-accent);
     text-align: center;
     vertical-align: middle;
     font-size: clamp(1.5rem, 1.5rem + 1vw - 0.5vh, 2.5rem);
+    line-height: 1.4;
     color: var(--text-color);
     overflow: hidden;
   }
@@ -497,41 +534,30 @@ main {
   .skill-item:nth-child(6n) i {
     color: var(--sec);
   }
-  /*  
- 
-
-
-  .textBox {
-    color: var(--text-color);
-    font-family: var(--ff-accent);
-  }
 }
 
 #project-cards {
   width: 70%;
-  @media (max-width: 600px) {
-    width: 100%;
-    margin: 0 auto;
-  }
-  /* height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  margin: 0 auto; 
+  margin: 0 auto;
   @media (max-width: 783px) {
     width: 90%;
-  }*/
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
   .project-card {
     display: flex;
     flex-direction: column;
-
     padding: 2rem 1rem;
     @media (max-width: 600px) {
-      width: 90%;
+      width: 95%;
       padding: 1rem;
-      margin: 1rem auto;
     }
   }
   .project-card__button {
@@ -547,12 +573,10 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(12px) saturate(171%);
-    -webkit-backdrop-filter: blur(12px) saturate(171%);
     background-color: rgba(5, 17, 38, 0.61);
-    border-radius: 12px;
-    border: 1px outset rgba(255, 255, 255, 0.125);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 10px;
+    border: 1px solid rgb(1, 20, 49);
+
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     overflow: hidden;
     @media (max-width: 600px) {
@@ -575,9 +599,13 @@ main {
     background: linear-gradient(
       to top,
       rgba(0, 0, 0, 0.02) 0%,
-      rgba(0, 0, 0, 0.05) 5%,
-      rgba(0, 0, 0, 0.1) 10%,
-      rgba(0, 0, 0, 0.5) 100%
+      rgba(0, 0, 0, 0.08) 5%,
+      rgba(0, 0, 0, 0.25) 15%,
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.7) 60%,
+      rgba(0, 0, 0, 0.8) 80%,
+      rgba(0, 0, 0, 1) 100%
     );
     z-index: 999;
     transition: all 0.25s ease;
@@ -595,40 +623,49 @@ main {
     position: absolute;
     bottom: 0;
     left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
     width: 100%;
     height: 20%;
-    padding: 0.4rem;
+    padding: 0.2rem;
     z-index: 999;
     background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.02) 0%,
-      rgba(0, 0, 0, 0.05) 5%,
-      rgba(0, 0, 0, 0.226) 10%,
-      rgba(0, 0, 0, 0.61) 100%
+      rgba(0, 0, 0, 0.08) 5%,
+      rgba(0, 0, 0, 0.25) 15%,
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.7) 60%,
+      rgba(0, 0, 0, 0.8) 80%,
+      rgba(0, 0, 0, 1) 100%
     );
     transition: all 0.25s ease;
     transform: scale(1);
   }
   figure .footer h2 {
     font-family: var(--ff-accent);
-    font-weight: 400;
+    font-weight: 600;
     color: var(--text-color-light);
-    font-size: 1.6rem;
-    padding: 0.2rem;
-    margin-bottom: 0.4em;
+    font-size: 1.8rem;
+    padding: 0.4rem;
     opacity: 1;
     transform: scale(1);
     transition: 0.25s ease;
+    display: contents;
   }
   figure .footer h3 {
     font-family: var(--ff-accent);
     color: var(--text-color-light);
     font-size: 1.4rem;
-    padding: 0.2rem;
+    padding: 0.4rem;
     opacity: 1;
     transform: scale(1);
     transition: 0.25s ease;
   }
+
   figure:hover .banner {
     top: -20%;
   }
@@ -636,6 +673,7 @@ main {
     bottom: -20%;
   }
   figure:hover {
+    border: 1px solid rgba(1, 11, 27, 0.877);
     box-shadow: 0 14px 28px rgba(10, 1, 12, 0.336),
       0 10px 10px rgba(2, 1, 20, 0.801);
   }
@@ -660,12 +698,11 @@ main {
     bottom: 0;
     opacity: 1;
     height: 60%;
-    background: rgba(1, 3, 43, 0.56);
+    background: rgba(1, 2, 27, 0.781);
     border-radius: 6px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.226);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(1, 3, 43, 0.01);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     @media (max-width: 600px) {
       height: 100%;
     }
@@ -676,8 +713,7 @@ main {
     top: 0;
     left: 0;
     bottom: 0;
-
-    border-radius: 6px;
+    border-radius: 4px;
     width: 100%;
     height: 100%;
     transition: 0.25s;
@@ -694,11 +730,12 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(10, 2, 27, 0.85);
-    box-shadow: 0 0 20px rgba(24, 1, 24, 0.4);
     color: var(--text-color-light);
     line-height: 1;
     transition: 0.25s;
+    @media (max-width: 600px) {
+      padding: 0.8rem;
+    }
   }
 
   figure figcaption p {
@@ -710,8 +747,9 @@ main {
     line-height: 1.5;
   }
   figure figcaption button {
+    border: 1px solid rgba(3, 29, 66, 0.87);
     @media (max-width: 600px) {
-      width: 50%;
+      width: 40%;
     }
   }
 }
@@ -725,9 +763,7 @@ main {
       width: 90%;
     }
     @media (max-width: 600px) {
-      width: 100%;
-      padding: 0;
-      margin: 0;
+      width: 95%;
     }
 
     & input[type="text"],
@@ -828,28 +864,27 @@ main {
   }
 }
 footer {
+  width: 100vw;
+  min-height: 30vh;
+  padding: 0;
+  margin: 0 auto;
+  width: 100vw;
+  /*  min-height: 30vh; */
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   background-color: var(--background-dark);
-  border-radius: 6px;
-  box-shadow: var(--box-shadow);
   backdrop-filter: blur(8.9px);
   -webkit-backdrop-filter: blur(8.9px);
-  border: 1px solid rgba(1, 3, 43, 0.01);
   color: var(--text-color-light);
   font-family: var(--ff-accent);
   font-size: 1.4rem;
-  padding: 0;
-  margin: 0 auto;
-  width: 100%;
-  min-height: 30vh;
   @media (max-width: 600px) {
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
-    width: 90%;
+    padding: 1rem 2rem;
   }
   & img {
     width: 4rem;
@@ -868,7 +903,7 @@ footer {
     letter-spacing: 0.1em;
   }
   & a {
-    margin: 1rem 1.4rem;
+    margin: 1rem;
     text-decoration: none;
     transition: all 3s ease-in-out;
     @media (max-width: 600px) {

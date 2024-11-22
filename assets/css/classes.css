@@ -6,11 +6,12 @@
 }
 
 section {
-  width: 100vw;
+  width: 100%;
   padding: 0;
-  margin: 0 auto;
+  margin: 1rem auto;
   h2 {
-    margin: 2vh auto;
+    margin: 0 auto;
+    text-shadow: var(--text-shadow);
   }
 }
 .container {
@@ -76,8 +77,11 @@ section {
   padding: 1rem;
   margin: 0 auto;
   color: var(--text-color);
-  @media (max-width: 783px) {
+  @media (max-width: 600px) {
+    width: 90%;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
   }
 
   .card {
@@ -85,14 +89,14 @@ section {
     height: 70vh;
     margin: 1rem auto;
     padding: 1rem;
-    background-color: var(--bg-card);
+    background: var(--bg-card);
     border: var(--border);
     border-radius: 10px;
     box-shadow: var(--box-shadow);
     overflow: hidden;
-    @media screen and (max-width: 783px) {
-      width: 90%;
-      padding: 1.5rem 1rem;
+    @media (max-width: 600px) {
+      width: 100%;
+      height: auto;
     }
   }
 }
@@ -102,7 +106,7 @@ section {
   box-shadow: var(--box-shadow);
   backdrop-filter: blur(8.9px);
   -webkit-backdrop-filter: blur(8.9px);
-  border: 1px solid var(--border);
+  border: var(--border);
 }
 
 .row {
