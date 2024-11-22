@@ -86,7 +86,7 @@ section {
     margin: 1rem auto;
     padding: 1rem;
     background-color: var(--bg-card);
-    border: 2px solid var(--border);
+    border: var(--border);
     border-radius: 10px;
     box-shadow: var(--box-shadow);
     overflow: hidden;
@@ -97,7 +97,7 @@ section {
   }
 }
 .transparent-bg {
-  background: var(--bg-card-transp);
+  background: var(--bg-trans);
   border-radius: 16px;
   box-shadow: var(--box-shadow);
   backdrop-filter: blur(8.9px);
