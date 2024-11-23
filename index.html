@@ -18,6 +18,15 @@
       href="/assets/css/image-compare-viewer.min.css.map"
       type="application/json"
     />
+    <link
+      rel="stylesheet"
+      href="/node_modules/@glidejs/glide/dist/css/glide.core.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="node_modules/@glidejs/glide/dist/css/glide.theme.min.css"
+    />
   </head>
   <body id="bg">
     <!-- =============== NAVBAR ================ -->
@@ -59,7 +68,8 @@
     <!-- =============== HOME ================ -->
     <div class="home" id="home">
       <h1 class="headline">Frontend developer</h1>
-      <button onclick="toggleTheme()">Toggle Theme</button>
+      <button id="buttonz" onclick="toggleTheme()">Toggle Theme</button>
+
       <div id="compare">
         <div id="example">
           <img src="/assets/img/mini-removebg-preview.png" alt="BEFORE" />
@@ -235,91 +245,58 @@
 
       <section class="skills" id="skills">
         <h2>Skills</h2>
-        <div class="card-container">
-          <div class="card">
-            <h3>HTML, CSS and JS</h3>
-            <div class="skill-description">
-              <p>
-                Although widely considered as the simplest technologies, they
-                are still irreplaceable in web development. I started designing
-                blogs and simple pages with HTML and CSS as a highschool
-                student. Starting college, I moved on to JavaScript, and had an
-                opportunity to work on web-sites, where I could learn the most.
-                I know how to use different CSS preprocessors, JS libraries and
-                framworks.
-              </p>
-            </div>
+        <div class="glide glide--carousel card-container">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              <li class="glide__slide card">
+                <h3>HTML, CSS, JS</h3>
+                <p>
+                  HTML, CSS and JS I started designing blogs and simple pages
+                  with HTML and CSS as a highschool student. I know how to use
+                  different CSS preprocessors, JS libraries and framworks.
+                </p>
+              </li>
+              <li class="glide__slide card">
+                <h3>React</h3>
+                <p>
+                  I have experience with React libraries like Redux and Next.js,
+                  and I am currently learning more about creating 3D content
+                  with Three.js and about animation with GSAP.
+                </p>
+              </li>
+              <li class="glide__slide card">
+                <h3>Node.js</h3>
+                <p>
+                  I really like that JavaScript can be used on the server side
+                  with Node.js, and I have worked with with Express.js, a
+                  Node.js framework.
+                </p>
+              </li>
+              <li class="glide__slide card">
+                <h3>Testing and optimization</h3>
+                <p>
+                  I always try to ensure that my code is bug-free and that it
+                  works as expected. I am also familiar with debugging tools and
+                  I am always trying to optimize my code for better performance.
+                </p>
+              </li>
+              <li class="glide__slide card">
+                <h3>Version Control</h3>
+                <p>
+                  Git and Github are essential part of my workflow, and most of
+                  my projects are hosted on Github. That way we can collaborate
+                  easily anyday anytime.
+                </p>
+              </li>
+            </ul>
           </div>
-          <div class="card">
-            <h3>JavaScript libraries and React.js</h3>
-            <div class="skill-description">
-              <p>
-                While studying Frontend Development on Algebra, focus was mostly
-                on React. It is a JavaScript library extremly helpful in
-                building user-interfaces and creating interactive and responsive
-                web-applications. I have experience with React libraries like
-                Redux and Next.js, and I am currently learning more about
-                creating 3D content with Three.js and about animation with GSAP.
-              </p>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Node.js</h3>
-            <div class="skill-description">
-              <p>
-                Node.js is an amazing technology as it allows us to use
-                JavaScript on the server side. I have some experience with
-                Express.js, a Node.js framework, and I am currently learning
-                more about backend development with Node.js
-              </p>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Databases</h3>
-            <div class="skill-description">
-              <p>
-                As i usually use JSON for storing data, NoSQL databases are very
-                efficient. I have experience with MongoDB, and I am currently
-                learning more about MERN stack. I am also familiar with SQL
-                databases, and I have worked in MySQL.
-              </p>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Testing, debugging and optimization</h3>
-            <div class="skill-description">
-              <p>
-                I always try to ensure that my code is bug-free and that it
-                works as expected. I have experience with testing libraries like
-                Jest and Enzyme, and I am currently learning more about testing
-                with Cypress. I am also familiar with debugging tools and I am
-                always trying to optimize my code for better performance.
-              </p>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Version control and deployment</h3>
-            <div class="skill-description">
-              <p>
-                I have experience with version control systems like Git and
-                GitHub, and I am currently learning more about deployment with
-                Netlify and Vercel. I am also familiar with CI/CD pipelines and
-                I am always trying to automate my workflow.
-              </p>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Web hosting and maintenance</h3>
-            <div class="skill-description">
-              <p>
-                I use hosting services like Netlify and Vercel for deploying my
-                projects, and I am currently learning more about serverless
-                architecture. I am also familiar with domain management and I am
-                always trying to keep my projects up-to-date.
-              </p>
-            </div>
+          <div class="glide__bullets" data-glide-el="controls[nav]">
+            <button class="glide__bullet" data-glide-dir="=0"></button>
+            <button class="glide__bullet" data-glide-dir="=1"></button>
+            <button class="glide__bullet" data-glide-dir="=2"></button>
           </div>
         </div>
+
         <div class="container-responsive transparent-bg">
           <h3>If you need someone who can...</h3>
           <ul class="skill-list" id="skill-list">
@@ -587,12 +564,29 @@
               value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
             />
             <div class="form-group">
-              <label for="name">Name:</label><br />
-              <input type="text" name="name" id="name" required />
+              <label for="name">Full name:</label><br />
+              <input
+                class="name"
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Jane Doe"
+                minlength="6"
+                maxlength="60"
+                required
+              />
             </div>
             <div class="form-group">
               <label for="email">E-mail:</label><br />
-              <input type="email" name="email" id="email" required />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="jane.doe@example.com"
+                minlength="5"
+                maxlength="60"
+                required
+              />
             </div>
             <div class="form-group">
               <label for="message">Message:</label><br />
@@ -601,10 +595,13 @@
                 id="message"
                 cols="100"
                 rows="10"
+                placeholder="Your message goes here..."
+                minlength="20"
+                maxlength="4000"
                 required
               ></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group checkbox">
               <input type="checkbox" name="agree" id="agree" required />
               <label for="agree" name="agree">
                 I allow you to use my information to contact me back.
@@ -679,6 +676,24 @@
     <script src="/assets/js/themes.js"></script>
     <!--   <script src="/assets/js/main.js"></script> -->
     <script src="/assets/js/image-compare-viewer.min.js"></script>
+    <!--   <script src="/assets/js/carousel.js"></script> -->
     <script src="/assets/js/comparison.js"></script>
+
+    <script src="/node_modules/@glidejs/glide/dist/glide.min.js"></script>
+    <script>
+      import { Breakpoints } from "@glidejs/glide/dist/glide.modular.esm.js";
+      Breakpoints.match({
+        600: { perView: 1 },
+        1200: { perView: 3 },
+      });
+      new Glide(".glide", {
+        type: "carousel",
+        startAt: 0,
+        perView: 3,
+        gap: 20,
+        autoplay: 3000,
+        hoverpause: true,
+      }).mount({ Breakpoints });
+    </script>
   </body>
 </html>

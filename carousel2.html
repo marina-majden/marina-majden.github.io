@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .carousel {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial;
+      perspective: 1000px; /* Add perspective for 3D effect */
+    }
+
+    .carousel__list {
+      display: flex;
+      list-style: none;
+      position: relative;
+      width: 100%;
+      height: 300px;
+      transform-style: preserve-3d; /* Enable 3D transformations */
+      transition: transform 1s; /* Smooth transition for rotation */
+    }
+
+    .carousel__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0px;
+      width: 280px;
+      height: 240px;
+      border-radius: 12px;
+      box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.5);
+      position: absolute;
+      cursor: pointer;
+      transition: transform 0.3s ease-in;
+      backface-visibility: hidden; /* Hide back face of items */
+    }
+
+    .carousel__item p {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      white-space: wrap;
+      font-size: 14px;
+      padding: 1rem;
+    }
+
+    .carousel__item:nth-child(1) {
+      background: linear-gradient(45deg, #2d35eb 0%, #904ed4 100%);
+    }
+    .carousel__item:nth-child(2) {
+      background: linear-gradient(45deg, #2d35eb 0%, #fdbb2d 100%);
+    }
+    .carousel__item:nth-child(3) {
+      background: linear-gradient(45deg, #2d35eb 0%, #22c1c3 100%);
+    }
+    .carousel__item:nth-child(4) {
+      background: linear-gradient(45deg, #fdbb2d 0%, #904ed4 100%);
+    }
+    .carousel__item:nth-child(5) {
+      background: linear-gradient(45deg, #22c1c3 0%, #904ed4 100%);
+    }
+  </style>
+  <body>
+    <section class="skills" id="skills">
+      <h2>Skills</h2>
+      <div class="carousel">
+        <ul class="carousel__list">
+          <li class="carousel__item" data-pos="-2">
+            <p>
+              HTML, CSS and JS I started designing blogs and simple pages with
+              HTML and CSS as a highschool student. I know how to use different
+              CSS preprocessors, JS libraries and framworks.
+            </p>
+          </li>
+          <li class="carousel__item" data-pos="-1">
+            <p>
+              I have experience with React libraries like Redux and Next.js, and
+              I am currently learning more about creating 3D content with
+              Three.js and about animation with GSAP.
+            </p>
+          </li>
+          <li class="carousel__item" data-pos="0">
+            <p>
+              Node.js is an amazing technology as it allows us to use JavaScript
+              on the server side. I have some experience with Express.js, a
+              Node.js framework.
+            </p>
+          </li>
+          <li class="carousel__item" data-pos="1">
+            <p>
+              I always try to ensure that my code is bug-free and that it works
+              as expected. I am also familiar with debugging tools and I am
+              always trying to optimize my code for better performance.
+            </p>
+          </li>
+          <li class="carousel__item" data-pos="2">
+            <p>
+              Version Control like Git and GitHub are irreplaceable part of my
+              workflow. Netlify and Vercel.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </body>
+  <script>
+    const carouselList = document.querySelector(".carousel__list");
+    const carouselItems = document.querySelectorAll(".carousel__item");
+    const elems = Array.from(carouselItems);
+
+    let angle = 0;
+    const numItems = elems.length;
+    const rotateAngle = 360 / numItems;
+
+    elems.forEach((item, index) => {
+      const itemAngle = rotateAngle * index;
+      item.style.transform = `rotateY(${itemAngle}deg) translateZ(300px)`;
+    });
+
+    let startX;
+    let currentX;
+    let isDragging = false;
+
+    carouselList.addEventListener("mousedown", (event) => {
+      startX = event.clientX;
+      isDragging = true;
+    });
+
+    carouselList.addEventListener("mousemove", (event) => {
+      if (!isDragging) return;
+      currentX = event.clientX;
+      const deltaX = currentX - startX;
+      angle += deltaX * 0.1;
+      carouselList.style.transform = `rotateY(${angle}deg)`;
+      startX = currentX;
+    });
+
+    carouselList.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    carouselList.addEventListener("mouseleave", () => {
+      isDragging = false;
+    });
+  </script>
+</html>
