@@ -313,7 +313,7 @@ p.accent {
     width: 100%;
     max-width: 100vw;
     padding: 1rem;
-    margin: 0 auto;
+    margin: 1rem;
     text-align: left;
     text-shadow: var(--text-shadow);
     background: transparent;
