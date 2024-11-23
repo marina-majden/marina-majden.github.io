@@ -1,81 +1,18 @@
-const state = {};
-const carouselList = document.querySelector(".carousel__list");
-const carouselItems = document.querySelectorAll(".carousel__item");
-const elems = Array.from(carouselItems);
+new Glide(".glide", {
+  type: "carousel",
+  startAt: 0,
 
-carouselList.addEventListener("click", function (event) {
-  var newActive = event.target;
-  var isItem = newActive.closest(".carousel__item");
-
-  if (!isItem || newActive.classList.contains("carousel__item_active")) {
-    return;
-  }
-
-  update(newActive);
-});
-
-const update = function (newActive) {
-  const newActivePos = newActive.dataset.pos;
-
-  const current = elems.find((elem) => elem.dataset.pos == 0);
-  const prev = elems.find((elem) => elem.dataset.pos == -1);
-  const next = elems.find((elem) => elem.dataset.pos == 1);
-  const first = elems.find((elem) => elem.dataset.pos == -2);
-  const last = elems.find((elem) => elem.dataset.pos == 2);
-
-  current.classList.remove("carousel__item_active");
-
-  [current, prev, next, first, last].forEach((item) => {
-    var itemPos = item.dataset.pos;
-
-    item.dataset.pos = getPos(itemPos, newActivePos);
-  });
-};
-const getPos = function (current, active) {
-  const diff = current - active;
-
-  if (Math.abs(diff) > 2) {
-    return current > active ? current - 5 : current + 5;
-  }
-
-  return diff;
-
-  /* const getPos = function (current, active) {
-  const diff = current - active;
-
-  if (Math.abs(current - active) > 2) {
-    return -current;
-  }
-
-  return diff; */
-};
-
-/* const update = function (newActive) {
-  const newActivePos = parseInt(newActive.dataset.pos);
-
-  const current = elems.find((elem) => parseInt(elem.dataset.pos) === 0);
-  const prev = elems.find((elem) => parseInt(elem.dataset.pos) === -1);
-  const next = elems.find((elem) => parseInt(elem.dataset.pos) === 1);
-  const first = elems.find((elem) => parseInt(elem.dataset.pos) === -2);
-  const last = elems.find((elem) => parseInt(elem.dataset.pos) === 2);
-
-  current.classList.remove("carousel__item_active");
-
-  [current, prev, next, first, last].forEach((item) => {
-    const itemPos = parseInt(item.dataset.pos);
-    item.dataset.pos = getPos(itemPos, newActivePos);
-  });
-
-  newActive.classList.add("carousel__item_active");
-};
-
-const getPos = function (current, active) {
-  const diff = current - active;
-
-  if (Math.abs(diff) > 2) {
-    return current > active ? current - 5 : current + 5;
-  }
-
-  return diff;
-};
- */
+  gap: 30,
+  perView: 3,
+  breakpoints: {
+    999: {
+      perView: 2,
+    },
+    789: {
+      perView: 1,
+    },
+  },
+  focusAt: "center",
+  autoplay: 2500,
+  hoverpause: true,
+}).mount();
