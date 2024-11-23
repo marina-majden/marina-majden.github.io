@@ -26,8 +26,63 @@
   --prim: hsl(196, 47%, 45%);
   --sec: hsl(170, 17%, 53%);
   --accenty: hsl(262, 21%, 46%);
-}
+  --background: hsl(231, 74%, 9%);
+  --bg-button: hsl(238, 63%, 22%);
+  --bg-button-hover: hsl(238, 55%, 28%);
+  --border-button: hsl(238, 63%, 22%);
+  --border-button-hover: hsl(238, 55%, 28%);
+  --text-color: hsl(195, 33%, 86%);
+  --link-color: hsl(201, 50%, 72%);
+  --heading: hsl(196, 67%, 74%);
+  --bg-trans: hsla(231, 74%, 9%, 0.575);
+  --bg-box: hsl(225, 94%, 12%);
+  --bg-card: hsla(247, 84%, 10%, 0.884);
+  --border: 1px solid hsl(228, 90%, 15%);
 
+  --background: hsl(213, 69%, 10%);
+  --bg-button: hsl(205, 86%, 11%);
+  --bg-button-hover: hsl(213, 69%, 10%);
+  --border-button: hsl(205, 86%, 11%);
+  --border-button-hover: hsl(212, 70%, 10%);
+  --text-color: hsl(194, 11%, 77%);
+  --link-color: hsl(200, 30%, 68%);
+  --heading: hsl(200, 84%, 76%);
+  --bg-trans: hsla(213, 69%, 10%, 0.5);
+  --bg-box: hsla(213, 69%, 10%, 0.992);
+  --bg-card: hsla(213, 69%, 10%, 0.753);
+  --border: 1px solid hsl(213, 88%, 10%);
+
+  --blue: rgb(61, 106, 255);
+  --bll: hsl(238, 60%, 48%);
+
+  --backdrop-filter: blur(10px);
+
+  --gradient-45: linear-gradient(
+    90deg,
+    hsla(212, 64%, 11%, 0.884),
+    hsla(211, 58%, 14%, 0.87),
+    hsla(205, 86%, 11%, 0.842),
+    hsla(213, 69%, 10%, 0.897)
+  );
+  --gradient-90: linear-gradient(
+    90deg,
+    hsla(205, 86%, 11%, 0.87),
+    hsla(213, 69%, 10%, 0.945),
+    hsla(212, 64%, 11%, 0.911),
+    hsla(211, 58%, 14%, 0.87)
+  );
+  --box-shadow: 1px 2px 3px hsla(206, 70%, 17%, 0.719),
+    -1px -2px 3px hsla(205, 87%, 12%, 0.808);
+  --text-shadow: 1px 1px 1px hsl(205, 85%, 44%);
+
+  @media (max-width: 600px) {
+    --bg-image: url(/assets/img/colorbgDV.png);
+  }
+  @media (min-width: 601px) {
+    --bg-image: url(/assets/img/colorbgDH.png);
+  }
+}
+/* 
 :root[data-theme="light"] {
   --alice-blue: #e6f5feff;
   --columbia-blue: #cbe8fbff;
@@ -114,7 +169,7 @@
   @media (min-width: 601px) {
     --bg-image: url(/assets/img/colorbgDH.png);
   }
-}
+} */
 
 /* STYLING */
 body {
