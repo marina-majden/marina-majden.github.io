@@ -1,5 +1,8 @@
 /* --------- box Animation ---------- */
 #hero {
+  width: 90%;
+  height: 100vh;
+  margin: 0 auto;
   color: var(--text-color);
   h3.box-text {
     color: var(--text-color);
@@ -107,7 +110,7 @@
   /* --------- Grid ---------- */
   .grid {
     display: grid;
-    width: 100vw;
+    width: 90vw;
     overflow: visible;
 
     .box.item2 {
@@ -145,9 +148,6 @@
     .box.item7 {
       grid-area: 4/2/4/2;
       background-image: url(/assets/img/wormhole-1731853681154.png);
-      box-shadow: var(--box-shadow);
-
-      border: var(--border);
     }
 
     .item8.box:hover,
