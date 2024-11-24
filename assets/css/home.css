@@ -1,9 +1,117 @@
-@media screen and (max-width: 789px) {
-  #compare {
-    margin-top: 10vh;
-    width: 100vw;
-    height: 100%;
+#home {
+  width: 100%;
+  height: 100vh;
+  @media (min-width: 980px) {
+    height: auto;
+    background-color: transparent;
+    h1.headline {
+      font-size: clamp(3rem, 6vw - 1vh, 8rem);
+      position: absolute;
+      top: 0;
+      z-index: 999;
+    }
+    #compare {
+      display: none;
+    }
   }
+  h1.headline {
+    width: 100%;
+    max-width: 100vw;
+    padding: 1rem;
+    margin: 1rem;
+    text-align: left;
+    text-shadow: var(--text-shadow);
+    background: transparent;
+  }
+  .intro {
+    position: absolute;
+    bottom: 2rem;
+    left: 20%;
+    z-index: 999;
+    width: 60vw;
+    padding: 1rem 2rem;
+    margin: 0 auto;
+
+    @media (max-width: 600px) {
+      position: static;
+      width: 70vw;
+      padding: 1rem;
+      margin: 1rem auto;
+      height: 100%;
+    }
+    .chev {
+      font-size: 1.5rem;
+      padding: 1rem;
+      margin: 1rem auto;
+      text-align: center;
+    }
+    h3 {
+      font-size: clamp(1.4rem, 1rem + 1vw - 0.5vh, 2.2rem);
+      color: var(--text-color);
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.2;
+
+      @media (max-width: 600px) {
+        line-height: 1.4;
+        margin-bottom: 2 rem;
+      }
+    }
+  }
+
+  .scroll-btn {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    z-index: 999;
+    width: max-content;
+    padding: 1rem;
+    margin: 1rem auto;
+    transform: rotate(90deg);
+    .home-scroll {
+      letter-spacing: -8px;
+      i {
+        color: var(--text-color);
+        font-size: 2rem;
+        animation-name: blink-down;
+        animation-duration: 1.4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in;
+        &:first-child {
+          animation-delay: 0s;
+        }
+        &:last-child {
+          animation-delay: 0.7s;
+        }
+      }
+    }
+    @media (max-width: 600px) {
+      position: static;
+      padding: 0;
+      margin: 0 auto;
+    }
+  }
+  #compare {
+    width: 100%;
+    position: relative;
+    padding: 2rem;
+    margin: 0 auto;
+    #example {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      img {
+        filter: contrast(1.2) saturate(1.1);
+      }
+    }
+    @media (max-width: 600px) {
+      margin-top: 2rem;
+      margin: 0;
+      padding-bottom: 5%;
+    }
+  }
+}
+@media screen and (max-width: 789px) {
   #split {
     display: none;
   }
@@ -13,7 +121,6 @@
     display: none;
   }
   #split {
-    background-color: #1b1b1b;
     .subtitle {
       position: absolute;
       color: rgb(146, 245, 245);
@@ -30,7 +137,7 @@
       width: 100%;
       height: 100vh;
       min-height: 45vw;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .panel {
@@ -52,7 +159,7 @@
     .panel .description {
       width: 25%;
       position: absolute;
-      top: 60%;
+      top: 50%;
       transform: translateY(-50%);
       text-align: center;
       display: flex;
@@ -64,26 +171,23 @@
       font-family: var(--ff-cursive);
       font-size: clamp(24px, 5vw + 1vh, 40px);
       padding: 0.5rem;
-    } /* 
-      .panel .description p {
-        font-family: var(--ff-accent);
-        font-size: clamp(18px, 1rem + 1vw + 0.5vh, 24px);
-        width: 40ch;
-        font-weight: 500;
-        padding: 1rem;
-        margin: 0 auto;
-        text-align: center;
-        color: var(--white);
-      } */
+    }
+    .panel .description p {
+      font-family: var(--ff-accent);
+      font-size: clamp(22px, 1rem + 2vw + 0.5vh, 32px);
+
+      font-weight: 600;
+
+      color: var(--text-color);
+    }
 
     .panel img {
       width: 30%;
       position: absolute;
-      top: 50%;
+      top: 45%;
       left: 50%;
 
       transform: translate(-50%, -50%);
-      background-image: url(/assets/img/Layer_1-removebg-preview.png);
     }
 
     .bottom {
@@ -128,7 +232,7 @@
       height: 100%;
       position: absolute;
       display: block;
-      background-color: #033c92fb;
+      background-color: transparent;
       width: 5px;
       top: 0;
       left: 50%;
@@ -139,7 +243,7 @@
     .skewed .handle {
       top: 50%;
       transform: rotate(20deg) translateY(-50%);
-      height: 200%;
+      height: 100%;
       -webkit-transform-origin: top;
       -moz-transform-origin: top;
       transform-origin: top;

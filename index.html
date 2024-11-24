@@ -18,10 +18,114 @@
       type="application/json"
     />
   </head>
-  <body id="bg">
-    <!-- =============== NAVBAR ================ -->
+  <body>
+    <!-- =============== HOME ================ -->
+    <div class="home" id="home">
+      <h1 class="headline">web &amp; frontend developer</h1>
+      <!-- <button id="buttonz" onclick="toggleTheme()">Toggle Theme</button>
+ -->
+      <div id="compare">
+        <div id="example">
+          <img src="/assets/img/mini-removebg-preview.png" alt="mini-design" />
+          <img src="/assets/img/maxi-removebg-preview.png" alt="maxi-design" />
+        </div>
+      </div>
 
-    <nav class="navbar">
+      <div id="split">
+        <div class="splitview skewed">
+          <div class="panel bottom">
+            <div class="content">
+              <div class="description">
+                <p class="accent">or you are looking for...</p>
+                <h1>Minimalistic Elegant Websites</h1>
+                <p class="accent">look no more!</p>
+              </div>
+
+              <img src="/assets/img/mini-removebg-preview.png" alt="mini" />
+            </div>
+          </div>
+          <div class="panel top">
+            <div class="content">
+              <div class="description">
+                <p class="accent">Whether you like</p>
+                <h1>Bold Innovative Websites</h1>
+                <p class="accent">that catch the eye...</p>
+              </div>
+
+              <img src="/assets/img/maxi-removebg-preview.png" alt="maxi" />
+            </div>
+          </div>
+
+          <div class="handle"></div>
+        </div>
+      </div>
+      <div class="intro">
+        <h3>
+          Looking for a Front-end / Web developer for your project or a new
+          member to join your team?
+        </h3>
+        <h3>Feel free to say hi!</h3>
+
+        <button class="cta">Contact me</button>
+
+        <h3>or scroll down and look around</h3>
+        <div class="chev">
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============== HERO ================ -->
+    <section class="hero" id="hero">
+      <article class="grid">
+        <div class="box item1"></div>
+        <div class="box item2"></div>
+        <div class="box item3"></div>
+        <div class="box item4">
+          <h3 class="box-text">
+            I am Marina Majdenić, a freelancing Frontend / Web developer based
+            in Croatia and available for collaboration or hire. I enjoy creating
+            interactive and responsive websites and web applications, as well as
+            ensuring reliability, scalability and performance of the final
+            product.
+          </h3>
+        </div>
+        <div class="box item5"></div>
+
+        <div class="box item7"></div>
+        <div class="box item8">
+          <a href="#projects">
+            <h4 class="box-text">Take a look at my projects</h4>
+            <i class="fa-solid fa-folder-open"></i>
+          </a>
+        </div>
+        <div class="box item9">
+          <a href="#skills">
+            <h4 class="box-text">Click here to see my skills</h4>
+            <i class="fa-solid fa-code"></i
+          ></a>
+        </div>
+        <div class="box item10">
+          <a href="#contact"
+            ><h4 class="box-text">Contact me here</h4>
+            <i class="fa-solid fa-comment"></i>
+          </a>
+        </div>
+        <div class="box item11">
+          <a href="#services">
+            <h4 class="box-text">Or check out my services</h4>
+
+            <i class="fa-solid fa-laptop-file"></i
+          ></a>
+        </div>
+      </article>
+    </section>
+    <!-- =============== NAVBAR ================ -->
+    <button class="menu-button">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <nav class="navbar sticky-bg">
       <ul>
         <li>
           <a href="#home" data-content="Home"
@@ -55,106 +159,6 @@
         </li>
       </ul>
     </nav>
-    <!-- =============== HOME ================ -->
-    <div class="home" id="home">
-      <h1 class="headline">web &amp; frontend developer</h1>
-      <!-- <button id="buttonz" onclick="toggleTheme()">Toggle Theme</button>
- -->
-      <div id="compare">
-        <div id="example">
-          <img src="/assets/img/mini-removebg-preview.png" alt="BEFORE" />
-          <img src="/assets/img/maxi-removebg-preview.png" alt="AFTER" />
-        </div>
-      </div>
-      <div class="intro">
-        <h3>
-          Looking for a Front-end / Web developer for your project or a new
-          member to join your team? Check me out and let me know!
-        </h3>
-      </div>
-
-      <div class="scroll-btn">
-        <a href="#hero" class="home-scroll">
-          <i class="fa-solid fa-chevron-right"></i
-          ><i class="fa-solid fa-chevron-right"></i
-        ></a>
-      </div>
-    </div>
-    <!-- <div id="split">
-    <div class="splitview skewed">
-        <div class="panel bottom">
-          <div class="content">
-            <div class="description">
-              <p class="accent">or you are looking for...</p>
-              <h1>Minimalistic Elegant Websites</h1>
-              <p class="accent">look no more!</p>
-            </div>
-
-            <img src="/assets/img/webdesign-mini.png" alt="Original" />
-          </div>
-        </div>
-        <div class="panel top">
-          <div class="content">
-            <div class="description">
-              <p class="accent">Whether you like</p>
-              <h1>Bold Innovative Websites</h1>
-              <p class="accent">that catch the eye...</p>
-            </div>
-
-            <img src="/assets/img/webdesign-maxi.png" alt="Duotone" />
-          </div>
-        </div>
-
-        <div class="handle"></div>
-      </div> </div>
- -->
-
-    <!-- =============== HERO ================ -->
-    <section class="hero" id="hero">
-      <article class="grid">
-        <div class="box item1"></div>
-        <div class="box item2"></div>
-        <!--  <div class="box item3"></div> -->
-        <div class="box item4">
-          <h3 class="box-text">
-            I am Marina Majdenić, a freelancing Frontend / Web developer based
-            in Croatia and available for collaboration or hire. I enjoy creating
-            interactive and responsive websites and web applications, as well as
-            ensuring reliability, scalability and performance of the final
-            product.
-          </h3>
-        </div>
-        <!-- <div class="box item5"></div> -->
-
-        <div class="box item7"></div>
-        <div class="box item8">
-          <a href="#projects">
-            <h4 class="box-text">Take a look at my projects</h4>
-            <i class="fa-solid fa-folder-open"></i>
-          </a>
-        </div>
-        <div class="box item9">
-          <a href="#skills">
-            <h4 class="box-text">Click here to see my skills</h4>
-            <i class="fa-solid fa-code"></i
-          ></a>
-        </div>
-        <div class="box item10">
-          <a href="#contact"
-            ><h4 class="box-text">Contact me here</h4>
-            <i class="fa-solid fa-comment"></i>
-          </a>
-        </div>
-        <div class="box item11">
-          <a href="#services">
-            <h4 class="box-text">Or check out my services</h4>
-
-            <i class="fa-solid fa-laptop-file"></i
-          ></a>
-        </div>
-      </article>
-    </section>
-
     <!-- =============== MAIN ================ -->
     <main>
       <div class="logo" href="#">
@@ -668,6 +672,7 @@
     <script src="/assets/js/split.js"></script>
     <script src="/assets/js/themes.js"></script>
     <!--   <script src="/assets/js/main.js"></script> -->
+    <script src="/assets/js/navbar.js"></script>
     <script src="/assets/js/image-compare-viewer.min.js"></script>
     <script src="/node_modules/@glidejs/glide/dist/glide.min.js"></script>
     <script src="/assets/js/carousel.js"></script>
