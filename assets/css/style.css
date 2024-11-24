@@ -184,6 +184,7 @@ body {
   background-image: var(--bg-image);
   background-attachment: fixed;
   background-size: cover;
+  color-scheme: only dark;
 }
 h1 {
   font-family: var(--ff-cursive);
