@@ -1,38 +1,30 @@
-@import url(/assets/fonts/NotoSerifDisplay-VariableFont_wdth\,wght.ttf);
-@import url(/assets/fonts/Pacifico/Pacifico-Regular.ttf);
-/* =============== FONTS =============== */
 @font-face {
-  font-family: "Pacifico";
-  src: url(/assets/fonts/Pacifico/Pacifico-Regular.ttf) format("truetype");
-}
-@font-face {
-  font-family: "Noto Sans";
-  src: url(/assets/fonts/Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf)
-    format("truetype");
+  font-family: "Dosis";
+  src: url(/assets/fonts/Dosis-Light.ttf) format("truetype");
+  font-weight: 300;
 }
 @font-face {
   font-family: "Dosis";
-  src: url("/assets/fonts/Dosis-Font/Dosis-ExtraLight.ttf") format("truetype"),
-    url("/assets/fonts/Dosis-Font/Dosis-Light.ttf") format("truetype"),
-    url("/assets/fonts/Dosis-Font/Dosis-Medium.ttf") format("truetype"),
-    url("/assets/fonts/Dosis-Font/Dosis-SemiBold.ttf") format("truetype"),
-    url("/assets/fonts/Dosis-Font/Dosis-Bold.ttf") format("truetype"),
-    url("/assets/fonts/Dosis-Font/Dosis-ExtraBold.ttf") format("truetype");
+  src: url(/assets/fonts/Dosis-Book.ttf) format("truetype");
+  font-weight: 400;
 }
 @font-face {
-  font-family: "Noto Serif";
-  src: url("/assets/fonts/NotoSerifDisplay-VariableFont_wdth\,wght.ttf")
-    format("truetype");
-  font-style: normal;
+  font-family: "Dosis";
+  src: url(/assets/fonts/Dosis-Medium.ttf) format("truetype");
+  font-weight: 500;
 }
 @font-face {
-  font-family: "Noto Serif";
-  src: url("/assets/fonts/NotoSerifDisplay-Italic-VariableFont_wdth\,wght.ttf")
-    format("truetype");
-  font-style: italic;
+  font-family: "Dosis";
+  src: url(/assets/fonts/Dosis-ExtraBold.ttf) format("truetype");
+  font-weight: 800;
 }
+
 @font-face {
-  font-family: "Encode Sans";
-  src: url(/assets/fonts/Encode_Sans/EncodeSans-VariableFont_wdth\,wght.ttf)
-    format("truetype");
+  font-family: "Palamecia";
+  src: url(/assets/fonts/PalameciaTitling.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "FiraCode";
+  src: url(/assets/fonts/FiraCode-VF.ttf) format("truetype");
 }

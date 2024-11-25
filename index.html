@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,674 +10,770 @@
     />
     <title>Marina Majdenić - Portfolio Website</title>
     <!-- CSS  -->
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link href="/assets/css/image-compare-viewer.min.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="/assets/css/image-compare-viewer.min.css.map"
-      type="application/json"
-    />
+    <link rel="stylesheet" href="/assets/css/main.css" />
   </head>
   <body>
-    <!-- =============== HOME ================ -->
-    <div class="home" id="home">
-      <h1 class="headline">web &amp; frontend developer</h1>
-      <!-- <button id="buttonz" onclick="toggleTheme()">Toggle Theme</button>
- -->
-      <div id="compare">
-        <div id="example">
-          <img src="/assets/img/mini-removebg-preview.png" alt="mini-design" />
-          <img src="/assets/img/maxi-removebg-preview.png" alt="maxi-design" />
-        </div>
+    <div class="main-container">
+      <!-- ============= PARALLAX ================-->
+      <div class="parallax-header">
+        <img
+          src="/assets/img/city-office-sm.png"
+          alt=""
+          srcset="(max-width: 600px)"
+          class="background"
+        />
+        <img
+          src="/assets/img/city-office.png"
+          srcset="(min-width: 601px)"
+          class="background"
+        />
+        <img src="/assets/img/girl-in-office.png" class="foreground" />
+        <h1>web &amp; frontend developer</h1>
+
+        <br />
+        <h2>let's build cool <del>s#it</del> stuff!</h2>
       </div>
-
-      <div id="split">
-        <div class="splitview skewed">
-          <div class="panel bottom">
-            <div class="content">
-              <div class="description">
-                <p class="accent">or you are looking for...</p>
-                <h1>Minimalistic Elegant Websites</h1>
-                <p class="accent">look no more!</p>
-              </div>
-
-              <img src="/assets/img/mini-removebg-preview.png" alt="mini" />
-            </div>
-          </div>
-          <div class="panel top">
-            <div class="content">
-              <div class="description">
-                <p class="accent">Whether you like</p>
-                <h1>Bold Innovative Websites</h1>
-                <p class="accent">that catch the eye...</p>
-              </div>
-
-              <img src="/assets/img/maxi-removebg-preview.png" alt="maxi" />
-            </div>
-          </div>
-
-          <div class="handle"></div>
-        </div>
-      </div>
-      <div class="intro">
-        <h3>
-          Looking for a Front-end / Web developer for your project or a new
-          member to join your team?
-        </h3>
-        <h3>Feel free to say hi!</h3>
-
-        <button class="cta">Contact me</button>
-
-        <h3>or scroll down and look around</h3>
-        <div class="chev">
-          <i class="fa-solid fa-chevron-down"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- =============== HERO ================ -->
-    <section class="hero" id="hero">
-      <article class="grid">
-        <div class="box item1"></div>
-        <div class="box item2"></div>
-        <div class="box item3"></div>
-        <div class="box item4">
-          <h3 class="box-text">
-            I am Marina Majdenić, a freelancing Frontend / Web developer based
-            in Croatia and available for collaboration or hire. I enjoy creating
-            interactive and responsive websites and web applications, as well as
-            ensuring reliability, scalability and performance of the final
-            product.
-          </h3>
-        </div>
-        <div class="box item5"></div>
-
-        <div class="box item7"></div>
-        <div class="box item8">
-          <a href="#projects">
-            <h4 class="box-text">Take a look at my projects</h4>
-            <i class="fa-solid fa-folder-open"></i>
-          </a>
-        </div>
-        <div class="box item9">
-          <a href="#skills">
-            <h4 class="box-text">Click here to see my skills</h4>
-            <i class="fa-solid fa-code"></i
-          ></a>
-        </div>
-        <div class="box item10">
-          <a href="#contact"
-            ><h4 class="box-text">Contact me here</h4>
-            <i class="fa-solid fa-comment"></i>
-          </a>
-        </div>
-        <div class="box item11">
-          <a href="#services">
-            <h4 class="box-text">Or check out my services</h4>
-
-            <i class="fa-solid fa-laptop-file"></i
-          ></a>
-        </div>
-      </article>
-    </section>
-    <!-- =============== NAVBAR ================ -->
-    <button class="menu-button">
-      <i class="fa fa-bars"></i>
-    </button>
-
-    <nav class="navbar sticky-bg">
-      <ul>
-        <li>
-          <a href="#home" data-content="Home"
-            ><i class="fa-solid fa-house"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#hero" data-content="About"
-            ><i class="fa-solid fa-circle-info"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#services" data-content="Services"
-            ><i class="fa-solid fa-laptop-file"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#skills" data-content="Skills"
-            ><i class="fa-solid fa-code"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#projects" data-content="Projects"
-            ><i class="fa-solid fa-folder-open"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#contact" data-content="Contact"
-            ><i class="fa-solid fa-comment"></i
-          ></a>
-        </li>
-      </ul>
-    </nav>
-    <!-- =============== MAIN ================ -->
-    <main>
-      <div class="logo" href="#">
-        <img src="/assets/img/logo-white.png" alt="logo" />
-      </div>
-      <!-- =============== Services ============== -->
-      <section id="services" class="services">
-        <h2>Services</h2>
-        <div class="row">
-          <div class="card">
-            <h4>Web Development Based on Existing Design</h4>
-            <img
-              src="/assets/svg/undraw_undraw_design_1w1r_-1-_1qg6.svg"
-              alt=""
-            />
-            <p class="card__description_front">
-              Polished and responsive website development based on your design,
-              ideal for landing pages and small business websites.
-            </p>
-
-            <div class="card__content">
-              <div class="card__description_back">
-                <h4>Includes:</h4>
-                <ul>
-                  <li>Development based on client-provided designs</li>
-                  <li>Responsive design across devices</li>
-                  <li>Basic SEO optimization</li>
-                  <li>Updating old websites possible</li>
-                </ul>
-                <button><a href="#contact">Ask for more info</a></button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <h4>Custom Web Design and Development</h4>
-            <img src="/assets/svg/undraw_proud_coder_re_exuy.svg" alt="" />
-            <p class="card__description_front">
-              Tailored design based on your needs and target audience, full
-              development of the website, deployment and maintenance.
-            </p>
-
-            <div class="card__content">
-              <div class="card__description_back">
-                <h4>Includes:</h4>
-                <ul>
-                  <li>Custom design creation</li>
-                  <li>Responsive design across devices</li>
-                  <li>SEO optimization</li>
-                  <li>Visual identity services</li>
-                </ul>
-                <button><a href="#contact">Ask for more info</a></button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <h4>Custom Web Design, Development and Deployment</h4>
-            <img src="/assets/svg/undraw_web_devices_re_m8sc.svg" alt="" />
-            <p class="card__description_front">
-              Complete and conceptualized full-package, designed and adjusted
-              for target audience and transformative user experience into
-              interactive and functional website.
-            </p>
-
-            <div class="card__content">
-              <div class="card__description_back">
-                <h4>Includes:</h4>
-                <ul>
-                  <li>Custom design and development</li>
-                  <li>Deployment to client's server</li>
-                  <li>Responsive design across devices</li>
-                  <li>Maintenance and updating</li>
-                </ul>
-                <button><a href="#contact">Ask for more info</a></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =============== SKILLS ================ -->
-
-      <section class="skills" id="skills">
-        <h2>Skills</h2>
-        <div class="glide glide--carousel">
-          <div class="glide__track" data-glide-el="track">
-            <ul class="glide__slides">
-              <li class="glide__slide">
-                <h3>HTML, CSS, JS</h3>
-                <p>
-                  HTML, CSS and JS I started designing blogs and simple pages
-                  with HTML and CSS as a highschool student. I know how to use
-                  different CSS preprocessors, JS libraries and framworks.
-                </p>
-              </li>
-              <li class="glide__slide">
-                <h3>React</h3>
-                <p>
-                  I have experience with React libraries like Redux and Next.js,
-                  and I am currently learning more about creating 3D content
-                  with Three.js and about animation with GSAP.
-                </p>
-              </li>
-              <li class="glide__slide">
-                <h3>Node.js</h3>
-                <p>
-                  It is amazing that JavaScript can be used on the server side
-                  with Node.js, and frameworks like Express.js make setting up a
-                  server for applications so much easier and faster.
-                </p>
-              </li>
-              <li class="glide__slide">
-                <h3>Testing and optimization</h3>
-                <p>
-                  I always try to ensure that my code is bug-free and that it
-                  works as expected. I can work with debugging tools and I am
-                  always trying to optimize my code for better performance.
-                </p>
-              </li>
-              <li class="glide__slide">
-                <h3>Version Control</h3>
-                <p>
-                  Git and Github are essential part of my workflow, and most of
-                  my projects are hosted on Github. That way we can collaborate
-                  easily anyday anytime.
-                </p>
-              </li>
-            </ul>
-          </div>
-          <div class="glide__bullets" data-glide-el="controls[nav]">
-            <button class="glide__bullet" data-glide-dir="=0"></button>
-            <button class="glide__bullet" data-glide-dir="=1"></button>
-            <button class="glide__bullet" data-glide-dir="=2"></button>
-          </div>
-        </div>
-
-        <div class="container-responsive transparent-bg">
-          <h3>If you need someone who can...</h3>
-          <ul class="skill-list" id="skill-list">
-            <li class="skill-item" id="card-1">
-              <i class="fa-solid fa-paintbrush text-teal"></i>create interactive
-              and intuitive UX
-            </li>
-            <li class="skill-item animate" id="card-2">
-              <i class="fa-solid fa-wand-magic-sparkles text-orange"></i>design
-              animated and pretty UI
-            </li>
-            <li class="skill-item animate" id="card-3">
-              <i class="fa-solid fa-pen-ruler text-blue"></i>build responsive
-              and scalabale websites
-            </li>
-            <li class="skill-item animate" id="card-4">
-              <i class="fa-solid fa-images text-teal"></i>develop interactive
-              web apps
-            </li>
-            <li class="skill-item" id="card-5">
-              <i class="fa-solid fa-feather text-orange"></i>optimize websites
-              for easy and lightweight use
-            </li>
-            <li class="skill-item" id="card-6">
-              <i class="fa-solid fa-rocket text-pink"></i>
-              deploy and manage websites
-            </li>
-            <li class="skill-item" id="card-7">
-              <i class="fa-solid fa-code text-blue"></i>handle
-              backend-integration
-            </li>
-            <li class="skill-item" id="card-8">
-              <i class="fa-solid fa-network-wired text-orange"></i>work with
-              APIs and third-party libraries
-            </li>
-            <li class="skill-item" id="card-9">
-              <i class="fa-solid fa-newspaper text-orange"></i>stay up-to-date
-              with new technologies
-            </li>
+      <!-- =============== MAIN ================ -->
+      <main>
+        <!-- =============== NAVBAR ================ -->
+        <nav class="main-navbar">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
-          <h3>feel free to</h3>
-          <button><a href="#contact">Contact me</a></button>
+          <div class="logo" href="#">
+            <img src="/assets/img/logo-white.png" alt="logo" />
+          </div>
+        </nav>
+
+        <!-- =============== ABOUT ================ -->
+        <div class="about" id="about">
+          <div class="container">
+            <p>
+              I am Marina Majdenić, Front-end and Web developer from Croatia.
+            </p>
+            <p>
+              Looking for a Front-end / Web developer for your project or a new
+              member to join your team?
+            </p>
+            <button class="call-to-action">
+              <a href="#contact">Contact me</a>
+            </button>
+
+            <p>Or just take a look around my page and have fun!</p>
+          </div>
         </div>
-      </section>
 
-      <!--=============== PROJECTS ================ -->
-      <section class="projects" id="projects">
-        <h2>Projects</h2>
+        <!-- =============== Services ============== -->
+        <section class="services" id="services">
+          <h2>SERVICES</h2>
+          <div class="container-responsive">
+            <div class="container-service graphic">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    font-size="20"
+                    transform="translate(50 150)"
+                    fill="#fff"
+                    stroke="none"
+                    font-family="Roboto"
+                    font-weight="500"
+                  >
+                    Web Design
+                  </text>
+                  <path class="graphic-shape2" d="M68.54 60.66h60v60h-60z" />
+                  <path
+                    class="graphic-middle"
+                    d="M68.54 91h.31a30 30 0 0 0 30-30v-.31H68.54z"
+                  />
+                  <path
+                    class="graphic-shape1"
+                    d="M68.85 31a30 30 0 0 1 30 30 30 30 0 0 1-30 30 30 30 0 0 1-30-30 30 30 0 0 1 30-30z"
+                  />
+                  <circle
+                    class="graphic-dot1"
+                    cx
+                    cy
+                    r="3"
+                    fill="#fff"
+                    stroke="transparent"
+                  />
+                  <circle
+                    class="graphic-dot2"
+                    cx
+                    cy
+                    r="3"
+                    fill="#fff"
+                    stroke="transparent"
+                  />
+                  <path
+                    class="typo-right-under"
+                    fill="#fff"
+                    d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z"
+                  />
+                  <path
+                    class="typo-left-under"
+                    fill="#fff"
+                    d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z"
+                  />
 
-        <!-- =============== PROJECT ONE =============== -->
+                  <path
+                    class="typo-right-top"
+                    stroke="#fff"
+                    d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z"
+                  />
+                  <path
+                    class="typo-left-top"
+                    d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z"
+                  />
+                </g>
+              </svg>
+              <p>
+                If you don't have your own design ready, I can create a design
+                that will be visually appealing, user-friendly and responsive.
+              </p>
+            </div>
+            <!-- UI/UX animation-->
+            <div class="container-service graphic ui">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    transform="translate(40 150)"
+                    font-size="16"
+                    fill="#fff"
+                    stroke="none"
+                    font-family="Roboto"
+                    font-weight="500"
+                  >
+                    UI/UX design
+                  </text>
+                  <path class="rectangle" d="M30.57 22.69h98.86v98.86H30.57z" />
+                  <path class="bar" d="M30.57 37.59h98.86" />
+                  <circle class="dot3" cx="58.76" cy="29.96" r="3.09" />
+                  <circle class="dot2" cx="49.19" cy="29.96" r="3.09" />
+                  <circle class="dot1" cx="39.62" cy="29.96" r="3.09" />
+                  <rect
+                    class="btn"
+                    x="55.28"
+                    y="67.21"
+                    width="49.43"
+                    height="24.72"
+                    rx="4"
+                  />
+                  <path
+                    class="heart"
+                    fill="#121212"
+                    d="M80 85.57l-1-.86c-3.37-3.06-5.59-5.07-5.59-7.54a3.56 3.56 0 0 1 3.6-3.6A3.9 3.9 0 0 1 80 74.94a3.9 3.9 0 0 1 2.94-1.37 3.56 3.56 0 0 1 3.6 3.6c0 2.47-2.22 4.48-5.59 7.54z"
+                  />
+                </g>
+              </svg>
+              <p>
+                Creating functional and pretty interfaces which can enrich
+                user-experience is my primary job, and I like to exceed
+                expectations.
+              </p>
+            </div>
+            <!-- WebDev animation-->
+            <div class="container-service interactive ui">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    transform="translate(20 150)"
+                    fill="#fff"
+                    stroke="none"
+                    font-size="16"
+                    font-family="Roboto"
+                    font-weight="500"
+                  >
+                    Interactive Web-Apps
+                  </text>
+                  <path class="ellipse4" />
+                  <path class="ellipse3" />
+                  <path class="ellipse2" />
+                  <path class="ellipse1" />
+                  <path class="ellipse0" />
+                  <path
+                    class="ellipse"
+                    d="M68,61.83a12,12 0 1,0 24,0a12,12 0 1,0 -24,0"
+                    stroke-miterlimit="10"
+                    fill="#fff"
+                    opacity="0.87"
+                  />
+                  <path
+                    class="hand"
+                    d="M100.33 82.21a5.82 5.82 0 0 0-3.66.19c-.08-.93-.46-3.07-2.32-3.64a5.83 5.83 0 0 0-3.74.21 3.59 3.59 0 0 0-2.24-3 5.85 5.85 0 0 0-3.64.17v-7.68c0-2-.83-5.44-4-5.44-2.91 0-4 3.25-4 5.44v17.08C75.34 84.12 73 82.13 71.14 82c-3-.24-5.19 1.64-4.59 4.56s3.12 2.75 5 5.14 6.34 9.81 6.37 9.86c.67 1.26 2.49 4.74 2.79 5.62a12 12 0 0 1 .27 3.09.79.79 0 0 0 .22.55.76.76 0 0 0 .54.23h17.18a.77.77 0 0 0 .76-.68 17.08 17.08 0 0 0 0-2.73 5.5 5.5 0 0 1 1.32-3.84 11.61 11.61 0 0 0 1.63-4.52.41.41 0 0 0 0-.11V86.28c.04-.28-.01-3.35-2.3-4.07z"
+                    fill="#121212"
+                    stroke="#fff"
+                    stroke-miterlimit="10"
+                  />
+                  <path class="bar" d="M96.68 88.8v-6.4" />
+                  <path class="bar" d="M90.61 87.29v-8.36" />
+                  <path class="bar" d="M84.73 86.74V76.13" />
+                  <path class="bar" d="M76.79 87.94v-2.39" />
+                </g>
+              </svg>
+              <p>
+                Static websites are past time; bringing websites to life with
+                animations and interactive elements is my specialty.
+              </p>
+            </div>
+            <!-- Code Animation -->
+            <div class="container-service code ui">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+                <g opacity=".87" fill="none" stroke="#fff">
+                  <text
+                    class="text"
+                    transform="translate(20 150)"
+                    font-size="16"
+                    fill="#fff"
+                    stroke="none"
+                    font-family="Roboto"
+                    font-weight="500"
+                  >
+                    Backend integration
+                  </text>
+                  <path
+                    class="rectangle"
+                    transform="rotate(-90 80 72.12)"
+                    d="M30.57 22.69h98.86v98.86H30.57z"
+                  />
+                  <path class="bar" d="M45.46 121.55V22.69" />
+                </g>
+              </svg>
+              <span class="change-letter"></span>
+              <p>
+                Aside from front-end, I also do the back-end integration, work
+                with APIs and databases, and much more.
+              </p>
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-        <div id="project-cards" class="container-responsive">
-          <div class="project-card">
-            <figure>
-              <div class="banner">
-                <div class="tools">
-                  <i class="fa-brands fa-html5"></i>
-                  <i class="fa-brands fa-css3-alt"></i>
-                  <i class="fa-brands fa-square-js"></i>
-                  <i class="fa-brands fa-node-js"></i>
-                  <i class="fa-brands fa-react"></i>
-                </div>
-              </div>
-              <img
-                class="project-img"
-                src="/assets/img/quiz-app-contrast.png"
-                alt=""
-              />
-              <div class="footer">
-                <h2>Song Finder</h2>
-                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
-              </div>
-              <figcaption>
-                <p>
-                  This is an app that helps you find a song on the iTunes, if
-                  you know what you"re looking for. As for copyright rules, you
-                  can listen a sample for free.
-                </p>
-                <div class="buttons">
-                  <button class="project-card__button">
-                    <a
-                      href="https://song-finder-itunes.netlify.app/"
-                      target="_blank"
-                      >Live Demo</a
-                    >
-                  </button>
-                  <button class="project-card__button secondary">
-                    <a
-                      href="https://github.com/marina-majden/song-finder"
-                      target="_blank"
-                    >
-                      Source Code</a
-                    >
-                  </button>
-                </div>
-              </figcaption>
-            </figure>
+            <!-- Dots/bullets/indicators -->
+            <div class="dot-container">
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
+              <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
           </div>
-          <!-- =============== PROJECT TWO ===============-->
-          <div class="project-card">
-            <figure>
-              <div class="banner">
-                <div class="tools">
-                  <i class="fa-brands fa-html5"></i>
-                  <i class="fa-brands fa-css3-alt"></i>
-                  <i class="fa-brands fa-square-js"></i>
-                  <i class="fa-brands fa-node-js"></i>
-                  <i class="fa-brands fa-react"></i>
-                </div>
+          <!--    <div class="container">
+            <div class="glide glide--carousel">
+              <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                  <li class="glide__slide">
+                    <h3>HTML, CSS, JS</h3>
+                    <p>
+                      HTML, CSS and JS I started designing blogs and simple
+                      pages with HTML and CSS as a highschool student. I know
+                      how to use different CSS preprocessors, JS libraries and
+                      framworks.
+                    </p>
+                  </li>
+                  <li class="glide__slide">
+                    <h3>React</h3>
+                    <p>
+                      I have experience with React libraries like Redux and
+                      Next.js, and I am currently learning more about creating
+                      3D content with Three.js and about animation with GSAP.
+                    </p>
+                  </li>
+                  <li class="glide__slide">
+                    <h3>Node.js</h3>
+                    <p>
+                      It is amazing that JavaScript can be used on the server
+                      side with Node.js, and frameworks like Express.js make
+                      setting up a server for applications so much easier and
+                      faster.
+                    </p>
+                  </li>
+                  <li class="glide__slide">
+                    <h3>Testing and optimization</h3>
+                    <p>
+                      I always try to ensure that my code is bug-free and that
+                      it works as expected. I can work with debugging tools and
+                      I am always trying to optimize my code for better
+                      performance.
+                    </p>
+                  </li>
+                  <li class="glide__slide">
+                    <h3>Version Control</h3>
+                    <p>
+                      Git and Github are essential part of my workflow, and most
+                      of my projects are hosted on Github. That way we can
+                      collaborate easily anyday anytime.
+                    </p>
+                  </li>
+                </ul>
+              </div>
+              <div class="glide__bullets" data-glide-el="controls[nav]">
+                <button class="glide__bullet" data-glide-dir="=0"></button>
+                <button class="glide__bullet" data-glide-dir="=1"></button>
+                <button class="glide__bullet" data-glide-dir="=2"></button>
+              </div>
+            </div> -->
+          <!-- 
+            <div class="icons">
+              <div class="icon-block">
+                <img
+                  class="center-align"
+                  src="https://img.icons8.com/nolan/256/html-5.png"
+                  alt="html-5"
+                />
               </div>
 
-              <img
-                class="project-img"
-                src="/assets/img/chat-app-logo.png"
-                alt=""
-              />
-              <div class="footer">
-                <h2>Chat Room App</h2>
-                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              <div class="icon-block">
+                <img
+                  src="https://img.icons8.com/nolan/256/css3.png"
+                  alt="css3"
+                  class="center-align"
+                />
               </div>
-              <figcaption>
-                <p>
-                  Simple, fast, versatile and privacy friendly, this app enables
-                  you to access chat-window and talk to your friends anywhere
-                  and anytime in a matter of seconds. Creative and session-based
-                  usernames guarantee your privacy.
-                </p>
-                <div class="buttons">
-                  <button class="project-card__button">
-                    <a
-                      href="https://oldschool-chatroom.netlify.app/"
-                      target="_blank"
-                      >Live Demo</a
-                    >
-                  </button>
-                  <button class="project-card__button secondary">
-                    <a
-                      href="https://github.com/marina-majden/chat-room-app"
-                      target="_blank"
-                    >
-                      Source Code</a
-                    >
-                  </button>
-                </div>
-              </figcaption>
-            </figure>
+
+              <div class="icon-block">
+                <img
+                  src="https://img.icons8.com/nolan/256/javascript.png"
+                  alt="javascript"
+                  class="center-align"
+                />
+              </div>
+
+              <div class="icon-block">
+                <img
+                  src="https://img.icons8.com/nolan/256/react-native.png"
+                  alt="ReactJS"
+                  class="center-align"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-sass center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-node-js center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-npm center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-php center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-git center-align"></i>
+              </div>
+              <div class="col s2 brand-icon">
+                <i class="fa-solid fa-3x fa-brands fa-gitlab center-align"></i>
+              </div>
+            </div>
+          -->
+        </section>
+        <!-- =============== SKILLS ================ -->
+        <section class="skills" id="skills">
+          <h2>SKILLS</h2>
+          <div class="container">
+            <div class="around-list">
+              <h3>If you need someone who can...</h3>
+            </div>
+            <div class="skill-list">
+              <ul role="list">
+                <li>
+                  <i class="fa-solid fa-paintbrush text-teal"></i>create
+                  interactive and intuitive UX
+                </li>
+                <li>
+                  <i class="fa-solid fa-wand-magic-sparkles text-orange"></i
+                  >design animated and pretty UI
+                </li>
+                <li>
+                  <i class="fa-solid fa-pen-ruler text-blue"></i>build
+                  responsive and scalabale websites
+                </li>
+                <li>
+                  <i class="fa-solid fa-images text-teal"></i>develop
+                  interactive web apps
+                </li>
+                <li>
+                  <i class="fa-solid fa-feather text-orange"></i>optimize
+                  websites for easy and lightweight use
+                </li>
+                <li>
+                  <i class="fa-solid fa-rocket text-pink"></i>
+                  deploy and manage websites
+                </li>
+                <li>
+                  <i class="fa-solid fa-code text-blue"></i>handle
+                  backend-integration
+                </li>
+                <li>
+                  <i class="fa-solid fa-network-wired text-orange"></i>work with
+                  APIs and third-party libraries
+                </li>
+                <li>
+                  <i class="fa-solid fa-database text-teal"></i>manage and
+                  maintain databases
+                </li>
+                <li>
+                  <i class="fa-solid fa-code-branch text-pink"></i>work with
+                  version control systems
+                </li>
+                <li>
+                  <i class="fa-solid fa-brain text-teal"></i>think creatively
+                  and critically
+                </li>
+                <li>
+                  <i class="fa-solid fa-circle-nodes text-pink"></i>
+                  take interdisciplinary aproach to problem-solving
+                </li>
+                <li>
+                  <i class="fa-solid fa-people-carry-box text-orange"></i
+                  >collaborate and work in a team
+                </li>
+                <li>
+                  <i class="fa-regular fa-comments text-blue"></i>actively
+                  listen and answer the needs of the clients
+                </li>
+                <li>
+                  <i class="fa-solid fa-newspaper text-orange"></i>stay
+                  up-to-date with new technologies
+                </li>
+                <li>
+                  <i class="fa-solid fa-file-signature text-teal"></i>write
+                  content and manage project documentation
+                </li>
+                <li>
+                  <i class="fa-regular fa-compass text-pink"></i>find the best
+                  solutions and directions
+                </li>
+              </ul>
+            </div>
+            <div class="around-list">
+              <h3>...don't hesitate to:</h3>
+            </div>
+            <button class="call-to-action">
+              <a href="#contact">Contact me!</a>
+            </button>
           </div>
+        </section>
+        <!--=============== PROJECTS ================ -->
+        <section class="projects" id="projects">
+          <h2>PROJECTS</h2>
 
+          <!-- =============== PROJECT ONE =============== -->
+          <div class="project-card">
+            <div class="project-card-image">
+              <img src="/assets/img/quiz-app.png" alt="screenshot-quizz-app" />
+            </div>
+            <p class="project-card-title">Quiz Game</p>
+            <p class="project-card-body">
+              One of my first PWA projects; Progressive Web Applications come
+              very handy if you need a fast and responsive web-app that works
+              offline. I love them because even though they are made for desktop
+              browsers, they look completely native on smartphones, and you can
+              even install them as a regular app and place its icon on your
+              mobile screen.
+            </p>
+
+            <div class="project-card-footer">
+              <label for="codeQuizBtn">Check out the source code:</label>
+              <button type="button" id="codeQuizBtn" name="codeQuizBtn">
+                <a
+                  href="https://github.com/marina-majden/quiz-play"
+                  target="_blank"
+                ></a
+                >Code
+              </button>
+              <label for="demoQuizBtn">You can play the game for free:</label>
+              <button type="button" id="demoQuizBtn" name="codeQuizBtn">
+                <a
+                  href="https://song-finder-itunes.netlify.app"
+                  target="_blank"
+                ></a
+                >Play
+              </button>
+            </div>
+          </div>
+          <!-- =============== PROJECT TWO =============== -->
+          <div class="project-card">
+            <div class="project-card-image">
+              <img src="/assets/img/songfinder.png" alt="songfinder-app" />
+            </div>
+            <p class="project-card-title">Song Finder</p>
+            <p class="project-card-body">
+              With the iTunes API, I have built this simple app that works as a
+              music search interface. Results are accompanied with some
+              information about each song, you can see the cover of a single or
+              amlbum and you can listen to a sample with integrated music
+              player.
+            </p>
+
+            <div class="project-card-footer">
+              <label for="codeiTunesBtn">Check out the source code:</label>
+              <button type="button" id="codeiTunesBtn" name="codeiTunesBtn">
+                <a
+                  href="https://github.com/marina-majden/songfinder-app"
+                  target="_blank"
+                ></a
+                >Code
+              </button>
+              <label for="demoiTunesBtn">Try out the app here:</label>
+              <button type="button" id="demoiTunesBtn" name="codeQuizBtn">
+                <a
+                  href="https://marina-majden.github.io/song-finder"
+                  target="_blank"
+                ></a
+                >Open App
+              </button>
+            </div>
+          </div>
           <!-- =============== PROJECT THREE =============== -->
           <div class="project-card">
-            <figure>
-              <div class="banner">
-                <div class="tools">
-                  <i class="fa-brands fa-html5"></i>
-                  <i class="fa-brands fa-css3-alt"></i>
-                  <i class="fa-brands fa-square-js"></i>
-                  <i class="fa-brands fa-node-js"></i>
-                  <i class="fa-brands fa-react"></i>
-                </div>
-              </div>
+            <div class="project-card-image">
+              <img
+                src="/assets/img/chatroom-horizontal.png"
+                alt="chatroom-app"
+              />
+            </div>
+            <p class="project-card-title">Chatroom App</p>
+            <p class="project-card-body">
+              Simple, fast, versatile and privacy friendly, this app enables you
+              to access chat-window and talk to your friends anywhere and
+              anytime in a matter of seconds. Creative and session-based
+              usernames guarantee your privacy.
+            </p>
+            <div class="project-card-footer">
+              <label for="codeChatBtn">Check out the source code:</label>
+              <button type="button" id="codeChatBtn" name="codeChatBtn">
+                <a href="https://github.com/marina-majden/" target="_blank"
+                  >Code</a
+                >
+              </button>
+              <label for="demoChatBtn">Try out the app here:</label>
+              <button type="button" id="demoChatBtn" name="demoChatBtn">
+                <a
+                  href="https://oldschool-chatroom.netlify.app"
+                  target="_blank"
+                  delay="1000"
+                >
+                  Open App</a
+                >
+              </button>
+            </div>
+          </div>
+        </section>
 
-              <img
-                class="project-img"
-                src="/assets/img/quiz-app-colorful.png"
-                alt=""
+        <!-- ============= CONTACT ================-->
+        <section class="contact" id="contact">
+          <h2>CONTACT</h2>
+          <div class="container">
+            <form
+              id="contact-form"
+              name="contact-form"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              target="_blank"
+            >
+              <input
+                type="hidden"
+                name="access_key"
+                value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
               />
-              <div class="footer">
-                <h2>Quiz game</h2>
-                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              <div class="form-group">
+                <label for="name" name="name">Name:</label><br />
+                <input type="text" id="name" required />
               </div>
-              <figcaption>
-                <p>
-                  One of my first PWA projects; Progressive Web Apps are
-                  fabulous because even though they are made for desktop
-                  browsers, they look completely native on smartphones, and you
-                  can even install them as a regular app and place its icon on
-                  your mobile screen. This quiz game
-                  <i>per se</i> is lacking in questions, but I will add more
-                  soon.
-                </p>
-                <div class="buttons">
-                  <button class="project-card__button">
-                    <a
-                      href="https://marina-majden.github.io/quizzy/"
-                      target="_blank"
-                      >Live Demo</a
+              <div class="form-group">
+                <label for="email">Email:</label><br />
+                <input type="email" name="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="message" name="message">Message:</label><br />
+                <textarea
+                  name="message"
+                  id="message"
+                  cols="100"
+                  rows="10"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" name="submit">
+                <div class="svg-wrapper-1">
+                  <div class="svg-wrapper">
+                    <svg
+                      href="/assets/svg/regular/paper-plane.svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
                     >
-                  </button>
-                  <button class="project-card__button secondary">
-                    <a
-                      href="https://github.com/marina-majden/quizzy"
-                      target="_blank"
-                    >
-                      Source Code</a
-                    >
-                  </button>
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path
+                        fill="currentColor"
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
-              </figcaption>
-            </figure>
+                <span>Send</span>
+              </button>
+            </form>
           </div>
-          <!-- =============== PROJECT FOUR =============== -->
-          <div class="project-card">
-            <figure>
-              <div class="banner">
-                <div class="tools">
-                  <i class="fa-brands fa-html5"></i>
-                  <i class="fa-brands fa-css3-alt"></i>
-                  <i class="fa-brands fa-square-js"></i>
-                  <i class="fa-brands fa-node-js"></i>
-                  <i class="fa-brands fa-react"></i>
-                </div>
-              </div>
-              <img
-                class="project-img"
-                src="/assets/img/quote-interface.jpg"
-                alt=""
+        </section>
+        <!-- ============= CONTACT ================-->
+        <!--   <section class="contact" id="contact">
+          <h2>Contact</h2>
+          <div class="container">
+            <form
+              id="contact-form"
+              name="contact-form"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              target="_blank"
+            >
+              <input
+                type="hidden"
+                name="access_key"
+                value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
               />
-              <div class="footer">
-                <h2>Quotes</h2>
-                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              <div class="form-group">
+                <label for="name">Full name:</label><br />
+                <input
+                  class="name"
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Jane Doe"
+                  minlength="6"
+                  maxlength="60"
+                  required
+                />
               </div>
-              <figcaption>
-                <p>
-                  As you guessed correctly, it"s an app that helps you find a
-                  song on the iTunes, if you know what you"re looking for. Or if
-                  you don"t, maybe you will find something nice, and you can
-                  listen a sample for free.
-                </p>
-                <div class="buttons">
-                  <button class="project-card__button">
-                    <a
-                      href="https://cute-quote-today.netlify.app/"
-                      target="_blank"
-                      >Live Demo</a
+              <div class="form-group">
+                <label for="email">E-mail:</label><br />
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="jane.doe@example.com"
+                  minlength="5"
+                  maxlength="60"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="message">Message:</label><br />
+                <textarea
+                  name="message"
+                  id="message"
+                  cols="100"
+                  rows="10"
+                  placeholder="Your message goes here..."
+                  minlength="20"
+                  maxlength="4000"
+                  required
+                ></textarea>
+              </div>
+              <div class="form-group checkbox">
+                <input type="checkbox" name="agree" id="agree" required />
+                <label for="agree" name="agree">
+                  I allow you to use my information to contact me back.
+                </label>
+              </div>
+              <button type="submit" name="submit">
+                <div class="svg-wrapper-1">
+                  <div class="svg-wrapper">
+                    <svg
+                      href="/assets/svg/regular/paper-plane.svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
                     >
-                  </button>
-                  <button class="project-card__button secondary">
-                    <a
-                      href="https://github.com/marina-majden/song-finder"
-                      target="_blank"
-                    >
-                      Source Code</a
-                    >
-                  </button>
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path
+                        fill="currentColor"
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
-              </figcaption>
-            </figure>
+                <span>Send</span>
+              </button>
+            </form>
           </div>
-        </div>
-      </section>
-      <!-- ============= CONTACT ================-->
-      <section class="contact" id="contact">
-        <h2>Contact</h2>
-        <div class="container">
-          <form
-            id="contact-form"
-            name="contact-form"
-            action="https://api.web3forms.com/submit"
-            method="POST"
-            target="_blank"
-          >
-            <input
-              type="hidden"
-              name="access_key"
-              value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
+        </section> -->
+        <!-- =============== FOOTER ================ -->
+        <footer class="footer">
+          <div class="socials">
+            <a href="https://github.com/marina-majden" target="_blank"
+              ><i class="fa-brands fa-2x fa-square-github fa-beat"> </i
+            ></a>
+            <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
+              ><i class="fa-brands fa-2x fa-linkedin-in fa-beat"></i
+            ></a>
+            <a href="mailto:marina.majden@gmail.com" target="_blank"
+              ><i class="fa-brands fa-2x fa-google-plus-square fa-beat"></i
+            ></a>
+            <a href="https://medium.com/@marina.majden" target="_blank"
+              ><i class="fa-brands fa-2x fa-medium fa-beat"></i
+            ></a>
+          </div>
+          <div class="copyright">
+            <p>
+              Copyright
+              <i class="fa-solid fa-copyright w3-hover-opacity"></i>
+              Marina Majdenić <br />
+              2024.
+            </p>
+          </div>
+          <div class="logo-copy">
+            <img
+              src="/assets/img/logo-white.png"
+              alt="logo"
+              width="50px"
+              height="50px"
             />
-            <div class="form-group">
-              <label for="name">Full name:</label><br />
-              <input
-                class="name"
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Jane Doe"
-                minlength="6"
-                maxlength="60"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="email">E-mail:</label><br />
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="jane.doe@example.com"
-                minlength="5"
-                maxlength="60"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="message">Message:</label><br />
-              <textarea
-                name="message"
-                id="message"
-                cols="100"
-                rows="10"
-                placeholder="Your message goes here..."
-                minlength="20"
-                maxlength="4000"
-                required
-              ></textarea>
-            </div>
-            <div class="form-group checkbox">
-              <input type="checkbox" name="agree" id="agree" required />
-              <label for="agree" name="agree">
-                I allow you to use my information to contact me back.
-              </label>
-            </div>
-            <button type="submit" name="submit">
-              <div class="svg-wrapper-1">
-                <div class="svg-wrapper">
-                  <svg
-                    href="/assets/svg/regular/paper-plane.svg"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                  >
-                    <path fill="none" d="M0 0h24v24H0z"></path>
-                    <path
-                      fill="currentColor"
-                      d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-              <span>Send</span>
-            </button>
-          </form>
-        </div>
-      </section>
-
-      <!-- =============== FOOTER ================ -->
-      <footer class="footer">
-        <div class="socials">
-          <h3>Links to my socials:</h3>
-          <a href="https://github.com/marina-majden" target="_blank"
-            ><i class="fa-brands fa-2x fa-square-github fa-beat"> </i
-          ></a>
-          <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
-            ><i class="fa-brands fa-2x fa-linkedin-in fa-beat"></i
-          ></a>
-          <a href="mailto:marina.majden@gmail.com" target="_blank"
-            ><i class="fa-brands fa-2x fa-google-plus-square fa-beat"></i
-          ></a>
-          <a href="https://medium.com/@marina.majden" target="_blank"
-            ><i class="fa-brands fa-2x fa-medium fa-beat"></i
-          ></a>
-        </div>
-        <div class="copyright">
-          <p>
-            Copyright
-            <i class="fa-solid fa-copyright w3-hover-opacity"></i>
-            Marina Majdenić <br />
-            2024.
-          </p>
-        </div>
-        <div class="logo-copy">
-          <img
-            src="/assets/img/logo-white.png"
-            alt="logo"
-            width="50px"
-            height="50px"
-          />
-        </div>
-      </footer>
-    </main>
-
-    <!-- JS files    -->
+          </div>
+        </footer>
+        <!--  <footer class="footer">
+          <div class="socials">
+            <h3>Links to my socials:</h3>
+            <a href="https://github.com/marina-majden" target="_blank"
+              ><i class="fa-brands fa-3x fa-square-github fa-spin"> </i
+            ></a>
+            <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
+              ><i class="fa-brands fa-3x fa-linkedin-in fa-flip"></i
+            ></a>
+            <a href="mailto:marina.majden@gmail.com" target="_blank"
+              ><i class="fa-brands fa-3x fa-google-plus-square fa-bounce"></i
+            ></a>
+            <a href="https://medium.com/@marina.majden" target="_blank"
+              ><i class="fa-brands fa-3x fa-medium fa-beat"></i
+            ></a>
+          </div>
+          <div class="copyright">
+            <p>
+              Copyright
+              <i class="fa-solid fa-copyright w3-hover-opacity"></i>
+              Marina Majdenić <br />
+              2024.
+            </p>
+          </div>
+        </footer> -->
+      </main>
+    </div>
+    <!-- JS files -->
     <script
       src="https://kit.fontawesome.com/677ac239ea.js"
       crossorigin="anonymous"
     ></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="/assets/js/split.js"></script>
-    <script src="/assets/js/themes.js"></script>
-    <!--   <script src="/assets/js/main.js"></script> -->
-    <script src="/assets/js/navbar.js"></script>
-    <script src="/assets/js/image-compare-viewer.min.js"></script>
-    <script src="/node_modules/@glidejs/glide/dist/glide.min.js"></script>
-    <script src="/assets/js/carousel.js"></script>
-    <script src="/assets/js/comparison.js"></script>
-
-    <script></script>
+    <script src="/assets/js/slider.js"></script>
+    <script src="/assets/js/glide.min.js"></script>
+    <script src="/assets/js/materialize.js"></script>
   </body>
 </html>

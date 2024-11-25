@@ -1,0 +1,286 @@
+.character {
+  --skin: #f0beaf;
+  --pinkish: #f6828c;
+  display: block;
+  cursor: pointer;
+}
+
+.character,
+.face,
+.hair,
+.nose,
+.ear,
+.neck,
+.body,
+.group,
+.fringe,
+.eye,
+.profile-card,
+.yes,
+.no,
+.info,
+.tongue,
+.profile-wrap,
+.name,
+.mouth,
+.eyebrow,
+.blush {
+  display: inline;
+  position: absolute;
+}
+.character {
+  position: relative;
+
+  background: var(--blue);
+
+  margin: auto;
+  width: 200px;
+  height: 200px;
+  border: 5px solid inherit;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+}
+
+.profile {
+  position: relative;
+  /*position: fixed;
+  top: 1300px;
+  left: 100px;*/
+  width: 200px;
+  height: 200px;
+  border: 2px solid var(--teal);
+  overflow: hidden;
+  background: var(--blue);
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+}
+.group {
+  left: -7px;
+}
+
+.face {
+  z-index: 3;
+  top: 78px;
+  left: 70px;
+  width: 80px;
+  height: 80px;
+  background: #f0beaf;
+  border: 5px solid inherit;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 100%;
+  /* -webkit-border-radius: 100%;
+  -moz-border-radius: 100%; */
+}
+.hairstyle .hair {
+  z-index: 2;
+  top: 30px;
+  left: 50px;
+  width: 120px;
+  height: 200px;
+  border: 1px solid inherit;
+  border-radius: 100px 100px 0 0;
+  background: rgb(13, 12, 15);
+  transition: background ease-in 200ms;
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+  }
+  &:hover {
+    background: rgb(198, 190, 124);
+  }
+}
+.ear {
+  z-index: 8;
+  position: relative;
+  top: 94px;
+  left: 61px;
+  width: 15px;
+  height: 30px;
+  background: var(--skin);
+  display: inline;
+  &:before {
+    position: absolute;
+    top: 10px;
+    left: 4px;
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: inherit;
+    opacity: 0.8;
+    border-radius: 20px;
+  }
+}
+
+.ear.right {
+  left: 130px;
+}
+
+.eyebrow {
+  z-index: 300;
+  top: 95px;
+  left: 78px;
+  width: 12px;
+  height: 2px;
+  background: #646b73;
+  border: 1px solid inherit;
+  border-radius: 100%;
+  &:before {
+    position: absolute;
+    content: "";
+    left: 50px;
+    width: 12px;
+    height: 2px;
+    background: #646b73;
+    border-radius: 50%;
+  }
+  &:hover {
+    transform: rotate(-3deg);
+  }
+}
+.eyes {
+  position: relative;
+  top: 100px;
+  left: 65px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 99;
+}
+.eye {
+  position: relative;
+  width: 12px;
+  height: 10px;
+  display: block;
+  margin: 0 17px;
+  background: #fff;
+  border-radius: 100%;
+}
+.closed-eyes {
+  position: relative;
+  top: 90px;
+  left: 72px;
+  background-color: var(--skin);
+  height: 20px;
+  width: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 100;
+  display: none;
+}
+.closed-eyes:before {
+  content: ">";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 20px;
+  color: #000;
+}
+.closed-eyes:after {
+  content: "<";
+  position: absolute;
+  top: 0;
+  left: 53px;
+  font-size: 20px;
+  color: #000;
+}
+.lice:hover .closed-eyes {
+  display: block;
+}
+.lice:hover .eyes {
+  display: none;
+}
+.eye:before {
+  position: absolute;
+  content: "";
+  width: 4px;
+  height: 4px;
+  top: 50%;
+  left: 0px;
+  transform: translate(-50% -50%);
+  background: #000;
+  border-radius: 100%;
+}
+
+.blush {
+  z-index: 999;
+  top: 116px;
+  left: 77px;
+  width: 10px;
+  height: 7px;
+  background: #e3879e;
+  opacity: 0.4;
+  &:before {
+    position: absolute;
+    content: "";
+    left: 58px;
+    width: 10px;
+    height: 7px;
+    background: #e3879e;
+  }
+}
+
+.nose {
+  z-index: 20;
+  top: 113px;
+  left: 105px;
+  width: 8px;
+  height: 10px;
+  background: #db9b99;
+  border: 2px solid inherit;
+  border-radius: 100%;
+}
+
+.mouth {
+  z-index: 20;
+  top: 130px;
+  left: 97px;
+  width: 30px;
+  height: 15px;
+  border: 1px solid grey;
+  border-radius: 0 0 100px 100px;
+  background: #424b54;
+  overflow: hidden;
+}
+.mouth:hover {
+  top: 130px;
+  height: 3px;
+  width: 30px;
+  border-radius: 100px 100px 0 0;
+}
+.tongue {
+  top: 4px;
+  left: 7px;
+  width: 30px;
+  height: 20px;
+
+  background: var(--pinkish);
+}
+
+.neck {
+  z-index: 13;
+  width: 30px;
+  height: 30px;
+  background: var(--skin);
+  top: 139px;
+  left: 97px;
+  border: 3px solid inherit;
+  border-radius: 0 0 10px 10px;
+}
+
+.body {
+  z-index: 2;
+  top: 155px;
+  left: 60px;
+  width: 100px;
+  height: 150px;
+  background: #2a143a;
+  border-radius: 100px 100px 0 0;
+  transition: background ease-in 200ms;
+}
+.body:hover {
+  background: var(--orange);
+}

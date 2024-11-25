@@ -26,8 +26,8 @@ section {
 }
 .container-responsive {
   width: 75%;
-  padding: 0 1rem;
-  margin: 0 auto;
+  padding: 1rem;
+  margin: 1rem auto;
   @media (max-width: 600px) {
     width: 90%;
   }

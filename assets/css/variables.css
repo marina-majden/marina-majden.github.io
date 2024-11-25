@@ -1,0 +1,27 @@
+:root {
+  --green: #219479;
+  --teal: #018299;
+  --blue: #044d91;
+  --pink: #3b0483;
+  --orange: #8f106f;
+
+  --grey: #333333;
+  --grey-darker: #232222;
+
+  --grey-lighter: #4d4d4d;
+  --grey-lightest: #666666;
+
+  --background: #1b1b1b;
+  --background-transparent: #0d0d0ecb;
+  --box-shadow: 2px 4px 8px #0d0d0ecb, -2px -4px 8px #1818319f;
+  --text-shadow: 1px 1px 3px #0d0d0f;
+  --text: #e9dddd;
+  --text-alt: #cfcdcd;
+
+  --ff-text: "Piximisa", sans-serif;
+  --ff-heading: "Dosis", sans-serif;
+  --ff-link: "Dosis", sans-serif;
+  --ff-title: "Palamecia", sans-serif;
+  --ff-cursive: "Sacramento", cursive;
+  --ff-mono: "FiraCode", monospace;
+}

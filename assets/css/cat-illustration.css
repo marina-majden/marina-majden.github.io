@@ -1,0 +1,226 @@
+.cat-illustration {
+  max-width: 700px;
+  margin: 4em auto 0;
+  text-align: center;
+}
+
+.cat-illustration h4 {
+  font-size: 1.2rem;
+  margin: 1rem;
+  color: var(--off-white);
+}
+
+.cat-illustration svg {
+  display: inline-block;
+}
+
+.cat-illustration path,
+cat-illustration polygon,
+cat-illustration circle,
+cat-illustration rect {
+  transition: fill 1s ease;
+}
+
+.cat-illustration-window {
+  position: relative;
+  background: var(--grey);
+  margin: 0 auto 1rem;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 10px;
+}
+.cat-illustration-window:before {
+  content: "";
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  height: 18px;
+  top: 100%;
+  width: 112%;
+  margin-left: -6%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: var(--orange);
+}
+
+.cat-illustration-cat {
+  position: absolute;
+  z-index: 10;
+  bottom: -5px;
+  right: -35px;
+}
+
+.cat-illustration-picture {
+  position: relative;
+  align-self: end;
+  margin: auto;
+  width: 250px;
+  overflow: hidden;
+}
+
+.cat-illustration-mountain,
+.cat-illustration-hill,
+.cat-illustration-land,
+.cat-illustration-trees,
+.cat-illustration-sun,
+.cat-illustration-clouds,
+.cat-illustration-moon,
+.cat-illustration-stars {
+  position: absolute;
+  left: 0;
+  margin: auto;
+  right: 0;
+}
+
+.cat-illustration-mountain {
+  bottom: 45px;
+}
+
+.cat-illustration-hill {
+  bottom: 45px;
+}
+
+.cat-illustration-trees {
+  bottom: 25px;
+}
+
+.cat-illustration-sun {
+  top: 120px;
+  margin-left: -20px;
+  transition: all 1s ease;
+  transform: scale(0.2);
+}
+
+.cat-illustration-moon,
+.cat-illustration-stars {
+  top: 25px;
+  opacity: 0;
+}
+
+.cat-illustration-land {
+  bottom: 3px;
+}
+
+.cat-illustration-clouds {
+  top: 50px;
+  right: -500px;
+  transition: all 1s ease 0.1s;
+}
+
+.day .cat-illustration-sun {
+  top: 10px;
+  margin-left: 0;
+  transform: scale(1);
+}
+.day .cat-illustration-clouds {
+  right: 0;
+}
+
+.night .cat-illustration-stars,
+.night .cat-illustration-moon {
+  opacity: 1;
+  transition: all 1s ease 0.5s;
+}
+.night #sky {
+  fill: #17377f;
+}
+.night #mountain {
+  fill: #73addf;
+}
+.night #hill {
+  fill: #659fcd;
+}
+.night #land {
+  fill: #508bb5;
+}
+.night .cat-illustration-trees {
+  fill: #1c2c3b;
+}
+.night .cat-illustration-trunks {
+  fill: #3f3e3d;
+}
+
+.sunset .cat-illustration-sun {
+  top: 60px;
+  margin-left: -80px;
+  transform: scale(1);
+}
+.sunset #sun {
+  fill: #fff;
+}
+.sunset #sky {
+  fill: url(#sky_sunset);
+}
+.sunset #mountain {
+  fill: #efbb2b;
+}
+.sunset #hill {
+  fill: #e6ad28;
+}
+.sunset #land {
+  fill: #de9f26;
+}
+.sunset .cat-illustration-trees {
+  fill: #747c0b;
+}
+.sunset cat-illustration-.trunks {
+  fill: #3f3e3d;
+}
+
+.dusk .cat-illustration-sun {
+  top: 60px;
+  margin-left: 140px;
+  transform: scale(1);
+}
+.dusk #sun {
+  fill: #ffffda;
+}
+.dusk #sky {
+  fill: url(#sky_dusk);
+}
+.dusk #mountain {
+  fill: #f1a3a2;
+}
+.cat-illustration-dusk #hill {
+  fill: #e09c9c;
+}
+.dusk #land {
+  fill: #c4918d;
+}
+.dusk .cat-illustration-trees {
+  fill: #ce791c;
+}
+.dusk .cat-illustration-trunks {
+  fill: #8c5f50;
+}
+
+.cat-illustration-options {
+  display: flex;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  padding: 1em;
+  max-width: 300px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+.cat-illustration-options .cat-illustration-time {
+  transition: all 200ms ease;
+  padding: 3px;
+  margin: 0 3px;
+  width: 50%;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: 1px solid var(--teal);
+  cursor: pointer;
+  color: var(--white);
+  & :hover {
+    color: var(--teal);
+  }
+}
+.cat-illustration-options .cat-illustration-time .active {
+  background: #fff;
+  color: #333;
+  pointer-events: none;
+}
