@@ -55,12 +55,15 @@ p {
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
+
+  overflow: hidden;
   transform-style: preserve-3d;
   z-index: -1;
   @media (max-width: 600px) {
     height: 100%;
   }
 }
+
 .background,
 .foreground {
   position: absolute;
@@ -72,16 +75,16 @@ p {
 .background {
   transform: translateZ(-10px) scale(2);
   @media (max-width: 600px) {
-    transform: translateZ(-10px) scale(1.9) translateY(-150px);
+    transform: translateZ(-10px) scale(1) translateY(-200px);
   }
 }
 /* .background img {
   filter: hue-rotate(36deg);
 } */
 .foreground {
-  transform: translateZ(-5px) scale(1.2) translateX(-300px) translateY(150px);
+  transform: translateZ(-6px) scale(1.2) translateX(-300px) translateY(150px);
   @media (max-width: 1278px) {
-    transform: translateZ(-5px) scale(1.8) translateY(200px);
+    transform: translateZ(-6px) scale(1.8) translateY(0);
     object-fit: scale-down;
   }
   /*  @media (max-width: 789px) {
@@ -95,35 +98,62 @@ p {
 }
 .parallax-header h1 {
   position: absolute;
-  top: -40px;
-  text-align: left;
+  top: 0;
+  left: 10%;
+  text-align: center;
   padding: 1em;
-  right: 20px;
   font-family: var(--ff-heading), cursive;
   text-rendering: geometricPrecision;
   color: var(--text);
   text-shadow: 7px 8px 10px rgba(19, 18, 18, 0.951),
     0 0 10px rgba(19, 18, 18, 0.951);
-  transform: translateZ(-1px) scale(1.2);
-  @media (max-width: 789px) {
+  transform: translateZ(-4px) translateY(-20%) scale(2);
+  @media (max-width: 600px) {
     text-align: left;
+    transform: scale(1);
   }
 }
 .parallax-header h2 {
   position: absolute;
-  top: -100px;
+  top: 55%;
 
-  text-align: center;
-  align-self: center;
-  margin: 2em auto;
+  width: 100%;
+  text-align: right;
   font-family: var(--ff-title), cursive;
-  text-rendering: geometricPrecision;
-  color: white;
-  text-shadow: 8px 8px 10px rgba(2, 6, 24, 0.951);
+  color: var(--text);
+  text-shadow: 7px 8px 10px rgba(19, 18, 18, 0.951),
+    0 0 10px rgba(19, 18, 18, 0.951);
+  transform: translateZ(-1px) translateX(0%) scale(1.8);
+  @media (max-width: 600px) {
+    transform: translateX(-15%) scale(1);
+  }
+}
+.parallax-header h3 {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  width: 100%;
+  font-family: var(--ff-title), cursive;
+  color: black;
+  text-shadow: 3px 3px 3px rgb(255, 250, 250),
+    0 0 8px rgba(255, 255, 255, 0.863);
+  transform: translateZ(-3px) scale(2.8);
+  @media (max-width: 600px) {
+    transform: translateX(-20%) scale(1.2);
+  }
+}
+.parallax-header h4 {
+  position: absolute;
+  top: 200px;
+  text-align: center;
+
+  font-family: var(--ff-heading), cursive;
+
+  color: var(--text);
+  text-shadow: var(--text-shadow);
   transform: translateZ(-4px) scale(1.2);
   @media (max-width: 789px) {
-    top: -50px;
-    margin: 2em 0;
+    transform: scale(1.8);
   }
 }
 
@@ -864,7 +894,7 @@ button {
 } */
 footer {
   width: 100vw;
- 
+
   padding: 2rem;
   margin: 1rem auto;
   display: flex;
@@ -888,7 +918,7 @@ footer {
 
   & h3 {
     color: var(--text);
-    font-family: var(--ff-heading);
+    font-family: var(--ff-link);
     font-weight: 500;
     font-size: 1.4rem;
     padding: 1rem;
