@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .parallax__group {
+      --parallax-scale: 0.1;
+      --parallax-min-height: 44rem;
+      --container-offset-adjustment: 5rem;
+      @media (prefers-reduced-motion) {
+        :root {
+          --parallax-scale: 0;
+        }
+      }
+      .parallax__group {
+        position: relative;
+        z-index: -1;
+        transform-origin: center top;
+        transform: scaleY(calc(1 - var(--parallax-scale)));
+        margin-top: calc(
+          var(--container-offset-adjustment) +
+            (-1 * max(100vh, var(--parallax-min-height)))
+        );
+        margin-bottom: calc(-1 * var(--container-offset-adjustment));
+      }
+
+      .parallax__layer {
+        transform-origin: center top;
+        transform: scaleY(calc(1 / (1 - var(--parallax-scale))));
+      }
+
+      .parallax__layer--foreground {
+        position: relative;
+        top: 0;
+      }
+
+      .parallax__layer--background {
+        position: sticky;
+        z-index: -2;
+        top: 0;
+        transform-origin: center top;
+        transform: scaleY(calc(1 / (1 - var(--parallax-scale))));
+        height: 100%;
+        min-height: 100vh;
+        min-height: max(100vh, var(--parallax-min-height));
+        width: 100vw;
+        background-attachment: fixed; /* legacy fallback */
+        background-image: url(/assets/img/city-office.png);
+      }
+    }
+  </style>
+  <body>
+    <section class="parallax__group">
+      <div class="parallax__layer parallax__layer--background"></div>
+      <div class="parallax__layer parallax__layer--foreground">
+        <img src="/assets/img/girl-in-office.png" />
+        <div><h1>web &amp; frontend developer</h1></div>
+        <div><h2>less white-space</h2></div>
+        <div><h3>more dark-mode</h3></div>
+      </div>
+    </section>
+  </body>
+</html>
