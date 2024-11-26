@@ -42,7 +42,7 @@ p {
   padding: 1rem;
   margin: 0 auto;
 }
-/* S obzirom da ovaj element sadrži čitav sadržaj stranice i pomoću njega gradimo treću dimenziju kako bismo dobili parallax efekt, na njega postavljamo perspektivu; 10px znači da je element "udaljen" od zaslona 10px; to je arbitrarno određena vrijednost potrebna samo kako bismo mogli odrediti relativne vrijednosti koje su nam potrebne da imamo elemente koji su međusobno prividno udaljeni, te zajedno udaljeni od našeg horizonta */
+/* PARALLAX - MAIN CONTAINER JE SCROLLER I NOSI CIJELU STRANICU */
 .main-container {
   height: 100vh;
   overflow-y: auto;
@@ -57,6 +57,12 @@ p {
   height: 100%;
   transform-style: preserve-3d;
   z-index: -1;
+  @media (max-width: 600px) {
+    width: 100vw;
+   
+    
+   
+  }
 }
 .background,
 .foreground {
@@ -68,47 +74,67 @@ p {
 }
 .background {
   transform: translateZ(-100px) scale(2);
+  @media (max-width: 600px) {
+   transform: translateZ(-100px) translateY(0) scale(2);
+  }
 }
 .background img {
   filter: none;
 }
 .foreground {
+  width: 100%;
   left: 0;
   transform: translateZ(-60px) scale(1.1) translateX(-30%) translateY(220px);
-  @media (max-width: 1278px) {
-    transform: translateZ(-4px) scale(1.8) translateY(200px);
+  @media (max-width: 780px) {
+    transform: translateZ(-60px) scale(1.8) translateY(25%);
     object-fit: scale-down;
+  }
+  @media (max-width: 600px) {
+ 
+    transform: translateZ(-60px) scale(2) translateX(0) translateY(30%);
+    object-fit: contain;
   }
 }
 .parallax-header .h1 {
   position: absolute;
-  top: -10%;
   left: 20%;
   text-rendering: geometricPrecision;
   font-family: var(--ff-title), cursive;
   color: var(--text);
   text-shadow: 7px 8px 10px rgba(19, 18, 18, 0.951),
     0 0 10px rgba(19, 18, 18, 0.951);
-  transform: translateZ(-75px) scale(2);
+  transform: translateZ(-75px) translateY(-90%) scale(2);
   text-align: center;
   @media (max-width: 789px) {
+    transform: translateZ(-75px) translateY(-90%) scale(2);
     text-align: left;
+ 
+  }
+  @media (max-width: 600px) {
+    transform: translateZ(-75px) translateY(-100%) scale(1.6);
+   top: 0;
+    left: 0;
+    text-align: center;
+    width: 100%;
   }
 }
 .parallax-header .h11 {
   position: absolute;
-  top: 4rem;
+  top: 10%;
   left: 40%;
   text-rendering: geometricPrecision;
-  font-family: var(--ff-title), cursive;
-  color: var(--blue);
+  font-family: var(--ff-heading), cursive;
+  color: var(--teal);
   text-shadow: 7px 8px 10px rgba(19, 18, 18, 0.951),
     0 0 10px rgba(19, 18, 18, 0.951);
   transform: translateZ(-70px) scale(2);
   text-align: right;
   @media (max-width: 789px) {
-    text-align: left;
-    top: 0;
+    transform: translateZ(-70px) translateY(0) scale(1.6);
+    width: 100%;
+    text-align: center;
+    left: 10%;
+    top: 10%;
   }
 }
 .parallax-header .h2 {
@@ -117,7 +143,7 @@ p {
   right: 5%;
   margin: 2em auto;
   text-rendering: geometricPrecision;
-  font-family: var(--ff-heading), cursive;
+  font-family: var(--ff-cursive), cursive;
   font-weight: 500;
   text-align: right;
   color: var(--text);
@@ -152,25 +178,36 @@ p {
   margin: 1rem auto;
   padding: 1rem 2rem;
 
-  background-color: var(--background-transparent);
+  background: #05041856;
 
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  overflow: hidden;
+  border: 1px solid rgba(3, 1, 24, 0.137);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  overflow: visible;
   transform: translateZ(-20px) translateY(-50%) scale(1);
+  
   @media screen and (max-width: 783px) {
     top: 50%;
     left: 5%;
     right: 5%;
     width: 90vw;
+    padding: 1rem;
     margin: 0 auto;
   }
+  @media screen and (max-width: 600px) {
+    width: 90vw;
+    padding: 1rem;
+    margin: 0 auto;
+    top: 20%;
+    left: 2vw;
+    transform: translateZ(-10px) translateY(80%) scale(1);
+  
+  }
   p {
-    color: var(--text);
-    font-family: var(--link);
+    color: var(--text-alt);
+    font-family: var(--ff-heading);
     font-size: 1.2 rem;
     text-align: center;
   }
@@ -399,13 +436,14 @@ button {
   height: clamp(44px, 5vh, 130px);
   color: var(--text);
   border: 1px outset var(--blue);
-  border-radius: 0.6rem;
+  border-radius: 12px;
   font-size: 100%;
   box-shadow: var(--box-shadow);
   text-rendering: geometricPrecision;
   text-decoration: none;
   text-decoration-line: none;
   text-transform: uppercase;
+  letter-spacing: 1px;
   background: linear-gradient(
     45deg,
     var(--orange) 20%,
@@ -757,6 +795,10 @@ button {
       color: var(--text-color) !important;
       background-color: var(--background) !important;
       box-shadow: var(--box-shadow);
+      @media (max-width: 600px) {
+        width: 90%;
+        margin: 1rem auto;
+      }
       &:focus,
       &:active {
         border: 2px solid var(--blue);
@@ -933,10 +975,12 @@ footer {
   }
 
   @media (max-width: 600px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem 2rem;
+
+    padding: 1rem;
+    margin: 0 auto;
   }
 
   & h3 {
@@ -950,6 +994,12 @@ footer {
     font-family: var(--ff-link);
     font-weight: 500;
     letter-spacing: 0.1em;
+    text-align: center;
+  }
+  & .logo-copy {
+    width: 10%;
+    padding: 1rem;
+    margin: 1rem auto;
   }
   & a {
     margin: 1rem;
@@ -957,7 +1007,7 @@ footer {
     transition: all 3s ease-in-out;
     @media (max-width: 600px) {
       font-size: 1rem;
-      margin: 0.2rem;
+      margin: 0.6rem;
     }
     &:hover {
       color: #2003032d;
