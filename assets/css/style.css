@@ -124,7 +124,7 @@ p {
   left: 40%;
   text-rendering: geometricPrecision;
   font-family: var(--ff-heading), cursive;
-  color: var(--teal);
+  color: var(--white-alt);
   text-shadow: 7px 8px 10px rgba(19, 18, 18, 0.951),
     0 0 10px rgba(19, 18, 18, 0.951);
   transform: translateZ(-70px) scale(2);
@@ -173,15 +173,15 @@ p {
 .container-pllx {
   position: absolute;
   top: 60%;
-  left: 30%;
+  left: 60%;
   width: 40%;
   margin: 1rem auto;
   padding: 1rem 2rem;
 
   background: #05041856;
 
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 16px;
   border: 1px solid rgba(3, 1, 24, 0.137);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
