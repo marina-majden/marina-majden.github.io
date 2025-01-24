@@ -15,13 +15,64 @@ section {
     text-shadow: var(--text-shadow);
   }
 }
-.container {
+.container{
   width: 100vw;
   max-width: 1200px;
   padding: 1rem 2.4rem;
   margin: 0 auto;
   @media (max-width: 768px) {
     padding: 1rem;
+  }
+}
+.container-full {
+  width: 100vw;
+  max-width: 1200px;
+  padding: 1rem 2.4rem;
+  margin: 0 auto;
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+.container-padded {
+  width: 75vw;
+  max-width: 1200px;
+  padding: 1rem 2.2rem;
+  margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 90vw;
+    padding: 1rem;
+  }
+  @media (max-width: 600px) {
+  width: 95vw;
+  padding: 1rem;
+  }
+}
+.container-fluid {
+  width: 100vw;
+  padding: 0 1rem;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-between;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .col-item {
+    width: 30%;
+    height: 100%;
+    padding: 2rem;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
   }
 }
 .container-responsive {
@@ -36,36 +87,6 @@ section {
   }
   @media (789px < width < 998px) {
     width: 80%;
-  }
-}
-.container-fluid {
-  width: 100vw;
-  padding: 0 1rem;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-content: space-evenly;
-}
-.container-flex {
-  padding: 0 1rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-content: space-evenly;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    justify-content: center;
-  }
-  .item {
-    width: 30%;
-    height: 100%;
-    padding: 2rem;
-    @media (max-width: 768px) {
-      width: 90%;
-    }
   }
 }
 /* CARD STYLING */

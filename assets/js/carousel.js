@@ -2,17 +2,23 @@ new Glide(".glide", {
   type: "carousel",
   startAt: 0,
 
-  gap: 30,
-  perView: 3,
+  gap: 10,
+   perView: 8,
   breakpoints: {
     999: {
-      perView: 2,
+      perView: 7,
     },
     789: {
-      perView: 1,
+      perView: 6,
     },
-  },
+    600: {
+      perView: 5,
+    },
+    400: {
+      perView: 4,
+    }
+  }, 
   focusAt: "center",
-  autoplay: 2500,
+  autoplay: 1000,
   hoverpause: true,
 }).mount();

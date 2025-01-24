@@ -118,7 +118,7 @@
     .box.item1 {
       grid-area: 3/3/3/3;
       background: var(--bg-trans);
-      display: none;
+      
     }
     .box.item2 {
       background-image: url(/assets/img/wormhole-1731853681154.png);

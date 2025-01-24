@@ -18,279 +18,639 @@
       type="application/json"
     />
   </head>
+
   <body>
+    <!-- MOBILE NAVIGATION MENU -->
+    <nav id="nav" class="nav" role="navigation">
+      <ul
+        class="nav__menu"
+        id="menu"
+        tabindex="-1"
+        aria-label="main navigation"
+        hidden
+      >
+        <li class="nav__item">
+          <a href="#"><i class="fa-solid fa-house"></i></a>
+        </li>
+        <li class="nav__item"><a href="#about"> About </a></li>
+        <li class="nav__item"><a href="#services">Services</a></li>
+        <li class="nav__item"><a href="#skills">Skills</a></li>
+        <li class="nav__item"><a href="#projects">Projects</a></li>
+        <li class="nav__item"><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- MENU TOGGLE BUTTON -->
+      <a
+        href="#nav"
+        class="nav__toggle"
+        role="button"
+        aria-expanded="false"
+        aria-controls="menu"
+      >
+        <svg
+          class="menuicon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="50"
+          height="50"
+          viewBox="0 0 50 50"
+        >
+          <title>Toggle Menu</title>
+          <g>
+            <line class="menuicon__bar" x1="13" y1="16.5" x2="37" y2="16.5" />
+            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+            <line class="menuicon__bar" x1="13" y1="32.5" x2="37" y2="32.5" />
+            <circle class="menuicon__circle" r="23" cx="25" cy="25" />
+          </g>
+        </svg>
+      </a>
+
+      <!-- ANIMATED BACKGROUND ELEMENT -->
+      <div class="splash"></div>
+    </nav>
+
     <!-- =============== HOME ================ -->
     <div class="home" id="home">
-      <h1 class="headline">web &amp; frontend developer</h1>
-      <!-- <button id="buttonz" onclick="toggleTheme()">Toggle Theme</button>
- -->
-      <div id="compare">
-        <div id="example">
-          <img src="/assets/img/mini-removebg-preview.png" alt="mini-design" />
-          <img src="/assets/img/maxi-removebg-preview.png" alt="maxi-design" />
-        </div>
-      </div>
-
       <div id="split">
+        <h1 class="headline">web &amp; frontend developer</h1>
+
         <div class="splitview skewed">
           <div class="panel bottom">
             <div class="content">
-              <div class="description">
-                <p class="accent">or you are looking for...</p>
-                <h1>Minimalistic Elegant Websites</h1>
-                <p class="accent">look no more!</p>
-              </div>
+              <div class="code-editor">
+                <div class="header">
+                  <span class="title">CSS</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    class="icon"
+                  >
+                    <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                    <g
+                      stroke-linejoin="round"
+                      stroke-linecap="round"
+                      id="SVGRepo_tracerCarrier"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        stroke-linecap="round"
+                        stroke-width="2"
+                        stroke="#4C4F5A"
+                        d="M6 6L18 18"
+                      ></path>
+                      <path
+                        stroke-linecap="round"
+                        stroke-width="2"
+                        stroke="#4C4F5A"
+                        d="M18 6L6 18"
+                      ></path>
+                    </g>
+                  </svg>
+                </div>
+                <div class="editor-content">
+                  <code class="code">
+                    <p>
+                      <span class="color-0">.code-editor </span> <span>{</span>
+                    </p>
 
-              <img src="/assets/img/mini-removebg-preview.png" alt="mini" />
+                    <p class="property">
+                      <span class="color-2">max-width</span><span>:</span>
+                      <span class="color-1">300px</span>;
+                    </p>
+                    <p class="property">
+                      <span class="color-2">background-color</span
+                      ><span>:</span> <span class="color-preview-1"></span
+                      ><span class="">#1d1e22</span>;
+                    </p>
+                    <p class="property">
+                      <span class="color-2"> box-shadow</span><span>:</span>
+                      <span class="color-1"
+                        >0px 4px 30px <span class="color-preview-2"></span
+                        ><span class="color-3">rgba(</span>0, 0, 0, 0.5<span
+                          class="color-3"
+                          >)</span
+                        ></span
+                      >;
+                    </p>
+                    <p class="property">
+                      <span class="color-2">border-radius</span><span>:</span>
+                      <span class="color-1">8px</span>;
+                    </p>
+                    <p>}</p>
+                  </code>
+                </div>
+              </div>
+              <div class="description right">
+                <!--   <p class="accent">or you are looking for...</p> -->
+                <h3>Minimalistic Elegant Websites</h3>
+                <!--   <p class="accent">look no more!</p> -->
+              </div>
             </div>
           </div>
           <div class="panel top">
             <div class="content">
-              <div class="description">
-                <p class="accent">Whether you like</p>
-                <h1>Bold Innovative Websites</h1>
-                <p class="accent">that catch the eye...</p>
+              <div class="card-showcase">
+                <div class="content-showcase">
+                  <p class="heading-showcase">Card Hover Effect</p>
+                  <p class="para-showcase">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Modi laboriosam at voluptas minus culpa deserunt delectus
+                    sapiente inventore pariatur
+                  </p>
+                  <button class="btn-showcase">Read more</button>
+                </div>
               </div>
-
-              <img src="/assets/img/maxi-removebg-preview.png" alt="maxi" />
+              <div class="description left">
+                <!--   <p class="accent">Whether you like</p> -->
+                <h3>Bold Innovative Websites</h3>
+                <!--   <p class="accent">that catch the eye...</p> -->
+              </div>
             </div>
           </div>
 
           <div class="handle"></div>
         </div>
       </div>
-      <div class="intro">
-        <h3>
-          Looking for a Front-end / Web developer for your project or a new
-          member to join your team?
-        </h3>
-        <h3>Feel free to say hi!</h3>
-
-        <button class="cta">Contact me</button>
-
-        <h3>or scroll down and look around</h3>
-        <div class="chev">
-          <i class="fa-solid fa-chevron-down"></i>
-        </div>
-      </div>
     </div>
 
-    <!-- =============== HERO ================ -->
-    <section class="hero" id="hero">
-      <article class="grid">
-        <div class="box item1"></div>
-        <div class="box item2"></div>
-        <div class="box item3"></div>
-        <div class="box item4">
-          <h3 class="box-text">
-            I am Marina Majdenić, a freelancing Frontend / Web developer based
-            in Croatia and available for collaboration or hire. I enjoy creating
-            interactive and responsive websites and web applications, as well as
-            ensuring reliability, scalability and performance of the final
-            product.
-          </h3>
-        </div>
-        <div class="box item5"></div>
-
-        <div class="box item7"></div>
-        <div class="box item8">
-          <a href="#projects">
-            <h4 class="box-text">Take a look at my projects</h4>
-            <i class="fa-solid fa-folder-open"></i>
-          </a>
-        </div>
-        <div class="box item9">
-          <a href="#skills">
-            <h4 class="box-text">Click here to see my skills</h4>
-            <i class="fa-solid fa-code"></i
-          ></a>
-        </div>
-        <div class="box item10">
-          <a href="#contact"
-            ><h4 class="box-text">Contact me here</h4>
-            <i class="fa-solid fa-comment"></i>
-          </a>
-        </div>
-        <div class="box item11">
-          <a href="#services">
-            <h4 class="box-text">Or check out my services</h4>
-
-            <i class="fa-solid fa-laptop-file"></i
-          ></a>
-        </div>
-      </article>
-    </section>
-    <!-- =============== NAVBAR ================ -->
-    <button class="menu-button">
-      <i class="fa fa-bars"></i>
-    </button>
-
-    <nav class="navbar sticky-bg">
-      <ul>
-        <li>
-          <a href="#home" data-content="Home"
-            ><i class="fa-solid fa-house"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#hero" data-content="About"
-            ><i class="fa-solid fa-circle-info"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#services" data-content="Services"
-            ><i class="fa-solid fa-laptop-file"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#skills" data-content="Skills"
-            ><i class="fa-solid fa-code"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#projects" data-content="Projects"
-            ><i class="fa-solid fa-folder-open"></i
-          ></a>
-        </li>
-        <li>
-          <a href="#contact" data-content="Contact"
-            ><i class="fa-solid fa-comment"></i
-          ></a>
-        </li>
-      </ul>
-    </nav>
     <!-- =============== MAIN ================ -->
     <main>
+      <!-- ============== DESKTOP NAVBAR ============== -->
+      <nav class="navbar" id="navbar">
+        <ul>
+          <li>
+            <a href="#"><i class="fa-solid fa-house"></i></a>
+          </li>
+          <li><a href="#about"> About </a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <div id="marker"></div>
+        </ul>
+      </nav>
       <div class="logo" href="#">
         <img src="/assets/img/logo-white.png" alt="logo" />
       </div>
-      <!-- =============== Services ============== -->
+
+      <!-- =============== SERVICES ============== -->
       <section id="services" class="services">
         <h2>Services</h2>
-        <div class="row">
-          <div class="card">
-            <h4>Web Development Based on Existing Design</h4>
-            <img
-              src="/assets/svg/undraw_undraw_design_1w1r_-1-_1qg6.svg"
-              alt=""
-            />
-            <p class="card__description_front">
-              Polished and responsive website development based on your design,
-              ideal for landing pages and small business websites.
-            </p>
-
-            <div class="card__content">
-              <div class="card__description_back">
-                <h4>Includes:</h4>
-                <ul>
-                  <li>Development based on client-provided designs</li>
-                  <li>Responsive design across devices</li>
-                  <li>Basic SEO optimization</li>
-                  <li>Updating old websites possible</li>
-                </ul>
-                <button><a href="#contact">Ask for more info</a></button>
+        <div class="container-padded">
+          <div class="wrapper-outer">
+            <div class="wrapper-inner">
+              <input id="tab-1" name="slider" type="radio" />
+              <input checked="" id="tab-2" name="slider" type="radio" />
+              <input id="tab-3" name="slider" type="radio" />
+              <header class="tab-header">
+                <label class="tab-1" for="tab-1">1</label>
+                <label class="tab-2" for="tab-2">2</label>
+                <label class="tab-3" for="tab-3">3</label>
+                <div class="slider"></div>
+              </header>
+              <div class="card-area">
+                <div class="cards-tab">
+                  <div class="row-tab row-1">
+                    <div class="price-details">
+                      <span class="price">1000</span>
+                      <p>Web Development Based on Existing Design</p>
+                    </div>
+                    <ul class="features">
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>
+                          Polished and responsive website development
+                        </span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline></svg><span>Responsive design across devices</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline></svg><span>Basic SEO optimization</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Updating old websites possible</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="row-tab">
+                    <div class="price-details">
+                      <span class="price">1500</span>
+                      <p>Custom Web Design and Development</p>
+                    </div>
+                    <ul class="features">
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>
+                          Tailored design based on your needs and target
+                          audience</span
+                        >
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span> Complete development of the website</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Responsive design across devices</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Advanced SEO optimization</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="row-tab">
+                    <div class="price-details">
+                      <span class="price">2000</span>
+                      <p>Custom Web Design, Development and Deployment</p>
+                    </div>
+                    <ul class="features">
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span
+                          >Website custom designed and adjusted for target
+                          audience</span
+                        >
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span
+                          >Fully functional, interactive and user-friendly
+                          website development
+                        </span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span
+                          >Responsive design across devices and SEO
+                          optimization</span
+                        >
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span
+                          >Deployment to client's server (possible maintenance
+                          deal)</span
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="card">
-            <h4>Custom Web Design and Development</h4>
-            <img src="/assets/svg/undraw_proud_coder_re_exuy.svg" alt="" />
-            <p class="card__description_front">
-              Tailored design based on your needs and target audience, full
-              development of the website, deployment and maintenance.
-            </p>
-
-            <div class="card__content">
-              <div class="card__description_back">
-                <h4>Includes:</h4>
-                <ul>
-                  <li>Custom design creation</li>
-                  <li>Responsive design across devices</li>
-                  <li>SEO optimization</li>
-                  <li>Visual identity services</li>
-                </ul>
-                <button><a href="#contact">Ask for more info</a></button>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <h4>Custom Web Design, Development and Deployment</h4>
-            <img src="/assets/svg/undraw_web_devices_re_m8sc.svg" alt="" />
-            <p class="card__description_front">
-              Complete and conceptualized full-package, designed and adjusted
-              for target audience and transformative user experience into
-              interactive and functional website.
-            </p>
-
-            <div class="card__content">
-              <div class="card__description_back">
-                <h4>Includes:</h4>
-                <ul>
-                  <li>Custom design and development</li>
-                  <li>Deployment to client's server</li>
-                  <li>Responsive design across devices</li>
-                  <li>Maintenance and updating</li>
-                </ul>
-                <button><a href="#contact">Ask for more info</a></button>
-              </div>
+              <button>Choose plan</button>
             </div>
           </div>
         </div>
       </section>
 
       <!-- =============== SKILLS ================ -->
-
       <section class="skills" id="skills">
         <h2>Skills</h2>
+        <div class="skill-wrapper">
+          <div class="overflow-box">
+            <div class="animation-box">
+              <!-- Tech Stack title -->
+              <h3>Tech Stack</h3>
+              <!-- Displaying the name of current technology -->
+              <h4 id="techName"></h4>
+            </div>
+          </div>
+          <!-- Container with technology icons -->
+          <div class="flexbox">
+            <img src="assets/svg/html.svg" name="HTML" />
+            <img src="assets/svg/css.svg" name="CSS" />
+            <img src="assets/svg/javascript.svg" name="JavaScript" />
+            <img src="assets/svg/react.svg" name="React" />
+            <img src="assets/svg/node.svg" name="NodeJS" />
+            <img src="assets/svg/sass.svg" name="Sass" />
+            <img src="assets/svg/tailwind.svg" name="TailwindCSS" />
+            <img src="assets/svg/git.svg" name="Git" />
+          </div>
+        </div>
+
+        <!--  <div class="container">
+        <div class="advice-container">
+          <div class="image-svg">
+            <svg class="App-logo" xmlns="http://www.w3.org/2000/svg" aria-label="JavaScript" role="img"
+              viewBox="0 0 256 256">
+              <rect width="36" height="36" rx="15%" fill="#f7df1e"></rect>
+              <path fill="#25241c"
+                d="M324 370c10 17 24 29 47 29c20 0 33-10 33 -24c0-16 -13 -22 -35 -32l-12-5c-35-15 -58 -33 -58 -72c0-36 27 -64 70 -64c31 0 53 11 68 39l-37 24c-8-15 -17 -21 -31 -21c-14 0-23 9 -23 21c0 14 9 20 30 29l12 5c41 18 64 35 64 76c0 43-34 67 -80 67c-45 0-74 -21 -88 -49zm-170 4c8 13 14 25 31 25c16 0 26-6 26 -30V203h48v164c0 50-29 72 -72 72c-39 0-61 -20 -72 -44z">
+              </path>
+            </svg>
+          </div>
+          <p class="paragraph">A D V I S E # 140</p>
+          <div class="advice-details">
+            “If your hair is thinning, try dying your hair a similar tone to
+            your scalp.”
+          </div>
+          <div class="pattern-divider">
+            <svg width="295" height="16" xmlns="http://www.w3.org/2000/svg">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="#4F5D74" d="M0 8h122v1H0zM173 8h122v1H173z"></path>
+                <g transform="translate(138)" fill="#CEE3E9">
+                  <rect width="6" height="16" rx="3"></rect>
+                  <rect x="14" width="6" height="16" rx="3"></rect>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <button>
+            <svg class="icon-dice" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 0H4a4.005 4.005 0 0 0-4 4v16a4.005 4.005 0 0 0 4 4h16a4.005 4.005 0 0 0 4-4V4a4.005 4.005 0 0 0-4-4ZM7.5 18a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm4.5 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm4.5 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"
+                fill="#202733"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="advice-container">
+          <p class="paragraph">A D V I S E # 140</p>
+          <div class="advice-details">
+            “If your hair is thinning, try dying your hair a similar tone to
+            your scalp.”
+          </div>
+          <div class="pattern-divider">
+            <svg width="295" height="16" xmlns="http://www.w3.org/2000/svg">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="#4F5D74" d="M0 8h122v1H0zM173 8h122v1H173z"></path>
+                <g transform="translate(138)" fill="#CEE3E9">
+                  <rect width="6" height="16" rx="3"></rect>
+                  <rect x="14" width="6" height="16" rx="3"></rect>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <button>
+            <svg class="icon-dice" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 0H4a4.005 4.005 0 0 0-4 4v16a4.005 4.005 0 0 0 4 4h16a4.005 4.005 0 0 0 4-4V4a4.005 4.005 0 0 0-4-4ZM7.5 18a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm4.5 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm4.5 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"
+                fill="#202733"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="advice-container">
+          <p class="paragraph">A D V I S E # 140</p>
+          <div class="advice-details">
+            “If your hair is thinning, try dying your hair a similar tone to
+            your scalp.”
+          </div>
+          <div class="pattern-divider">
+            <svg width="295" height="16" xmlns="http://www.w3.org/2000/svg">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="#2c2c2c" d="M0 8h122v1H0zM173 8h122v1H173z"></path>
+                <g transform="translate(138)" fill="#CEE3E9">
+                  <rect width="6" height="16" rx="3"></rect>
+                  <rect x="14" width="6" height="16" rx="3"></rect>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <button>
+            <svg class="icon-dice" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 0H4a4.005 4.005 0 0 0-4 4v16a4.005 4.005 0 0 0 4 4h16a4.005 4.005 0 0 0 4-4V4a4.005 4.005 0 0 0-4-4ZM7.5 18a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm4.5 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm4.5 4.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm0-9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"
+                fill="#202733"></path>
+            </svg>
+          </button>
+        </div>
+      </div> -->
+        <div class="container-padded skill-cards">
+          <div class="skill-card">
+            <h4>HTML, CSS, JS</h4>
+            <p>
+              HTML, CSS and JS I started designing blogs and simple pages with
+              HTML and CSS as a highschool student. I know how to use different
+              CSS preprocessors, JS libraries and framworks.
+            </p>
+          </div>
+          <div class="skill-card">
+            <h4>React</h4>
+            <p>
+              I have experience with React libraries like Redux and Next.js, and
+              I am currently learning more about creating 3D content with
+              Three.js and about animation with GSAP.
+            </p>
+          </div>
+          <div class="skill-card">
+            <h4>Node.js</h4>
+            <p>
+              It is amazing that JavaScript can be used on the server side with
+              Node.js, and frameworks like Express.js make setting up a server
+              for applications so much easier and faster.
+            </p>
+          </div>
+          <div class="skill-card">
+            <h4>Node.js</h4>
+            <p>
+              It is amazing that JavaScript can be used on the server side with
+              Node.js, and frameworks like Express.js make setting up a server
+              for applications so much easier and faster.
+            </p>
+          </div>
+          <div class="skill-card">
+            <h4>Testing and optimization</h4>
+            <p>
+              I always try to ensure that my code is bug-free and that it works
+              as expected. I can work with debugging tools and I am always
+              trying to optimize my code for better performance.
+            </p>
+          </div>
+          <div class="skill-card">
+            <h4>Version Control</h4>
+            <p>
+              Git and Github are essential part of my workflow, and most of my
+              projects are hosted on Github. That way we can collaborate easily
+              anyday anytime.
+            </p>
+          </div>
+        </div>
         <div class="glide glide--carousel">
           <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
               <li class="glide__slide">
-                <h3>HTML, CSS, JS</h3>
-                <p>
-                  HTML, CSS and JS I started designing blogs and simple pages
-                  with HTML and CSS as a highschool student. I know how to use
-                  different CSS preprocessors, JS libraries and framworks.
-                </p>
+                <img src="assets/svg/html.svg" name="HTML" />
               </li>
               <li class="glide__slide">
-                <h3>React</h3>
-                <p>
-                  I have experience with React libraries like Redux and Next.js,
-                  and I am currently learning more about creating 3D content
-                  with Three.js and about animation with GSAP.
-                </p>
+                <img src="assets/svg/css.svg" name="CSS" />
               </li>
               <li class="glide__slide">
-                <h3>Node.js</h3>
-                <p>
-                  It is amazing that JavaScript can be used on the server side
-                  with Node.js, and frameworks like Express.js make setting up a
-                  server for applications so much easier and faster.
-                </p>
+                <img src="assets/svg/javascript.svg" name="JavaScript" />
               </li>
               <li class="glide__slide">
-                <h3>Testing and optimization</h3>
-                <p>
-                  I always try to ensure that my code is bug-free and that it
-                  works as expected. I can work with debugging tools and I am
-                  always trying to optimize my code for better performance.
-                </p>
+                <img src="assets/svg/react.svg" name="React" />
               </li>
               <li class="glide__slide">
-                <h3>Version Control</h3>
-                <p>
-                  Git and Github are essential part of my workflow, and most of
-                  my projects are hosted on Github. That way we can collaborate
-                  easily anyday anytime.
-                </p>
+                <img src="assets/svg/node.svg" name="NodeJS" />
+              </li>
+              <li class="glide__slide">
+                <img src="assets/svg/sass.svg" name="Sass" />
+              </li>
+              <li class="glide__slide">
+                <img src="assets/svg/tailwind.svg" name="TailwindCSS" />
+              </li>
+              <li class="glide__slide">
+                <img src="assets/svg/mongo.svg" name="MongoDB" />
+              </li>
+              <li class="glide__slide">
+                <img src="assets/svg/express.svg" name="ExpressJS" />
+              </li>
+              <li class="glide__slide">
+                <img src="assets/svg/redux.svg" name="Redux" />
+              </li>
+              <li class="glide__slide">
+                <img src="assets/svg/git.svg" name="Git" />
+              </li>
+              <li class="glide__slide">
+                <img src="assets/svg/figma.svg" name="Figma" />
               </li>
             </ul>
-          </div>
-          <div class="glide__bullets" data-glide-el="controls[nav]">
-            <button class="glide__bullet" data-glide-dir="=0"></button>
-            <button class="glide__bullet" data-glide-dir="=1"></button>
-            <button class="glide__bullet" data-glide-dir="=2"></button>
           </div>
         </div>
 
@@ -346,7 +706,8 @@
         <!-- =============== PROJECT ONE =============== -->
 
         <div id="project-cards" class="container-responsive">
-          <div class="project-card">
+      
+        
             <figure>
               <div class="banner">
                 <div class="tools">
@@ -391,9 +752,9 @@
                 </div>
               </figcaption>
             </figure>
-          </div>
+       
           <!-- =============== PROJECT TWO ===============-->
-          <div class="project-card">
+
             <figure>
               <div class="banner">
                 <div class="tools">
@@ -440,10 +801,10 @@
                 </div>
               </figcaption>
             </figure>
-          </div>
+   
 
           <!-- =============== PROJECT THREE =============== -->
-          <div class="project-card">
+
             <figure>
               <div class="banner">
                 <div class="tools">
@@ -493,9 +854,9 @@
                 </div>
               </figcaption>
             </figure>
-          </div>
+     
           <!-- =============== PROJECT FOUR =============== -->
-          <div class="project-card">
+   
             <figure>
               <div class="banner">
                 <div class="tools">
@@ -542,8 +903,190 @@
               </figcaption>
             </figure>
           </div>
-        </div>
+    
       </section>
+
+      <!-- =============== HERO ================ -->
+      <!--  <section class="hero" id="hero">
+      <article class="grid">
+        <div class="box item1">
+          <div class="devices">
+            <div class="device"></div>
+            <div class="device"></div>
+            <div class="device"></div>
+          </div>
+        </div>
+        <div class="box item2">
+          <div class="text-switch-container">
+            <div class="text-switcher">
+              <h4>loading</h4>
+              <div class="words">
+                <span class="word">buttons</span>
+                <span class="word">forms</span>
+                <span class="word">switches</span>
+                <span class="word">cards</span>
+                <span class="word">buttons</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box item3">
+          <div class="lamp">
+            <div class="glass">
+              <div class="lava">
+                <div class="blob"></div>
+                <div class="blob"></div>
+                <div class="blob"></div>
+                <div class="blob top"></div>
+                <div class="blob bottom"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box item4">
+          <h3 class="box-text">
+            I am Marina Majdenić, a freelancing Frontend / Web developer based
+            in Croatia and available for collaboration or hire. I enjoy
+            creating interactive and responsive websites and web applications,
+            as well as ensuring reliability, scalability and performance of
+            the final product.
+          </h3>
+        </div>
+        <div class="box item5">
+          <div class="laptop">
+            <div class="screen">
+              <div class="header"></div>
+              <div class="text">Hello MackBook</div>
+            </div>
+            <div class="keyboard"></div>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+              <filter id="goo">
+                <fegaussianblur in="SourceGraphic" stdDeviation="10" result="blur"></fegaussianblur>
+                <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+                  result="goo"></fecolormatrix>
+                <feblend in="SourceGraphic" in2="goo"></feblend>
+              </filter>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="box item7">
+          <div class="flex">
+            <div class="card">
+              <div class="content">
+                <div class="back">
+                  <div class="back-content">
+                    <strong>Hover Me</strong>
+                  </div>
+                </div>
+                <div class="front">
+                  <div class="img">
+                    <div class="circle"></div>
+                    <div class="circle" id="right"></div>
+                    <div class="circle" id="bottom"></div>
+                  </div>
+
+                  <div class="front-content">
+                    <small class="badge">Pasta</small>
+                    <div class="description">
+                      <div class="title">
+                        <p class="title">
+                          <strong>Spaguetti Bolognese</strong>
+                        </p>
+                      </div>
+                      <p class="card-footer">30 Mins 1 Serving</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="content">
+                <div class="back">
+                  <div class="back-content">
+                    <strong>Hover Me</strong>
+                  </div>
+                </div>
+                <div class="front">
+                  <div class="img">
+                    <div class="circle"></div>
+                    <div class="circle" id="right2"></div>
+                    <div class="circle" id="bottom2"></div>
+                  </div>
+
+                  <div class="front-content">
+                    <small class="badge">Pasta</small>
+                    <div class="description">
+                      <div class="title">
+                        <p class="title">
+                          <strong>Spaguetti Bolognese</strong>
+                        </p>
+                      </div>
+                      <p class="card-footer">30 Mins 1 Serving</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="content">
+                <div class="back">
+                  <div class="back-content">
+                    <strong>Hover Me</strong>
+                  </div>
+                </div>
+                <div class="front">
+                  <div class="img">
+                    <div class="circle"></div>
+                    <div class="circle" id="right3"></div>
+                    <div class="circle" id="bottom3"></div>
+                  </div>
+
+                  <div class="front-content">
+                    <small class="badge">Pasta</small>
+                    <div class="description">
+                      <div class="title">
+                        <p class="title">
+                          <strong>Spaguetti Bolognese</strong>
+                        </p>
+                      </div>
+                      <p class="card-footer">30 Mins 1 Serving</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box item8">
+          <a href="#projects">
+            <h4 class="box-text">Take a look at my projects</h4>
+            <i class="fa-solid fa-folder-open"></i>
+          </a>
+        </div>
+        <div class="box item9">
+          <a href="#skills">
+            <h4 class="box-text">Click here to see my skills</h4>
+            <i class="fa-solid fa-code"></i>
+          </a>
+        </div>
+        <div class="box item10">
+          <a href="#contact">
+            <h4 class="box-text">Contact me here</h4>
+            <i class="fa-solid fa-comment"></i>
+          </a>
+        </div>
+        <div class="box item11">
+          <a href="#services">
+            <h4 class="box-text">Or check out my services</h4>
+
+            <i class="fa-solid fa-laptop-file"></i>
+          </a>
+        </div>
+      </article>
+    </section> -->
       <!-- ============= CONTACT ================-->
       <section class="contact" id="contact">
         <h2>Contact</h2>
@@ -630,27 +1173,20 @@
       <!-- =============== FOOTER ================ -->
       <footer class="footer">
         <div class="socials">
-          <h3>Links to my socials:</h3>
-          <a href="https://github.com/marina-majden" target="_blank"
-            ><i class="fa-brands fa-2x fa-square-github fa-beat"> </i
-          ></a>
-          <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
-            ><i class="fa-brands fa-2x fa-linkedin-in fa-beat"></i
-          ></a>
-          <a href="mailto:marina.majden@gmail.com" target="_blank"
-            ><i class="fa-brands fa-2x fa-google-plus-square fa-beat"></i
-          ></a>
-          <a href="https://medium.com/@marina.majden" target="_blank"
-            ><i class="fa-brands fa-2x fa-medium fa-beat"></i
-          ></a>
-        </div>
-        <div class="copyright">
-          <p>
-            Copyright
-            <i class="fa-solid fa-copyright w3-hover-opacity"></i>
-            Marina Majdenić <br />
-            2024.
-          </p>
+          <div class="socials-icons">
+            <a href="https://github.com/marina-majden" target="_blank"
+              ><i class="fa-brands fa fa-square-github fa-beat"> </i
+            ></a>
+            <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
+              ><i class="fa-brands fa fa-linkedin-in fa-beat"></i
+            ></a>
+            <a href="mailto:marina.majden@gmail.com" target="_blank"
+              ><i class="fa-brands fa fa-google-plus-square fa-beat"></i
+            ></a>
+            <a href="https://medium.com/@marina.majden" target="_blank"
+              ><i class="fa-brands fa fa-medium fa-beat"></i
+            ></a>
+          </div>
         </div>
         <div class="logo-copy">
           <img
@@ -660,10 +1196,18 @@
             height="50px"
           />
         </div>
+        <div class="copyright">
+          <p>
+            Copyright
+            <i class="fa-solid fa-copyright w3-hover-opacity"></i> 2024.
+            <br />Marina Majdenić
+          </p>
+        </div>
       </footer>
+      <div class="waterdrop"></div>
     </main>
 
-    <!-- JS files    -->
+    <!-- =============== JAVASCRIPT FILES ================ -->
     <script
       src="https://kit.fontawesome.com/677ac239ea.js"
       crossorigin="anonymous"
@@ -676,7 +1220,7 @@
     <script src="/assets/js/image-compare-viewer.min.js"></script>
     <script src="/node_modules/@glidejs/glide/dist/glide.min.js"></script>
     <script src="/assets/js/carousel.js"></script>
-    <script src="/assets/js/comparison.js"></script>
+    <script src="/assets/js/tech.js"></script>
 
     <script></script>
   </body>

@@ -1,5 +1,6 @@
 @import url(/assets/fonts/NotoSerifDisplay-VariableFont_wdth\,wght.ttf);
 @import url(/assets/fonts/Pacifico/Pacifico-Regular.ttf);
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&family=Reem+Kufi:wght@400..700&display=swap');
 /* =============== FONTS =============== */
 @font-face {
   font-family: "Pacifico";
@@ -35,4 +36,15 @@
   font-family: "Encode Sans";
   src: url(/assets/fonts/Encode_Sans/EncodeSans-VariableFont_wdth\,wght.ttf)
     format("truetype");
+}
+:root {
+  --font-family: "Noto Sans", sans-serif;
+  --font-family-serif: "Noto Serif", serif;
+  --font-family-display: "Pacifico", cursive;
+  --font-family-monospace: "Fira Code", monospace;
+  --ff-akshar: "Akshar", sans-serif;
+  --ff-lexend: "Lexend", sans-serif;
+  --ff-outfit: "Outfit", sans-serif;
+  --ff-red-hat: "Red Hat Text", sans-serif;
+  --ff-heading: "Reem Kufi", sans-serif;
 }
