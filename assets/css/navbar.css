@@ -266,7 +266,7 @@ a:active {
 
 /* Hide the navbar by default on smaller screens */
 @media screen and (max-width: 600px) {
-  .navbar, .splitview {display: none;
+  .navbar {display: none;
   }
   .nav__toggle {display: block;}
 }
