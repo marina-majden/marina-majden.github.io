@@ -80,7 +80,7 @@ section {
   padding: 1rem;
   margin: 2rem auto;
   @media (max-width: 600px) {
-    width: 90vw;
+    width: 95vw;
   }
   @media (601px < width < 786px) {
     width: 70vw;
