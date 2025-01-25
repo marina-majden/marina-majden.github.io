@@ -464,3 +464,6 @@ a:active {
   opacity: 1;
   transform: translateY(0);
 }
+#nav.hidden {
+  display: none;
+}

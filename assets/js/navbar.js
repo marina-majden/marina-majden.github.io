@@ -53,6 +53,7 @@ menuToggle.addEventListener('click', e => {
   menuToggle.setAttribute('aria-expanded', String(isMenuOpen));
   menu.hidden = !isMenuOpen;
   nav.classList.toggle('nav--open');
+
 });
 
 
@@ -70,10 +71,12 @@ nav.addEventListener('keydown', e => {
     if (e.shiftKey) {
       if (document.activeElement === menuLinks[0]) {
         menuToggle.focus();
+        
         e.preventDefault();
       }
     } else if (document.activeElement === menuToggle) {
       menuLinks[0].focus();
+      nav.classList.toggle('nav--open');
       e.preventDefault();
     }
   }
