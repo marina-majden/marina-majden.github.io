@@ -1400,52 +1400,6 @@ main {
     padding: 1rem;
   }
 
-  .container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-
-    .advice-container {
-      font-family: "Manrope", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      width: 320px;
-      height: auto;
-      background-color: hsl(217, 19%, 24%);
-      border-radius: 10px;
-      padding: 30px 16px 0 16px;
-    }
-
-    .paragraph {
-      font-size: 17px;
-      background-image: linear-gradient(to right, hsl(150, 100%, 66%), #C031B5);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-      font-weight: 500;
-      letter-spacing: 1px;
-      /*Reason: there are some contrast issues*/
-    }
-
-    .advice-details {
-      color: hsl(193, 38%, 86%);
-      font-size: 20px;
-      font-weight: 500;
-      margin: 30px 0;
-      line-height: 25px;
-      text-wrap: balance;
-      letter-spacing: 1px;
-    }
-
-    .pattern-divider path {
-      fill: hsl(217, 19%, 38%);
-    }
-  }
-
-
   #skill-list {
     list-style: none;
     padding: 1rem;
@@ -1481,27 +1435,27 @@ main {
   }
 
   .skill-item:nth-child(even) i {
-    color: var(--sec);
+    color: var(--clr-secondary);
   }
 
   .skill-item:nth-child(odd) i {
-    color: var(--accent);
+    color: var(--clr-primary);
   }
 
   .skill-item:first-child i {
-    color: var(--prim);
+    color: var(--clr-quaternary);
   }
 
   .skill-item:last-child i {
-    color: var(--accenty);
+    color: var(--clr-tertiary);
   }
 
   .skill-item:nth-child(5n) i {
-    color: var(--accenty);
+    color: var(--clr-primary);
   }
 
   .skill-item:nth-child(6n) i {
-    color: var(--sec);
+    color: var(--clr-quaternary);
   }
 
   .container-responsive {
@@ -1891,6 +1845,7 @@ figure {
   aspect-ratio: 4/3;
   padding: 0;
   margin: 0 auto;
+  margin-bottom: 1rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -2111,15 +2066,6 @@ figure .buttons {
     padding: 1rem;
     margin: 0 auto;
     font-family: var(--ff-accent);
-
-    @media (max-width: 783px) {
-      width: 90%;
-    }
-
-    @media (max-width: 600px) {
-      width: 95%;
-    }
-
     & :is(input, textarea) {
       width: 100%;
       padding: 0.4rem;
@@ -2267,7 +2213,20 @@ figure .buttons {
       }
     }
   }
+  @media (max-width: 786px) {
+    form {
+      width: 100%;
+      padding: 0;
+    
+    }
+  }
+  @media (max-width: 1200px) {
+    form {
+      width: 90%;
+    }
+  }
 }
+
 
 /* From Uiverse.io by escannord */
 .waterdrop {
@@ -2331,7 +2290,7 @@ footer {
   font-size: 1.4rem;
 
   @media (max-width: 600px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
@@ -2370,7 +2329,7 @@ footer {
     transition: all 3s ease;
 
     @media (max-width: 600px) {
-      font-size: 1rem;
+      font-size: 2rem;
       margin: 0.2rem;
     }
 
