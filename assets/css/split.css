@@ -27,7 +27,7 @@ top:0;
     margin: 1rem auto;
     z-index: 999;
     @media (max-width: 600px){
-    font-size: 2rem;
+    font-size: 1.8rem;
      }
 }
 
@@ -188,7 +188,7 @@ top:0;
    font-family: var(--ff-monospace);
   animation: rot 2s infinite ease;
   @media (max-width: 600px){
-    width: 350px;
+    width: 320px;
    }
 
   .header {
@@ -286,7 +286,7 @@ top:0;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   animation: rot 2s infinite ease;
   @media (max-width: 600px){
-    width: 100%;
+    width: 320px;
     height: 100%;
     aspect-ratio: 3 / 4;
    }
