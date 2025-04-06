@@ -43,8 +43,8 @@ section {
     padding: 1rem;
   }
   @media (max-width: 600px) {
-  width: 95vw;
-  padding: 1rem;
+  width: 100vw;
+  padding: 0;
   }
 }
 .container-fluid {
@@ -77,10 +77,12 @@ section {
 }
 .container-responsive {
   width: 50vw;
-  padding: 1rem;
+  padding: 2rem;
   margin: 2rem auto;
   @media (max-width: 600px) {
-    width: 95vw;
+    width: 100%;
+    padding: 0;
+    margin: 0;
   }
   @media (601px < width < 786px) {
     width: 70vw;
@@ -129,6 +131,14 @@ section {
   backdrop-filter: blur(8.9px);
   -webkit-backdrop-filter: blur(8.9px);
   border: var(--border);
+}
+@media screen and (max-width: 600px) {
+  .transparent-bg {
+   border: none;
+   border-radius: 0;
+   box-shadow: none;
+  }
+  
 }
 
 .row {

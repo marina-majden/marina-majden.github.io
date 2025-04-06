@@ -15,7 +15,7 @@
   --clr-bg-black: #1b1b1b;
   --clr-text: #dfdddd;
   --clr-heading: #d3eaf8;
-  --bg-trans: hsla(0, 0%, 8%, 0.932);
+  --bg-trans: hsla(0, 0%, 8%, 0.747);
   --bg-box: hsla(0, 0%, 9%, 0.938);
   --bg-card: hsla(180, 2%, 10%, 0.753);
   --border: 1px solid hsla(0, 0%, 5%, 0.658);
@@ -59,7 +59,8 @@ body {
   /* background-image: var(--bg-image);
   background-attachment: fixed;
   background-size: cover; color-scheme: only dark; */
-  background: var(--clr-bg-black);
+  background: var(--clr-bg);
+  background: linear-gradient(-45deg, #3b0483, #8f106f, #037488, #1369b9);
 }
 
 h1 {
@@ -1033,7 +1034,10 @@ main {
     border-bottom: 1px solid transparent;
     filter: drop-shadow(0px 0px 20px rgba(209, 38, 197, 0.5));
     @media (max-width: 600px){
-width: 95vw;
+width: 100vw;
+border-radius: 0;
+background: transparent;
+filter: none;
      }
   }
 
@@ -1046,9 +1050,15 @@ width: 95vw;
     transition: 0.3s ease;
     width: 99%;
     height: 98%;
-    padding: 2.2rem 1.8rem;
+    padding: 2.4rem 2rem;
     border-radius: 15px;
     margin: auto;
+    @media (max-width: 600px){
+      width: 100vw;
+background-color: var(--bg-trans);
+      border-radius: 0;
+ 
+           }
   }
 
   .wrapper-inner .tab-header {
@@ -1409,8 +1419,9 @@ width: 95vw;
     margin: 0 auto;
 
     @media (max-width: 600px) {
-      padding: 1rem;
+      padding: 0;
       margin: 0 auto;
+      border: none;
     }
   }
 
@@ -1480,13 +1491,13 @@ width: 95vw;
     margin: 2rem;
     border-radius: 30px;
     background: var(--clr-bg);
-
     font-size: 20%;
 
     p {
       font-size: 16px;
     }
   }
+
 
   .skill-wrapper {
     width: 100vw;
@@ -1536,13 +1547,13 @@ width: 95vw;
     transform: scale(120%); */
 }
 
+
 .glide {
   position: relative;
   width: 100%;
   height: 100%;
   padding: 0;
-  margin: 0 auto;
-  margin-bottom: 4rem;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1565,7 +1576,6 @@ width: 95vw;
     list-style: none;
     backface-visibility: hidden;
     transform-style: preserve-3d;
-    touch-action: pan-Y;
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -1585,14 +1595,9 @@ width: 95vw;
       transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    .glide__slide:hover {
-      box-shadow: var(--box-shadow);
-      background-color: var(--prim);
-      border: var(--border);
-    }
 
     img {
-      cursor: pointer;
+  
       padding: 0.6rem;
       margin: 0 auto;
       transition: all ease-in-out 100ms;
@@ -1620,11 +1625,9 @@ width: 95vw;
     height: 12px;
     padding: 0;
     border-radius: 50%;
-    border: 2px solid transparent;
-    transition: all 300ms ease-in-out;
-    cursor: pointer;
+
     line-height: 0;
-    box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.1);
+ 
     margin: 0.25em;
   }
 
@@ -1632,11 +1635,6 @@ width: 95vw;
     outline: none;
   }
 
-  .glide__bullet:hover,
-  .glide__bullet:focus {
-    border: 2px solid white;
-    background-color: rgba(255, 255, 255, 0.5);
-  }
 }
 
 
@@ -1848,7 +1846,7 @@ figure {
   aspect-ratio: 4/3;
   padding: 0;
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -1864,6 +1862,7 @@ figure {
     width: 100%;
     aspect-ratio: 4 / 3;
     height: auto;
+    border-radius: 0;
   }
 }
 
@@ -1879,14 +1878,14 @@ figure .banner {
   justify-content: space-around;
   align-items: center;
   background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.02) 0%,
-      rgba(0, 0, 0, 0.08) 5%,
-      rgba(0, 0, 0, 0.25) 15%,
-      rgba(0, 0, 0, 0.4) 30%,
-      rgba(0, 0, 0, 0.6) 50%,
-      rgba(0, 0, 0, 0.7) 60%,
-      rgba(0, 0, 0, 0.8) 80%,
-      rgba(0, 0, 0, 1) 100%);
+      rgba(15, 15, 15, 0.02) 0%,
+      rgba(15, 15, 15, 0.08) 5%,
+      rgba(15, 15, 15, 0.25) 15%,
+      rgba(15, 15, 15, 0.4) 30%,
+      rgba(15, 15, 15, 0.6) 50%,
+      rgba(15, 15, 15, 0.7) 60%,
+      rgba(15, 15, 15, 0.8) 80%,
+      rgba(15, 15, 15, 1) 100%);
   z-index: 999;
   transition: all 0.25s ease;
 }
@@ -1914,14 +1913,14 @@ figure .footer {
   padding: 0.2rem;
   z-index: 999;
   background: linear-gradient(to bottom,
-      rgba(0, 0, 0, 0.02) 0%,
-      rgba(0, 0, 0, 0.08) 5%,
-      rgba(0, 0, 0, 0.25) 15%,
-      rgba(0, 0, 0, 0.4) 30%,
-      rgba(0, 0, 0, 0.6) 50%,
-      rgba(0, 0, 0, 0.7) 60%,
-      rgba(0, 0, 0, 0.8) 80%,
-      rgba(0, 0, 0, 1) 100%);
+      rgba(15, 15, 15, 0.02) 0%,
+      rgba(15, 15, 15, 0.08) 5%,
+      rgba(15, 15, 15, 0.25) 15%,
+      rgba(15, 15, 15, 0.4) 30%,
+      rgba(15, 15, 15, 0.6) 50%,
+      rgba(15, 15, 15, 0.7) 60%,
+      rgba(15, 15, 15, 0.8) 80%,
+      rgba(15, 15, 15, 1) 100%);
   transition: all 0.25s ease;
   transform: scale(1);
 }
@@ -1987,7 +1986,7 @@ figure:hover figcaption {
   bottom: 0;
   opacity: 1;
   height: 60%;
-  background: rgba(1, 2, 27, 0.849);
+  background: rgba(9, 9, 20, 0.849);
   border-radius: 6px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.226);
   backdrop-filter: blur(10px);
@@ -1995,6 +1994,7 @@ figure:hover figcaption {
 font-size: 1.2rem;
   @media (max-width: 600px) {
     height: 100%;
+    border-radius: 0;
   }
 }
 
@@ -2064,11 +2064,16 @@ figure .buttons {
 
 
 #contact {
+  @media screen and (max-width: 600px) {
+    padding: 0;
+    width: 100%;
+  }
   & form {
     width: 80%;
     padding: 1rem;
     margin: 0 auto;
     font-family: var(--ff-accent);
+   
     & :is(input, textarea) {
       width: 100%;
       padding: 0.4rem;
@@ -2084,11 +2089,11 @@ figure .buttons {
 
       &:focus,
       &:active {
-        border: 2px solid var(--clr-primary);
+        border: 1px solid var(--clr-primary);
       }
 
       &:placeholder-shown {
-        border: 2px solid var(--clr-primary);
+        border: 1px solid var(--clr-primary);
       }
 
       &:not(:placeholder-shown) {
@@ -2137,7 +2142,7 @@ figure .buttons {
       margin-top: 1rem;
       display: inline-grid;
       place-content: center;
-      border: 2px solid var(--clr-primary);
+      border: 1px solid var(--clr-primary);
 
       &::before {
         content: "";
@@ -2209,13 +2214,25 @@ figure .buttons {
       font-size: 1.4rem;
       font-weight: 550;
       color: var(--clr-text);
-
+      
+      margin: 1rem 0; 
       &[for="agree"] {
         font-size: 1.2rem;
         font-weight: 400;
       }
     }
   }
+  @media screen and (max-width: 600px) {
+    form {
+      width: 100%;
+       & :is(input, textarea){
+        width: 100%;
+        margin: 1rem 0;
+        border: 0.8px solid var(--clr-primary);
+        border-radius: 6px;
+    }
+  }
+}
   @media (max-width: 786px) {
     form {
       width: 100%;
@@ -2334,7 +2351,7 @@ footer {
     transition: all 3s ease;
 
     @media (max-width: 600px) {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin: 0.2rem;
     }
 

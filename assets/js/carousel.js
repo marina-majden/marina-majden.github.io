@@ -1,9 +1,8 @@
 new Glide(".glide", {
   type: "carousel",
   startAt: 0,
-
   gap: 10,
-   perView: 8,
+ perView: 8,
   breakpoints: {
     999: {
       perView: 7,
@@ -18,7 +17,9 @@ new Glide(".glide", {
       perView: 4,
     }
   }, 
+  autoplay: 2000,
+  animationDuration: 2000,
+  animationTimingFunc: "linear",
   focusAt: "center",
-  autoplay: 1000,
   hoverpause: true,
 }).mount();
