@@ -1603,10 +1603,6 @@ background-color: var(--bg-trans);
       transition: all ease-in-out 100ms;
     }
 
-    img:hover {
-      transform: scale(120%);
-    }
-
   }
 
   .glide__bullets {

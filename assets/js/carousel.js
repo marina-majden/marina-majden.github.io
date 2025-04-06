@@ -21,5 +21,4 @@ new Glide(".glide", {
   animationDuration: 2000,
   animationTimingFunc: "linear",
   focusAt: "center",
-  hoverpause: true,
 }).mount();
