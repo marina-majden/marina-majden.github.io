@@ -143,8 +143,7 @@
   -moz-transform-origin: top;
   transform-origin: top;
   @media (max-width: 600px) {
-    transform: rotate(30deg) translateY(-60%);
-    left: 60%;
+    display: none;
   }
 }
 

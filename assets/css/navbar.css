@@ -19,8 +19,8 @@
 
 @keyframes logoGone {
   0% {
-    opacity: 1;
-    transform: scale(1.5) translateX(-95px) translateY(-60px);
+    opacity: 0.8;
+    transform: scale(1.3) translateX(-95px) translateY(-60px);
   }
 
   10% {
