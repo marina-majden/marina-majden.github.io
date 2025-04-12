@@ -1,10 +1,43 @@
 :root {
+  --green: #aee9db;
+  --teal: #b2e3ec;
+  --blue: #afd3f5;
+  --pink: #eee3fc;
+  --orange: #fce1f4;
+  --brand: #2a9cb1;
+  --grey: #bebdbd;
+  --grey-darker: #b3b1b1;
+
+  --grey-lighter: #636363;
+  --grey-lightest: #666666;
+
+  --background:  #eefafc94;
+  --background-transparent: #9f9fcfaf;
+  --box-shadow: 2px 4px 5px #adc2c0cb, -2px -4px 4px #bdbdd19f;
+  --text-shadow: 1px 1px 2px #2a2935, -1px -1px 2px #57464656;
+  --text-shadow-heading: 7px 8px 10px rgba(58, 57, 57, 0.951),
+  0 0 10px rgba(49, 49, 49, 0.951);
+  --text: #292828;
+  --text-alt: #3d3d3d;
+
+  --ff-text: "Piximisa", sans-serif;
+  --ff-heading: "Dosis", sans-serif;
+  --ff-link: "Dosis", sans-serif;
+  --ff-title: "Palamecia", sans-serif;
+  --ff-cursive: "Sacramento", cursive;
+  --ff-mono: "FiraCode", monospace;
+}
+[data-theme="dark"] {
+  --brand: #2a9cb1;
   --green: #219479;
   --teal: #018299;
   --blue: #044d91;
   --pink: #3b0483;
-  --orange: #8f106f;
-
+  --orange: #700c57;
+  --teal: #03515f;
+  --blue: #043664;
+  --pink: #260353;
+  --orange: #530841;
   --grey: #333333;
   --grey-darker: #232222;
 
@@ -14,14 +47,9 @@
   --background: #1b1b1b;
   --background-transparent: #0d0d0ecc;
   --box-shadow: 2px 4px 8px #0d0d0ecb, -2px -4px 8px #1818319f;
-  --text-shadow: 1px 1px 3px #0d0d0f;
-  --text: #e9dddd;
-  --text-alt: #cfcdcd;
-
-  --ff-text: "Piximisa", sans-serif;
-  --ff-heading: "Dosis", sans-serif;
-  --ff-link: "Dosis", sans-serif;
-  --ff-title: "Palamecia", sans-serif;
-  --ff-cursive: "Sacramento", cursive;
-  --ff-mono: "FiraCode", monospace;
+  --text-shadow: 1px 1px 3px #29293dd3, -1px -1px 2px #383838d3;
+  --text-shadow-heading:  7px 8px 10px rgba(19, 18, 18, 0.951),
+  0 0 10px rgba(19, 18, 18, 0.951);
+  --text: #dadada;
+  --text-alt: #a8a8a8;
 }

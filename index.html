@@ -16,8 +16,8 @@
     <div class="main-container">
       <!-- ============= PARALLAX ================-->
       <div class="parallax-header">
-        <img src="/assets/img/background-interior.jpg" class="background" />
-        <img src="/assets/img/girl-in-office.png" class="foreground" />
+        <!-- <img src="/assets/img/background-interior.jpg" class="background" />
+        <img src="/assets/img/girl-in-office.png" class="foreground" /> -->
         <div class="h1">
           <h1>web &amp; frontend developer</h1>
         </div>
@@ -32,18 +32,30 @@
           </button>
 
           <p>Or scroll down and take a look around!</p>
+          <div class="chev">
+            <a href="#about"> <i class="fa-solid fa-chevron-down"></i></a>
+          </div>
         </div>
-        <!--   <div class="h3"><h3>{under construction}</h3></div> -->
+
       </div>
       <!-- =============== MAIN ================ -->
       <main>
         <!-- =============== NAVBAR ================ -->
         <nav class="main-navbar">
           <ul>
-            <li><a href="#">
-              <i class="fa-solid fa-home"></i>
-            </a></li>
-        
+            <li><div class="theme-switch-wrapper">
+              <label class="theme-switch" for="checkbox">
+                  <input type="checkbox" id="checkbox" />
+                  <div class="theme-slider round"></div>
+            </label>
+       
+          </div></li>
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-home"></i>
+              </a>
+            </li>
+            <li><a href="#about">About me</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
@@ -55,7 +67,127 @@
         </nav>
 
         <!-- =============== ABOUT ================ -->
-        <div class="about" id="about"></div>
+        <section class="about" id="about">
+          <div id="split">
+            <div class="splitview skewed">
+              <div class="panel bottom">
+                <div class="content">
+                  <div class="code-editor">
+                    <div class="header">
+                      <span class="title">CSS</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        class="icon"
+                      >
+                        <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                        <g
+                          stroke-linejoin="round"
+                          stroke-linecap="round"
+                          id="SVGRepo_tracerCarrier"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            stroke-linecap="round"
+                            stroke-width="2"
+                            stroke="#4C4F5A"
+                            d="M6 6L18 18"
+                          ></path>
+                          <path
+                            stroke-linecap="round"
+                            stroke-width="2"
+                            stroke="#4C4F5A"
+                            d="M18 6L6 18"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+
+                    <div class="editor-content">
+                      <code class="code">
+                        <p>
+                          <span class="color-0">.code-editor </span>
+                          <span>{</span>
+                        </p>
+
+                        <p class="property">
+                          <span class="color-2">max-width</span><span>:</span>
+                          <span class="color-1">300px</span>;
+                        </p>
+                        <p class="property">
+                          <span class="color-2">background-color</span
+                          ><span>:</span> <span class="color-preview-1"></span
+                          ><span class="">#1d1e22</span>;
+                        </p>
+                        <p class="property">
+                          <span class="color-2"> box-shadow</span
+                          ><span>:</span>
+                          <span class="color-1"
+                            >0px 4px 30px <span class="color-preview-2"></span
+                            ><span class="color-3">rgba(</span>0, 0, 0, 0.5<span
+                              class="color-3"
+                              >)</span
+                            ></span
+                          >;
+                        </p>
+                        <p class="property">
+                          <span class="color-2">border-radius</span
+                          ><span>:</span> <span class="color-1">8px</span>;
+                        </p>
+                        <p>}</p>
+                      </code>
+                    </div>
+                  </div>
+                  <!--   <div class="description right">
+                  <p class="accent">or you are looking for...</p> 
+                  <h3>Minimalistic Elegant Websites</h3>-->
+                  <!--   <p class="accent">look no more!</p> 
+                </div>-->
+                </div>
+              </div>
+              <div class="panel top">
+                <div class="content">
+                  <div class="card-showcase">
+                    <div class="content-showcase">
+                      <div class="content-avatar">
+                        <img
+                          src="/assets/svg/avatar.svg"
+                          alt="avatar"
+                          width="150px"
+                          height="150px"
+                        />
+                        <div class="avatar-caption">
+                          <p>Marina Majdenić</p>
+                        </div>
+                      </div>
+                      <div class="content-text">
+                        <p class="heading-showcase">About me</p>
+                        <p class="para-showcase">
+                          I am a front-end / web developer based in Zagreb,
+                          Croatia. I am skilled in HTML, CSS, JavaScript, React
+                          etc. Along with that, I have experience in full-stack
+                          development using Node.js, Express.js, and MongoDB.
+                        </p>
+                        <button class="btn-showcase">Let's talk!</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!--   <div class="description left">
+                  <p class="accent">Whether you like</p>
+                  <h3>Bold Innovative Websites</h3>
+                   <p class="accent">that catch the eye...</p> 
+                </div>-->
+                </div>
+              </div>
+              <div class="handle"></div>
+            </div>
+          </div>
+
+          <div class="chev">
+            <a href="#services"> <i class="fa-solid fa-chevron-down"></i></a>
+          </div>
+        </section>
 
         <!-- =============== Services ============== -->
         <section class="services" id="services">
@@ -368,7 +500,7 @@
           <h2>SKILLS</h2>
           <div class="container">
             <div class="around-list">
-              <h3>If you need someone who can...</h3>
+              <h4>If you need someone who can...</h4>
             </div>
             <div class="skill-list">
               <ul role="list">
@@ -453,7 +585,7 @@
         <!--=============== PROJECTS ================ -->
         <section class="projects" id="projects">
           <h2>PROJECTS</h2>
-
+<div class="container">
           <!-- =============== PROJECT ONE =============== -->
           <div class="project-card">
             <div class="project-card-image">
@@ -555,66 +687,12 @@
               </button>
             </div>
           </div>
+        </div>
         </section>
 
         <!-- ============= CONTACT ================-->
+
         <section class="contact" id="contact">
-          <h2>CONTACT</h2>
-          <div class="container">
-            <form
-              id="contact-form"
-              name="contact-form"
-              action="https://api.web3forms.com/submit"
-              method="POST"
-              target="_blank"
-            >
-              <input
-                type="hidden"
-                name="access_key"
-                value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
-              />
-              <div class="form-group">
-                <label for="name" name="name">Name:</label><br />
-                <input type="text" id="name" required />
-              </div>
-              <div class="form-group">
-                <label for="email">Email:</label><br />
-                <input type="email" name="email" id="email" required />
-              </div>
-              <div class="form-group">
-                <label for="message" name="message">Message:</label><br />
-                <textarea
-                  name="message"
-                  id="message"
-                  cols="100"
-                  rows="10"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" name="submit">
-                <div class="svg-wrapper-1">
-                  <div class="svg-wrapper">
-                    <svg
-                      href="/assets/svg/regular/paper-plane.svg"
-                      viewBox="0 0 24 24"
-                      width="24"
-                      height="24"
-                    >
-                      <path fill="none" d="M0 0h24v24H0z"></path>
-                      <path
-                        fill="currentColor"
-                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-                <span>Send</span>
-              </button>
-            </form>
-          </div>
-        </section>
-        <!-- ============= CONTACT ================-->
-        <!--   <section class="contact" id="contact">
           <h2>Contact</h2>
           <div class="container">
             <form
@@ -659,7 +737,7 @@
                 <textarea
                   name="message"
                   id="message"
-                  cols="100"
+                  cols="40"
                   rows="10"
                   placeholder="Your message goes here..."
                   minlength="20"
@@ -694,7 +772,7 @@
               </button>
             </form>
           </div>
-        </section> -->
+        </section>
         <!-- =============== FOOTER ================ -->
         <footer class="footer">
           <div class="socials">
@@ -705,29 +783,34 @@
               ><i class="fa-brands fa-2x fa-linkedin-in"></i
             ></a>
             <a href="mailto:marina.majden@gmail.com" target="_blank"
-              ><i class="fa-brands fa-2x fa-google-plus-square "></i
+              ><i class="fa-brands fa-2x fa-google-plus-square"></i
             ></a>
             <a href="https://medium.com/@marina.majden" target="_blank"
               ><i class="fa-brands fa-2x fa-medium"></i
             ></a>
           </div>
           <div class="logo-copy">
-            <img
-              src="/assets/img/logo-white.png"
-              alt="logo"
-             
-            />
+            <picture>
+              <source
+                srcset="/assets/img/logo-white.png"
+                media="[data-theme='dark']"
+              />
+              <source
+                srcset="/assets/img/logo-black.png"
+                media="[data-theme='']"
+              />
+              <img src="/assets/img/logo-black.png" alt="logo" />
+            </picture>
+          
           </div>
           <div class="copyright">
             <p>
-           2024
-              <i class="fa-solid fa-copyright w3-hover-opacity"></i> 
+              2024
+              <i class="fa-solid fa-copyright w3-hover-opacity"></i>
               Marina Majdenić
-             
             </p>
           </div>
         </footer>
-      
       </main>
     </div>
     <!-- JS files -->
@@ -736,6 +819,9 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/assets/js/theme.js"></script>
+    <script src="/assets/js/split.js"></script>
+    <script src="/assets/js/validation.js"></script>
     <script src="/assets/js/slider.js"></script>
     <script src="/assets/js/glide.min.js"></script>
     <script src="/assets/js/materialize.js"></script>
