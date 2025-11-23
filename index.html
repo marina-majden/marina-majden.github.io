@@ -1,749 +1,1161 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Marina Majdenić" />
-    <meta
-      name="keywords"
-      content="portfolio, front-end, developer, applications, web-applications, web-design"
-    />
-    <title>Marina Majdenić - Portfolio Website</title>
+    <meta name="keywords" content="portfolio, front-end, developer, applications, web-applications, web-design" />
+    <title>Marina Majdenić | Portfolio Website</title>
     <!-- CSS  -->
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link href="/assets/css/image-compare-viewer.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/image-compare-viewer.min.css.map" type="application/json" />
   </head>
+
   <body>
-    <div class="main-container">
-      <!-- ============= PARALLAX ================-->
-      <div class="parallax-header">
-        <!-- <img src="/assets/img/background-interior.jpg" class="background" />
-        <img src="/assets/img/girl-in-office.png" class="foreground" /> -->
-        <div class="h1">
-          <h1>web &amp; frontend developer</h1>
-        </div>
-        <div class="h11"><h2>Portfolio @ Marina Majdenić</h2></div>
-        <div class="container-pllx">
-          <p>
-            Looking for a Front-end / Web developer for your project or a new
-            member to join your team?
-          </p>
-          <button class="call-to-action">
-            <a href="#contact">Contact me</a>
-          </button>
+    <!-- MOBILE NAVIGATION MENU -->
+    <nav id="nav" class="nav" role="navigation">
+      <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
+        <li class="nav__item">
+          <a href="#"><i class="fa-solid fa-house"></i></a>
+        </li>
+        <li class="nav__item"><a href="#about">About</a></li>
+        <li class="nav__item"><a href="#services">Services</a></li>
+        <li class="nav__item"><a href="#skills">Skills</a></li>
+        <li class="nav__item"><a href="#projects">Projects</a></li>
+        <li class="nav__item"><a href="#contact">Contact</a></li>
+      </ul>
 
-          <p>Or scroll down and take a look around!</p>
-          <div class="chev">
-            <a href="#about"> <i class="fa-solid fa-chevron-down"></i></a>
+      <!-- MENU TOGGLE BUTTON -->
+      <a href="#nav" class="nav__toggle" role="button" aria-expanded="false" aria-controls="menu">
+        <svg class="menuicon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+          <title>Toggle Menu</title>
+          <g>
+            <line class="menuicon__bar" x1="13" y1="16.5" x2="37" y2="16.5" />
+            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+            <line class="menuicon__bar" x1="13" y1="32.5" x2="37" y2="32.5" />
+            <circle class="menuicon__circle" r="23" cx="25" cy="25" />
+          </g>
+        </svg>
+      </a>
+
+      <!-- ANIMATED BACKGROUND ELEMENT -->
+      <div class="splash"></div>
+    </nav>
+
+    <!-- =============== HOME ================ -->
+    <div class="home" id="home">
+      <div id="split">
+        <h1 class="headline">dev &amp; design</h1>
+        <div class="splitview skewed">
+          <div class="panel bottom">
+            <div class="content">
+              <div class="code-editor">
+                <div class="header">
+                  <span class="title">CSS</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="icon">
+                    <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                    <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path stroke-linecap="round" stroke-width="2" stroke="#4C4F5A" d="M6 6L18 18"></path>
+                      <path stroke-linecap="round" stroke-width="2" stroke="#4C4F5A" d="M18 6L6 18"></path>
+                    </g>
+                  </svg>
+                </div>
+
+                <div class="editor-content">
+                  <code class="code">
+                    <p>
+                      <span class="color-0">.code-editor </span> <span>{</span>
+                    </p>
+
+                    <p class="property">
+                      <span class="color-2">max-width</span><span>:</span>
+                      <span class="color-1">300px</span>;
+                    </p>
+                    <p class="property">
+                      <span
+                        class="color-2">background-color</span><span>:</span>
+                      <span class="color-preview-1"></span><span
+                        class>#1d1e22</span>;
+                    </p>
+                    <p class="property">
+                      <span class="color-2"> box-shadow</span><span>:</span>
+                      <span class="color-1">0px 4px 30px <span
+                          class="color-preview-2"></span><span
+                          class="color-3">rgba(</span>0, 0, 0, 0.5<span
+                          class="color-3">)</span></span>;
+                    </p>
+                    <p class="property">
+                      <span class="color-2">border-radius</span><span>:</span>
+                      <span class="color-1">8px</span>;
+                    </p>
+                    <p>}</p>
+                  </code>
+                </div>
+              </div>
+              <!--   <div class="description right">
+                <p class="accent">or you are looking for...</p> 
+                <h3>Minimalistic Elegant Websites</h3>-->
+              <!--   <p class="accent">look no more!</p> 
+              </div>-->
+            </div>
           </div>
-        </div>
+          <div class="panel top">
+            <div class="content">
+              <div class="card-showcase">
+                <div class="content-showcase">
+                  <div class="content-avatar">
+                    <img src="/assets/svg/avatar.svg" alt="avatar" width="150px" height="150px">
+                    <div class="avatar-caption">
+                      <p>Marina Majdenić</p>
+                    </div>
+                  </div>
+                  <div class="content-text">
+                    <p class="heading-showcase">About me</p>
+                    <p class="para-showcase">
+                      I am a front-end / web developer based in Zagreb, Croatia.
+                      I am skilled in HTML, CSS, JavaScript, React etc. Along
+                      with that, I have experience in full-stack development
+                      using Node.js, Express.js, and MongoDB.
+                    </p>
+                    <button class="btn-showcase">Let's talk!</button>
+                  </div>
 
+                </div>
+              </div>
+              <!--   <div class="description left">
+                <p class="accent">Whether you like</p>
+                <h3>Bold Innovative Websites</h3>
+                 <p class="accent">that catch the eye...</p> 
+              </div>-->
+            </div>
+          </div>
+
+          <div class="handle"></div>
+        </div>
       </div>
-      <!-- =============== MAIN ================ -->
-      <main>
-        <!-- =============== NAVBAR ================ -->
-        <nav class="main-navbar">
-          <ul>
-            <li><div class="theme-switch-wrapper">
-              <label class="theme-switch" for="checkbox">
-                  <input type="checkbox" id="checkbox" />
-                  <div class="theme-slider round"></div>
-            </label>
-       
-          </div></li>
-            <li>
-              <a href="#">
-                <i class="fa-solid fa-home"></i>
-              </a>
-            </li>
-            <li><a href="#about">About me</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <div class="logo" href="#">
-            <img src="/assets/img/logo-white.png" alt="logo" />
-          </div>
-        </nav>
+    </div>
 
-        <!-- =============== ABOUT ================ -->
-        <section class="about" id="about">
-          <div id="split">
-            <div class="splitview skewed">
-              <div class="panel bottom">
-                <div class="content">
-                  <div class="code-editor">
-                    <div class="header">
-                      <span class="title">CSS</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        class="icon"
-                      >
-                        <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-                        <g
-                          stroke-linejoin="round"
+    <!-- =============== MAIN ================ -->
+    <main>
+      <!-- ============== DESKTOP NAVBAR ============== -->
+      <nav class="navbar" id="navbar">
+        <ul>
+          <li>
+            <a href="#"><i class="fa-solid fa-house"></i></a>
+          </li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <div id="marker"></div>
+        </ul>
+        <div>
+          <a id="toggleLang">hr</a>
+        </div>
+      </nav>
+      <div class="logo" href="#">
+        <img src="/assets/img/logo-white.png" alt="logo" />
+      </div>
+      <!-- ============ ABOUT ========== -->
+      <section id="about" class="about">
+        <h2>ABOUT ME</h2>
+        <div class="container">
+          <div class="about-text">
+            <p>
+              With a background in Croatian language, art history, and
+              experience in teaching, editing, and writing, I’ve since
+              transitioned into the world of web development, audio engineering,
+              and digital design. I specialize in building responsive,
+              user-friendly web experiences using technologies like React,
+              Node.js, and MongoDB.
+
+              I love bringing ideas to life—whether through code, content, or
+              sound—and I’m always open to new collaborations and creative
+              challenges.
+
+              Pozdrav! Moje ime je [Tvoje ime] i dolazim iz svijeta riječi,
+              umjetnosti i tehnologije. Po struci sam kroatistica i
+              povjesničarka umjetnosti, a moj profesionalni put započeo je u
+              obrazovanju i izdavaštvu – kao lektorica, profesorica hrvatskog
+              jezika te autorica i suurednica na web-portalu.
+
+              S vremenom me kreativna znatiželja odvela i u svijet zvuka –
+              završila sam edukaciju iz audio inženjeringa i glazbene produkcije
+              na Akademiji glazbene produkcije, što mi je dodatno proširilo
+              pogled na digitalne medije.
+
+              Godine 2023. završila sam Front-end developer program pri Algebri,
+              nakon čega sam krenula raditi kao web-developer i dizajner za
+              privatne klijente. Izrađivala sam moderne i funkcionalne
+              web-stranice i aplikacije, pritom razvijajući i backend vještine
+              kroz samostalno učenje.
+
+              Moje glavne tehnologije uključuju HTML, CSS i JavaScript, s
+              naglaskom na React – framework u kojem posebno uživam raditi.
+              Dobro poznajem Node.js i rad s NoSQL bazama poput MongoDB-a, a
+              aktivno radim na MERN stack projektima kako bih dodatno učvrstila
+              svoje znanje i vještine.
+
+              Vjerujem u stalno učenje, multidisciplinarni pristup i balans
+              između estetskog i funkcionalnog. Volim raditi na projektima koji
+              spajaju sadržaj, dizajn i tehnologiju – i veselim se novim
+              izazovima i suradnjama u digitalnom svijetu.
+              I am a front-end / web developer based in Zagreb, Croatia. I am
+              skilled in HTML, CSS, JavaScript, React etc. Along with that, I
+              have
+              experience in full-stack development using Node.js, Express.js,
+              and
+              MongoDB.
+            </p>
+            <p>
+              I am passionate about creating beautiful and functional websites
+              that
+              provide a great user experience. I love to learn new technologies
+              and
+              stay up-to-date with the latest trends in web development.
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="/assets/svg/avatar.svg" alt="avatar" />
+          </div>
+        </div>
+      </section>
+      <!-- =============== SERVICES ============== -->
+      <section id="services" class="services">
+        <h2>SERVICES</h2>
+        <div class="container">
+          <div class="container-skill graphic">
+            <!-- WebDesign animation-->
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+              <g opacity=".87" fill="none" stroke="#fff">
+                <text class="text" font-size="20" transform="translate(50 150)" fill="#fff" stroke="none"
+                  font-family="RobotoMono-Medium,Roboto Mono" font-weight="500">
+                  Web Design
+                </text>
+                <path class="graphic-shape2" d="M68.54 60.66h60v60h-60z" />
+                <path class="graphic-middle" d="M68.54 91h.31a30 30 0 0 0 30-30v-.31H68.54z" />
+                <path class="graphic-shape1"
+                  d="M68.85 31a30 30 0 0 1 30 30 30 30 0 0 1-30 30 30 30 0 0 1-30-30 30 30 0 0 1 30-30z" />
+                <circle class="graphic-dot1" cx cy r="3" fill="#fff" stroke="transparent" />
+                <circle class="graphic-dot2" cx cy r="3" fill="#fff" stroke="transparent" />
+                <path class="typo-right-under" fill="#fff"
+                  d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z" />
+                <path class="typo-left-under" fill="#fff"
+                  d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z" />
+
+                <path class="typo-right-top" stroke="#fff"
+                  d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z" />
+                <path class="typo-left-top"
+                  d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z" />
+              </g>
+            </svg>
+            <p>
+              If you don't have your own design ready, I can create a design
+              that will be visually appealing, user-friendly and responsive.
+            </p>
+          </div>
+          <!-- UI/UX animation-->
+          <div class="container-skill graphic ui">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+              <g opacity=".87" fill="none" stroke="#fff">
+                <text class="text" transform="translate(40 150)" font-size="16" fill="#fff" stroke="none"
+                  font-family="RobotoMono-Medium,Roboto Mono" font-weight="500">
+                  UI/UX design
+                </text>
+                <path class="rectangle" d="M30.57 22.69h98.86v98.86H30.57z" />
+                <path class="bar" d="M30.57 37.59h98.86" />
+                <circle class="dot3" cx="58.76" cy="29.96" r="3.09" />
+                <circle class="dot2" cx="49.19" cy="29.96" r="3.09" />
+                <circle class="dot1" cx="39.62" cy="29.96" r="3.09" />
+                <rect class="btn" x="55.28" y="67.21" width="49.43" height="24.72" rx="4" />
+                <path class="heart" fill="#121212"
+                  d="M80 85.57l-1-.86c-3.37-3.06-5.59-5.07-5.59-7.54a3.56 3.56 0 0 1 3.6-3.6A3.9 3.9 0 0 1 80 74.94a3.9 3.9 0 0 1 2.94-1.37 3.56 3.56 0 0 1 3.6 3.6c0 2.47-2.22 4.48-5.59 7.54z" />
+              </g>
+            </svg>
+            <p>
+              Creating functional and pretty interfaces which can enrich
+              user-experience is my primary job, and I like to exceed
+              expectations.
+            </p>
+          </div>
+          <!-- WebDev animation-->
+          <div class="container-skill interactive ui">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+              <g opacity=".87" fill="none" stroke="#fff">
+                <text class="text" transform="translate(20 150)" fill="#fff" stroke="none" font-size="16"
+                  font-family="RobotoMono-Medium,Roboto Mono" font-weight="500">
+                  Interactive Web-Apps
+                </text>
+                <path class="ellipse4" />
+                <path class="ellipse3" />
+                <path class="ellipse2" />
+                <path class="ellipse1" />
+                <path class="ellipse0" />
+                <path class="ellipse" d="M68,61.83a12,12 0 1,0 24,0a12,12 0 1,0 -24,0" stroke-miterlimit="10"
+                  fill="#fff" opacity="0.87" />
+                <path class="hand"
+                  d="M100.33 82.21a5.82 5.82 0 0 0-3.66.19c-.08-.93-.46-3.07-2.32-3.64a5.83 5.83 0 0 0-3.74.21 3.59 3.59 0 0 0-2.24-3 5.85 5.85 0 0 0-3.64.17v-7.68c0-2-.83-5.44-4-5.44-2.91 0-4 3.25-4 5.44v17.08C75.34 84.12 73 82.13 71.14 82c-3-.24-5.19 1.64-4.59 4.56s3.12 2.75 5 5.14 6.34 9.81 6.37 9.86c.67 1.26 2.49 4.74 2.79 5.62a12 12 0 0 1 .27 3.09.79.79 0 0 0 .22.55.76.76 0 0 0 .54.23h17.18a.77.77 0 0 0 .76-.68 17.08 17.08 0 0 0 0-2.73 5.5 5.5 0 0 1 1.32-3.84 11.61 11.61 0 0 0 1.63-4.52.41.41 0 0 0 0-.11V86.28c.04-.28-.01-3.35-2.3-4.07z"
+                  fill="#121212" stroke="#fff" stroke-miterlimit="10" />
+                <path class="bar" d="M96.68 88.8v-6.4" />
+                <path class="bar" d="M90.61 87.29v-8.36" />
+                <path class="bar" d="M84.73 86.74V76.13" />
+                <path class="bar" d="M76.79 87.94v-2.39" />
+              </g>
+            </svg>
+            <p>
+              Static websites are past time; bringing websites to life with
+              animations and interactive elements is my specialty.
+            </p>
+          </div>
+          <!-- Code Animation -->
+          <div class="container-skill code ui">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+              <g opacity=".87" fill="none" stroke="#fff">
+                <text class="text" transform="translate(20 150)" font-size="16" fill="#fff" stroke="none"
+                  font-family="RobotoMono-Medium,Roboto Mono" font-weight="500">
+                  Backend integration
+                </text>
+                <path class="rectangle" transform="rotate(-90 80 72.12)" d="M30.57 22.69h98.86v98.86H30.57z" />
+                <path class="bar" d="M45.46 121.55V22.69" />
+              </g>
+            </svg>
+            <span class="change-letter"></span>
+            <p>
+              Aside from front-end, I also do the back-end integration, work
+              with APIs and databases, and much more.
+            </p>
+          </div>
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <!--
+        <h2>Services</h2>
+        <div class="container-padded">
+          <div class="wrapper-outer">
+            <div class="wrapper-inner">
+              <input id="tab-1" name="slider" type="radio" />
+              <input checked id="tab-2" name="slider" type="radio" />
+              <input id="tab-3" name="slider" type="radio" />
+              <header class="tab-header">
+                <label class="tab-1" for="tab-1">MINI</label>
+                <label class="tab-2" for="tab-2">MEDIUM</label>
+                <label class="tab-3" for="tab-3">MAXI</label>
+                <div class="slider"></div>
+              </header>
+              <div class="card-area">
+                <div class="cards-tab">
+                  <div class="row-tab row-1">
+                    <div class="price-details">
+                      <span class="price">1000</span>
+                      <p>Web Development Based on Existing Design</p>
+                    </div>
+                    <ul class="features">
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
                           stroke-linecap="round"
-                          id="SVGRepo_tracerCarrier"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                          <path
-                            stroke-linecap="round"
-                            stroke-width="2"
-                            stroke="#4C4F5A"
-                            d="M6 6L18 18"
-                          ></path>
-                          <path
-                            stroke-linecap="round"
-                            stroke-width="2"
-                            stroke="#4C4F5A"
-                            d="M18 6L6 18"
-                          ></path>
-                        </g>
-                      </svg>
-                    </div>
-
-                    <div class="editor-content">
-                      <code class="code">
-                        <p>
-                          <span class="color-0">.code-editor </span>
-                          <span>{</span>
-                        </p>
-
-                        <p class="property">
-                          <span class="color-2">max-width</span><span>:</span>
-                          <span class="color-1">300px</span>;
-                        </p>
-                        <p class="property">
-                          <span class="color-2">background-color</span
-                          ><span>:</span> <span class="color-preview-1"></span
-                          ><span class="">#1d1e22</span>;
-                        </p>
-                        <p class="property">
-                          <span class="color-2"> box-shadow</span
-                          ><span>:</span>
-                          <span class="color-1"
-                            >0px 4px 30px <span class="color-preview-2"></span
-                            ><span class="color-3">rgba(</span>0, 0, 0, 0.5<span
-                              class="color-3"
-                              >)</span
-                            ></span
-                          >;
-                        </p>
-                        <p class="property">
-                          <span class="color-2">border-radius</span
-                          ><span>:</span> <span class="color-1">8px</span>;
-                        </p>
-                        <p>}</p>
-                      </code>
-                    </div>
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>
+                          Polished and responsive website development
+                        </span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline
+                            points="20 6 9 17 4 12"></polyline></svg><span>Responsive
+                          design across devices</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline
+                            points="20 6 9 17 4 12"></polyline></svg><span>Basic
+                          SEO optimization</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#d3eaf8"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Updating old websites possible</span>
+                      </li>
+                    </ul>
                   </div>
-                  <!--   <div class="description right">
-                  <p class="accent">or you are looking for...</p> 
-                  <h3>Minimalistic Elegant Websites</h3>-->
-                  <!--   <p class="accent">look no more!</p> 
-                </div>-->
+                  <div class="row-tab">
+                    <div class="price-details">
+                      <span class="price">1500</span>
+                      <p>Custom Web Design and Development</p>
+                    </div>
+                    <ul class="features">
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>
+                          Tailored design based on your needs and target
+                          audience</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span> Complete development of the website</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Responsive design across devices</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Advanced SEO optimization</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="row-tab">
+                    <div class="price-details">
+                      <span class="price">2000</span>
+                      <p>Custom Web Design, Development and Deployment</p>
+                    </div>
+                    <ul class="features">
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Website custom designed and adjusted for target
+                          audience</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Fully functional, interactive and user-friendly
+                          website development
+                        </span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Responsive design across devices and SEO
+                          optimization</span>
+                      </li>
+                      <li>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#3d8ca9"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Deployment to client's server (possible
+                          maintenance
+                          deal)</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div class="panel top">
-                <div class="content">
-                  <div class="card-showcase">
-                    <div class="content-showcase">
-                      <div class="content-avatar">
-                        <img
-                          src="/assets/svg/avatar.svg"
-                          alt="avatar"
-                          width="150px"
-                          height="150px"
-                        />
-                        <div class="avatar-caption">
-                          <p>Marina Majdenić</p>
-                        </div>
-                      </div>
-                      <div class="content-text">
-                        <p class="heading-showcase">About me</p>
-                        <p class="para-showcase">
-                          I am a front-end / web developer based in Zagreb,
-                          Croatia. I am skilled in HTML, CSS, JavaScript, React
-                          etc. Along with that, I have experience in full-stack
-                          development using Node.js, Express.js, and MongoDB.
-                        </p>
-                        <button class="btn-showcase">Let's talk!</button>
-                      </div>
-                    </div>
-                  </div>
-                  <!--   <div class="description left">
-                  <p class="accent">Whether you like</p>
-                  <h3>Bold Innovative Websites</h3>
-                   <p class="accent">that catch the eye...</p> 
-                </div>-->
-                </div>
-              </div>
-              <div class="handle"></div>
+              <button>Choose plan</button>
             </div>
           </div>
-
-          <div class="chev">
-            <a href="#services"> <i class="fa-solid fa-chevron-down"></i></a>
-          </div>
-        </section>
-
-        <!-- =============== Services ============== -->
-        <section class="services" id="services">
-          <h2>SERVICES</h2>
-          <div class="container-responsive">
-            <div class="container-service graphic">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-                <g opacity=".87" fill="none" stroke="#fff">
-                  <text
-                    class="text"
-                    font-size="20"
-                    transform="translate(50 150)"
-                    fill="#fff"
-                    stroke="none"
-                    font-family="Roboto"
-                    font-weight="500"
-                  >
-                    Web Design
-                  </text>
-                  <path class="graphic-shape2" d="M68.54 60.66h60v60h-60z" />
-                  <path
-                    class="graphic-middle"
-                    d="M68.54 91h.31a30 30 0 0 0 30-30v-.31H68.54z"
-                  />
-                  <path
-                    class="graphic-shape1"
-                    d="M68.85 31a30 30 0 0 1 30 30 30 30 0 0 1-30 30 30 30 0 0 1-30-30 30 30 0 0 1 30-30z"
-                  />
-                  <circle
-                    class="graphic-dot1"
-                    cx
-                    cy
-                    r="3"
-                    fill="#fff"
-                    stroke="transparent"
-                  />
-                  <circle
-                    class="graphic-dot2"
-                    cx
-                    cy
-                    r="3"
-                    fill="#fff"
-                    stroke="transparent"
-                  />
-                  <path
-                    class="typo-right-under"
-                    fill="#fff"
-                    d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z"
-                  />
-                  <path
-                    class="typo-left-under"
-                    fill="#fff"
-                    d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z"
-                  />
-
-                  <path
-                    class="typo-right-top"
-                    stroke="#fff"
-                    d="M112.06 111.91a6.21 6.21 0 0 1-.4-1.13c-.11-.43-.2-.88-.28-1.36a8.58 8.58 0 0 1-1.31 1.14 9.37 9.37 0 0 1-1.65.92 9.56 9.56 0 0 1-2 .62 10.91 10.91 0 0 1-2.34.2 11.35 11.35 0 0 1-3.73-.63 9 9 0 0 1-2.9-1.67 7.41 7.41 0 0 1-2.53-5.73 7.57 7.57 0 0 1 3.21-6.45c2.11-1.51 5.23-2.23 9.37-2.18h3.81V94.1a3.87 3.87 0 0 0-1.21-3 5.27 5.27 0 0 0-3.59-1.16 4.34 4.34 0 0 0-3.06.86 3.11 3.11 0 0 0-1 2.38l-6.82-.08a7.17 7.17 0 0 1 .78-3.21 8.09 8.09 0 0 1 2.22-2.65 10.89 10.89 0 0 1 3.54-1.78 15.18 15.18 0 0 1 4.76-.62 16.75 16.75 0 0 1 4.47.64 10.88 10.88 0 0 1 3.6 1.74 8 8 0 0 1 2.35 2.94 9.13 9.13 0 0 1 .81 4.08l-.16 11.39a18.69 18.69 0 0 0 .23 3.53 8.61 8.61 0 0 0 .75 2.42v.42zm-6.44-4.91a6.91 6.91 0 0 0 1.91-.22 6.83 6.83 0 0 0 1.61-.62 5.51 5.51 0 0 0 1.24-.88 4.67 4.67 0 0 0 .82-1v-4.56h-3.48a10.37 10.37 0 0 0-2.72.28 5.28 5.28 0 0 0-1.85.83 3.46 3.46 0 0 0-1.07 1.32 4.05 4.05 0 0 0-.37 1.68 3 3 0 0 0 1 2.29 4.12 4.12 0 0 0 2.91.88z"
-                  />
-                  <path
-                    class="typo-left-top"
-                    d="M77.28 94H54.91l-5.38 17.35H41l21.63-67h7.14l21.27 67h-8.46zm-20.07-7.44H75l-8.81-29.09z"
-                  />
-                </g>
-              </svg>
-              <p>
-                If you don't have your own design ready, I can create a design
-                that will be visually appealing, user-friendly and responsive.
-              </p>
-            </div>
-            <!-- UI/UX animation-->
-            <div class="container-service graphic ui">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-                <g opacity=".87" fill="none" stroke="#fff">
-                  <text
-                    class="text"
-                    transform="translate(40 150)"
-                    font-size="16"
-                    fill="#fff"
-                    stroke="none"
-                    font-family="Roboto"
-                    font-weight="500"
-                  >
-                    UI/UX design
-                  </text>
-                  <path class="rectangle" d="M30.57 22.69h98.86v98.86H30.57z" />
-                  <path class="bar" d="M30.57 37.59h98.86" />
-                  <circle class="dot3" cx="58.76" cy="29.96" r="3.09" />
-                  <circle class="dot2" cx="49.19" cy="29.96" r="3.09" />
-                  <circle class="dot1" cx="39.62" cy="29.96" r="3.09" />
-                  <rect
-                    class="btn"
-                    x="55.28"
-                    y="67.21"
-                    width="49.43"
-                    height="24.72"
-                    rx="4"
-                  />
-                  <path
-                    class="heart"
-                    fill="#121212"
-                    d="M80 85.57l-1-.86c-3.37-3.06-5.59-5.07-5.59-7.54a3.56 3.56 0 0 1 3.6-3.6A3.9 3.9 0 0 1 80 74.94a3.9 3.9 0 0 1 2.94-1.37 3.56 3.56 0 0 1 3.6 3.6c0 2.47-2.22 4.48-5.59 7.54z"
-                  />
-                </g>
-              </svg>
-              <p>
-                Creating functional and pretty interfaces which can enrich
-                user-experience is my primary job, and I like to exceed
-                expectations.
-              </p>
-            </div>
-            <!-- WebDev animation-->
-            <div class="container-service interactive ui">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-                <g opacity=".87" fill="none" stroke="#fff">
-                  <text
-                    class="text"
-                    transform="translate(20 150)"
-                    fill="#fff"
-                    stroke="none"
-                    font-size="16"
-                    font-family="Roboto"
-                    font-weight="500"
-                  >
-                    Interactive Web-Apps
-                  </text>
-                  <path class="ellipse4" />
-                  <path class="ellipse3" />
-                  <path class="ellipse2" />
-                  <path class="ellipse1" />
-                  <path class="ellipse0" />
-                  <path
-                    class="ellipse"
-                    d="M68,61.83a12,12 0 1,0 24,0a12,12 0 1,0 -24,0"
-                    stroke-miterlimit="10"
-                    fill="#fff"
-                    opacity="0.87"
-                  />
-                  <path
-                    class="hand"
-                    d="M100.33 82.21a5.82 5.82 0 0 0-3.66.19c-.08-.93-.46-3.07-2.32-3.64a5.83 5.83 0 0 0-3.74.21 3.59 3.59 0 0 0-2.24-3 5.85 5.85 0 0 0-3.64.17v-7.68c0-2-.83-5.44-4-5.44-2.91 0-4 3.25-4 5.44v17.08C75.34 84.12 73 82.13 71.14 82c-3-.24-5.19 1.64-4.59 4.56s3.12 2.75 5 5.14 6.34 9.81 6.37 9.86c.67 1.26 2.49 4.74 2.79 5.62a12 12 0 0 1 .27 3.09.79.79 0 0 0 .22.55.76.76 0 0 0 .54.23h17.18a.77.77 0 0 0 .76-.68 17.08 17.08 0 0 0 0-2.73 5.5 5.5 0 0 1 1.32-3.84 11.61 11.61 0 0 0 1.63-4.52.41.41 0 0 0 0-.11V86.28c.04-.28-.01-3.35-2.3-4.07z"
-                    fill="#121212"
-                    stroke="#fff"
-                    stroke-miterlimit="10"
-                  />
-                  <path class="bar" d="M96.68 88.8v-6.4" />
-                  <path class="bar" d="M90.61 87.29v-8.36" />
-                  <path class="bar" d="M84.73 86.74V76.13" />
-                  <path class="bar" d="M76.79 87.94v-2.39" />
-                </g>
-              </svg>
-              <p>
-                Static websites are past time; bringing websites to life with
-                animations and interactive elements is my specialty.
-              </p>
-            </div>
-            <!-- Code Animation -->
-            <div class="container-service code ui">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-                <g opacity=".87" fill="none" stroke="#fff">
-                  <text
-                    class="text"
-                    transform="translate(20 150)"
-                    font-size="16"
-                    fill="#fff"
-                    stroke="none"
-                    font-family="Roboto"
-                    font-weight="500"
-                  >
-                    Backend integration
-                  </text>
-                  <path
-                    class="rectangle"
-                    transform="rotate(-90 80 72.12)"
-                    d="M30.57 22.69h98.86v98.86H30.57z"
-                  />
-                  <path class="bar" d="M45.46 121.55V22.69" />
-                </g>
-              </svg>
-              <span class="change-letter"></span>
-              <p>
-                Aside from front-end, I also do the back-end integration, work
-                with APIs and databases, and much more.
-              </p>
-            </div>
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-            <!-- Dots/bullets/indicators -->
-            <div class="dot-container">
-              <span class="dot" onclick="currentSlide(1)"></span>
-              <span class="dot" onclick="currentSlide(2)"></span>
-              <span class="dot" onclick="currentSlide(3)"></span>
-            </div>
-          </div>
-          <!--    <div class="container">
-            <div class="glide glide--carousel">
-              <div class="glide__track" data-glide-el="track">
-                <ul class="glide__slides">
-                  <li class="glide__slide">
-                    <h3>HTML, CSS, JS</h3>
-                    <p>
-                      HTML, CSS and JS I started designing blogs and simple
-                      pages with HTML and CSS as a highschool student. I know
-                      how to use different CSS preprocessors, JS libraries and
-                      framworks.
-                    </p>
-                  </li>
-                  <li class="glide__slide">
-                    <h3>React</h3>
-                    <p>
-                      I have experience with React libraries like Redux and
-                      Next.js, and I am currently learning more about creating
-                      3D content with Three.js and about animation with GSAP.
-                    </p>
-                  </li>
-                  <li class="glide__slide">
-                    <h3>Node.js</h3>
-                    <p>
-                      It is amazing that JavaScript can be used on the server
-                      side with Node.js, and frameworks like Express.js make
-                      setting up a server for applications so much easier and
-                      faster.
-                    </p>
-                  </li>
-                  <li class="glide__slide">
-                    <h3>Testing and optimization</h3>
-                    <p>
-                      I always try to ensure that my code is bug-free and that
-                      it works as expected. I can work with debugging tools and
-                      I am always trying to optimize my code for better
-                      performance.
-                    </p>
-                  </li>
-                  <li class="glide__slide">
-                    <h3>Version Control</h3>
-                    <p>
-                      Git and Github are essential part of my workflow, and most
-                      of my projects are hosted on Github. That way we can
-                      collaborate easily anyday anytime.
-                    </p>
-                  </li>
-                </ul>
-              </div>
-              <div class="glide__bullets" data-glide-el="controls[nav]">
-                <button class="glide__bullet" data-glide-dir="=0"></button>
-                <button class="glide__bullet" data-glide-dir="=1"></button>
-                <button class="glide__bullet" data-glide-dir="=2"></button>
-              </div>
-            </div> -->
-          <!-- 
-            <div class="icons">
-              <div class="icon-block">
-                <img
-                  class="center-align"
-                  src="https://img.icons8.com/nolan/256/html-5.png"
-                  alt="html-5"
-                />
-              </div>
-
-              <div class="icon-block">
-                <img
-                  src="https://img.icons8.com/nolan/256/css3.png"
-                  alt="css3"
-                  class="center-align"
-                />
-              </div>
-
-              <div class="icon-block">
-                <img
-                  src="https://img.icons8.com/nolan/256/javascript.png"
-                  alt="javascript"
-                  class="center-align"
-                />
-              </div>
-
-              <div class="icon-block">
-                <img
-                  src="https://img.icons8.com/nolan/256/react-native.png"
-                  alt="ReactJS"
-                  class="center-align"
-                />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s2 brand-icon">
-                <i class="fa-solid fa-3x fa-brands fa-sass center-align"></i>
-              </div>
-              <div class="col s2 brand-icon">
-                <i class="fa-solid fa-3x fa-brands fa-node-js center-align"></i>
-              </div>
-              <div class="col s2 brand-icon">
-                <i class="fa-solid fa-3x fa-brands fa-npm center-align"></i>
-              </div>
-              <div class="col s2 brand-icon">
-                <i class="fa-solid fa-3x fa-brands fa-php center-align"></i>
-              </div>
-              <div class="col s2 brand-icon">
-                <i class="fa-solid fa-3x fa-brands fa-git center-align"></i>
-              </div>
-              <div class="col s2 brand-icon">
-                <i class="fa-solid fa-3x fa-brands fa-gitlab center-align"></i>
-              </div>
-            </div>
-          -->
-        </section>
+        </div>
+      </section>
+ -->
         <!-- =============== SKILLS ================ -->
         <section class="skills" id="skills">
-          <h2>SKILLS</h2>
-          <div class="container">
-            <div class="around-list">
-              <h4>If you need someone who can...</h4>
-            </div>
-            <div class="skill-list">
-              <ul role="list">
-                <li>
-                  <i class="fa-solid fa-paintbrush text-teal"></i>create
-                  interactive and intuitive UX
+          <h2>Skills</h2>
+
+          <div class="container-responsive transparent-bg">
+            <h3>If you need someone who can...</h3>
+            <ul class="skill-list" id="skill-list">
+              <li class="skill-item" id="card-1">
+                <i class="fa-solid fa-paintbrush text-teal"></i>create
+                interactive
+                and intuitive UX
+              </li>
+              <li class="skill-item animate" id="card-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-orange"></i>design
+                animated and pretty UI
+              </li>
+              <li class="skill-item animate" id="card-3">
+                <i class="fa-solid fa-pen-ruler text-blue"></i>build
+                responsive
+                and scalabale websites
+              </li>
+              <li class="skill-item animate" id="card-4">
+                <i class="fa-solid fa-images text-teal"></i>develop
+                interactive
+                web apps
+              </li>
+              <li class="skill-item" id="card-5">
+                <i class="fa-solid fa-feather text-orange"></i>optimize
+                websites
+                for easy and lightweight use
+              </li>
+              <li class="skill-item" id="card-6">
+                <i class="fa-solid fa-rocket text-pink"></i>
+                deploy and manage websites
+              </li>
+              <li class="skill-item" id="card-7">
+                <i class="fa-solid fa-code text-blue"></i>handle
+                backend-integration
+              </li>
+              <li class="skill-item" id="card-8">
+                <i class="fa-solid fa-network-wired text-orange"></i>work with
+                APIs and third-party libraries
+              </li>
+              <li class="skill-item" id="card-9">
+                <i class="fa-solid fa-newspaper text-orange"></i>stay
+                up-to-date
+                with new technologies
+              </li>
+            </ul>
+            <h3>feel free to</h3>
+            <button><a href="#contact">Contact me</a></button>
+          </div>
+          <div class="glide glide--carousel">
+            <div class="glide__track" data-glide-el="track">
+              <ul class="glide__slides">
+                <li class="glide__slide">
+                  <img src="assets/svg/html.svg" name="HTML" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-wand-magic-sparkles text-orange"></i
-                  >design animated and pretty UI
+                <li class="glide__slide">
+                  <img src="assets/svg/css.svg" name="CSS" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-pen-ruler text-blue"></i>build
-                  responsive and scalabale websites
+                <li class="glide__slide">
+                  <img src="assets/svg/javascript.svg" name="JavaScript" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-images text-teal"></i>develop
-                  interactive web apps
+                <li class="glide__slide">
+                  <img src="assets/svg/react.svg" name="React" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-feather text-orange"></i>optimize
-                  websites for easy and lightweight use
+                <li class="glide__slide">
+                  <img src="assets/svg/node.svg" name="NodeJS" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-rocket text-pink"></i>
-                  deploy and manage websites
+                <li class="glide__slide">
+                  <img src="assets/svg/sass.svg" name="Sass" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-code text-blue"></i>handle
-                  backend-integration
+                <li class="glide__slide">
+                  <img src="assets/svg/tailwind.svg" name="TailwindCSS" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-network-wired text-orange"></i>work with
-                  APIs and third-party libraries
+                <li class="glide__slide">
+                  <img src="assets/svg/mongo.svg" name="MongoDB" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-database text-teal"></i>manage and
-                  maintain databases
+                <li class="glide__slide">
+                  <img src="assets/svg/express.svg" name="ExpressJS" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-code-branch text-pink"></i>work with
-                  version control systems
+                <li class="glide__slide">
+                  <img src="assets/svg/redux.svg" name="Redux" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-brain text-teal"></i>think creatively
-                  and critically
+                <li class="glide__slide">
+                  <img src="assets/svg/git.svg" name="Git" />
                 </li>
-                <li>
-                  <i class="fa-solid fa-circle-nodes text-pink"></i>
-                  take interdisciplinary aproach to problem-solving
-                </li>
-                <li>
-                  <i class="fa-solid fa-people-carry-box text-orange"></i
-                  >collaborate and work in a team
-                </li>
-                <li>
-                  <i class="fa-regular fa-comments text-blue"></i>actively
-                  listen and answer the needs of the clients
-                </li>
-                <li>
-                  <i class="fa-solid fa-newspaper text-orange"></i>stay
-                  up-to-date with new technologies
-                </li>
-                <li>
-                  <i class="fa-solid fa-file-signature text-teal"></i>write
-                  content and manage project documentation
-                </li>
-                <li>
-                  <i class="fa-regular fa-compass text-pink"></i>find the best
-                  solutions and directions
+                <li class="glide__slide">
+                  <img src="assets/svg/figma.svg" name="Figma" />
                 </li>
               </ul>
             </div>
-            <div class="around-list">
-              <h3>...don't hesitate to:</h3>
-            </div>
-            <button class="call-to-action">
-              <a href="#contact">Contact me!</a>
-            </button>
           </div>
+
+        </section>
+
+        <!--=============== PROJECTS ================ -->
+        <section class="projects" id="pprojects">
+          <h2>Projects</h2>
+
+          <!-- =============== PROJECT ONE =============== -->
+
+          <div id="project-cards" class="container-responsive">
+
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+              <img class="project-img" src="/assets/img/quiz-app-contrast.png" alt />
+              <div class="footer">
+                <h2>Song Finder</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  This is an app that helps you find a song on the iTunes, if
+                  you know what you"re looking for. As for copyright rules,
+                  you
+                  can listen a sample for free.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a href="https://song-finder-itunes.netlify.app/" target="_blank">Live Demo</a>
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a href="https://github.com/marina-majden/song-finder" target="_blank">
+                      Source Code</a>
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+
+            <!-- =============== PROJECT TWO ===============-->
+
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+
+              <img class="project-img" src="/assets/img/chat-app-logo.png" alt />
+              <div class="footer">
+                <h2>Chat Room App</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  Simple, fast, versatile and privacy friendly, this app
+                  enables
+                  you to access chat-window and talk to your friends anywhere
+                  and anytime in a matter of seconds. Creative and
+                  session-based
+                  usernames guarantee your privacy.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a href="https://oldschool-chatroom.netlify.app/" target="_blank">Live Demo</a>
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a href="https://github.com/marina-majden/chat-room-app" target="_blank">
+                      Source Code</a>
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+
+            <!-- =============== PROJECT THREE =============== -->
+
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+
+              <img class="project-img" src="/assets/img/quiz-app-colorful.png" alt />
+              <div class="footer">
+                <h2>Quiz game</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  One of my first PWA projects; Progressive Web Apps are
+                  fabulous because even though they are made for desktop
+                  browsers, they look completely native on smartphones, and
+                  you
+                  can even install them as a regular app and place its icon on
+                  your mobile screen. This quiz game
+                  <i>per se</i> is lacking in questions, but I will add more
+                  soon.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a href="https://marina-majden.github.io/quizzy/" target="_blank">Live Demo</a>
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a href="https://github.com/marina-majden/quizzy" target="_blank">
+                      Source Code</a>
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+
+            <!-- =============== PROJECT FOUR =============== -->
+
+            <figure>
+              <div class="banner">
+                <div class="tools">
+                  <i class="fa-brands fa-html5"></i>
+                  <i class="fa-brands fa-css3-alt"></i>
+                  <i class="fa-brands fa-square-js"></i>
+                  <i class="fa-brands fa-node-js"></i>
+                  <i class="fa-brands fa-react"></i>
+                </div>
+              </div>
+              <img class="project-img" src="/assets/img/quote-interface.jpg" alt />
+              <div class="footer">
+                <h2>Quotes</h2>
+                <h3><i class="fa-solid fa-arrow-up"></i> Read more</h3>
+              </div>
+              <figcaption>
+                <p>
+                  As you guessed correctly, it"s an app that helps you find a
+                  song on the iTunes, if you know what you"re looking for. Or
+                  if
+                  you don"t, maybe you will find something nice, and you can
+                  listen a sample for free.
+                </p>
+                <div class="buttons">
+                  <button class="project-card__button">
+                    <a href="https://cute-quote-today.netlify.app/" target="_blank">Live Demo</a>
+                  </button>
+                  <button class="project-card__button secondary">
+                    <a href="https://github.com/marina-majden/song-finder" target="_blank">
+                      Source Code</a>
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+
         </section>
         <!--=============== PROJECTS ================ -->
         <section class="projects" id="projects">
           <h2>PROJECTS</h2>
-<div class="container">
+
           <!-- =============== PROJECT ONE =============== -->
           <div class="project-card">
             <div class="project-card-image">
-              <img src="/assets/img/quiz-app.png" alt="screenshot-quizz-app" />
+              <img src="/assets/img/quizgame-interface.jpg" alt="screenshot-quizz-app" />
             </div>
             <p class="project-card-title">Quiz Game</p>
             <p class="project-card-body">
-              One of my first PWA projects; Progressive Web Applications come
-              very handy if you need a fast and responsive web-app that works
-              offline. I love them because even though they are made for desktop
-              browsers, they look completely native on smartphones, and you can
-              even install them as a regular app and place its icon on your
-              mobile screen.
+              One of my first PWA projects; Progressive Web Apps are fabulous
+              because even though they are made for desktop browsers, they
+              look
+              completely native on smartphones, and you can even install them
+              as
+              a regular app and place its icon on your mobile screen. This
+              quiz
+              game <i>per se</i> is lacking in questions, but I will add more
+              soon.
             </p>
 
             <div class="project-card-footer">
-              <label for="codeQuizBtn">Check out the source code:</label>
-              <button type="button" id="codeQuizBtn" name="codeQuizBtn">
-                <a
-                  href="https://github.com/marina-majden/quiz-play"
-                  target="_blank"
-                ></a
-                >Code
-              </button>
-              <label for="demoQuizBtn">You can play the game for free:</label>
-              <button type="button" id="demoQuizBtn" name="codeQuizBtn">
-                <a
-                  href="https://song-finder-itunes.netlify.app"
-                  target="_blank"
-                ></a
-                >Play
-              </button>
+              <div>
+                <label for="codeQuizBtn">Check out the source code:</label>
+                <button class="color" type="button" id="codeQuizBtn" name="codeQuizBtn">
+                  <a href="https://github.com/marina-majden/quiz-play" target="_blank"></a>Code
+                </button>
+              </div>
+              <div>
+                <label for="demoQuizBtn">You can play the game for
+                  free:</label>
+                <button class="color" type="button" id="demoQuizBtn" name="codeQuizBtn">
+                  <a href="https://song-finder-itunes.netlify.app" target="_blank"></a>Play
+                </button>
+              </div>
+
             </div>
           </div>
           <!-- =============== PROJECT TWO =============== -->
           <div class="project-card">
             <div class="project-card-image">
-              <img src="/assets/img/songfinder.png" alt="songfinder-app" />
+              <img src="/assets/img/songfinder-interface.jpg" alt="songfinder-app" />
             </div>
             <p class="project-card-title">Song Finder</p>
             <p class="project-card-body">
-              With the iTunes API, I have built this simple app that works as a
-              music search interface. Results are accompanied with some
-              information about each song, you can see the cover of a single or
-              amlbum and you can listen to a sample with integrated music
-              player.
+              As you guessed correctly, it's an app that helps you find a song
+              on the iTunes, if you know what you're looking for. Or if you
+              don't, maybe you will find something nice, and you can listen a
+              sample for free.
             </p>
 
             <div class="project-card-footer">
-              <label for="codeiTunesBtn">Check out the source code:</label>
-              <button type="button" id="codeiTunesBtn" name="codeiTunesBtn">
-                <a
-                  href="https://github.com/marina-majden/songfinder-app"
-                  target="_blank"
-                ></a
-                >Code
-              </button>
-              <label for="demoiTunesBtn">Try out the app here:</label>
-              <button type="button" id="demoiTunesBtn" name="codeQuizBtn">
-                <a
-                  href="https://marina-majden.github.io/song-finder"
-                  target="_blank"
-                ></a
-                >Open App
-              </button>
+              <div>
+                <label for="codeiTunesBtn">Check out the source code:</label>
+                <button class="color" type="button" id="codeiTunesBtn" name="codeiTunesBtn">
+                  <a href="https://github.com/marina-majden/songfinder-app" target="_blank"></a>Code
+                </button>
+              </div>
+              <div>
+                <label for="demoiTunesBtn">Try out the app here:</label>
+                <button class="color" type="button" id="demoiTunesBtn" name="codeQuizBtn">
+                  <a href="https://marina-majden.github.io/song-finder" target="_blank"></a>Open App
+                </button>
+              </div>
+
+            </div>
+          </div>
+          <!-- =============== PROJECT FOUR =============== -->
+          <div class="project-card">
+            <div class="project-card-image">
+              <img src="/assets/img/quote-interface.jpg" alt="chatroom-app" />
+            </div>
+            <p class="project-card-title">Great Quotes</p>
+            <p class="project-card-body">
+              Very basic, very straightforward. This app is connected is using
+              API
+              calls to bring great quotes to the user with one simple click.
+              It is
+              built using HTML, CSS and JS and it uses API...
+            </p>
+            <div class="project-card-footer">
+              <div>
+                <label for="codeChatBtn">Check out the source code:</label>
+                <button class="color" type="button" id="codeChatBtn" name="codeChatBtn">
+                  <a href="https://github.com/marina-majden/" target="_blank">Code</a>
+                </button>
+              </div>
+              <div>
+                <label for="demoChatBtn">Try out the app here:</label>
+                <button class="color" type="button" id="demoChatBtn" name="demoChatBtn">
+                  <a href="https://cute-quote-today.netlify.app" target="_blank" delay="1000">
+                    Open App</a>
+                </button>
+              </div>
+
             </div>
           </div>
           <!-- =============== PROJECT THREE =============== -->
           <div class="project-card">
             <div class="project-card-image">
-              <img
-                src="/assets/img/chatroom-horizontal.png"
-                alt="chatroom-app"
-              />
+              <img src="/assets/img/chat-app-logo.png" alt="chatroom-app" />
             </div>
             <p class="project-card-title">Chatroom App</p>
             <p class="project-card-body">
-              Simple, fast, versatile and privacy friendly, this app enables you
-              to access chat-window and talk to your friends anywhere and
-              anytime in a matter of seconds. Creative and session-based
-              usernames guarantee your privacy.
+              Simple, fast, versatile and privacy friendly, <br />
+              this app enables you to access chat-window and talk to your
+              friends anywhere and anytime in a matter of seconds. Creative
+              and
+              session-based usernames guarantee your privacy.
             </p>
             <div class="project-card-footer">
               <label for="codeChatBtn">Check out the source code:</label>
-              <button type="button" id="codeChatBtn" name="codeChatBtn">
-                <a href="https://github.com/marina-majden/" target="_blank"
-                  >Code</a
-                >
+              <button class="color" type="button" id="codeChatBtn" name="codeChatBtn">
+                <a href="https://github.com/marina-majden/" target="_blank">Code</a>
               </button>
               <label for="demoChatBtn">Try out the app here:</label>
-              <button type="button" id="demoChatBtn" name="demoChatBtn">
-                <a
-                  href="https://oldschool-chatroom.netlify.app"
-                  target="_blank"
-                  delay="1000"
-                >
-                  Open App</a
-                >
+              <button class="color" type="button" id="demoChatBtn" name="demoChatBtn">
+                <a href="https://oldschool-chatroom.netlify.app" target="_blank" delay="1000">
+                  Open App</a>
               </button>
             </div>
           </div>
-        </div>
         </section>
+        <!-- =============== HERO ================ -->
+        <!--  <section class="hero" id="hero">
+      <article class="grid">
+        <div class="box item1">
+          <div class="devices">
+            <div class="device"></div>
+            <div class="device"></div>
+            <div class="device"></div>
+          </div>
+        </div>
+        <div class="box item2">
+          <div class="text-switch-container">
+            <div class="text-switcher">
+              <h4>loading</h4>
+              <div class="words">
+                <span class="word">buttons</span>
+                <span class="word">forms</span>
+                <span class="word">switches</span>
+                <span class="word">cards</span>
+                <span class="word">buttons</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box item3">
+          <div class="lamp">
+            <div class="glass">
+              <div class="lava">
+                <div class="blob"></div>
+                <div class="blob"></div>
+                <div class="blob"></div>
+                <div class="blob top"></div>
+                <div class="blob bottom"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box item4">
+          <h3 class="box-text">
+            I am Marina Majdenić, a freelancing Frontend / Web developer based
+            in Croatia and available for collaboration or hire. I enjoy
+            creating interactive and responsive websites and web applications,
+            as well as ensuring reliability, scalability and performance of
+            the final product.
+          </h3>
+        </div>
+        <div class="box item5">
+          <div class="laptop">
+            <div class="screen">
+              <div class="header"></div>
+              <div class="text">Hello MackBook</div>
+            </div>
+            <div class="keyboard"></div>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+              <filter id="goo">
+                <fegaussianblur in="SourceGraphic" stdDeviation="10" result="blur"></fegaussianblur>
+                <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+                  result="goo"></fecolormatrix>
+                <feblend in="SourceGraphic" in2="goo"></feblend>
+              </filter>
+            </defs>
+          </svg>
+        </div>
 
+        <div class="box item7">
+          <div class="flex">
+            <div class="card">
+              <div class="content">
+                <div class="back">
+                  <div class="back-content">
+                    <strong>Hover Me</strong>
+                  </div>
+                </div>
+                <div class="front">
+                  <div class="img">
+                    <div class="circle"></div>
+                    <div class="circle" id="right"></div>
+                    <div class="circle" id="bottom"></div>
+                  </div>
+
+                  <div class="front-content">
+                    <small class="badge">Pasta</small>
+                    <div class="description">
+                      <div class="title">
+                        <p class="title">
+                          <strong>Spaguetti Bolognese</strong>
+                        </p>
+                      </div>
+                      <p class="card-footer">30 Mins 1 Serving</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="content">
+                <div class="back">
+                  <div class="back-content">
+                    <strong>Hover Me</strong>
+                  </div>
+                </div>
+                <div class="front">
+                  <div class="img">
+                    <div class="circle"></div>
+                    <div class="circle" id="right2"></div>
+                    <div class="circle" id="bottom2"></div>
+                  </div>
+
+                  <div class="front-content">
+                    <small class="badge">Pasta</small>
+                    <div class="description">
+                      <div class="title">
+                        <p class="title">
+                          <strong>Spaguetti Bolognese</strong>
+                        </p>
+                      </div>
+                      <p class="card-footer">30 Mins 1 Serving</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="content">
+                <div class="back">
+                  <div class="back-content">
+                    <strong>Hover Me</strong>
+                  </div>
+                </div>
+                <div class="front">
+                  <div class="img">
+                    <div class="circle"></div>
+                    <div class="circle" id="right3"></div>
+                    <div class="circle" id="bottom3"></div>
+                  </div>
+
+                  <div class="front-content">
+                    <small class="badge">Pasta</small>
+                    <div class="description">
+                      <div class="title">
+                        <p class="title">
+                          <strong>Spaguetti Bolognese</strong>
+                        </p>
+                      </div>
+                      <p class="card-footer">30 Mins 1 Serving</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box item8">
+          <a href="#projects">
+            <h4 class="box-text">Take a look at my projects</h4>
+            <i class="fa-solid fa-folder-open"></i>
+          </a>
+        </div>
+        <div class="box item9">
+          <a href="#skills">
+            <h4 class="box-text">Click here to see my skills</h4>
+            <i class="fa-solid fa-code"></i>
+          </a>
+        </div>
+        <div class="box item10">
+          <a href="#contact">
+            <h4 class="box-text">Contact me here</h4>
+            <i class="fa-solid fa-comment"></i>
+          </a>
+        </div>
+        <div class="box item11">
+          <a href="#services">
+            <h4 class="box-text">Or check out my services</h4>
+
+            <i class="fa-solid fa-laptop-file"></i>
+          </a>
+        </div>
+      </article>
+    </section> -->
         <!-- ============= CONTACT ================-->
-
         <section class="contact" id="contact">
           <h2>Contact</h2>
           <div class="container">
-            <form
-              id="contact-form"
-              name="contact-form"
-              action="https://api.web3forms.com/submit"
-              method="POST"
-              target="_blank"
-            >
-              <input
-                type="hidden"
-                name="access_key"
-                value="d84c9554-a339-41d0-b6b6-1a9b29e4df70"
-              />
+            <form id="contact-form" name="contact-form" action="https://api.web3forms.com/submit" method="POST"
+              target="_blank">
+              <input type="hidden" name="access_key" value="d84c9554-a339-41d0-b6b6-1a9b29e4df70" />
               <div class="form-group">
                 <label for="name">Full name:</label><br />
-                <input
-                  class="name"
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Jane Doe"
-                  minlength="6"
-                  maxlength="60"
-                  required
-                />
+                <input class="name" type="text" name="name" id="name" placeholder="Jane Doe" minlength="6"
+                  maxlength="60" required />
               </div>
               <div class="form-group">
                 <label for="email">E-mail:</label><br />
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="jane.doe@example.com"
-                  minlength="5"
-                  maxlength="60"
-                  required
-                />
+                <input type="email" name="email" id="email" placeholder="jane.doe@example.com" minlength="5"
+                  maxlength="60" required />
               </div>
               <div class="form-group">
                 <label for="message">Message:</label><br />
-                <textarea
-                  name="message"
-                  id="message"
-                  cols="40"
-                  rows="10"
-                  placeholder="Your message goes here..."
-                  minlength="20"
-                  maxlength="4000"
-                  required
-                ></textarea>
+                <textarea name="message" id="message" cols="100" rows="10" placeholder="Your message goes here..."
+                  minlength="20" maxlength="4000" required></textarea>
               </div>
               <div class="form-group checkbox">
                 <input type="checkbox" name="agree" id="agree" required />
@@ -754,17 +1166,11 @@
               <button type="submit" name="submit">
                 <div class="svg-wrapper-1">
                   <div class="svg-wrapper">
-                    <svg
-                      href="/assets/svg/regular/paper-plane.svg"
-                      viewBox="0 0 24 24"
-                      width="24"
-                      height="24"
-                    >
+                    <svg href="/assets/svg/regular/paper-plane.svg" viewBox="0 0 24 24" width="24" height="24">
                       <path fill="none" d="M0 0h24v24H0z"></path>
-                      <path
-                        fill="currentColor"
-                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                      ></path>
+                      <path fill="currentColor"
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z">
+                      </path>
                     </svg>
                   </div>
                 </div>
@@ -773,57 +1179,48 @@
             </form>
           </div>
         </section>
+
         <!-- =============== FOOTER ================ -->
         <footer class="footer">
           <div class="socials">
-            <a href="https://github.com/marina-majden" target="_blank"
-              ><i class="fa-brands fa-2x fa-square-github"> </i
-            ></a>
-            <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"
-              ><i class="fa-brands fa-2x fa-linkedin-in"></i
-            ></a>
-            <a href="mailto:marina.majden@gmail.com" target="_blank"
-              ><i class="fa-brands fa-2x fa-google-plus-square"></i
-            ></a>
-            <a href="https://medium.com/@marina.majden" target="_blank"
-              ><i class="fa-brands fa-2x fa-medium"></i
-            ></a>
+            <div class="socials-icons">
+              <a href="https://github.com/marina-majden" target="_blank"><i
+                  class="fa-brands fa fa-square-github fa-beat"> </i></a>
+              <a href="https://www.linkedin.com/in/marina-majden/" target="_blank"><i
+                  class="fa-brands fa fa-linkedin-in fa-beat"></i></a>
+              <a href="mailto:marina.majden@gmail.com" target="_blank"><i
+                  class="fa-brands fa fa-google-plus-square fa-beat"></i></a>
+              <a href="https://medium.com/@marina.majden" target="_blank"><i
+                  class="fa-brands fa fa-medium fa-beat"></i></a>
+            </div>
           </div>
           <div class="logo-copy">
-            <picture>
-              <source
-                srcset="/assets/img/logo-white.png"
-                media="[data-theme='dark']"
-              />
-              <source
-                srcset="/assets/img/logo-black.png"
-                media="[data-theme='']"
-              />
-              <img src="/assets/img/logo-black.png" alt="logo" />
-            </picture>
-          
+            <img src="/assets/img/logo-white.png" alt="logo" width="50px" height="50px" />
           </div>
           <div class="copyright">
             <p>
-              2024
-              <i class="fa-solid fa-copyright w3-hover-opacity"></i>
-              Marina Majdenić
+              Copyright
+              <i class="fa-solid fa-copyright w3-hover-opacity"></i> 2024.
+              <br />Marina Majdenić
             </p>
           </div>
         </footer>
-      </main>
-    </div>
-    <!-- JS files -->
-    <script
-      src="https://kit.fontawesome.com/677ac239ea.js"
-      crossorigin="anonymous"
-    ></script>
+
+    </main>
+
+    <!-- =============== JAVASCRIPT FILES ================ -->
+    <script src="https://kit.fontawesome.com/677ac239ea.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="/assets/js/theme.js"></script>
     <script src="/assets/js/split.js"></script>
-    <script src="/assets/js/validation.js"></script>
+    <script src="/assets/js/themes.js"></script>
+    <script src="/assets/js/language-switcher.js"></script>
     <script src="/assets/js/slider.js"></script>
-    <script src="/assets/js/glide.min.js"></script>
-    <script src="/assets/js/materialize.js"></script>
+    <!--  <script src="/assets/js/image-compare-viewer.min.js"></script>  -->
+    <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/node_modules/@glidejs/glide/dist/glide.min.js"></script>
+    <script src="/assets/js/carousel.js"></script>
+
   </body>
+
 </html>
