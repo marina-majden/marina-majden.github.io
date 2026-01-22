@@ -16,8 +16,9 @@ const Hero = ({ t, scrollToSection }) => {
                             ? "opacity-100 translate-y-0"
                             : "opacity-0 translate-y-4"
                     }`}>
-                    <span className='self-start font-mono text-xs text-cyan-400 flex items-center gap-2'>
-                        <Terminal size={12} /> v3.0.0 // Portfolio initialized
+                    <span className='self-start font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-alias'>
+                        <Terminal size={12} className='animate-pulse' /> v3.0.0
+                        // Portfolio initialized
                     </span>
                 </div>
 
@@ -39,7 +40,7 @@ const Hero = ({ t, scrollToSection }) => {
                         {t.hero.line3}
                     </span>
                     <span
-                        className={`block text-3xl bg-clip-text font-bold text-right mr-1/3 text-black text-shadow-indigo-600 text-shadow-xs drop-shadow-fuchsia-600 drop-shadow-xs z-50 transition-all duration-700 delay-700 ${
+                        className={`block text-3xl bg-clip-text font-bold text-right text-black text-shadow-white text-shadow-sm z-50 transition-all duration-700 delay-700 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-10"

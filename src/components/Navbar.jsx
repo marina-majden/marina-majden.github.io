@@ -5,7 +5,7 @@ const Navbar = ({
     menuOpen,
     setMenuOpen,
     scrollToSection,
-    setActiveTab,
+
     lang,
     setLang,
     t,
@@ -18,7 +18,7 @@ const Navbar = ({
         }`}>
         <div className='flex justify-between items-center'>
             <h1
-                className='text-5xl text-gradient font-extrabold my-2 font-logo cursor-pointer hover:scale-105 transition-transform duration-300 ease'
+                className='text-5xl text-gradient font-extrabold my-2 font-6 cursor-pointer hover:scale-105 transition-transform duration-300 ease-in'
                 onClick={() => scrollToSection("home")}>
                 &lt;M /&gt;
             </h1>

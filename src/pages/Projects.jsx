@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal";
 import SectionTitle from "../components/SectionTitle";
 
-// TODO: Replace placeholder images and links with actual project data from src/data/data.js 
+// TODO: Replace placeholder images and links with actual project data from src/data/data.js
 const Projects = ({ t }) => (
     <section id='projects' className='py-24'>
         <div className='container mx-auto px-6'>
@@ -36,13 +37,16 @@ const Projects = ({ t }) => (
                                     </span>
                                 </div>
                                 <div className='absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm'>
-                                    <button className='px-6 py-2 bg-white text-black rounded-full font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:scale-105'>
-                                        <a
-                                            href={project.url}
+                                    <button className='px-6 py-2 bg-white text-black rounded-full font-bold cursor-pointer transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:scale-105'>
+                                        {t.projects.viewProject}
+                                        <Link
+                                            to={project.urlShowcase}
                                             target='_blank'
                                             rel='noopener noreferrer'>
-                                            {t.projects.viewProject}
-                                        </a>
+                                            <span className='ml-2 underline'>
+                                                ↗
+                                            </span>
+                                        </Link>
                                     </button>
                                 </div>
                             </div>
