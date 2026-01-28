@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const SkillBar = ({ percentage, colorClass }) => {
-    const [width, setWidth] = useState(0);
-    const ref = useRef(null);
+interface SkillBarProps {
+    percentage: number;
+    colorClass: string;
+}
+
+const SkillBar: React.FC<SkillBarProps> = ({ percentage, colorClass }) => {
+    const [width, setWidth] = useState<number>(0);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
@@ -11,7 +16,11 @@ const SkillBar = ({ percentage, colorClass }) => {
             }
         });
         if (ref.current) observer.observe(ref.current);
-        return () => ref.current && observer.disconnect();
+        return () => {
+            if (ref.current) {
+                observer.disconnect();
+            }
+        };
     }, [percentage]);
 
     return (
@@ -24,4 +33,5 @@ const SkillBar = ({ percentage, colorClass }) => {
         </div>
     );
 };
+
 export default SkillBar;

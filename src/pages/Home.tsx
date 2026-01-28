@@ -1,26 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import SpinnerLoader from "../components/SpinnerLoader.tsx";
-import Footer from "./Footer.jsx";
-import Navbar from "../components/Navbar.jsx";
-import Contact from "./Contact.jsx";
-import Hero from "./Hero.jsx";
-import About from "./About.jsx";
-import Projects from "./Projects.jsx";
-import Services from "./Services.jsx";
-import Skills from "./Skills.jsx";
-import { content } from "../data/data.js";
+import Footer from "./Footer.tsx";
+import Navbar from "../components/Navbar.tsx";
+import Contact from "./Contact.tsx";
+import Hero from "./Hero.tsx";
+import About from "./About.tsx";
+import Projects from "./Projects.tsx";
+import Services from "./Services.tsx";
+import Skills from "./Skills.tsx";
+import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "../components/BackgroundCanvas.tsx";
 import BackgroundGlows from "../components/BackgroundGlows.tsx";
 import Split from "../components/Split.tsx";
 
-export default function Home() {
+const Home: React.FC = () => {
     const [lang, setLang] = useState<"hr" | "en">("hr");
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [menuOpen, setMenuOpen] = useState<boolean>(false);
+    const [scrolled, setScrolled] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    const t = content[lang];
-
+    const t: ContentSection = content[lang];
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener("scroll", handleScroll);
@@ -33,7 +32,7 @@ export default function Home() {
         return () => clearTimeout(timer);
     }, []);
 
-    const scrollToSection = (id: string) => {
+    const scrollToSection = (id: string): void => {
         setMenuOpen(false);
         const element = document.getElementById(id);
         if (element) {
@@ -70,4 +69,6 @@ export default function Home() {
             <Footer t={t} />
         </div>
     );
-}
+};
+
+export default Home;

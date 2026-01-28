@@ -1,6 +1,107 @@
-// todo: add more content
+// Define types for better type safety
+interface NavItem {
+    [key: string]: string;
+    home: string;
+    about: string;
+    skills: string;
+    services: string;
+    projects: string;
+    lab: string;
+    litart: string;
+    contact: string;
+}
 
-const content = {
+interface HeroSection {
+    line1: string;
+    line2: string;
+    line3: string;
+    subtitle: string;
+    cta: string;
+}
+
+interface SoftSkill {
+    title: string;
+    desc: string;
+}
+
+interface ServiceItem {
+    title: string;
+    desc: string;
+    imgUrl: string;
+    imgClass: string;
+}
+
+interface ProjectItem {
+    title: string;
+    desc: string;
+    stack: string[];
+    full: string;
+    url: string;
+    urlShowcase: string;
+}
+
+interface ContentSection {
+    nav: NavItem;
+    hero: HeroSection;
+    about: { title: string; p1: string; p2: string };
+    skills: {
+        title: string;
+        hard: string;
+        soft: string;
+        softList: SoftSkill[];
+    };
+    services: { title: string; list: ServiceItem[] };
+    projects: { title: string; viewProject: string; items: ProjectItem[] };
+    contact: {
+        title: string;
+        instruction: string;
+        text: string;
+        cta: string;
+        sender: string;
+        email: string;
+        message: string;
+        agree: string;
+    };
+    footer: { copyright: string };
+    litart: {
+        title: string;
+        subtitle: string;
+        desc: string;
+        back: string;
+        contextTitle: string;
+        contextDesc: string;
+        visualTitle: string;
+        visualDesc: string;
+        nextBtn: string;
+        nextVisualBtn: string;
+    };
+}
+interface ContentData {
+    hr: ContentSection;
+    en: ContentSection;
+}
+
+interface ContextVariation {
+    word: string;
+    before: string;
+    after: string;
+    source: string;
+    colorClass: string;
+    btnClass: string;
+    tone: string;
+}
+
+interface VisualVariation {
+    motif: string;
+    style: string;
+    desc: string;
+    img: string;
+    colorClass: string;
+    btnClass: string;
+    tone: string;
+}
+
+const content: ContentData = {
     hr: {
         nav: {
             home: "Početna",
@@ -15,15 +116,14 @@ const content = {
         hero: {
             line1: "@marina.majdenic",
             line2: "umjetnost kodiranja",
-            line3: "Pretvorimo vašu ideju u remek-djelo.",
-            subtitle:
-                "Front-end / web developerka & profesorica književnosti i umjetnosti. Izrađujem besprijekorne web-stranice, estetski univerzalno privlačne, a istovremeno autentične i vjerne brandu. Želite zasjati u novom digitalnom izdanju?",
+            line3: "Apstraktne ideje pretvaramo u remek-djela.",
+            subtitle: "",
             cta: "Stvorimo nešto posebno!",
         },
         about: {
-            title: "Od petica do nula i jedinica",
-            p1: "Profesorica književnosti sada piše kod i pretvara apstraktne ideje u funkcionalnu digitalnu stvarnost... Je li to Breaking good? No kako god, ako tražite besprijekorna web rješenja koja su visokofunkcionalna, estetski izvanredna, a pritom ostaju vjerna vašoj autentičnoj priči.",
-            p2: "Moja pozadina u edukaciji naučila me metodičnosti, vođenju timova i snalaženju u stresnim situacijama (vjerujte, server koji padne nije ništa naspram razreda tinejdžera petkom poslijepodne). Danas te vještine koristim kako bih gradila robusne, skalabilne i vizualno promišljene web aplikacije. Ne pišem samo kod; kreiram jedinstvena iskustva.",
+            title: "",
+            p1: "Prisutnost na mreži neophodna je ako želite da javnost ima povjerenja u Vaš posao, stoga gradimo čvrstu i stabilnu arhitekturu Vašeg digitalnog prostora.",
+            p2: "Tamo ćemo izgraditi Vaš vizualni identitet, ispričati Vašu priču i oslikati viziju Vašeg brenda, temeljenu na promišljenoj i funkcionalnoj estetici koja nikoga neće ostaviti ravnodušnim. Kreiranje digitalnog sadržaja i autentičnih mrežnih iskustava koje svatko razumije, a nitko ne zaboravlja. ",
         },
         skills: {
             title: "Vještine",
@@ -86,12 +186,12 @@ const content = {
                     title: "Need Help",
                     desc: "Platforma koja omogućuje anonimno postavljanje pitanja i stručan, topao, ljudski odgovor s empatijom.",
                     stack: ["Next.js", "Stripe", "Tailwind"],
-                    full: "Kada nam AI daje odgovore na sva pitanja i pri tome potvrđuje svaku našu misao te plješće na svaku tvrdnju, moramo se zapitati koliko su dobri njegovi savjeti te koliko je to u suštini korisno kada imamo stvarne životne probleme, a ne matematičke jednadžbe. Ovdje nastupa Need Help – digitalna platforma koja omogućuje anonimno postavljanje pitanja i stručan, topao, ljudski odgovor s empatijom.",
+                    full: "Kada nam AI daje odgovore na sva pitanja i pritom potrvđuje svaku našu pomisao Ovdje nastupa Need Help – digitalna platforma koja omogućuje anonimno postavljanje pitanja i stručan, topao, ljudski odgovor s empatijom.",
                     url: "https://need-help.netlify.app",
                     urlShowcase: "/showcase/need-help",
                 },
                 {
-                    title: "Kako su Anđa i roko spasili Božić",
+                    title: "Kako su Anđa i Roko spasili Božić",
                     desc: "Personalizirana i unikatna digitalna slikovnica za djecu izrađena prema dva prava djeteta",
                     stack: [
                         "React",
@@ -101,7 +201,7 @@ const content = {
                         "TailwindCSS",
                         "Web Speech API",
                     ],
-                    full: "Interaktivna digitalna slikovnica s generativnom umjetnošću i glasovnim pripovijedanjem. Glavni likovi i lokacije izrađeni su prema stvarnim osobama i mjestima, a radnja je temeljena na osobitostima likova i njihovih života kako bi bila personalizirana i unikatna baš kao i oni. Sjajan i emotivan poklon koji nikoga ne ostavlja ravnodušnim! Slikovnica se može isprintati, a u digitalnom obliku dostupna je na mreži i lokalno. Responzivnost omogućuje čitanje na svim uređajima. Pregledajte slikovnicu te pogledajte detaljnije informacije na stranici, gdje možete i naručiti svoju slikovnicu!",
+                    full: "Interaktivna digitalna slikovnica s generativnom umjetnošću i glasovnim pripovijedanjem. Glavni likovi i lokacije izrađeni su prema stvarnim osobama i mjestima, a radnja je temeljena na osobitostima likova i njihovih života kako bi bila personalizirana i unikatna baš kao i oni.",
                     url: "https://christmas-storybook.netlify.app",
                     urlShowcase: "/showcase/storybook",
                 },
@@ -158,6 +258,7 @@ const content = {
             skills: "Skills",
             services: "Services",
             projects: "Projects",
+            lab: "Lab",
             litart: "ARToteka",
             contact: "Contact",
         },
@@ -199,14 +300,23 @@ const content = {
                 {
                     title: "End-to-End Development",
                     desc: "From a blank canvas to live status. Design, architecture, coding, and deployment.",
+                    imgUrl: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop",
+                    imgClass:
+                        "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
                 },
                 {
                     title: "Project Rescue",
                     desc: "Have code that isn't working as it should? My didactic patience comes into play here – bug detection and performance optimization.",
+                    imgUrl: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop",
+                    imgClass:
+                        "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
                 },
                 {
                     title: "Methodical Design Approach",
                     desc: "Web experiences that are intuitive for users, pleasing to the eye, and logical in the background.",
+                    imgUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop",
+                    imgClass:
+                        "w-full h-full object-cover opacity-50 transition-transform duration-500 group-hover:scale-110",
                 },
             ],
         },
@@ -294,7 +404,7 @@ const content = {
     },
 };
 
-const contextVariations = {
+const contextVariations: Record<string, ContextVariation[]> = {
     hr: [
         {
             word: "Ruka",
@@ -391,7 +501,7 @@ const contextVariations = {
     ],
 };
 
-const visualContextVariations = {
+const visualContextVariations: Record<string, VisualVariation[]> = {
     hr: [
         {
             motif: "Motiv",
@@ -453,3 +563,4 @@ const visualContextVariations = {
 };
 
 export { content, contextVariations, visualContextVariations };
+export type { ContentData, ContentSection, ContextVariation, VisualVariation };

@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { Feather, RefreshCw } from "lucide-react";
-import { contextVariations } from "../data/data";
+import { contextVariations, type ContextVariation } from "../data/data";
 
-const ContextShifter = ({ lang, t }) => {
-    const [idx, setIdx] = useState(0);
-    const variations = contextVariations[lang];
-    const current = variations[idx];
+interface ContextShifterProps {
+    lang: "hr" | "en";
+    t: {
+        litart: {
+            contextTitle: string;
+            contextDesc: string;
+            nextBtn: string;
+        };
+    };
+}
 
-    const nextContext = () => {
+const ContextShifter: React.FC<ContextShifterProps> = ({ lang, t }) => {
+    const [idx, setIdx] = useState<number>(0);
+    const variations: ContextVariation[] = contextVariations[lang];
+    const current: ContextVariation = variations[idx];
+
+    const nextContext = (): void => {
         setIdx((prev) => (prev + 1) % variations.length);
     };
 
@@ -16,7 +27,7 @@ const ContextShifter = ({ lang, t }) => {
             <div className='text-center mb-8'>
                 <div className='flex justify-center items-center gap-2 mb-2'>
                     <Feather className='text-purple-400' size={24} />
-                    <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-pink-400 font-['Dosis']">
+                    <h3 className='text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-pink-400 font-heading'>
                         {t.litart.contextTitle}
                     </h3>
                 </div>
@@ -27,7 +38,7 @@ const ContextShifter = ({ lang, t }) => {
                 className={`relative p-12 rounded-3xl border transition-all duration-700 ease-in-out flex flex-col items-center justify-center min-h-[300px] shadow-2xl overflow-hidden ${current.colorClass}`}>
                 <div className='absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -z-10 animate-pulse'></div>
                 <div className='absolute bottom-0 left-0 w-48 h-48 bg-black/20 rounded-full blur-2xl -z-10'></div>
-                <div className="absolute top-6 right-6 font-['Fira_Code'] text-xs opacity-60 uppercase tracking-widest border border-current px-3 py-1 rounded-full">
+                <div className='absolute top-6 right-6 font-mono text-xs opacity-60 uppercase tracking-widest border border-current px-3 py-1 rounded-full'>
                     {current.source} // {current.tone}
                 </div>
                 <div className='text-xl md:text-3xl leading-relaxed text-center max-w-2xl font-light'>

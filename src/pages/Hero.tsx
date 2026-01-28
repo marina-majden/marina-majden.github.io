@@ -1,9 +1,31 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Terminal, ArrowRight } from "react-feather";
 
-const Hero = ({ t, scrollToSection }) => {
-    const [heroLoaded, setHeroLoaded] = useState(false);
-    useEffect(() => setHeroLoaded(true), []);
+interface HeroContent {
+    line1: string;
+    line2: string;
+    line3: string;
+    cta: string;
+}
+
+interface NavContent {
+    projects: string;
+}
+
+interface HeroProps {
+    t: {
+        hero: HeroContent;
+        nav: NavContent;
+    };
+    scrollToSection: (section: string) => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
+    const [heroLoaded, setHeroLoaded] = useState<boolean>(false);
+
+    useEffect(() => {
+        setHeroLoaded(true);
+    }, []);
 
     return (
         <section
@@ -22,9 +44,9 @@ const Hero = ({ t, scrollToSection }) => {
                     </span>
                 </div>
 
-                <h1 className='text-5xl my-12 tracking-tight leading-tight'>
+                <h1 className='text-5xl my-8 tracking-tight  leading-tight'>
                     <span
-                        className={`block text-8xl bg-clip-text text-transparent  bg-linear-to-tr from-lake-500 via-indigo-500  to-candy-500 leading-normal font-bold z-50 animate-gradient-x transition-all duration-500 delay-300 ${
+                        className={`block text-6xl lg:text-9xl bg-clip-text text-transparent bg-linear-to-tr from-lake-500 via-indigo-500 to-candy-500 leading-normal font-extrabold font-di z-50 animate-gradient-x transition-all duration-500 delay-300 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 translate-x-10"
@@ -32,28 +54,22 @@ const Hero = ({ t, scrollToSection }) => {
                         {t.hero.line2}
                     </span>
                     <span
-                        className={`block text-2xl text-slate-200 font-link font-bold uppercase tracking-[0.24em] transition-all duration-700 delay-500 ${
-                            heroLoaded
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-20"
-                        }`}>
-                        {t.hero.line3}
-                    </span>
-                    <span
-                        className={`block text-3xl bg-clip-text font-bold text-right text-black text-shadow-white text-shadow-sm z-50 transition-all duration-700 delay-700 ${
+                        className={`block text-2xl lg:text-3xl font-light font-display text-right text-black/50 text-shadow-cyan-500 text-shadow-xs z-50 transition-all duration-700 delay-700 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-10"
                         }`}>
                         {t.hero.line1}
                     </span>
+                    <span
+                        className={`block text-2xl text-slate-200 font-heading mt-4 font-semibold uppercase tracking-[0.2em] transition-all duration-700 delay-500 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-20"
+                        }`}>
+                        {t.hero.line3}
+                    </span>
                 </h1>
-                <p
-                    className={`text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-light transition-all duration-1000 delay-900 ${
-                        heroLoaded ? "opacity-100" : "opacity-0"
-                    }`}>
-                    {t.hero.subtitle}
-                </p>
 
                 <div
                     className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 delay-1000 ${
@@ -63,12 +79,12 @@ const Hero = ({ t, scrollToSection }) => {
                     }`}>
                     <button
                         onClick={() => scrollToSection("contact")}
-                        className='px-8 py-4 bg-cyan-500 text-slate-950  text-md font-semibold font-link uppercase text-shadow-xs text-shadow-slate-300 tracking-wider rounded-full hover:bg-cyan-400 transition-all hover:scale-105 shadow-[0_0_10px_rgba(34,211,238,0.4)] active:scale-95'>
+                        className='button bg-lake-500 hover:bg-lake-600 backdrop-blur-md text-shadow-black transition-all hover:scale-105 shadow-[0_0_10px_rgba(34,211,238,0.4)] active:scale-95'>
                         {t.hero.cta}
                     </button>
                     <button
                         onClick={() => scrollToSection("projects")}
-                        className='px-8 py-4 text-md text-cyan-500 font-semibold font-link uppercase tracking-wider backdrop-blur-md border border-cyan-600 rounded-full hover:bg-cyan-600 hover:text-slate-900 hover:border-slate-500 transition-all flex items-center gap-2 group'>
+                        className='button text-lake-500 rounded-full hover:bg-lake-400 hover:text-slate-900 hover:border-slate-500 transition-all duration-300 flex items-center gap-2 group'>
                         {t.nav.projects}{" "}
                         <ArrowRight
                             size={18}
@@ -80,4 +96,5 @@ const Hero = ({ t, scrollToSection }) => {
         </section>
     );
 };
+
 export default Hero;

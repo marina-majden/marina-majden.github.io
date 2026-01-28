@@ -15,3 +15,4 @@ const BackgroundGlows: React.FC = () => {
 };
 
 export default BackgroundGlows;
+

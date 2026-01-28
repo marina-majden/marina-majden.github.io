@@ -6,6 +6,7 @@ import {
     ShieldCheck,
     Rocket,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 // --- META-KOD - X-RAY ---
 const COMPLEX_CODE_SNIPPET = `
@@ -33,8 +34,46 @@ export const useNeuralNetwork = <T extends DataPoint>(
 };
 `;
 
+// --- THEME TYPES ---
+interface Theme {
+    name: string;
+    bg: string;
+    cardBg: string;
+    text: string;
+    title: string;
+    primary: string;
+    accent: string;
+    border: string;
+    overlay: string;
+}
+
+interface Themes {
+    [key: string]: Theme;
+}
+
+interface VoteOption {
+    label: string;
+    votes: number;
+}
+
+interface TasteTestQuestion {
+    id: number;
+    title: string;
+    desc: string;
+    optionA: VoteOption;
+    optionB: VoteOption;
+}
+
+interface WorkflowStep {
+    icon: LucideIcon;
+    title: string;
+    desc: string;
+    highlight?: string;
+    isLast?: boolean;
+}
+
 // --- TEME ZA PLAYGROUND ---
-const themes = {
+const themes: Themes = {
     mediteran: {
         name: "Mediteran",
         bg: "bg-rose-100",
@@ -74,22 +113,22 @@ const fonts = {
     sans: "font-sans",
     serif: "font-serif",
     mono: "font-mono",
-};
+} as const;
 
 const radiuses = {
     sharp: "rounded-none",
     smooth: "rounded-xl",
     full: "rounded-3xl",
-};
+} as const;
 
 const heroLayouts = {
     background: "Pozadina",
     split: "Split",
     creative: "Kreativno",
-};
+} as const;
 
 // --- PODACI ZA TASTE TEST (SUKUS UKUSA) ---
-const tasteTestQuestions = [
+const tasteTestQuestions: TasteTestQuestion[] = [
     {
         id: 1,
         title: "Button Stil",
@@ -135,7 +174,7 @@ const tasteTestQuestions = [
 ];
 
 // --- PODACI ZA HODOGRAM ---
-const workflowSteps = [
+const workflowSteps: WorkflowStep[] = [
     {
         icon: MessageSquare,
         title: "1. Inicijalni Razgovor & Opseg",
@@ -179,3 +218,4 @@ export {
     tasteTestQuestions,
     workflowSteps,
 };
+export type { Theme, Themes, TasteTestQuestion, WorkflowStep, VoteOption };

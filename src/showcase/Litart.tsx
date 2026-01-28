@@ -17,117 +17,17 @@ import {
     Feather,
     ScrollText,
     Video,
-    Image as ImageIcon,
+    Image,
     Sparkles,
-    Cpu,
-    Zap,
     ArrowUp,
     ArrowLeft,
     Languages,
+    Zap,
 } from "lucide-react";
-
-// --- Constants & Animations (Moved outside components for performance) ---
-
-const GLITCH_ANIMATION = {
-    opacity: [1, 0.8, 1, 1, 0.1, 1, 0.9, 1, 0.1, 1, 0.95, 1],
-    textShadow: [
-        "0 0 5px #fff, 0 0 10px #fff, 0 0 20px #d946ef, 0 0 40px #d946ef",
-        "0 0 2px #fff, 0 0 5px #fff, 0 0 10px #d946ef, 0 0 20px #d946ef",
-        "0 0 5px #fff, 0 0 10px #fff, 0 0 20px #d946ef, 0 0 40px #d946ef",
-    ],
-    boxShadow: [
-        "0 0 5px #a855f7, 0 0 10px #a855f7, inset 0 0 5px #a855f7",
-        "0 0 2px #a855f7, 0 0 5px #a855f7, inset 0 0 2px #a855f7",
-        "0 0 5px #a855f7, 0 0 10px #a855f7, inset 0 0 5px #a855f7",
-    ],
-};
-
-const GLITCH_TRANSITION = {
-    duration: 5,
-    repeat: Infinity,
-    repeatType: "mirror" as const,
-    times: [0, 0.05, 0.1, 0.2, 0.22, 0.25, 0.3, 0.35, 0.36, 0.4, 0.8, 1],
-};
-
-const CARD_VARIANTS = {
-    indigo: "border-indigo-500/30 bg-indigo-900/10 hover:border-indigo-500/50 hover:bg-indigo-900/20 shadow-[0_0_40px_-10px_rgba(79,70,229,0.1)]",
-    purple: "border-purple-500/30 bg-purple-900/10 hover:border-purple-500/50 hover:bg-purple-900/20 shadow-[0_0_40px_-10px_rgba(168,85,247,0.1)]",
-    cyan: "border-cyan-500/30 bg-cyan-900/10 hover:border-cyan-500/50 hover:bg-cyan-900/20 shadow-[0_0_40px_-10px_rgba(34,211,238,0.1)]",
-};
-
-// --- Components ---
-
-// 1. NEON SIGN
-const NeonSign = () => (
-    <div className='fixed top-28 -right-4 md:top-24 md:right-8 z-0 pointer-events-none select-none transform rotate-[8deg] hidden sm:block opacity-60 mix-blend-screen'>
-        <motion.div
-            animate={GLITCH_ANIMATION}
-            transition={GLITCH_TRANSITION}
-            className='px-4 py-2 md:px-6 md:py-3 border-2 border-purple-500/10 rounded-xl bg-black/10 backdrop-blur-[2px]'>
-            <span className='font-ysbeau font-bold text-2xl md:text-3xl tracking-widest uppercase text-transparent bg-clip-text bg-linear-to-r from-cyan-400/50 via-fuchsia-400/50 to-indigo-400/50'>
-                Project Showcase
-            </span>
-        </motion.div>
-    </div>
-);
-
-// 2. BACKGROUND GLOWS (Optimized with will-change-transform)
-const BackgroundGlows = () => (
-    <div className='fixed inset-0 overflow-hidden pointer-events-none z-0'>
-        <motion.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-600/30 rounded-full blur-[120px] will-change-transform'
-        />
-        <motion.div
-            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-            transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 2,
-            }}
-            className='absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] will-change-transform'
-        />
-        <motion.div
-            animate={{ x: [0, 50, 0], y: [0, -50, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className='absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] will-change-transform'
-        />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay" />
-    </div>
-);
-
-// 3. COLORED GLASS CARD
-const ColoredGlassCard: React.FC<{
-    children: React.ReactNode;
-    className?: string;
-    variant?: "indigo" | "purple" | "cyan";
-}> = ({ children, className = "", variant = "indigo" }) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            className={`relative overflow-hidden rounded-3xl border backdrop-blur-2xl transition-all duration-500 ${CARD_VARIANTS[variant]} ${className}`}>
-            <div
-                className={`absolute top-0 left-0 w-full h-full bg-linear-to-br from-white/5 to-transparent opacity-50 pointer-events-none`}
-            />
-            <div className='relative z-10'>{children}</div>
-        </motion.div>
-    );
-};
-
-// Standard Glass Card
-const GlassCard: React.FC<{
-    children: React.ReactNode;
-    className?: string;
-}> = ({ children, className = "" }) => (
-    <div
-        className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 hover:bg-white/10 transition-colors ${className}`}>
-        {children}
-    </div>
-);
+import BackgroundGlows from "./components/BackgroundGlows.tsx";
+import NeonSign from "./components/NeonSign.tsx";
+import { ColoredGlassCard, GlassCard } from "./components/GlassCard.tsx";
+import CodeSnippet from "./components/CodeSnippet.tsx";
 
 const TechBadge: React.FC<{ label: string; icon?: React.ReactNode }> = ({
     label,
@@ -158,32 +58,6 @@ const SectionHeading: React.FC<{
         </p>
     </div>
 );
-
-const CodeSnippet: React.FC<{
-    code: string;
-    language: string;
-    title: string;
-}> = ({ code, language, title }) => (
-    <div className='rounded-xl overflow-hidden border border-white/10 bg-[#0B0F19]/80 backdrop-blur-xl shadow-2xl my-6 font-mono text-sm relative group'>
-        <div className='flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5'>
-            <span className='text-slate-400 text-xs flex items-center gap-2'>
-                <Code2 size={14} className='text-indigo-400' /> {title}
-            </span>
-            <div className='flex gap-1.5'>
-                <div className='w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50' />
-                <div className='w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50' />
-                <div className='w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50' />
-            </div>
-        </div>
-        <div className='p-4 overflow-x-auto text-slate-300 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent'>
-            <pre>
-                <code>{code}</code>
-            </pre>
-        </div>
-    </div>
-);
-
-// --- Main Component ---
 
 const LitArtShowcase: React.FC = () => {
     const [activeTab, setActiveTab] = useState<"frontend" | "backend">(

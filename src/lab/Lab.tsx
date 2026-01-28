@@ -44,7 +44,7 @@ const Lab = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
     const [items, setItems] = useState(["hero", "grid", "stats"]);
 
     const [activeAccordion, setActiveAccordion] = useState<string | null>(
-        "theme"
+        "theme",
     );
 
     const mouseX = useMotionValue(0);
@@ -109,7 +109,7 @@ const Lab = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
       `}</style>
             <button
                 onClick={() => setActiveTab("home")}
-                className="absolute top-8 left-8 flex items-center gap-2 text-offblack hover:text-deepgray transition-all hover:translate-x-[-5px] font-['Fira_Code'] z-50">
+                className='absolute top-8 left-8 flex items-center gap-2 text-offblack hover:text-deepgray transition-all hover:translate-x-[-5px] font-mono z-50'>
                 <ArrowRight className='rotate-180' size={20} /> Povratak na
                 portfolio
             </button>
@@ -386,7 +386,7 @@ const Lab = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
                                                 }`}>
                                                 {label}
                                             </button>
-                                        )
+                                        ),
                                     )}
                                 </div>
                             </div>

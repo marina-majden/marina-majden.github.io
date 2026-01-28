@@ -58,7 +58,9 @@ const BackgroundCanvas: React.FC = () => {
 
         const initParticles = () => {
             particles = [];
-            for (let i = 0; i < 60; i++) particles.push(new Particle());
+            const particleCount = width < 768 ? 30 : 60;
+            for (let i = 0; i < particleCount; i++)
+                particles.push(new Particle());
         };
 
         const animate = () => {
@@ -80,7 +82,7 @@ const BackgroundCanvas: React.FC = () => {
                             p1.x,
                             p1.y,
                             p2.x,
-                            p2.y
+                            p2.y,
                         );
                         grad.addColorStop(0, p1.color + "0.15)");
                         grad.addColorStop(1, p2.color + "0.15)");

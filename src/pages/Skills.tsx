@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, ReactNode } from "react";
 import {
     Cpu,
     Sparkles,
@@ -10,7 +10,35 @@ import {
 import Reveal from "../components/Reveal";
 import SectionTitle from "../components/SectionTitle";
 
-const techSkills = [
+interface TechSkill {
+    category: string;
+    icon: ReactNode;
+    skills: string[];
+    color: string;
+    border: string;
+    shadow: string;
+    description: string;
+    tagHover: string;
+}
+
+interface SoftSkill {
+    title: string;
+    desc: string;
+}
+
+interface SkillsContent {
+    title: string;
+    soft: string;
+    softList: SoftSkill[];
+}
+
+interface SkillsProps {
+    t: {
+        skills: SkillsContent;
+    };
+}
+
+const techSkills: TechSkill[] = [
     {
         category: "Core",
         icon: <Cpu size={24} />,
@@ -26,7 +54,7 @@ const techSkills = [
     {
         category: "Creative",
         icon: <Sparkles size={24} />,
-        skills: ["Framer Motion", "React Three Fiber"],
+        skills: ["Framer Motion", "React Three.js", "GSAP", "Tailwind"],
         color: "text-pink-400",
         border: "hover:border-pink-500/50",
         shadow: "hover:shadow-[0_0_20px_rgba(244,114,182,0.2)]",
@@ -63,15 +91,17 @@ const techSkills = [
         skills: ["Technical SEO", "Google Analytics", "Accessibility (WCAG)"],
         color: "text-green-400",
         border: "hover:border-green-500/50",
-        shadow: "hover:shadow-[0_0_20px_rgba(74,222,128,0.2)]",
+        shadow: "hover:shadow-[0_0_20px_rgba(74,150,128,0.2)]",
         description: "Making sure people actually find and can use your site.",
         tagHover:
-            "hover:shadow-[0_0_10px_rgba(74,222,128,0.6)] hover:border-green-400 hover:text-green-300",
+            "hover:shadow-[0_0_10px_rgba(74,150,128,0.6)] hover:border-green-400 hover:text-green-300",
     },
 ];
 
-const Skills = ({ t }) => {
-    const [activeMobileIndex, setActiveMobileIndex] = useState(null);
+const Skills: React.FC<SkillsProps> = ({ t }) => {
+    const [activeMobileIndex, setActiveMobileIndex] = useState<number | null>(
+        null
+    );
 
     return (
         <section id='skills' className='py-24 relative'>
@@ -83,14 +113,14 @@ const Skills = ({ t }) => {
                 <div className='mt-16'>
                     <Reveal>
                         <div className='flex flex-col md:flex-row gap-2 h-auto  w-full'>
-                            {techSkills.map((item, index) => (
+                            {techSkills.map((item: TechSkill, index: number) => (
                                 <div
                                     key={index}
                                     onClick={() =>
                                         setActiveMobileIndex(
                                             activeMobileIndex === index
                                                 ? null
-                                                : index,
+                                                : index
                                         )
                                     }
                                     className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
@@ -98,12 +128,11 @@ const Skills = ({ t }) => {
                                             ? "h-64"
                                             : "h-20"
                                     } md:h-full min-w-0 md:flex-1 md:hover:flex-3 cursor-pointer md:cursor-default bg-slate-900/50 backdrop-blur-sm border border-slate-800 ${item.border} ${item.shadow}`}>
-                                    <div
-                                        className={`h-full w-full p-6 flex flex-col`}>
+                                    <div className={`h-full w-full p-6 flex flex-col`}>
                                         <div
                                             className={`flex items-center gap-3 mb-4 ${item.color}`}>
                                             {item.icon}
-                                            <h3 className="text-xl font-bold font-['Fira_Code'] whitespace-nowrap">
+                                            <h3 className='text-xl font-bold font-mono whitespace-nowrap'>
                                                 {item.category}
                                             </h3>
                                         </div>
@@ -113,13 +142,18 @@ const Skills = ({ t }) => {
                                                     ? "opacity-100"
                                                     : "opacity-0 md:opacity-100"
                                             }`}>
-                                            {item.skills.map((skill, i) => (
-                                                <span
-                                                    key={i}
-                                                    className={`px-2 py-1 bg-slate-800/80 border border-slate-700 rounded-full text-xs text-slate-300 transition-all duration-300 whitespace-nowrap cursor-pointer ${item.tagHover}`}>
-                                                    {skill}
-                                                </span>
-                                            ))}
+                                            {item.skills.map(
+                                                (
+                                                    skill: string,
+                                                    i: number
+                                                ) => (
+                                                    <span
+                                                        key={i}
+                                                        className={`px-2 py-1 bg-slate-800/80 border border-slate-700 rounded-full text-xs text-slate-300 transition-all duration-300 whitespace-nowrap cursor-pointer ${item.tagHover}`}>
+                                                        {skill}
+                                                    </span>
+                                                )
+                                            )}
                                         </div>
                                         <p
                                             className={`mt-4 text-slate-400 text-sm leading-relaxed transition-opacity duration-500 delay-100 ${
@@ -149,18 +183,20 @@ const Skills = ({ t }) => {
                         </Reveal>
 
                         <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                            {t.skills.softList.map((skill, index) => (
-                                <Reveal key={index} delay={index * 100}>
-                                    <div className='h-full bg-slate-900/30 border border-slate-800 p-6 rounded-2xl hover:border-purple-500/30 transition-all duration-300 hover:bg-slate-900/50 group'>
-                                        <h4 className='font-bold text-lg mb-3 text-purple-400 group-hover:text-purple-300 transition-colors'>
-                                            {skill.title}
-                                        </h4>
-                                        <p className='text-slate-400 text-sm leading-relaxed'>
-                                            {skill.desc}
-                                        </p>
-                                    </div>
-                                </Reveal>
-                            ))}
+                            {t.skills.softList.map(
+                                (skill: SoftSkill, index: number) => (
+                                    <Reveal key={index} delay={index * 100}>
+                                        <div className='h-full bg-slate-900/30 border border-slate-800 p-6 rounded-2xl hover:border-purple-500/30 transition-all duration-300 hover:bg-slate-900/50 group'>
+                                            <h4 className='font-bold text-lg mb-3 text-purple-400 group-hover:text-purple-300 transition-colors'>
+                                                {skill.title}
+                                            </h4>
+                                            <p className='text-slate-400 text-sm leading-relaxed'>
+                                                {skill.desc}
+                                            </p>
+                                        </div>
+                                    </Reveal>
+                                )
+                            )}
                         </div>
                     </div>
                 )}
@@ -168,4 +204,5 @@ const Skills = ({ t }) => {
         </section>
     );
 };
+
 export default Skills;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./CyberCard.css";
-import portrait from "../assets/di-trevi.jpg";
 
 const CyberCard: React.FC = () => {
     // Stanje za pohranu rotacije (X i Y os)
@@ -40,12 +39,12 @@ const CyberCard: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 style={{
                     transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+                    willChange: "transform",
                     transition: isHovering ? "none" : "transform 0.5s ease", // Glatki povratak
                 }}>
                 <div id='card' className={isHovering ? "is-hovering" : ""}>
                     <div className='card-content'>
                         <div className='card-glare'></div>
-                        <img src={portrait} alt='portrait' className='image' />
 
                         <div className='cyber-lines'>
                             <span></span>
@@ -80,9 +79,7 @@ const CyberCard: React.FC = () => {
                         </div>
 
                         <div className='subtitle'>
-                            <span className="font-['Fira_Code']">
-                                const role =
-                            </span>
+                            <span className='font-mono'>const role =</span>
                             <span className='highlight'> "Edu-Dev";</span>
                         </div>
 

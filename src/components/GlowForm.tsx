@@ -3,7 +3,7 @@ import { SendIcon } from "lucide-react";
 
 const GlowForm = () => {
     return (
-        <div className='max-w-3xl mx-auto my-4 py-8 relative  z-10 bg-background/50 p-8 rounded-lg before:w-32 before:h-32 before:absolute before:bg-purple-600 before:rounded-full before:left-6 before:top-92 before:-z-10 before:blur-2xl before:animate-neon-glow after:w-46 after:h-46 after:absolute after:bg-sky-400 after:rounded-full after:-z-10 after:blur-xl after:top-28 after:-right-12 after:animate-cruising after:animate-neon-glow overflow-visible'>
+        <div className='max-w-3xl mx-auto my-4 py-8 relative  z-10 bg-background/50 p-8 rounded-lg before:w-32 before:h-32 before:absolute before:bg-purple-600 before:rounded-full before:left-6 before:top-92 before:-z-10 before:blur-2xl before:animate-neon-glow after:w-46 after:h-46 after:absolute after:bg-sky-400 after:rounded-full after:-z-10 after:blur-xl after:top-28 after:-right-12 after:animate-cruising overflow-visible'>
             <h2 className='text-2xl font-heading mb-6 text-gradient'>
                 Pošaljite upit ili poruku
             </h2>

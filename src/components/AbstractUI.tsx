@@ -40,14 +40,14 @@ const AnimatedProgressBar = () => {
 
     return (
         <motion.div
-            animate={{ y: [0, 15, 0], x: [0, 10, 0] }}
+            animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
             transition={{
                 duration: 9,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: 2,
             }}
-            className='absolute top-1/2 left-[10%] w-64 p-5 bg-[#1e293b]/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl z-10 hidden md:flex flex-col gap-4'>
+            className='absolute top-1/2 left-[20%] w-64 p-5 bg-[#1e293b]/90 backdrop-blur-xl border-2 border-slate-700/50 rounded-2xl shadow-2xl z-10 flex flex-col gap-4'>
             <div className='flex justify-between items-center text-xs font-mono text-slate-400'>
                 <span className='flex items-center gap-2'>
                     <Activity
@@ -78,7 +78,7 @@ const AnimatedProgressBar = () => {
                         boxShadow:
                             progress === 100 ? "0 0 12px #4ade80" : "none",
                     }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    transition={{ duration: 0.5, ease: "easeOut", delay: 1 }}
                 />
             </div>
 
@@ -116,7 +116,7 @@ const AvatarChat = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowText(true);
-        }, 4000);
+        }, 5000);
         return () => clearTimeout(timer);
     }, []);
 
@@ -124,7 +124,7 @@ const AvatarChat = () => {
         <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute bottom-1/4 left-[15%] z-20 flex items-end gap-3'>
+            className='absolute top-1/3 left-[20%] z-20 flex items-end gap-3'>
             <div className='w-14 h-14 rounded-full bg-linear-to-br from-indigo-500 to-rose-500 p-0.5 shadow-lg shadow-indigo-500/20'>
                 <div className='w-full h-full rounded-full bg-slate-800 overflow-hidden flex items-center justify-center'>
                     <User size={24} className='text-slate-400' />
@@ -176,7 +176,7 @@ const AvatarChat = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             className='text-xs font-medium leading-relaxed'>
-                            <span className='text-rose-400'>LRM IPSM</span>,
+                            <span className='font-sans'>Lorem ipsum,</span>,
                             hahahha! 🤣
                         </motion.div>
                     )}
@@ -188,7 +188,7 @@ const AvatarChat = () => {
 
 // --- POMOĆNA KOMPONENTA: ABSTRACT UI (LIJEVA STRANA) ---
 const AbstractUI = () => (
-    <div className='absolute inset-0 pointer-events-none overflow-hidden'>
+    <div className='absolute inset-0 border-2 border-accent pointer-events-none overflow-hidden'>
         <AnimatedProgressBar />
         <AvatarChat />
 
@@ -196,7 +196,7 @@ const AbstractUI = () => (
         <motion.div
             animate={{ y: [0, -20, 0], rotate: [0, 2, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute top-1/4 right-[15%] w-72 h-44 bg-linear-to-b from-slate-700/90 to-slate-900/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl z-10 hidden md:flex flex-col p-5'>
+            className='absolute top-1/5 left-6 lg:top-1/4 lg:right-[15%] w-4/5 h-auto lg:w-72 lg:h-44 bg-linear-to-b from-slate-700/90 to-slate-900/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl z-10 flex flex-col p-5'>
             <div className='flex items-center gap-3 mb-6'>
                 <div className='w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center text-rose-400 border border-rose-500/10 shadow-inner'>
                     <Heart size={18} fill='currentColor' />
@@ -219,7 +219,7 @@ const AbstractUI = () => (
         <motion.div
             animate={{ scale: [1, 1.1, 1], x: [0, 20, 0] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute bottom-1/3 right-[25%] w-48 h-48 rounded-full bg-indigo-900/30 blur-3xl opacity-60 z-0'
+            className='absolute top-1/4 left-1/4 w-full h-full rounded-full bg-indigo-900/10 blur-3xl opacity-30 z-0'
         />
 
         {/* Lebdeći Graf */}
@@ -231,7 +231,7 @@ const AbstractUI = () => (
                 ease: "easeInOut",
                 delay: 1,
             }}
-            className='absolute bottom-20 right-[10%] w-64 h-64 bg-[#0f172a]/80 backdrop-blur-md border border-slate-800 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-0 hidden md:flex items-center justify-center'>
+            className='absolute bottom-20 right-[10%] w-64 h-64 bg-[#0f172a]/80 backdrop-blur-md border border-slate-800 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-0 flex items-center justify-center'>
             <div className='absolute inset-0 rounded-full border border-slate-700/30'></div>
             <div className='w-40 h-40 border-2 border-dashed border-indigo-500/30 rounded-full animate-spin-slow flex items-center justify-center'>
                 <div className='w-20 h-20 bg-indigo-500/10 rounded-full blur-xl'></div>

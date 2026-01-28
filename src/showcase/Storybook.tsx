@@ -56,7 +56,7 @@ const NeonSign = () => (
             animate={GLITCH_ANIMATION}
             transition={GLITCH_TRANSITION}
             className='px-4 py-2 md:px-6 md:py-3 border-2 border-purple-500/10 rounded-xl bg-black/10 backdrop-blur-[2px]'>
-            <span className='font-ysbeau font-bold text-2xl md:text-3xl tracking-widest uppercase text-transparent bg-clip-text bg-linear-to-r from-cyan-400/50 via-fuchsia-400/50 to-indigo-400/50'>
+            <span className='font-link font-bold text-2xl md:text-3xl tracking-widest uppercase text-transparent bg-clip-text bg-linear-to-r from-cyan-400/50 via-fuchsia-400/50 to-indigo-400/50'>
                 Project Showcase
             </span>
         </motion.div>

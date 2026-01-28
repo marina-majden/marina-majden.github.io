@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, ReactNode } from "react";
 
-const Reveal = ({ children, className = "", delay = 0 }) => {
+interface RevealProps {
+    children: ReactNode;
+    className?: string;
+    delay?: number;
+}
+
+const Reveal: React.FC<RevealProps> = ({ children, className = "", delay = 0 }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(

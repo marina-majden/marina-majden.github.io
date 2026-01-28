@@ -1,13 +1,29 @@
 import { useState } from "react";
 import { Eye, Palette } from "lucide-react";
-import { visualContextVariations } from "../data/data";
+import { visualContextVariations, type VisualVariation } from "../data/data";
 
-const VisualContextShifter = ({ lang, t }) => {
-    const [idx, setIdx] = useState(0);
-    const variations = visualContextVariations[lang];
-    const current = variations[idx];
+interface LitartContent {
+    visualTitle: string;
+    visualDesc: string;
+    nextVisualBtn: string;
+}
 
-    const nextVisual = () => {
+interface VisualContextShifterProps {
+    lang: "hr" | "en";
+    t: {
+        litart: LitartContent;
+    };
+}
+
+const VisualContextShifter: React.FC<VisualContextShifterProps> = ({
+    lang,
+    t,
+}) => {
+    const [idx, setIdx] = useState<number>(0);
+    const variations: VisualVariation[] = visualContextVariations[lang];
+    const current: VisualVariation = variations[idx];
+
+    const nextVisual = (): void => {
         setIdx((prev) => (prev + 1) % variations.length);
     };
 
@@ -16,7 +32,7 @@ const VisualContextShifter = ({ lang, t }) => {
             <div className='text-center mb-8'>
                 <div className='flex justify-center items-center gap-2 mb-2'>
                     <Palette className='text-cyan-400' size={24} />
-                    <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-blue-400 font-['Dosis']">
+                    <h3 className='text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-blue-400 font-heading'>
                         {t.litart.visualTitle}
                     </h3>
                 </div>
@@ -32,13 +48,13 @@ const VisualContextShifter = ({ lang, t }) => {
                             backgroundImage: `url(${current.img})`,
                         }}></div>
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/grid-noise.png')] opacity-20 mix-blend-overlay"></div>
-                    <div className="absolute top-4 left-4 bg-black/60 backdrop-blur text-xs font-['Fira_Code'] px-3 py-1 rounded border border-white/20">
+                    <div className='absolute top-4 left-4 bg-black/60 backdrop-blur text-xs font-mono px-3 py-1 rounded border border-white/20'>
                         {current.motif} // {idx + 1}.0
                     </div>
                 </div>
                 <div className='w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative backdrop-blur-sm bg-black/20'>
                     <div className='mb-auto'>
-                        <h4 className="text-2xl font-bold mb-2 font-['Dosis'] uppercase tracking-widest opacity-90">
+                        <h4 className='text-2xl font-bold mb-2 font-heading uppercase tracking-widest opacity-90'>
                             {current.style}
                         </h4>
                         <div className='w-12 h-1 bg-current opacity-50 mb-6 rounded-full'></div>
@@ -47,7 +63,7 @@ const VisualContextShifter = ({ lang, t }) => {
                         {current.desc}
                     </p>
                     <div className='mt-auto pt-6 border-t border-white/10 flex justify-between items-center'>
-                        <span className="font-['Fira_Code'] text-xs opacity-50 uppercase tracking-widest">
+                        <span className='font-mono text-xs opacity-50 uppercase tracking-widest'>
                             Tone: {current.tone}
                         </span>
                         <button
@@ -65,4 +81,5 @@ const VisualContextShifter = ({ lang, t }) => {
         </div>
     );
 };
+
 export default VisualContextShifter;

@@ -1,14 +1,34 @@
+import React from "react";
 import { FlaskConical, Globe, Menu, Sparkles, X } from "lucide-react";
 
-const Navbar = ({
+interface ContentNav {
+    [key: string]: string;
+}
+
+interface Content {
+    nav: ContentNav;
+}
+
+interface NavbarProps {
+    scrolled: boolean;
+    menuOpen: boolean;
+    setMenuOpen: (open: boolean) => void;
+    scrollToSection: (section: string) => void;
+    lang: "hr" | "en";
+    setLang: (lang: "hr" | "en") => void;
+    t: Content;
+    setActiveTab?: (tab: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({
     scrolled,
     menuOpen,
     setMenuOpen,
     scrollToSection,
-
     lang,
     setLang,
     t,
+    setActiveTab = () => {},
 }) => (
     <nav
         className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-5xl transition-all duration-300 ${
@@ -18,7 +38,7 @@ const Navbar = ({
         }`}>
         <div className='flex justify-between items-center'>
             <h1
-                className='text-5xl text-gradient font-extrabold my-2 font-6 cursor-pointer hover:scale-105 transition-transform duration-300 ease-in'
+                className='text-5xl text-gradient font-extrabold my-2 font-display cursor-pointer hover:scale-105 transition-transform duration-300 ease-in'
                 onClick={() => scrollToSection("home")}>
                 &lt;M /&gt;
             </h1>
@@ -44,7 +64,7 @@ const Navbar = ({
                 </button>
                 <button
                     onClick={() => setActiveTab("litart")}
-                    className='text-neon-pink hover:text-pink-600 transition-colors cursor-pointer uppercase tracking-widest flex items-center gap-1 group'>
+                    className='text-neon-pink hover:text-pink-500 transition-colors cursor-pointer uppercase tracking-widest flex items-center gap-1 group'>
                     <Sparkles
                         size={14}
                         className='group-hover:scale-105 transition-transform transition-300 ease'
@@ -53,13 +73,13 @@ const Navbar = ({
                 </button>
                 <button
                     onClick={() => scrollToSection("contact")}
-                    className='hidden md:block px-6 py-2 rounded-full cursor-pointer border border-white/50 text-white hover:bg-cyan-500/20 transition-all text-xs uppercase tracking-widest'>
+                    className='hidden md:block px-6 py-2 rounded-full cursor-pointer border border-white/50 text-white hover:bg-cyan-700 transition-all text-xs uppercase tracking-widest'>
                     {t.nav.contact}
                 </button>
 
                 <button
                     onClick={() => setLang(lang === "hr" ? "en" : "hr")}
-                    className='flex items-center gap-1 text-slate-400 hover:text-white cursor-pointer transition-colors duration-500'>
+                    className='flex items-center gap-1 text-slate-200 hover:text-cyan-500 cursor-pointer transition-colors duration-500'>
                     <Globe size={16} />
                     <span className='uppercase text-xs font-bold'>{lang}</span>
                 </button>
@@ -73,7 +93,7 @@ const Navbar = ({
         </div>
 
         {menuOpen && (
-            <div className='md:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-xl border-b  border-slate-800 p-6 flex flex-col gap-4 font-mono animate-in slide-in-from-top-5 duration-300'>
+            <div className='md:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 p-6 flex flex-col gap-4 font-mono animate-in slide-in-from-top-5 duration-300'>
                 {["about", "skills", "services", "projects"].map((item) => (
                     <button
                         key={item}
@@ -109,4 +129,5 @@ const Navbar = ({
         )}
     </nav>
 );
+
 export default Navbar;
