@@ -115,8 +115,8 @@ const content: ContentData = {
         },
         hero: {
             line1: "@marina.majdenic",
-            line2: "umjetnost kodiranja",
-            line3: "Apstraktne ideje pretvaramo u remek-djela.",
+            line2: "umjetnost radi umjetnosti",
+            line3: "a tehnologija da pretvori naše ideje u prava remek-djela!",
             subtitle: "",
             cta: "Stvorimo nešto posebno!",
         },
