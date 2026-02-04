@@ -6,7 +6,7 @@ import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
 import About from "./About.tsx";
 import Projects from "./Projects.tsx";
-import Services from "./Services.tsx";
+
 import Skills from "./Skills.tsx";
 import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "../components/BackgroundCanvas.tsx";
@@ -63,7 +63,7 @@ const Home: React.FC = () => {
             <Split />
             <About t={t} />
             <Skills t={t} />
-            <Services t={t} />
+
             <Projects t={t} scrollToSection={scrollToSection} />
             <Contact t={t} />
             <Footer t={t} />

@@ -100,11 +100,11 @@ const techSkills: TechSkill[] = [
 
 const Skills: React.FC<SkillsProps> = ({ t }) => {
     const [activeMobileIndex, setActiveMobileIndex] = useState<number | null>(
-        null
+        null,
     );
 
     return (
-        <section id='skills' className='py-24 relative'>
+        <section id='skills' className='py-10 md:py-14 lg:py-20 relative'>
             <div className='container mx-auto px-6'>
                 <Reveal>
                     <SectionTitle>{t.skills.title}</SectionTitle>
@@ -113,59 +113,62 @@ const Skills: React.FC<SkillsProps> = ({ t }) => {
                 <div className='mt-16'>
                     <Reveal>
                         <div className='flex flex-col md:flex-row gap-2 h-auto  w-full'>
-                            {techSkills.map((item: TechSkill, index: number) => (
-                                <div
-                                    key={index}
-                                    onClick={() =>
-                                        setActiveMobileIndex(
+                            {techSkills.map(
+                                (item: TechSkill, index: number) => (
+                                    <div
+                                        key={index}
+                                        onClick={() =>
+                                            setActiveMobileIndex(
+                                                activeMobileIndex === index
+                                                    ? null
+                                                    : index,
+                                            )
+                                        }
+                                        className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                                             activeMobileIndex === index
-                                                ? null
-                                                : index
-                                        )
-                                    }
-                                    className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${
-                                        activeMobileIndex === index
-                                            ? "h-64"
-                                            : "h-20"
-                                    } md:h-full min-w-0 md:flex-1 md:hover:flex-3 cursor-pointer md:cursor-default bg-slate-900/50 backdrop-blur-sm border border-slate-800 ${item.border} ${item.shadow}`}>
-                                    <div className={`h-full w-full p-6 flex flex-col`}>
+                                                ? "h-64"
+                                                : "h-20"
+                                        } md:h-full min-w-0 md:flex-1 md:hover:flex-3 cursor-pointer md:cursor-default bg-slate-900/50 backdrop-blur-sm border border-slate-800 ${item.border} ${item.shadow}`}>
                                         <div
-                                            className={`flex items-center gap-3 mb-4 ${item.color}`}>
-                                            {item.icon}
-                                            <h3 className='text-xl font-bold font-mono whitespace-nowrap'>
-                                                {item.category}
-                                            </h3>
+                                            className={`h-full w-full p-6 flex flex-col`}>
+                                            <div
+                                                className={`flex items-center gap-3 mb-4 ${item.color}`}>
+                                                {item.icon}
+                                                <h3 className='text-xl font-bold font-mono whitespace-nowrap'>
+                                                    {item.category}
+                                                </h3>
+                                            </div>
+                                            <div
+                                                className={`flex flex-wrap gap-2 content-start transition-opacity duration-500 ${
+                                                    activeMobileIndex === index
+                                                        ? "opacity-100"
+                                                        : "opacity-0 md:opacity-100"
+                                                }`}>
+                                                {item.skills.map(
+                                                    (
+                                                        skill: string,
+                                                        i: number,
+                                                    ) => (
+                                                        <span
+                                                            key={i}
+                                                            className={`px-2 py-1 bg-slate-800/80 border border-slate-700 rounded-full text-xs text-slate-300 transition-all duration-300 whitespace-nowrap cursor-pointer ${item.tagHover}`}>
+                                                            {skill}
+                                                        </span>
+                                                    ),
+                                                )}
+                                            </div>
+                                            <p
+                                                className={`mt-4 text-slate-400 text-sm leading-relaxed transition-opacity duration-500 delay-100 ${
+                                                    activeMobileIndex === index
+                                                        ? "opacity-100"
+                                                        : "opacity-0"
+                                                } md:opacity-0 md:group-hover:opacity-100`}>
+                                                {item.description}
+                                            </p>
                                         </div>
-                                        <div
-                                            className={`flex flex-wrap gap-2 content-start transition-opacity duration-500 ${
-                                                activeMobileIndex === index
-                                                    ? "opacity-100"
-                                                    : "opacity-0 md:opacity-100"
-                                            }`}>
-                                            {item.skills.map(
-                                                (
-                                                    skill: string,
-                                                    i: number
-                                                ) => (
-                                                    <span
-                                                        key={i}
-                                                        className={`px-2 py-1 bg-slate-800/80 border border-slate-700 rounded-full text-xs text-slate-300 transition-all duration-300 whitespace-nowrap cursor-pointer ${item.tagHover}`}>
-                                                        {skill}
-                                                    </span>
-                                                )
-                                            )}
-                                        </div>
-                                        <p
-                                            className={`mt-4 text-slate-400 text-sm leading-relaxed transition-opacity duration-500 delay-100 ${
-                                                activeMobileIndex === index
-                                                    ? "opacity-100"
-                                                    : "opacity-0"
-                                            } md:opacity-0 md:group-hover:opacity-100`}>
-                                            {item.description}
-                                        </p>
                                     </div>
-                                </div>
-                            ))}
+                                ),
+                            )}
                         </div>
                     </Reveal>
                 </div>
@@ -195,7 +198,7 @@ const Skills: React.FC<SkillsProps> = ({ t }) => {
                                             </p>
                                         </div>
                                     </Reveal>
-                                )
+                                ),
                             )}
                         </div>
                     </div>

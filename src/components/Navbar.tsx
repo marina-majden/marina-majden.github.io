@@ -1,5 +1,6 @@
 import React from "react";
 import { FlaskConical, Globe, Menu, Sparkles, X } from "lucide-react";
+import logo from "../assets/logo-white.png";
 
 interface ContentNav {
     [key: string]: string;
@@ -31,17 +32,17 @@ const Navbar: React.FC<NavbarProps> = ({
     setActiveTab = () => {},
 }) => (
     <nav
-        className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-5xl transition-all duration-300 ${
+        className={`fixed top-6 left-0 right-0 z-50 w-11/12 max-w-5xl px-0 py-2 mx-auto transition-all duration-300 ${
             scrolled
-                ? "glass rounded-full px-6 py-4 bg-black/20"
-                : "bg-transparent w-full px-6 py-4"
+                ? "md:glass md:rounded-full md:px-6 md:py-4 md:bg-black/20"
+                : "bg-transparent"
         }`}>
         <div className='flex justify-between items-center'>
-            <h1
-                className='text-5xl text-gradient font-extrabold my-2 font-display cursor-pointer hover:scale-105 transition-transform duration-300 ease-in'
+            <div
+                className='cursor-pointer hover:scale-105 transition-transform duration-300 ease-in'
                 onClick={() => scrollToSection("home")}>
-                &lt;M /&gt;
-            </h1>
+                <img src={logo} alt='logo' width={36} height={36} />
+            </div>
 
             <div className='hidden md:flex gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
                 {["about", "skills", "services", "projects"].map((item) => (

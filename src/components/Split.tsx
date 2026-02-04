@@ -21,7 +21,8 @@ const Split = () => {
 
     return (
         <div
-            className='relative w-full h-[80vh] overflow-hidden flex flex-col md:flex-row border-b border-slate-800'
+            className='relative w-full h-[50vh] md:h-[50vh] overflow-hidden flex flex-col md:flex-row border-b border-slate-800'
+        
             onMouseMove={handleMouseMove}>
             {/* LIJEVA STRANA: KREATIVNOST & UI */}
             <div className='relative flex-1 h-full overflow-hidden  text-slate-100 flex flex-col justify-center px-8 md:px-20 w-full bg-grid-pattern'>

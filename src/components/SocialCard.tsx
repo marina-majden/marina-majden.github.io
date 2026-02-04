@@ -3,29 +3,6 @@ import React from "react";
 const SocialCard = () => {
     return (
         <>
-            <style>
-                {`
-                @keyframes move {
-                    0% { transform: translateX(0em) translateY(0em); }
-                    25% { transform: translateY(-1em) translateX(-1em); rotate: -10deg; }
-                    50% { transform: translateY(1em) translateX(-1em); }
-                    75% { transform: translateY(-1.25em) translateX(1em); rotate: 10deg; }
-                    100% { transform: translateX(0em) translateY(0em); }
-                }
-                @keyframes glowing-stars {
-                    0% { opacity: 0; }
-                    50% { opacity: 1; }
-                    100% { opacity: 0; }
-                }
-                @keyframes shootingStar {
-                    0% { transform: translateX(0) translateY(0); opacity: 1; }
-                    50% { transform: translateX(-55em) translateY(0); opacity: 1; }
-                    70% { transform: translateX(-70em) translateY(0); opacity: 0; }
-                    100% { transform: translateX(0) translateY(0); opacity: 0; }
-                }
-                `}
-            </style>
-
             <div
                 className="group relative w-[19em] h-[25em] flex flex-col items-center justify-center bg-[#171717] text-white font-bold p-[1em_2em_1em_1em] rounded-[20px] overflow-hidden z-10 gap-[1em] font-serif
                 before:content-[''] before:absolute before:w-full before:h-full before:inset-[-3px] before:rounded-[10px] before:bg-[radial-gradient(#858585,transparent,transparent)] before:translate-x-[-5px] before:translate-y-[250px] before:transition-all before:duration-400 before:ease-in-out before:-z-10

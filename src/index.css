@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface:wght@400;600;700&family=Poppins:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&family=Fira+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Inter:wght@400&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -83,6 +86,97 @@
             transform: rotate(360deg);
         }
     }
+    @keyframes move {
+        0% {
+            transform: translateX(0em) translateY(0em);
+        }
+        25% {
+            transform: translateY(-1em) translateX(-1em);
+            rotate: -10deg;
+        }
+        50% {
+            transform: translateY(1em) translateX(-1em);
+        }
+        75% {
+            transform: translateY(-1.25em) translateX(1em);
+            rotate: 10deg;
+        }
+        100% {
+            transform: translateX(0em) translateY(0em);
+        }
+    }
+    @keyframes glowing-stars {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+    @keyframes shootingStar {
+        0% {
+            transform: translateX(0) translateY(0);
+            opacity: 1;
+        }
+        50% {
+            transform: translateX(-55em) translateY(0);
+            opacity: 1;
+        }
+        70% {
+            transform: translateX(-70em) translateY(0);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0) translateY(0);
+            opacity: 0;
+        }
+    }
+    @keyframes ani {
+        0% {
+            transform: translateX(0%) scale(1);
+        }
+        50% {
+            transform: translateX(-100%) scale(0.8);
+        }
+        100% {
+            transform: translateX(0%) scale(1);
+        }
+    }
+    @keyframes shine {
+        0% {
+            top: 100%;
+            left: -100%;
+        }
+        50%,
+        100% {
+            top: 0%;
+            left: 70%;
+        }
+    }
+    @keyframes progressBar {
+        0% {
+            width: 0%;
+        }
+        50% {
+            width: 60%;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
     --color-lake-100: hsl(205, 92%, 82%);
     --color-lake-200: hsl(205, 92%, 78%);
@@ -150,18 +244,22 @@
     --animate-spin: spin 4s linear infinite;
     --animate-spin-slow: spin 8s linear infinite;
 
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(0, 0, 0, 0.03);
 
     --font-mono: "Fira Mono", monospace;
     --font-display: "Allison", cursive;
-
-    --font-disp: "Lavishly Yours", cursive;
-
+    --font-cursive: "Lavishly Yours", cursive;
     --font-di: "Rancho", cursive;
     --font-heading: "Asap", sans-serif;
     --font-sans: "Roboto Flex", sans-serif;
-    --font-link: "Londrina Shadow", cursive;
+    --font-link: "Asap", monospace;
+    --font-heading: "Fira Sans", serif;
+    --font-heading: "Abril Fatface", serif;
+    --font-frances: "Fraunces", serif;
+    --font-inter: "Inter", sans-serif;
+
+    --font-abril: "Abril Fatface", serif;
 }
 
 @layer base {
@@ -181,16 +279,16 @@
         @apply text-offwhite font-sans leading-relaxed;
     }
     a {
-        @apply text-cyan-200 font-heading no-underline p-2;
+        @apply text-lake-200 font-link no-underline p-2;
     }
     a:hover {
-        @apply text-link-hover underline;
+        @apply text-lake-500 underline;
     }
     button {
         @apply cursor-pointer font-heading transition-all duration-300;
     }
     .button {
-        @apply px-8 py-4 font-heading uppercase text-shadow-xs border border-cyan-600 tracking-widest rounded-full cursor-pointer;
+        @apply px-4 py-2 md:px-6 lg:px-8 md:py-3 lg:py-4 font-link uppercase text-shadow-xs border border-cyan-600 tracking-widest rounded-full cursor-pointer;
     }
 }
 
@@ -295,9 +393,8 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    mix-blend-mode: color-burn;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
     transition: background 1s ease;
-    border: 1px solid red;
 }
 
 .loader-pulse {
@@ -322,6 +419,15 @@
 
 .animate-shimmer {
     animation: shimmer 2s infinite;
+}
+.animate-progressBar {
+    animation: progressBar 2s ease-in-out infinite;
+}
+.animate-fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+}
+.animate-spin-slow {
+    animation: spin 8s linear infinite;
 }
 .bg-grid-pattern {
     background-size: 40px 40px;

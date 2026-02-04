@@ -3,24 +3,6 @@ import React from "react";
 const LoaderCard: React.FC = () => {
     return (
         <div className='flex min-h-screen w-full items-center justify-center bg-gray-900 p-4'>
-            <style>{`
-        @keyframes progressBar {
-          0% { width: 0%; }
-          50% { width: 60%; }
-          100% { width: 100%; }
-        }
-        @keyframes fadeIn {
-          0% { opacity: 0; transform: translateY(10px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        .animate-progressBar {
-          animation: progressBar 2s ease-in-out infinite;
-        }
-        .animate-fadeIn {
-          animation: fadeIn 1s ease-out forwards;
-        }
-      `}</style>
-
             {/* Main Container */}
             <div className='mx-auto w-[600px] overflow-hidden rounded-xl bg-gray-950 drop-shadow-2xl'>
                 {/* Title Bar */}

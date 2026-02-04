@@ -188,7 +188,7 @@ const AvatarChat = () => {
 
 // --- POMOĆNA KOMPONENTA: ABSTRACT UI (LIJEVA STRANA) ---
 const AbstractUI = () => (
-    <div className='absolute inset-0 border-2 border-accent pointer-events-none overflow-hidden'>
+    <div className='absolute inset-0 pointer-events-none overflow-hidden'>
         <AnimatedProgressBar />
         <AvatarChat />
 

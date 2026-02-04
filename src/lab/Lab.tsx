@@ -80,33 +80,6 @@ const Lab = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
 
     return (
         <div className='bg-slate-900 min-h-screen'>
-            <style>{`
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
-        .animate-shimmer { animation: shimmer 2s infinite; }
-        
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .animate-spin-slow { animation: spin 8s linear infinite; }
-
-        .bg-grid-pattern {
-          background-size: 40px 40px;
-          background-image: 
-            linear-gradient(to right, rgba(128, 128, 128, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(128, 128, 128, 0.1) 1px, transparent 1px);
-        }
-        
-        /* Makni default marker sa details elementa */
-        details > summary {
-          list-style: none;
-        }
-        details > summary::-webkit-details-marker {
-          display: none;
-        }
-        
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { bg: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
-      `}</style>
             <button
                 onClick={() => setActiveTab("home")}
                 className='absolute top-8 left-8 flex items-center gap-2 text-offblack hover:text-deepgray transition-all hover:translate-x-[-5px] font-mono z-50'>

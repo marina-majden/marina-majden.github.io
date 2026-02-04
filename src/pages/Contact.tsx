@@ -34,7 +34,7 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
     };
 
     return (
-        <section id='contact' className='py-24 relative overflow-hidden'>
+        <section id='contact' className='py-10 md:py-14 lg:py-20 relative overflow-hidden'>
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-linear-to-b-to-r from-purple-900/20 to-cyan-900/20 rounded-full blur-[120px] -z-10 before:animate-pulse after:animate-pulse'></div>
 
             <div className='container w-full px-1 md:px-6 mx-auto text-center'>

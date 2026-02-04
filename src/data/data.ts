@@ -109,38 +109,39 @@ const content: ContentData = {
             skills: "Vještine",
             services: "Usluge",
             projects: "Projekti",
-            lab: "Lab",
-            litart: "Art",
+            lab: "Laboratorij",
+            litart: "LitArt",
             contact: "Kontakt",
         },
         hero: {
-            line1: "@marina.majdenic",
-            line2: "umjetnost kodiranja",
-            line3: "Apstraktne ideje pretvaramo u remek-djela.",
-            subtitle: "",
+            line1: "kod sa stilom",
+            line2: "dizajn s pričom",
+            line3: "vizualni jezik koji svatko razumije",
+            subtitle:
+                "Svatko treba imati svoj digitalni prostor u kojemu će predstaviti sebe, svoj rad i svoju viziju. Moj je zadatak izraditi taj prostor tako da autentično prenese Vašu priču do željene publike. Trebate li novi dizajn za web-stranicu ili razvoj prema postojećem dizajnu, obratite mi se s povjerenjem.",
             cta: "Stvorimo nešto posebno!",
         },
         about: {
-            title: "",
-            p1: "Prisutnost na mreži neophodna je ako želite da javnost ima povjerenja u Vaš posao, stoga gradimo čvrstu i stabilnu arhitekturu Vašeg digitalnog prostora.",
-            p2: "Tamo ćemo izgraditi Vaš vizualni identitet, ispričati Vašu priču i oslikati viziju Vašeg brenda, temeljenu na promišljenoj i funkcionalnoj estetici koja nikoga neće ostaviti ravnodušnim. Kreiranje digitalnog sadržaja i autentičnih mrežnih iskustava koje svatko razumije, a nitko ne zaboravlja. ",
+            title: "Misija",
+            p1: "U vremenu u kojemu se neprestano vodi bitka za našu pažnju moramo mudro djelovati na mreži. Vaša web-stranica jedinstveni je prostor koji možete ustrojiti i ispuniti u potpunosti slobodno, gotovo bez ograničenja. Taj potencijal mudro je iskoristiti za ostvarenje kvalitetne, intimnije i preciznije komunikacije s postojećim i novim klijentima.  ",
+            p2: "Bez obzira na to imate li već razvijenu ideju i vizualni identite ili još o tome niste razmišljali, moj je cilj izraditi web-stranicu koja će dostojno predstaviti Vaš posao i dosljedno ispričati Vašu priču, a pritom i impresionirati posjetitelje estetski promišljenim dizajnom i besprijekornom funkcionalnošću.",
         },
         skills: {
             title: "Vještine",
-            hard: "Hard Core (Tehnologije)",
-            soft: "Human Core (Meke vještine)",
+            hard: "Tehnologije",
+            soft: "Šire vještine",
             softList: [
                 {
-                    title: "Dizajn & Estetika",
-                    desc: "Primjena teorije dizajna i UX/UI principa",
+                    title: "Stvaranje sadržaja",
+                    desc: "Profesorica sam hrvatskog jezika i književnosti te umjetnosti i rado ću pomoći s izradom tekstualnog i vizualnog sadržaja za Vašu stranicu.",
                 },
                 {
-                    title: "Komunikacija",
-                    desc: "Jasna dokumentacija i artikulirana suradnja.",
+                    title: "Marketinška strategija",
+                    desc: "Iskustvo u digitalnom marketingu i SEO optimizaciji za tražilice važno je kako bi Vaša stranica bila vidljivija i privlačnija ciljanoj publici.",
                 },
                 {
-                    title: "Crisis Management",
-                    desc: "Brzo donošenje odluka pod pritiskom i rješavanje konflikata.",
+                    title: "Personalizirani pristup",
+                    desc: "Posebno me raduju projekti koji se odmiču od šablonskih rješenja; možemo potpuno osloboditi kreativnost i stvoriti jedinstven dizajn skrojen samo po Vašoj mjeri!",
                 },
             ],
         },
@@ -148,19 +149,20 @@ const content: ContentData = {
             title: "Usluge",
             list: [
                 {
-                    title: "Trebate ideju, ideju i izvedbu?",
-                    desc: "Cijeli paket, od praznog platna do 'live' statusa. Dizajn, arhitektura, kodiranje i postavljanje na server.",
-                    imgUrl: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop",
-                    imgClass:
-                        "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
-                },
-                {
-                    title: "Trebate sadržaj koji će biti popularan na tražilicama?",
-                    desc: "Tekst i slike potrebno je optimizirati kako bi bili prepoznatljiv u nepreglednom svijetu digitalnog sadržaja.",
+                    title: "Razvoj web-stranice",
+                    desc: "Ako već imate dizajn i potrebno je pretvoriti ga u funkcionalan kod, ovo je usluga koja vam treba. Uz razvoj, optimizirat ću vašu stranicu kako bi bila brza, responzivna i prilagođena tražilicama.",
                     imgUrl: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop",
                     imgClass:
                         "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
                 },
+                {
+                    title: "Dizajn i razvoj web-stranice",
+                    desc: "Krećemo od praznog platna? Odlično, ovo je usluga koju trebate. Cijeli paket, od praznog platna do 'live' statusa. Dizajn, arhitektura, kodiranje i postavljanje na server. Ako ste novi u poslu ili želite promijeniti imidž, možemo se upustiti u najkreativniji dio posla; kreiranje unikatnog vizualnog identiteta Vašeg brenda.",
+                    imgUrl: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop",
+                    imgClass:
+                        "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
+                },
+
                 {
                     title: "Postavljanje stranice na mrežu i održavanje",
                     desc: "Kako bi izrađena stranica 'oživjela' i bila dostupna svima online, potrebno je postaviti ju na odgovarajući hosting servis. Nakon toga potrebno je održavati stranicu kako bi ostala ispravna i sigurna.",
@@ -176,20 +178,32 @@ const content: ContentData = {
             items: [
                 {
                     title: "Lit Art",
-                    desc: "Digitalne lekcije povećat ćemo interes i produbiti znanje!",
-                    stack: ["React", "Node.js", "MongoDB"],
-                    full: "Interaktivna platforma za upoznavanje i učenje umjetnosti i književnosti.",
-                    url: "showcase",
+                    desc: "Interaktivna digitalna platforma koja približava gradivo književnosti i umjetnosti učenicima, studentima i drugim znatiželjnicima.",
+                    stack: [
+                        "React",
+                        "React Router v7",
+                        "Adobe Photoshop",
+                        "Wiki Art API",
+                    ],
+                    full: "Eksperimentalni projekt koji istražuje nove metode online učenja književnosti, umjetnosti i drugih područja. Umjesto pasivnog primanja znanja i linearnog pristupa, interaktivne lekcije potiču korisnika na aktivno sudjelovanje i zahtijevaju kognitivan napor kako bi se naučeno zadržalo, a interdisciplinaran pristup osigurava spontano usvajanje šireg konteksta od same lekcije i razvoj kritičkog mišljenja.",
+                    url: "https://lit-art.netlify.app",
                     urlShowcase: "/showcase/lit-art",
                 },
                 {
-                    title: "Need Help",
-                    desc: "Platforma koja omogućuje anonimno postavljanje pitanja i stručan, topao, ljudski odgovor s empatijom.",
-                    stack: ["Next.js", "Stripe", "Tailwind"],
-                    full: "Kada nam AI daje odgovore na sva pitanja i pritom potrvđuje svaku našu pomisao Ovdje nastupa Need Help – digitalna platforma koja omogućuje anonimno postavljanje pitanja i stručan, topao, ljudski odgovor s empatijom.",
-                    url: "https://need-help.netlify.app",
-                    urlShowcase: "/showcase/need-help",
+                    title: "Need Advice",
+                    desc: "Digitalno rješenje fokusirano na osnaživanje zajednice i izravno društveno angažirano djelovanje",
+                    stack: [
+                        "React",
+                        "Router v7",
+                        "TailwindCSS",
+                        "Netlify",
+                        "Firebase",
+                    ],
+                    full: "Razvoj platforme koja potiče ljudsku interakciju i omogućuje posjetiteljima da anonimno postave pitanje, zatraže savjet i podijele problem bez straha od osuđivanja, a dobronamjerna online zajednica osigurat će promišljeni, empatičan i koristan odgovor na upit.",
+                    url: "https://need-advice.netlify.app",
+                    urlShowcase: "/showcase/need-advice",
                 },
+
                 {
                     title: "Kako su Anđa i Roko spasili Božić",
                     desc: "Personalizirana i unikatna digitalna slikovnica za djecu izrađena prema dva prava djeteta",
@@ -197,7 +211,7 @@ const content: ContentData = {
                         "React",
                         "Adobe Firefly",
                         "Vite",
-                        "Gemini",
+                        "Gemini AI",
                         "TailwindCSS",
                         "Web Speech API",
                     ],
@@ -205,11 +219,12 @@ const content: ContentData = {
                     url: "https://christmas-storybook.netlify.app",
                     urlShowcase: "/showcase/storybook",
                 },
+
                 {
                     title: "Unplugged App",
                     desc: "Društvena anti-mreža za one koji žele živjeti u stvarnom životu.",
-                    stack: ["React", "react Router v7", "TailwindCSS"],
-                    full: "Ovo nije samo platforma ili aplikacija, ovo je projekt koji nastoji promicati svjesno isključivanje iz digitalnog svijeta i ponovno povezivanje s realnošću.",
+                    stack: ["React", "React Router v7", "TailwindCSS"],
+                    full: "Konceptualni projekt koji nastoji postati mjesto za uspsotavu i osnaživanje malih zajednica koje će potom djelovati u stvarnom svijetu i pomoći nam povezati se uživo i smanjiti štetno suvišno izlaganje društvenim mrežama.",
                     url: "https://unplugged.netlify.app",
                     urlShowcase: "/showcase/unplugged",
                 },
@@ -217,7 +232,7 @@ const content: ContentData = {
                     title: "SongFinder App",
                     desc: "Pretraživanje i otkrivanje pjesama tražilicom uz mogućnost preslušavanja glazbe.",
                     stack: ["HTML5", "CSS3", "Vanilla JavaScript", "iTunesAPI"],
-                    full: "Jedan od mojih prvih projekata koji sam izradila samostalno kako bih uvježbala asinkrono dohvaćanje podataka iz vanjskog API-ja u JSON formatu i manipulaciju DOM-om bez korištenja frameworka. Aplikacija ima implementiranu logiku za reprodukciju glazbe (barem copyrightom dopuštenih 30 sekundi svake pjesme) te prikazuje i naslovnicu albuma, ime izvođača i naziv pjesme.",
+                    full: "Jedan od mojih prvih projekata koji sam izradila kako bih uvježbala asinkrono dohvaćanje podataka iz vanjskog API-ja u JSON formatu i manipulaciju DOM-om bez korištenja frameworka. Aplikacija ima implementiranu logiku za reprodukciju glazbe (onoliko koliko dopušta copyright) te prikazuje i naslovnicu albuma, ime izvođača i naziv pjesme.",
                     url: "https://marina-majden.github.io/song-finder/",
                     urlShowcase: "/showcase/songfinder",
                 },
@@ -254,66 +269,66 @@ const content: ContentData = {
     en: {
         nav: {
             home: "Home",
-            about: "About",
+            about: "Mission",
             skills: "Skills",
             services: "Services",
             projects: "Projects",
             lab: "Lab",
-            litart: "ARToteka",
+            litart: "LitArt",
             contact: "Contact",
         },
         hero: {
-            line1: "The Art of Coding;",
-            line2: "Sculpting your ideas",
-            line3: "into masterpieces.",
+            line1: "The Art of Coding",
+            line2: "Turning thoughts and ideas",
+            line3: "into digital masterpieces.",
             subtitle:
-                "A full-stack developer with artistic tendencies and a background in education. Delivering flawless web solutions with general appeal, while stay true to your authentic story.",
-            cta: "Let’s create something together",
+                "Everyone needs a digital space to present themselves, their work, and their vision. My job is to create that space to authentically convey your story to your desired audience.",
+            cta: "Let's do it",
         },
         about: {
-            title: "From Straight A's to Zeros and Ones",
-            p1: "You might wonder what a Literature and Art History professor is doing in a terminal. The answer is simple: creating structure and beauty. I’ve dedicated the last three years to translating abstract ideas into functional code.",
-            p2: "My background in education taught me methodical thinking, team leadership, and how to navigate high-stress situations (believe me, a server crash is nothing compared to a classroom full of teenagers on a Friday afternoon). Today, I use those skills to build robust, scalable, and visually thoughtful web applications. I don’t just write code; I create unique experiences.",
+            title: "Mission",
+            p1: "In an age where the battle for our attention is constant, we must act wisely online. Your website is a unique space that you can structure and fill completely freely, with almost no limitations. It is important to use that potential wisely to achieve quality, more intimate, and precise communication with existing and new clients.",
+            p2: "Regardless of whether you already have a developed idea and visual identity or have not yet thought about it, my goal is to create a website that will worthily represent your business and consistently tell your story, while impressing visitors with aesthetically thoughtful design and flawless functionality.",
         },
         skills: {
-            title: "You need Breadth to reach Depth",
+            title: "Skills",
             hard: "Hard Core (Tech)",
             soft: "Human Core (Soft Skills)",
             softList: [
                 {
-                    title: "Design & Aesthetics",
-                    desc: "Applied Design Theory and UX/UI principles (Thanks to Art History!)",
+                    title: "Content Creation",
+                    desc: "As a professor of Croatian language and literature and also Art Historian, I will gladly assist in creating textual and visual content for your website.",
                 },
                 {
-                    title: "Communication",
-                    desc: "Clear documentation and articulate collaboration.",
+                    title: "Digital Marketing Guidance",
+                    desc: "Experience in digital marketing and SEO optimization is crucial to make your website more visible and attractive to your target audience.",
                 },
                 {
-                    title: "Crisis Management",
-                    desc: "Rapid decision-making under pressure and conflict resolution.",
+                    title: "Personalized Approach",
+                    desc: "I especially enjoy projects that move away from template solutions; we can completely unleash creativity and create a unique design tailored just for you!",
                 },
             ],
         },
         services: {
-            title: "Smooth communication, refined design, and sound logic!",
+            title: "Services",
             list: [
                 {
-                    title: "End-to-End Development",
-                    desc: "From a blank canvas to live status. Design, architecture, coding, and deployment.",
+                    title: "Web Development",
+                    desc: "If you already have a design and need to turn it into functional code, this is the service you need. In addition to development, I will optimize your site to be fast, responsive, and search engine friendly.",
                     imgUrl: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop",
                     imgClass:
                         "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
                 },
                 {
-                    title: "Project Rescue",
-                    desc: "Have code that isn't working as it should? My didactic patience comes into play here – bug detection and performance optimization.",
+                    title: "Web Design & Development",
+                    desc: "Starting from a blank canvas? Great, this is the service you need. The whole package, from blank canvas to 'live' status. Design, architecture, coding, and deployment. If you are new to business or want to change your image, we can embark on the most creative part of the job; creating a unique visual identity for your brand.",
                     imgUrl: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop",
                     imgClass:
                         "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
                 },
                 {
-                    title: "Methodical Design Approach",
-                    desc: "Web experiences that are intuitive for users, pleasing to the eye, and logical in the background.",
+                    title: "Website Deployment, Hosting & Maintenance",
+                    desc: "I will handle the deployment of your website to a reliable hosting platform, ensuring it is live and accessible. I also provide ongoing maintenance to keep your site secure, up-to-date, and performing optimally.",
                     imgUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop",
                     imgClass:
                         "w-full h-full object-cover opacity-50 transition-transform duration-500 group-hover:scale-110",

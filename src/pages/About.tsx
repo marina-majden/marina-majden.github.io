@@ -11,7 +11,7 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ t }) => {
     return (
-        <section id='about' className='py-24 bg-slate-900'>
+        <section id='about' className='py-10 md:py-14 lg:py-20 bg-slate-900'>
             <div className='container mx-auto px-6'>
                 <Reveal className='fade-in'>
                     <SectionTitle>{t.about.title}</SectionTitle>

@@ -4,19 +4,6 @@ const ColoredGlassCard: React.FC = () => {
     return (
         // Spremnik pune visine za demonstraciju (u stvarnoj aplikaciji prilagodite visinu roditelja)
         <div className='h-screen w-full'>
-            {/* Definiramo custom animacije jer su specifične za ovu komponentu */}
-            <style>{`
-        @keyframes ani {
-          0% { transform: translateX(0%) scale(1); }
-          50% { transform: translateX(-100%) scale(0.8); }
-          100% { transform: translateX(0%) scale(1); }
-        }
-        @keyframes shine {
-          0% { top: 100%; left: -100%; }
-          50%, 100% { top: 0%; left: 70%; }
-        }
-      `}</style>
-
             {/* --- colored-glass-card-container --- */}
             <div
                 className='colored-glass-card-container relative flex h-full w-full items-center justify-center overflow-hidden bg-slate-950

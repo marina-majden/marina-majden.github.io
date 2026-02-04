@@ -25,8 +25,8 @@ interface ProjectsProps {
     scrollToSection: (section: string) => void;
 }
 
-const Projects: React.FC<ProjectsProps> = ({ t, scrollToSection }) => (
-    <section id='projects' className='py-24'>
+const Projects: React.FC<ProjectsProps> = ({ t }) => (
+    <section id='projects' className='py-10 md:py-14 lg:py-20  '>
         <div className='container mx-auto px-6'>
             <Reveal>
                 <SectionTitle>{t.projects.title}</SectionTitle>

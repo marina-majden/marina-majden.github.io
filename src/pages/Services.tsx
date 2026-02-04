@@ -21,10 +21,8 @@ interface ServicesProps {
 }
 
 const Services: React.FC<ServicesProps> = ({ t }) => (
-    <section
-        id='services'
-        className='py-24 bg-linear-to-b- from-slate-900 to-slate-950'>
-        <div className='container mx-auto px-6'>
+    <section id='services'>
+        <div className='py-10 md:py-14 lg:py-20 container mx-auto px-6'>
             <Reveal>
                 <SectionTitle>{t.services.title}</SectionTitle>
             </Reveal>
