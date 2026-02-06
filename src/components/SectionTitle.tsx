@@ -10,7 +10,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
     align = "text-center",
 }) => (
     <h2
-        className={`text-5xl md:text-6xl lg:text-7xl tracking-tighter font-bold font-heading leading-relaxed gradient-neon-effect ${align}`}>
+        className={`text-5xl md:text-6xl lg:text-7xl tracking-widest font-extrabold font-link leading-relaxed text-gradient animate-gradient-x transition-all duration-300 uppercase ${align}`}>
         {children}
     </h2>
 );

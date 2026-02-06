@@ -248,20 +248,50 @@
     --glass-bg: rgba(0, 0, 0, 0.03);
 
     --font-mono: "Fira Mono", monospace;
-    --font-display: "Allison", cursive;
-    --font-cursive: "Lavishly Yours", cursive;
-    --font-di: "Rancho", cursive;
+    --font-display: "Alex Brush", cursive;
+    --font-display-2: "Waterfall", cursive;
+    --font-display-3: "Licorice", cursive;
+    --font-display-4: "Rouge Script", cursive;
+    --font-display-5: "Ephesis", cursive;
+
     --font-heading: "Asap", sans-serif;
     --font-sans: "Roboto Flex", sans-serif;
     --font-link: "Asap", monospace;
-    --font-heading: "Fira Sans", serif;
-    --font-heading: "Abril Fatface", serif;
-    --font-frances: "Fraunces", serif;
-    --font-inter: "Inter", sans-serif;
-
-    --font-abril: "Abril Fatface", serif;
+    --font-heading: "Source Sans 3", serif;
 }
 
+.font-roboto-flex {
+    font-family: "Roboto Flex", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0,
+        "wdth" 100,
+        "GRAD" 0,
+        "XOPQ" 96,
+        "XTRA" 468,
+        "YOPQ" 79,
+        "YTAS" 750,
+        "YTDE" -203,
+        "YTFI" 738,
+        "YTLC" 514,
+        "YTUC" 712;
+}
+
+.asap-normal {
+    font-family: "Asap", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+.source-sans-normal {
+    font-family: "Source Sans 3", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
 @layer base {
     body {
         @apply w-screen min-h-screen mx-auto font-sans selection:bg-candy-500 selection:text-neon-cyan transition-colors duration-300;
@@ -283,6 +313,9 @@
     }
     a:hover {
         @apply text-lake-500 underline;
+    }       
+    section {
+        @apply max-w-screen mx-auto px-6 py-10 md:py-14 lg:py-20;
     }
     button {
         @apply cursor-pointer font-heading transition-all duration-300;
@@ -359,8 +392,8 @@
 .gradient-neon-effect {
     background: linear-gradient(
         to right,
-        var(--color-neon-cyan),
-        var(--color-neon-pink)
+        var(--color-lake-500),
+        var(--color-candy-700)
     );
     background-clip: text;
     -webkit-background-clip: text;
@@ -386,14 +419,13 @@
 
 .text-gradient {
     background: linear-gradient(
-        to right bottom,
-        var(--color-neon-cyan),
-        var(--color-neon-pink)
+        to right,
+        var(--color-lake-500),
+        var(--color-candy-500)
     );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
     transition: background 1s ease;
 }
 

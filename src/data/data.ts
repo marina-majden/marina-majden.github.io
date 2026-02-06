@@ -114,9 +114,9 @@ const content: ContentData = {
             contact: "Kontakt",
         },
         hero: {
-            line1: "kod sa stilom",
-            line2: "dizajn s pričom",
-            line3: "vizualni jezik koji svatko razumije",
+            line1: "Umjetnost kodiranja",
+            line2: "",
+            line3: "izrada web-stranica s razumijevanjem i stilom.",
             subtitle:
                 "Svatko treba imati svoj digitalni prostor u kojemu će predstaviti sebe, svoj rad i svoju viziju. Moj je zadatak izraditi taj prostor tako da autentično prenese Vašu priču do željene publike. Trebate li novi dizajn za web-stranicu ili razvoj prema postojećem dizajnu, obratite mi se s povjerenjem.",
             cta: "Stvorimo nešto posebno!",

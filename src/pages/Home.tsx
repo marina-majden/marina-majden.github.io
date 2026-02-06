@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import SpinnerLoader from "../components/SpinnerLoader.tsx";
 import Footer from "./Footer.tsx";
 import Navbar from "../components/Navbar.tsx";
@@ -6,7 +6,6 @@ import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
 import About from "./About.tsx";
 import Projects from "./Projects.tsx";
-
 import Skills from "./Skills.tsx";
 import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "../components/BackgroundCanvas.tsx";

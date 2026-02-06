@@ -30,13 +30,13 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
     return (
         <section
             id='home'
-            className='w-screen h-[50vh] md:h-screen mx-auto relative overflow-hidden pt-8 mt-8 md:mt-10 lg:mt-16'>
-            <div className='container md:h-[90vh] flex flex-col justify-evenly items-center mx-auto px-6 text-center relative z-10'>
+            className='w-screen h-[50vh] md:h-screen mx-auto relative overflow-hidden pt-8 mt-8 mb-2 md:mt-10 lg:mt-16'>
+            <div className='container md:h-[80vh] flex flex-col justify-around items-center mx-auto px-6 text-center relative z-10'>
                 <div
-                    className={`inline-block my-4 px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50 backdrop-blur-sm transition-all duration-700 ${
+                    className={`inline-block my-4 px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50 backdrop-blur-sm transition-all duration-800 ${
                         heroLoaded
                             ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-0"
+                            : "opacity-0 translate-y-6"
                     }`}>
                     <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-alias'>
                         <Terminal size={12} className='animate-pulse' /> v3.0.0
@@ -44,9 +44,9 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
                     </span>
                 </div>
 
-                <h1 className='text-5xl my-8 tracking-tight  leading-tight'>
+                <h1 className='w-4/5 mt-4 mb-8'>
                     <span
-                        className={`block text-5xl md:text-7-xl lg:text-8xl xl:text-9xl font-bold font-display text-lake-500 text-shadow-xs z-50 transition-all duration-700 delay-700 ${
+                        className={`block text-6xl md:text-7xl lg:text-9xl xl:text-[150px] text-left leading-normal bg-clip-text text-transparent font-display-5 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-10"
@@ -54,7 +54,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
                         {t.hero.line1}
                     </span>
                     <span
-                        className={`block text-5xl  md:text-7xl lg:text-9xl xl:text-10xl bg-clip-text text-transparent bg-linear-to-tr from-lake-600 via-indigo-600 to-candy-500 leading-tight font-extrabold font-display z-50 animate-gradient-x transition-all duration-500 delay-300 ${
+                        className={`block text-6xl md:text-7xl lg:text-9xl mb-4 leading-none text-right font-display-5  text-lake-600 text-shadow-lake-900 text-shadow-xs font-bold  z-40  transition-all duration-500 delay-400 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 translate-x-10"
@@ -63,7 +63,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
                     </span>
 
                     <span
-                        className={`block text-2xl text-slate-200 font-link mt-4 font-semibold uppercase z-40 tracking-[0.2em] transition-all duration-700 delay-500 ${
+                        className={`block text-2xl text-slate-200 font-link mt-4 font-semibold uppercase z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-20"
