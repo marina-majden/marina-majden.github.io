@@ -1,7 +1,6 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import { motion } from "framer-motion";
-import SpinnerLoader from "./components/SpinnerLoader";
 import Home from "./pages/Home";
 
 const NeedHelp = lazy(() => import("./showcase/NeedHelp"));
