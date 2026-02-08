@@ -17,7 +17,7 @@ const About: React.FC<AboutProps> = ({ t }) => {
                     <SectionTitle>{t.about.title}</SectionTitle>
                 </Reveal>
 
-                <div className='max-w-3xl mx-auto space-y-6 text-lg text-slate-400 leading-relaxed font-sans'>
+                <div className='max-w-3xl mx-auto space-y-6 text-lg text-slate-200 leading-relaxed font-sans'>
                     <Reveal className='animate-fadeIn' delay={200}>
                         <p className="text-offwhite font-heading">{t.about.p1}</p>
                     </Reveal>

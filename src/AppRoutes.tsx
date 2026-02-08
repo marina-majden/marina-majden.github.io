@@ -31,7 +31,7 @@ const LoadingScreen = () => (
 
 export const AppRoutes = () => {
     return (
-        <Suspense fallback={<SpinnerLoader />}>
+        <Suspense fallback={<LoadingScreen />}>
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/showcase/need-help' element={<NeedHelp />} />
