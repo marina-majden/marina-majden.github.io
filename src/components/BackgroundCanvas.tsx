@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const BackgroundCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -12,6 +13,13 @@ const BackgroundCanvas: React.FC = () => {
 
         let width: number, height: number, particles: Particle[];
         let animationFrameId: number;
+
+        let mouse = { x: -1000, y: -1000 };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        };
 
         const resize = () => {
             width = window.innerWidth;
@@ -70,13 +78,44 @@ const BackgroundCanvas: React.FC = () => {
                 p1.update();
                 p1.draw();
 
+                // Mouse interaction
+                const dxMouse = p1.x - mouse.x;
+                const dyMouse = p1.y - mouse.y;
+                const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
+
+                if (distMouseSq < 40000) {
+                    ctx.beginPath();
+                    const grad = ctx.createLinearGradient(
+                        p1.x,
+                        p1.y,
+                        mouse.x,
+                        mouse.y,
+                    );
+                    grad.addColorStop(0, p1.color + "0.4)");
+                    grad.addColorStop(1, "rgba(255, 255, 255, 0)");
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+
+                    if (distMouseSq < 10000) {
+                        p1.x += dxMouse * 0.02;
+                        p1.y += dyMouse * 0.02;
+                    }
+                }
+
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dx = p1.x - p2.x;
                     const dy = p1.y - p2.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 150) {
+                    if (dx > 150 || dx < -150 || dy > 150 || dy < -150)
+                        continue;
+
+                    const distSq = dx * dx + dy * dy;
+
+                    if (distSq < 22500) {
                         ctx.beginPath();
                         const grad = ctx.createLinearGradient(
                             p1.x,
@@ -98,6 +137,7 @@ const BackgroundCanvas: React.FC = () => {
         };
 
         window.addEventListener("resize", resize);
+        window.addEventListener("mousemove", handleMouseMove);
         resize();
         initParticles();
         animate();
@@ -105,24 +145,26 @@ const BackgroundCanvas: React.FC = () => {
         // Čišćenje (Cleanup) - VAŽNO u Reactu
         return () => {
             window.removeEventListener("resize", resize);
+            window.removeEventListener("mousemove", handleMouseMove);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
 
-    return (
+    return createPortal(
         <canvas
             ref={canvasRef}
             style={{
                 position: "fixed",
                 top: 0,
                 left: 0,
-                width: "100vw",
-                height: "100vh",
-                zIndex: 0, // Stavlja ga iza svega
+                width: "100%", // 100% sprječava horizontalni scrollbar
+                height: "100dvh", // 100dvh je bolje za mobilne preglednike
+                zIndex: -1, // Stavlja ga iza svega
                 background: "#0a0a0a", // Tamna pozadina
                 pointerEvents: "none", // Dozvoljava klikanje na kartice iznad
             }}
-        />
+        />,
+        document.body
     );
 };
 

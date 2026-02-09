@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
     motion,
     useMotionValue,
@@ -36,7 +37,7 @@ import TasteTestSection from "./TasteTestSection.tsx";
 // TODO: prebaciti split view u home?
 // TODO: zamijeniti oblake slikom
 
-const Lab = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
+const Lab = () => {
     const [currentTheme, setCurrentTheme] = useState("mediteran");
     const [currentFont, setCurrentFont] = useState("sans");
     const [currentRadius, setCurrentRadius] = useState("smooth");
@@ -80,12 +81,12 @@ const Lab = ({ setActiveTab }: { setActiveTab: (tab: string) => void }) => {
 
     return (
         <div className='bg-slate-900 min-h-screen'>
-            <button
-                onClick={() => setActiveTab("home")}
+            <Link
+                to='/'
                 className='absolute top-8 left-8 flex items-center gap-2 text-offblack hover:text-deepgray transition-all hover:translate-x-[-5px] font-mono z-50'>
                 <ArrowRight className='rotate-180' size={20} /> Povratak na
                 portfolio
-            </button>
+            </Link>
             <h1 className='text-5xl md:text-7xl font-bold text-white text-center pt-24 mb-12 flex items-center justify-center gap-4'>
                 <FlaskConical
                     className='text-dynamic-cyan animate-neon-glow'

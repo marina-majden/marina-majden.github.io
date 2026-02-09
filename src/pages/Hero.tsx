@@ -46,21 +46,21 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
 
                 <h1 className='w-4/5 mt-4 mb-8'>
                     <span
-                        className={`block text-6xl md:text-7xl lg:text-9xl xl:text-[150px] text-left leading-normal bg-clip-text text-transparent font-display-5 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                        className={`block text-6xl md:text-7xl lg:text-9xl text-center leading-normal bg-clip-text text-transparent font-display bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-10"
                         }`}>
                         {t.hero.line1}
                     </span>
-                    <span
-                        className={`block text-6xl md:text-7xl lg:text-9xl mb-4 leading-none text-right font-display-5  text-lake-600 text-shadow-lake-900 text-shadow-xs font-bold  z-40  transition-all duration-500 delay-400 ${
+                    {/*     <span
+                        className={`block text-6xl md:text-7xl lg:text-9xl mb-4 leading-none text-right font-link text-lake-600 text-shadow-lake-900 text-shadow-xs font-bold  z-40  transition-all duration-500 delay-400 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 translate-x-10"
                         }`}>
                         {t.hero.line2}
-                    </span>
+                    </span> */}
 
                     <span
                         className={`block text-2xl text-slate-200 font-link mt-4 font-semibold uppercase z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${

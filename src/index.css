@@ -1,6 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface:wght@400;600;700&family=Poppins:wght@400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&family=Fira+Sans:wght@400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Inter:wght@400&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -214,8 +211,10 @@
     --color-deepgray: #232222;
     --color-lightgray: #484646;
     --color-offwhite: #e5f5dc;
-
-    --color-background: #0f172a;
+    --color-deep-space: #0f172a;
+    --color-neon-pink: var(--color-candy-600);
+    --color-neon-cyan: var(--color-lake-500);
+    --color-background: #121213;
     --color-heading: var(--color-offblack);
     --color-link: var(--color-lake-500);
     --color-accent: var(--color-candy-500);
@@ -226,8 +225,7 @@
     --neon-pink: #ff00ff;
     --neon-cyan: #00ffff;
     --color-deep-space: #0f172a;
-    --color-neon-pink: var(--color-candy-700);
-    --color-neon-cyan: var(--color-lake-700);
+
     --neon-pink: var(--color-candy-500);
     --neon-cyan: var(--color-lake-500);
 
@@ -260,41 +258,9 @@
     --font-heading: "Source Sans 3", serif;
 }
 
-.font-roboto-flex {
-    font-family: "Roboto Flex", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings:
-        "slnt" 0,
-        "wdth" 100,
-        "GRAD" 0,
-        "XOPQ" 96,
-        "XTRA" 468,
-        "YOPQ" 79,
-        "YTAS" 750,
-        "YTDE" -203,
-        "YTFI" 738,
-        "YTLC" 514,
-        "YTUC" 712;
-}
-
-.asap-normal {
-    font-family: "Asap", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings: "wdth" 100;
-}
-.source-sans-normal {
-    font-family: "Source Sans 3", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
 @layer base {
     body {
-        @apply w-screen min-h-screen mx-auto font-sans selection:bg-candy-500 selection:text-neon-cyan transition-colors duration-300;
+        @apply w-screen min-h-screen p-0 mx-auto overflow-x-hidden bg-background text-offwhite font-sans selection:bg-candy-500 selection:text-neon-cyan  selection:text-shadow-black selection:text-shadow-md transition-colors duration-300;
     }
     h1,
     h2,
@@ -309,11 +275,14 @@
         @apply text-offwhite font-sans leading-relaxed;
     }
     a {
-        @apply text-lake-200 font-link no-underline p-2;
+        @apply text-offwhite font-link no-underline p-2 cursor-pointer transition-colors duration-300;
     }
     a:hover {
-        @apply text-lake-500 underline;
-    }       
+        @apply text-lake-500 no-underline;
+    }
+    a:active {
+        @apply text-lake-200 no-underline;
+    }
     section {
         @apply max-w-screen mx-auto px-6 py-10 md:py-14 lg:py-20;
     }

@@ -5,7 +5,8 @@ import {
     Database,
     Terminal,
     TrendingUp,
-    Palette,
+    Server,
+    ToolCase,
 } from "lucide-react";
 import Reveal from "../components/Reveal";
 import SectionTitle from "../components/SectionTitle";
@@ -29,6 +30,7 @@ interface SoftSkill {
 interface SkillsContent {
     title: string;
     soft: string;
+    hard: string;
     softList: SoftSkill[];
 }
 
@@ -109,10 +111,15 @@ const Skills: React.FC<SkillsProps> = ({ t }) => {
                 <Reveal>
                     <SectionTitle>{t.skills.title}</SectionTitle>
                 </Reveal>
-
+                <Reveal>
+                    <div className='flex items-center justify-center gap-3 mb-12'>
+                        <Server className='text-pink-400' size={24} />
+                        <h3 className='text-2xl font-bold'>{t.skills.hard}</h3>
+                    </div>
+                </Reveal>
                 <div className='mt-16'>
                     <Reveal>
-                        <div className='flex flex-col md:flex-row gap-2 h-auto  w-full'>
+                        <div className='flex flex-col md:flex-row gap-2 h-full  w-full'>
                             {techSkills.map(
                                 (item: TechSkill, index: number) => (
                                     <div
@@ -178,7 +185,7 @@ const Skills: React.FC<SkillsProps> = ({ t }) => {
                     <div className='mt-24'>
                         <Reveal>
                             <div className='flex items-center justify-center gap-3 mb-12'>
-                                <Palette className='text-pink-400' size={24} />
+                                <ToolCase className='text-pink-400' size={24} />
                                 <h3 className='text-2xl font-bold'>
                                     {t.skills.soft}
                                 </h3>

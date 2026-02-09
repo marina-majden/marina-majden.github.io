@@ -11,6 +11,7 @@ import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "../components/BackgroundCanvas.tsx";
 import BackgroundGlows from "../components/BackgroundGlows.tsx";
 import Split from "../components/Split.tsx";
+import Services from "./Services.tsx";
 
 const Home: React.FC = () => {
     const [lang, setLang] = useState<"hr" | "en">("hr");
@@ -46,7 +47,7 @@ const Home: React.FC = () => {
     }
 
     return (
-        <div className='bg-background/20 max-w-screen p-0 m-0 min-h-screen text-slate-200 font-sans selection:bg-candy-500 selection:text-cyan-500 selection:text-shadow-black selection:text-shadow-md overflow-x-hidden'>
+        <div className='bg-background/20 max-w-screen p-0 m-0 min-h-screen overflow-x-hidden'>
             <BackgroundGlows />
             <BackgroundCanvas />
             <Navbar
@@ -59,10 +60,9 @@ const Home: React.FC = () => {
                 t={t}
             />
             <Hero t={t} scrollToSection={scrollToSection} />
-            <Split />
             <About t={t} />
             <Skills t={t} />
-
+            <Services t={t} />
             <Projects t={t} scrollToSection={scrollToSection} />
             <Contact t={t} />
             <Footer t={t} />

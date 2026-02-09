@@ -40,17 +40,33 @@ interface ProjectItem {
     urlShowcase: string;
 }
 
+interface ServiceModalItem {
+    id: string;
+    title: string;
+    desc: string;
+    img: string;
+}
+
 interface ContentSection {
     nav: NavItem;
     hero: HeroSection;
-    about: { title: string; p1: string; p2: string };
+    about: { title: string; p1: string; p2: string; p3: string; };
     skills: {
         title: string;
         hard: string;
         soft: string;
         softList: SoftSkill[];
     };
-    services: { title: string; list: ServiceItem[] };
+    services: {
+        title: string;
+        subtitle: string;
+        list: ServiceItem[];
+        modal: {
+            items: ServiceModalItem[];
+            btn: string;
+            total: string;
+        };
+    };
     projects: { title: string; viewProject: string; items: ProjectItem[] };
     contact: {
         title: string;
@@ -116,20 +132,21 @@ const content: ContentData = {
         hero: {
             line1: "Umjetnost kodiranja",
             line2: "",
-            line3: "izrada web-stranica s razumijevanjem i stilom.",
+            line3: "izrada web-stranica s karakterom i stilom.",
             subtitle:
                 "Svatko treba imati svoj digitalni prostor u kojemu će predstaviti sebe, svoj rad i svoju viziju. Moj je zadatak izraditi taj prostor tako da autentično prenese Vašu priču do željene publike. Trebate li novi dizajn za web-stranicu ili razvoj prema postojećem dizajnu, obratite mi se s povjerenjem.",
             cta: "Stvorimo nešto posebno!",
         },
         about: {
             title: "Misija",
-            p1: "U vremenu u kojemu se neprestano vodi bitka za našu pažnju moramo mudro djelovati na mreži. Vaša web-stranica jedinstveni je prostor koji možete ustrojiti i ispuniti u potpunosti slobodno, gotovo bez ograničenja. Taj potencijal mudro je iskoristiti za ostvarenje kvalitetne, intimnije i preciznije komunikacije s postojećim i novim klijentima.  ",
-            p2: "Bez obzira na to imate li već razvijenu ideju i vizualni identite ili još o tome niste razmišljali, moj je cilj izraditi web-stranicu koja će dostojno predstaviti Vaš posao i dosljedno ispričati Vašu priču, a pritom i impresionirati posjetitelje estetski promišljenim dizajnom i besprijekornom funkcionalnošću.",
+            p1: "1. stvarati jedinstven i autentičan digitalni sadržaj",
+            p2: "2. prenijeti tisuće vaših priča tekstom i dizajnom",
+            p3: "3. promijeniti svijet (stranicu po stranicu!)",
         },
         skills: {
             title: "Vještine",
             hard: "Tehnologije",
-            soft: "Šire vještine",
+            soft: "Ostale vještine",
             softList: [
                 {
                     title: "Stvaranje sadržaja",
@@ -147,6 +164,7 @@ const content: ContentData = {
         },
         services: {
             title: "Usluge",
+            subtitle: "Interdisciplinarni studio",
             list: [
                 {
                     title: "Razvoj web-stranice",
@@ -171,6 +189,42 @@ const content: ContentData = {
                         "w-full h-full object-cover opacity-50 transition-transform duration-500 group-hover:scale-110",
                 },
             ],
+            modal: {
+                items: [
+                    {
+                        id: "branding",
+                        title: "Vizualni identitet i brending",
+                        desc: "Dizajn logotipa, palete boja i tipografije koji pričaju vašu priču.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1256/1256650.png",
+                    },
+                    {
+                        id: "design",
+                        title: "Web dizajn",
+                        desc: "Moderno i intuitivno sučelje prilagođeno vašim korisnicima.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1055/1055666.png",
+                    },
+                    {
+                        id: "dev",
+                        title: "Web razvoj",
+                        desc: "Brz, siguran i skalabilan kod za besprijekorno iskustvo.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1005/1005141.png",
+                    },
+                    {
+                        id: "deploy",
+                        title: "Postavljanje na server",
+                        desc: "Konfiguracija servera, domene i SSL certifikata.",
+                        img: "https://cdn-icons-png.flaticon.com/512/8099/8099466.png",
+                    },
+                    {
+                        id: "maint",
+                        title: "Održavanje",
+                        desc: "Redovita ažuriranja, sigurnosne kopije i tehnička podrška.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1006/1006517.png",
+                    },
+                ],
+                btn: "Rezerviraj usluge",
+                total: "Odabrano:",
+            },
         },
         projects: {
             title: "Projekti",
@@ -287,8 +341,9 @@ const content: ContentData = {
         },
         about: {
             title: "Mission",
-            p1: "In an age where the battle for our attention is constant, we must act wisely online. Your website is a unique space that you can structure and fill completely freely, with almost no limitations. It is important to use that potential wisely to achieve quality, more intimate, and precise communication with existing and new clients.",
-            p2: "Regardless of whether you already have a developed idea and visual identity or have not yet thought about it, my goal is to create a website that will worthily represent your business and consistently tell your story, while impressing visitors with aesthetically thoughtful design and flawless functionality.",
+            p1: "1. Create unique and authentic digital content",
+            p2: "2. Convey thousands of your stories through text and design",
+            p3: "3. Change the world (page by page!)",
         },
         skills: {
             title: "Skills",
@@ -311,6 +366,7 @@ const content: ContentData = {
         },
         services: {
             title: "Services",
+            subtitle: "Interdisciplinary Studio",
             list: [
                 {
                     title: "Web Development",
@@ -334,6 +390,42 @@ const content: ContentData = {
                         "w-full h-full object-cover opacity-50 transition-transform duration-500 group-hover:scale-110",
                 },
             ],
+            modal: {
+                items: [
+                    {
+                        id: "branding",
+                        title: "Visual Identity & Branding",
+                        desc: "Logo design, color palettes, and typography that tell your story.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1256/1256650.png",
+                    },
+                    {
+                        id: "design",
+                        title: "Web Design",
+                        desc: "Modern and intuitive interfaces tailored to your users.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1055/1055666.png",
+                    },
+                    {
+                        id: "dev",
+                        title: "Web Development",
+                        desc: "Fast, secure, and scalable code for a seamless experience.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1005/1005141.png",
+                    },
+                    {
+                        id: "deploy",
+                        title: "Website Deployment",
+                        desc: "Server configuration, domain setup, and SSL certificates.",
+                        img: "https://cdn-icons-png.flaticon.com/512/8099/8099466.png",
+                    },
+                    {
+                        id: "maint",
+                        title: "Website Maintenance",
+                        desc: "Regular updates, backups, and technical support.",
+                        img: "https://cdn-icons-png.flaticon.com/512/1006/1006517.png",
+                    },
+                ],
+                btn: "Book the services",
+                total: "Selected:",
+            },
         },
         projects: {
             title: "Projects",
