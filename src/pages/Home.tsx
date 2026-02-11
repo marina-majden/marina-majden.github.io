@@ -4,14 +4,14 @@ import Footer from "./Footer.tsx";
 import Navbar from "../components/Navbar.tsx";
 import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
-import About from "./About.tsx";
 import Projects from "./Projects.tsx";
 import Skills from "./Skills.tsx";
 import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "../components/BackgroundCanvas.tsx";
 import BackgroundGlows from "../components/BackgroundGlows.tsx";
-import Split from "../components/Split.tsx";
 import Services from "./Services.tsx";
+import Mission from "./Mission.tsx";
+import Split from "@/components/Split.tsx";
 
 const Home: React.FC = () => {
     const [lang, setLang] = useState<"hr" | "en">("hr");
@@ -45,6 +45,9 @@ const Home: React.FC = () => {
     if (loading) {
         return <SpinnerLoader />;
     }
+    const message =
+        "Exciting time in the world right now. Exciting time! - Mr. Robot, S01E01";
+    console.log(message);
 
     return (
         <div className='bg-background/20 max-w-screen p-0 m-0 min-h-screen overflow-x-hidden'>
@@ -60,7 +63,8 @@ const Home: React.FC = () => {
                 t={t}
             />
             <Hero t={t} scrollToSection={scrollToSection} />
-            <About t={t} />
+            <Split />
+            <Mission />
             <Skills t={t} />
             <Services t={t} />
             <Projects t={t} scrollToSection={scrollToSection} />

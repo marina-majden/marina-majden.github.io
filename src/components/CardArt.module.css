@@ -1,0 +1,205 @@
+/* CardArt.module.css */
+
+/* --- Base Structure (Shared by all cards) --- */
+.card {
+    overflow: hidden;
+    position: relative;
+    /* Specific padding calculation: .5 * 1.5 * 13em = 9.75em */
+    padding: min(85%, 9.75em) 0;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to left top, #ec014b, #06cced);
+    isolation: isolate;
+    width: 100%;
+    height: 100%;
+}
+
+.card::before,
+.card::after {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    content: "";
+    pointer-events: none;
+}
+
+/* Base Texture Layer (Default Style) */
+.card::before {
+    /* Default pattern if no specific style class is added */
+    background:
+        var(--pattern, repeating-linear-gradient(45deg, #000, #999, #000 5%)),
+        var(--map, linear-gradient(45deg, #777, #000));
+    background-blend-mode: screen;
+    filter: contrast(19);
+    mix-blend-mode: multiply;
+}
+
+/* Base Color Grading Layer */
+.card::after {
+    background: linear-gradient(90deg, #251967, #d0135e);
+    mix-blend-mode: screen;
+}
+
+/* --- Individual Style Classes --- */
+
+.style2 {
+    --pattern: repeating-radial-gradient(circle at 0 50%, #000, #999, #000 5%);
+    --map: radial-gradient(circle at 0 50%, #777, #000);
+}
+
+.style3 {
+    --pattern: repeating-conic-gradient(at -9% 25%, #000, #999, #000 2.5%);
+    --map: conic-gradient(at -9% 25%, #000, #777 50%);
+}
+
+.style4 {
+    --pattern:
+        repeating-linear-gradient(30deg, #000, #999, #000 5%),
+        repeating-linear-gradient(-60deg, #000, #999, #000 5%);
+    --map: linear-gradient(30deg, #777, #000);
+}
+
+/* Note: Some styles need to target ::before explicitly to override blend modes */
+.style5::before {
+    background: var(--map), var(--pattern);
+    --map: linear-gradient(#777, #000);
+    --pattern:
+        repeating-radial-gradient(circle at -35% 0, #000, #999, #000 5%),
+        repeating-radial-gradient(circle at -35% 100%, #000, #999, #000 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style6::before {
+    background: var(--map), var(--pattern);
+    --map:
+        linear-gradient(30deg, #777, #000),
+        repeating-linear-gradient(30deg, #000, #999, #000 5%);
+    --pattern: repeating-linear-gradient(-60deg, #000, #999, #000 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style7::before {
+    background: var(--map), var(--pattern);
+    --map: linear-gradient(30deg, #777, #000);
+    --pattern:
+        repeating-linear-gradient(30deg, #000, #999, #000 5%),
+        repeating-conic-gradient(#000, #999, #000 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style8::before {
+    background: var(--map), var(--pattern);
+    --map: linear-gradient(30deg, #777, #000);
+    --pattern:
+        repeating-linear-gradient(30deg, #000, #999, #000 5%),
+        repeating-radial-gradient(circle at 100% 50%, #000, #999, #000 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style9::before {
+    background: var(--map), var(--pattern);
+    --map: radial-gradient(circle, #777, #000);
+    --pattern:
+        repeating-linear-gradient(-45deg, #000, #999, #000 5%),
+        repeating-linear-gradient(45deg, #000, #999, #000 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style10::before {
+    background: var(--map), var(--pattern);
+    --map: conic-gradient(#777, #000);
+    --pattern:
+        repeating-linear-gradient(-45deg, #000, #999, #000 5%),
+        repeating-linear-gradient(45deg, #000, #999, #000 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style11::before {
+    background: var(--map), var(--pattern);
+    --map: radial-gradient(circle, #000, #666 70%);
+    --pattern:
+        radial-gradient(circle, #000, #fff, #000 71%) 0 0/2em 2em round,
+        radial-gradient(circle, #000, #fff, #000 71%) 1em 1em/2em 2em round;
+    background-blend-mode: difference;
+}
+
+.style12::before {
+    background: var(--map), var(--pattern);
+    --map: linear-gradient(-15deg, #000, #666);
+    --pattern:
+        radial-gradient(circle, #fff, #000 65%) 0 0/2em 2em round,
+        radial-gradient(circle, #000, #fff, #000 65%) 1em 1em/2em 2em round;
+    background-blend-mode: difference;
+}
+
+.style13::before {
+    background: var(--map), var(--pattern);
+    --map: linear-gradient(#777, #000);
+    --pattern:
+        radial-gradient(circle, #000, #999, #000 65%) 0 0/2em 2em round,
+        radial-gradient(circle, #000, #999, #000 65%) 1em 1em/2em 2em round;
+    background-blend-mode: screen, difference;
+}
+
+.style14::before {
+    background: var(--map), var(--pattern);
+    --map: conic-gradient(at 0 50%, #777, #000);
+    --pattern:
+        repeating-radial-gradient(circle at 0 0, #000, #999, #000 5%),
+        repeating-conic-gradient(at -5% 50%, #000, #999, #000 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style15 {
+    --pattern:
+        repeating-linear-gradient(45deg, #000, #999, #000 5%) 0/50% no-repeat,
+        repeating-linear-gradient(-45deg, #000, #999, #000 5%) 100%/50%
+            no-repeat;
+    --map: linear-gradient(#777, #000);
+}
+
+.style16::before {
+    background: var(--map), var(--pattern);
+    --map: radial-gradient(circle, #888, #000);
+    --pattern:
+        repeating-radial-gradient(circle at 0 100%, #000, #888, #000 5%) 0
+            0/100% 50% no-repeat,
+        repeating-radial-gradient(circle at 100% 0, #000, #888, #000 5%) 0
+            100%/100% 50% no-repeat;
+    background-blend-mode: screen;
+}
+
+.style17::before {
+    background:
+        radial-gradient(#000, #fff 70%) 0.75em 0.75em,
+        conic-gradient(from -90deg at 15% 50%, #fff, #000 5% 30%, #fff 35%),
+        conic-gradient(at 50% 15%, #fff, #000 5% 30%, #fff 35%),
+        conic-gradient(from 90deg at 85% 50%, #fff, #000 5% 30%, #fff 35%),
+        conic-gradient(from 180deg at 50% 85%, #fff, #000 5% 30%, #fff 35%);
+    background-size: 1.5em 1.5em;
+    background-blend-mode: difference, multiply, multiply, multiply;
+}
+
+.style18 {
+    --map: linear-gradient(#777, #000);
+    --pattern: repeating-conic-gradient(#ddd, #000 12.5% 37.5%, #ddd 50%) 0/1em
+        1em;
+}
+
+.style19::before {
+    background: var(--map), var(--pattern);
+    --map: radial-gradient(circle, #000, #777);
+    --pattern:
+        repeating-radial-gradient(circle, #ddd, #000, #ddd 5%),
+        repeating-conic-gradient(#ddd, #000, #ddd 5%);
+    background-blend-mode: screen, difference;
+}
+
+.style20::before {
+    background: var(--map), var(--pattern);
+    --map: repeating-linear-gradient(45deg, #000, #666, #000 20%);
+    --pattern:
+        repeating-radial-gradient(circle, #ddd, #000, #ddd 5%),
+        repeating-conic-gradient(#ddd, #000, #ddd 5%);
+    background-blend-mode: screen, difference;
+}
