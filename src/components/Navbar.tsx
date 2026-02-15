@@ -49,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     <img src={logo} alt='logo' width={36} height={36} />
                 </a>
 
-                <div className='hidden md:flex gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
+                <div className='hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
                     {["about", "skills", "services", "projects"].map((item) => (
                         <a
                             key={item}

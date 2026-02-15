@@ -38,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
                             ? "opacity-100 translate-y-0"
                             : "opacity-0 translate-y-6"
                     }`}>
-                    <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-alias'>
+                    <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-crosshair'>
                         <Terminal size={12} className='animate-pulse' /> v3.0.0
                         // Portfolio initialized
                     </span>

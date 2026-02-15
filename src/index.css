@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 @theme {
+    @keyframes letter-animation {
+        0% {
+            stroke-dashoffset: 2600;
+        }
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+
     @keyframes float {
         0% {
             transform: translate(0, 0) scale(1);
@@ -270,6 +279,14 @@
     --font-sans: "Roboto Flex", sans-serif;
     --font-link: "Asap", monospace;
     --font-heading: "Source Sans 3", serif;
+    --font-link: "Teko", sans-serif;
+    --font-link: "Asap", sans-serif;
+    --font-sans: "Satoshi", sans-serif;
+    --font-display: "Rosaline", cursive;
+    --font-display: "Telma", cursive;
+    --font-link: "Bevellier", sans-serif;
+    --font-heading: "Chillax", sans-serif;
+    --font-heading: "Bevellier", sans-serif;
 }
 
 @layer base {
@@ -282,7 +299,7 @@
     h4,
     h5,
     h6 {
-        @apply font-heading;
+        @apply font-heading select-none;
     }
 
     p {
@@ -511,9 +528,9 @@ details > summary::-webkit-details-marker {
     background: linear-gradient(
         to bottom,
         transparent,
-        rgba(0, 255, 255, 0.8),
-        rgba(0, 255, 255, 1),
-        rgba(0, 255, 255, 0.8),
+        rgba(0, 255, 255, 0.3),
+        rgba(0, 255, 255, 0.5),
+        rgba(0, 255, 255, 0.3),
         transparent
     );
     box-shadow:
@@ -545,4 +562,123 @@ details > summary::-webkit-details-marker {
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+#svgwrapper {
+    display: inline-block;
+    width: 200px;
+    height: 60px;
+    stroke: white;
+    fill: none;
+    position: relative;
+}
+
+.logo-path {
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    top: calc(20% + 20px);
+}
+
+.logo-path {
+    stroke-dasharray: 2600;
+    stroke-dashoffset: 2600;
+}
+
+.underline {
+    stroke-width: 16;
+    animation: letter-animation 5s linear forwards;
+    animation-delay: 5.1s;
+    animation-iteration-count: infinite;
+}
+
+.i-2 {
+    /* Mar(i)na */
+    stroke-width: 12;
+    animation: letter-animation 15s linear forwards;
+    animation-delay: 4.8s;
+    animation-iteration-count: infinite;
+}
+
+.aa-2 {
+    /* Marin(a) */
+    stroke-width: 30;
+    animation: letter-animation 10s linear forwards;
+    animation-delay: 4.25s;
+}
+
+.aa-1 {
+    /* Marin(a) */
+    stroke-width: 10;
+    animation: letter-animation 8s linear forwards;
+    animation-delay: 4s;
+}
+
+.n-2 {
+    /* Mari(n)a */
+    stroke-width: 15;
+    animation: letter-animation 10s linear forwards;
+    animation-delay: 3.5s;
+}
+
+.n-1 {
+    /* Mari(n)a */
+    stroke-width: 10;
+    animation: letter-animation 8s linear forwards;
+    animation-delay: 3.3s;
+}
+
+.i-1 {
+    /* Mar(i)na */
+    stroke-width: 9;
+    animation: letter-animation 8s linear forwards;
+    animation-delay: 3s;
+}
+
+.r-2 {
+    /* Ma(r)ina */
+    stroke-width: 12;
+    animation: letter-animation 8s linear forwards;
+    animation-delay: 2.7s;
+}
+
+.r-1 {
+    /* Ma(r)ina */
+    stroke-width: 9;
+    animation: letter-animation 8s linear forwards;
+    animation-delay: 2.45s;
+}
+
+.a-2 {
+    /* M(a)rina */
+    stroke-width: 8;
+    animation: letter-animation 8s linear forwards;
+    animation-delay: 2.25s;
+}
+
+.a-1 {
+    /* M(a)rina */
+    stroke-width: 10;
+    animation: letter-animation 8s linear forwards;
+    animation-delay: 2s;
+}
+
+.M-3 {
+    /* (M)arina */
+    stroke-width: 20;
+    animation: letter-animation 5s linear forwards;
+    animation-delay: 1.53s;
+}
+
+.M-2 {
+    /* (M)arina */
+    stroke-width: 20;
+    animation: letter-animation 5s linear forwards;
+    animation-delay: 1.05s;
+}
+
+.M-1 {
+    /* (M)arina */
+    stroke-width: 18;
+    animation: letter-animation 5s linear forwards;
 }

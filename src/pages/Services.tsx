@@ -60,7 +60,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
 
     return (
         <section id='services'>
-            <div className='py-10 md:py-14 lg:py-20 container mx-auto px-6'>
+            <div className='py-10 container mx-auto px-6'>
                 <Reveal>
                     <SectionTitle>{t.services.title}</SectionTitle>
                 </Reveal>

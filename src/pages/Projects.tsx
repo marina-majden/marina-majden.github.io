@@ -26,7 +26,7 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ t }) => (
-    <section id='projects' className='py-10 md:py-14 lg:py-20  '>
+    <section id='projects' className='py-10 md:py-14'>
         <div className='container mx-auto px-6'>
             <Reveal>
                 <SectionTitle>{t.projects.title}</SectionTitle>

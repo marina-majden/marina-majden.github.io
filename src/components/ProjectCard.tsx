@@ -6,7 +6,7 @@ const ProjectCard: React.FC = () => {
             {/* Glavni kontejner kartice s 'group' klasom za hover efekte */}
             <div className='group relative flex w-[270px] cursor-pointer flex-col gap-[5px] rounded-[25px] bg-[#323232] p-[25px] shadow-[0px_0px_5px_-1.5px_#000] transition-all duration-200 hover:shadow-[0px_0px_20px_-5px_#000]'>
                 {/* Pozadinska kartica (efekt rotacije) - bivši ::before element */}
-                <div className='absolute left-[1px] top-[1px] -z-10 h-[99%] w-[99%] rounded-[25px] bg-[#ccc] transition-all duration-300 group-hover:rotate-[10deg] group-hover:shadow-[0px_0px_20px_-5px_#000]'></div>
+                <div className='absolute left-px top-px -z-10 h-[99%] w-[99%] rounded-[25px] bg-[#ccc] transition-all duration-300 group-hover:rotate-10 group-hover:shadow-[0px_0px_20px_-5px_#000]'></div>
 
                 {/* Ilustracija (SVG) */}
                 <div className='w-full'>
@@ -137,7 +137,7 @@ const ProjectCard: React.FC = () => {
                     </div>
 
                     {/* Animated Icon */}
-                    <div className='h-[40px] w-[40px] -rotate-45 transition-all duration-300 group-hover:rotate-0'>
+                    <div className='h-10 w-10 -rotate-45 transition-all duration-300 group-hover:rotate-0'>
                         <svg
                             viewBox='0 0 256 256'
                             xmlns='http://www.w3.org/2000/svg'

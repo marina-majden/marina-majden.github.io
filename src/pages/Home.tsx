@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
-import SpinnerLoader from "../components/SpinnerLoader.tsx";
+import SpinnerLoader from "@/components/SpinnerLoader.tsx";
 import Footer from "./Footer.tsx";
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "@/components/Navbar.tsx";
+import Accordion from "@/components/Accordion.tsx";
 import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
 import Projects from "./Projects.tsx";
 import Skills from "./Skills.tsx";
 import { content, type ContentSection } from "../data/data";
-import BackgroundCanvas from "../components/BackgroundCanvas.tsx";
-import BackgroundGlows from "../components/BackgroundGlows.tsx";
+import BackgroundCanvas from "@/components/BackgroundCanvas.tsx";
+import BackgroundGlows from "@/components/BackgroundGlows.tsx";
 import Services from "./Services.tsx";
 import Mission from "./Mission.tsx";
-import Split from "@/components/Split.tsx";
+import About from "./About.tsx";
 
 const Home: React.FC = () => {
     const [lang, setLang] = useState<"hr" | "en">("hr");
@@ -63,10 +64,11 @@ const Home: React.FC = () => {
                 t={t}
             />
             <Hero t={t} scrollToSection={scrollToSection} />
-            <Split />
             <Mission />
+            <About t={t} />
             <Skills t={t} />
             <Services t={t} />
+            <Accordion />
             <Projects t={t} scrollToSection={scrollToSection} />
             <Contact t={t} />
             <Footer t={t} />

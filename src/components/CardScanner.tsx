@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo } from "react";
 import { useAnimationFrame } from "framer-motion";
 import {
-    Activity,
+    Album,
     Aperture,
     Archive,
     Award,
@@ -23,26 +23,28 @@ import {
     Layers,
     Anchor,
     Feather,
-    Key,
+    Candy,
     Umbrella,
-    Smartphone,
-    Monitor,
-    Headphones,
+    ChessQueen,
+    Amphora,
+    Cherry,
+    Rabbit,
     Camera,
-    Watch,
     Gift,
+    Rocket,
 } from "lucide-react";
 
 // --- KONFIGURACIJA BOJA ZA GRADIJENTE ---
+
 const GRADIENT_COLORS = [
-    "#ec014b", // 1. Hot Pink
-    "#06cced", // 2. Bright Cyan
-    "#251967", // 3. Deep Purple
-    "#d0135e", // 4. Magenta
-    "#f59e0b", // 5. Amber
-    "#10b981", // 6. Emerald Green
-    "#8b5cf6", // 7. Violet
-    "#3b82f6", // 8. Blue
+    "#0f172a", // Slate 900
+    "#1e1b4b", // Indigo 950
+    "#172554", // Blue 950
+    "#164e63", // Cyan 950
+    "#064e3b", // Emerald 950
+    "#2e1065", // Violet 950
+    "#4c1d95", // Purple 900
+    "#020617", // Darkest Navy
 ];
 
 // --- CSS Styles Injection ---
@@ -122,7 +124,7 @@ const CARD_WIDTH = 380;
 const CARD_GAP = 40;
 const ITEM_WIDTH = CARD_WIDTH + CARD_GAP;
 const SCANNER_WIDTH = 4;
-const SCANNER_HEIGHT = 260;
+const SCANNER_HEIGHT = 280;
 
 // --- Helper: Generate Code (Hidden Layer - RESTORED) ---
 // Vraćena logika za generiranje specifičnog koda sustava čestica
@@ -351,7 +353,7 @@ const CardItem = ({
     return (
         <div
             ref={setRef}
-            className='absolute top-0 left-0 h-60 rounded-2xl will-change-transform'
+            className='absolute top-0 left-0 h-70 rounded-2xl will-change-transform'
             style={{ width: CARD_WIDTH }}>
             {/* LAYER 1: Code (Revealed by Scanner) */}
             <div
@@ -369,22 +371,19 @@ const CardItem = ({
                 className={`card-texture ${data.styleClass} absolute inset-0 z-20`}
                 style={
                     {
-                        // CSS varijabla za pozadinu, override defaultnog gradijenta
                         "--card-bg": data.gradient,
                         "clipPath": "inset(0 0 0 var(--clip-right, 0%))",
                         "fontFamily": data.font,
                     } as React.CSSProperties
                 }>
-                {/* Sadržaj kartice - mora biti z-10 da bude iznad teksture */}
-                <div className='relative z-10 flex flex-col h-full justify-between p-6 text-white h-full'>
+                {/* Sadržaj kartice */}
+                <div className='relative z-10 flex flex-col h-full justify-between p-6 text-white'>
                     <div className='flex justify-between items-start'>
-                        <div className='p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-inner'>
-                            {/* Renderiramo ikonu malo veću */}
+                        <div className='p-2 bg-white/10 rounded-lg border border-white/20 shadow-inner'>
                             {React.cloneElement(
                                 data.icon as React.ReactElement,
                             )}
                         </div>
-                        {/* Ukrasni element */}
                         <div className='flex gap-1'>
                             <div className='w-2 h-2 rounded-full bg-white/50' />
                             <div className='w-2 h-2 rounded-full bg-white/30' />
@@ -392,17 +391,17 @@ const CardItem = ({
                     </div>
 
                     <div className='mt-2'>
-                        <h2 className='text-3xl font-bold tracking-tight mb-2 drop-shadow-lg'>
-                            High Fashion Code!
+                        <h2 className='text-3xl font-bold tracking-tight mb-2'>
+                            Code for the runways
                         </h2>
-                        <p className='text-sm font-medium opacity-90 leading-snug drop-shadow-md text-balance'>
+                        <p className='text-md font-medium leading-snug select-none text-balance'>
                             Our code culture is <i>haute couture </i> –
                             meticulously crafted, uniquely styled, and always
                             pushing the boundaries of creativity.
                         </p>
                     </div>
 
-                    <div className='flex gap-3 mt-4'>
+                    <div className='flex gap-3 my-4'>
                         <button className='flex-1 bg-white text-black py-2.5 rounded-lg font-bold text-xs uppercase tracking-wider hover:bg-gray-100 transition-colors shadow-lg'>
                             Very cute!
                         </button>
@@ -418,7 +417,7 @@ const CardItem = ({
 
 // --- Helpers for Random Generation ---
 const icons = [
-    <Activity />,
+    <Album />,
     <Aperture />,
     <Archive />,
     <Award />,
@@ -440,25 +439,25 @@ const icons = [
     <Layers />,
     <Anchor />,
     <Feather />,
-    <Key />,
+    <ChessQueen />,
     <Umbrella />,
-    <Smartphone />,
-    <Monitor />,
-    <Headphones />,
+    <Amphora />,
+    <Cherry />,
+    <Candy />,
     <Camera />,
-    <Watch />,
+    <Rabbit />,
     <Gift />,
 ];
 
 const fonts = [
-    "'Roboto', sans-serif",
-    "'Playfair Display', serif",
-    "'Montserrat', sans-serif",
-    "'Courier New', monospace",
-    "'Lato', sans-serif",
-    "'Oswald', sans-serif",
-    "'Raleway', sans-serif",
-    "ui-serif, Georgia, serif",
+    "var(--font-mono)",
+    "var(--font-display)",
+    "var(--font-heading)",
+    "var(--font-sans)",
+    "var(--font-display-2)",
+    "var(--font-display-3)",
+    "var(--font-display-4)",
+    "var(--font-display-5)",
 ];
 
 // Generira gradijent koristeći dvije nasumične boje iz naše konfigurirane liste
@@ -491,7 +490,6 @@ export default function CardScanner() {
     const generatedCards: CardData[] = useMemo(() => {
         return Array.from({ length: 20 }).map((_, i) => ({
             id: i,
-            // style1 do style20 ciklički, ali s nasumičnim pomakom da nije predvidljivo
             styleClass: `style${(i % 20) + 1}`,
             gradient: getRandomGradient(),
             icon: icons[Math.floor(Math.random() * icons.length)],
@@ -500,11 +498,7 @@ export default function CardScanner() {
     }, []);
 
     // Umnožimo ih za infinite scroll efekt
-    const displayCards = [
-        ...generatedCards,
-        ...generatedCards,
-        ...generatedCards,
-    ];
+    const displayCards = [...generatedCards, ...generatedCards];
     const totalWidth = displayCards.length * ITEM_WIDTH;
 
     useAnimationFrame((time) => {
@@ -570,22 +564,15 @@ export default function CardScanner() {
     });
 
     return (
-        <div className='relative w-full h-screen bg-transparent overflow-hidden font-sans text-slate-300 selection:bg-cyan-500 selection:text-black'>
+        <div className='relative w-full h-screen bg-transparent overflow-hidden font-sans text-slate-200 selection:bg-cyan-500 selection:text-black'>
             {/* Inject Styles */}
             <style>{styles}</style>
 
-            {/* UI Status */}
-            <div className='absolute top-8 right-8 z-50 px-6 py-3 bg-black/40 backdrop-blur-md border border-cyan-500/30 rounded-full font-mono text-sm'>
-                VELOCITY:{" "}
-                <span className='text-cyan-400 font-bold text-lg'>{SPEED}</span>{" "}
-                PX/S
-            </div>
-
-            {/* 2. Kartice */}
+            {/* Kartice */}
             <div
                 ref={containerRef}
                 className='relative w-full h-full flex items-center z-10'>
-                <div className='relative w-full h-[240px]'>
+                <div className='relative w-full h-66'>
                     {displayCards.map((card, index) => (
                         <CardItem
                             key={`${card.id}-${index}`}
@@ -596,24 +583,28 @@ export default function CardScanner() {
                 </div>
             </div>
 
-            {/* 3. Čestice Skenera */}
+            {/* Čestice Skenera */}
             <ScannerCanvas />
 
-            {/* 4. Skener Linija (Overlay) */}
+            {/* Skener Linija (Overlay) */}
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none flex flex-col items-center'>
                 <div
-                    className='w-[2px] bg-cyan-400 shadow-[0_0_15px_1px_rgba(34,211,238,0.8)] rounded-full relative'
+                    className='w-0.5 bg-cyan-400 shadow-[0_0_15px_1px_rgba(34,211,238,0.8)] rounded-full relative'
                     style={{ height: SCANNER_HEIGHT }}>
                     <div className='absolute left-1/2 -translate-x-1/2 w-8 h-4 bg-cyan-400/50 blur-lg rounded-full animate-pulse top-1/2 -translate-y-1/2' />
                 </div>
 
-                <div className='mt-4 font-mono text-[10px] tracking-[0.3em] text-cyan-500 animate-pulse bg-black/50 px-2 py-1 rounded'>
-                    SCANNING
+                <div className='mt-4 font-mono italic text-[10px] tracking-[0.3em] text-cyan-500 animate-pulse-dynamic bg-black/50 px-2 py-1 rounded'>
+                    RENDERING
                 </div>
             </div>
 
             <div className='absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] text-white/30 tracking-widest uppercase z-10'>
-                System Active • Security Level 4
+                Custom-made components • Intuitive UI/UX
+                <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-alias'>
+                    <Rocket size={12} className='animate-bounce' /> v3.0.0 //
+                    Production ready
+                </span>
             </div>
         </div>
     );
