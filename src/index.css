@@ -280,13 +280,13 @@
     --font-link: "Asap", monospace;
     --font-heading: "Source Sans 3", serif;
     --font-link: "Teko", sans-serif;
-    --font-link: "Asap", sans-serif;
+
     --font-sans: "Satoshi", sans-serif;
     --font-display: "Rosaline", cursive;
     --font-display: "Telma", cursive;
-    --font-link: "Bevellier", sans-serif;
+    --font-link: "Asap", sans-serif;
     --font-heading: "Chillax", sans-serif;
-    --font-heading: "Bevellier", sans-serif;
+    --font-heading: "Teko", sans-serif;
 }
 
 @layer base {
