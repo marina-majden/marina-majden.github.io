@@ -2,7 +2,7 @@ import React from "react";
 import { createPortal } from "react-dom";
 import { NavLink } from "react-router-dom";
 import { FlaskConical, Globe, Menu, Sparkles, X } from "lucide-react";
-import logo from "/logo.svg";
+import logo from "@/assets/logo.svg";
 
 interface ContentNav {
     [key: string]: string;
@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         e.preventDefault();
                         scrollToSection("home");
                     }}>
-                    <img src={logo} alt='logo' width={36} height={36} />
+                    <img src={logo} alt='logo' width={40} height={40} />
                 </a>
 
                 <div className='hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
