@@ -8,7 +8,8 @@
         "build": "vite build",
         "test": "vitest",
         "lint": "eslint .",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "cleanup": "node move-unused-components.js"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.17",

@@ -354,6 +354,7 @@
     z-index: 9999;
     animation: float 15s infinite ease-in-out;
     pointer-events: none;
+    background: var(--color-neon-cyan);
     transition: background 1.5s ease;
 }
 

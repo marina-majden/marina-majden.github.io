@@ -2,9 +2,7 @@ import React from "react";
 
 const ColoredGlassCard: React.FC = () => {
     return (
-        // Spremnik pune visine za demonstraciju (u stvarnoj aplikaciji prilagodite visinu roditelja)
         <div className='h-screen w-full'>
-            {/* --- colored-glass-card-container --- */}
             <div
                 className='colored-glass-card-container relative flex h-full w-full items-center justify-center overflow-hidden bg-slate-950
             z-0'>
