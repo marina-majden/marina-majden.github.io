@@ -22,7 +22,6 @@ const BackgroundGlows = () => (
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
             className='absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] will-change-transform'
         />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay" />
     </div>
 );
 

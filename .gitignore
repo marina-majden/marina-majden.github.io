@@ -23,3 +23,5 @@ unused
 *.njsproj
 *.sln
 *.sw?
+
+.move-unused-components.js

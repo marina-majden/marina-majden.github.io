@@ -106,7 +106,7 @@ const Skills: React.FC<SkillsProps> = ({ t }) => {
     );
 
     return (
-        <section id='skills' className='py-10 md:py-14 lg:py-20 relative'>
+        <section id='skills' className='py-10 relative'>
             <div className='container mx-auto px-6'>
                 <Reveal>
                     <SectionTitle>{t.skills.title}</SectionTitle>
@@ -211,6 +211,7 @@ const Skills: React.FC<SkillsProps> = ({ t }) => {
                     </div>
                 )}
             </div>
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-30 brightness-100 contrast-150 mix-blend-overlay" />
         </section>
     );
 };
