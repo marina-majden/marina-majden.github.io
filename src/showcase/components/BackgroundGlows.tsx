@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const BackgroundGlows = () => (
-    <div className='fixed inset-0 overflow-hidden pointer-events-none z-0'>
+    <div className='fixed w-screen h-screen inset-0 overflow-hidden pointer-events-none z-0'>
         <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -20,7 +20,7 @@ const BackgroundGlows = () => (
         <motion.div
             animate={{ x: [0, 50, 0], y: [0, -50, 0] }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className='absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] will-change-transform'
+            className='absolute top-[80%] left-[10%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] will-change-transform'
         />
     </div>
 );

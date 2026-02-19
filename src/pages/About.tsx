@@ -47,8 +47,8 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
     };
 
     const { rotate, color, speed, y } = getStyle();
-    const from = isEven ? "-50%" : "0%";
-    const to = isEven ? "0%" : "-50%";
+    const from = isEven ? "-50%" : "50%";
+    const to = isEven ? "50%" : "-50%";
     const x = useMotionValue(from);
     const content = Array(10).fill(text).join(" \u00A0 • \u00A0 ");
 
@@ -65,17 +65,17 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
 
     return (
         <div
-            className={`w-screen relative left-1/2 -translate-x-1/2 overflow-hidden py-4 ${color} mix-blend-screen`}
+            className={`w-screen relative left-1/2 overflow-hidden py-4 ${color} mix-blend-screen`}
             style={{
                 transform: `translateX(-50%) rotate(${rotate}deg) translateY(${y}px)`,
             }}
             onMouseEnter={() => controlsRef.current?.pause()}
             onMouseLeave={() => controlsRef.current?.play()}>
             <motion.div
-                className='flex whitespace-nowrap font-heading font-bold text-4xl md:text-6xl tracking-widest'
+                className='whitespace-nowrap font-heading font-bold text-4xl md:text-6xl tracking-widest'
                 style={{ x }}>
-                <span className='mr-8'>{content}</span>
-                <span className='mr-8'>{content}</span>
+                <span className=''>{content}</span>
+                <span className=''>{content}</span>
             </motion.div>
         </div>
     );
@@ -83,12 +83,14 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
 
 const About: React.FC<AboutProps> = ({ t }) => {
     return (
-        <section id='about' className='py-10 flex flex-col justify-center'>
+        <section
+            id='about'
+            className='py-10 md:py-14 flex flex-col justify-center'>
             <div className='container mx-auto px-6'>
                 <Reveal className='animate-fadeIn'>
                     <SectionTitle>{t.about.title}</SectionTitle>
                 </Reveal>
-                <Reveal className='animate-fadeIn h-[70dvh]' delay={100}>
+                <Reveal className='animate-fadeIn w-3/4 h-[70dvh] mx-auto' delay={100}>
                     <Split />
                 </Reveal>
             </div>

@@ -46,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         e.preventDefault();
                         scrollToSection("home");
                     }}>
-                    <img src={logo} alt='logo' width={40} height={40} />
+                    <img src={logo} alt='logo' width={44} height={44} />
                 </a>
 
                 <div className='hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
