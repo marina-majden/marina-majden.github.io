@@ -11,7 +11,6 @@ import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "@/components/BackgroundCanvas.tsx";
 import BackgroundGlows from "@/showcase/components/BackgroundGlows.tsx";
 import Services from "./Services.tsx";
-import Mission from "./Mission.tsx";
 import About from "./About.tsx";
 
 const Home: React.FC = () => {

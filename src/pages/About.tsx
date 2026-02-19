@@ -8,7 +8,6 @@ import {
 import Reveal from "../components/Reveal.tsx";
 import SectionTitle from "../components/SectionTitle";
 import { Translation } from "../types";
-import Split from "@/components/Split.tsx";
 import CardScanner from "@/components/CardScanner.tsx";
 interface AboutProps {
     t: Translation;
@@ -26,14 +25,14 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
                     rotate: 12,
                     color: "text-cyan-400",
                     speed: 30,
-                    y: 0,
+                    y: 20,
                 };
             case 2:
                 return {
                     rotate: -2,
                     color: "text-pink-400",
                     speed: 25,
-                    y: -20, // Pull it up a bit
+                    y: -20,
                 };
             case 3:
                 return {
@@ -66,7 +65,7 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
 
     return (
         <div
-            className={`w-screen h-screen relative left-1/2 overflow-hidden py-4 ${color} mix-blend-screen`}
+            className={`w-screen z-5 absolute left-1/2 top-1/2 overflow-hidden py-4 ${color} mix-blend-screen`}
             style={{
                 transform: `translateX(-50%) rotate(${rotate}deg) translateY(${y}px)`,
             }}
@@ -86,20 +85,19 @@ const About: React.FC<AboutProps> = ({ t }) => {
     return (
         <section
             id='about'
-            className='py-10 md:py-14 flex flex-col justify-center'>
-            <div className='container mx-auto px-6'>
+            className='py-10 md:py-14 mb-40 flex flex-col justify-center'>
+            <div className='container mx-auto px-6 relative'>
                 <Reveal className='animate-fadeIn'>
                     <SectionTitle>{t.about.title}</SectionTitle>
                 </Reveal>
-                <Reveal className='animate-fadeIn w-3/4 h-[70dvh] mx-auto' delay={100}>
-                    <Split />
-                </Reveal>
-            </div>
-            <div className='w-screen z-5'>
                 <AnimatedLine text={t.about.p1} index={1} />
+
+                <Reveal className='animate-fadeIn w-screen mx-auto' delay={100}>
+                    <CardScanner />
+                </Reveal>
+
                 <AnimatedLine text={t.about.p2} index={2} />
             </div>
-            <CardScanner />
         </section>
     );
 };
