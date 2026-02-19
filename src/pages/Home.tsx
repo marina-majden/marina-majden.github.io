@@ -64,7 +64,7 @@ const Home: React.FC = () => {
                 t={t}
             />
             <Hero t={t} scrollToSection={scrollToSection} />
-            <Mission />
+
             <About t={t} />
             <Skills t={t} />
             <Services t={t} />

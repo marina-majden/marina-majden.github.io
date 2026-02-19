@@ -9,6 +9,7 @@ import Reveal from "../components/Reveal.tsx";
 import SectionTitle from "../components/SectionTitle";
 import { Translation } from "../types";
 import Split from "@/components/Split.tsx";
+import CardScanner from "@/components/CardScanner.tsx";
 interface AboutProps {
     t: Translation;
 }
@@ -65,7 +66,7 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
 
     return (
         <div
-            className={`w-screen relative left-1/2 overflow-hidden py-4 ${color} mix-blend-screen`}
+            className={`w-screen h-screen relative left-1/2 overflow-hidden py-4 ${color} mix-blend-screen`}
             style={{
                 transform: `translateX(-50%) rotate(${rotate}deg) translateY(${y}px)`,
             }}
@@ -94,10 +95,11 @@ const About: React.FC<AboutProps> = ({ t }) => {
                     <Split />
                 </Reveal>
             </div>
-            <div className='w-screen border border-red-500 z-5'>
+            <div className='w-screen z-5'>
                 <AnimatedLine text={t.about.p1} index={1} />
                 <AnimatedLine text={t.about.p2} index={2} />
             </div>
+            <CardScanner />
         </section>
     );
 };
