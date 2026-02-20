@@ -123,7 +123,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                         <div className='w-full max-w-6xl h-[80vh] flex flex-col'>
                             <div className='flex-1 flex overflow-hidden p-4'>
                                 <div className='flex flex-col md:flex-row w-full h-full gap-4'>
-                                    {t.services.modal.items.map((item, idx) => {
+                                    {t.services.modal.items.map((item, id) => {
                                         const isSelected =
                                             selectedServices.includes(item.id);
                                         return (
@@ -134,7 +134,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                                                 }
                                                 className={`
                                                 relative rounded-2xl border cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden
-                                                flex-1 hover:flex-[3] md:hover:flex-[4]
+                                                flex-1 hover:flex-3 md:hover:flex-4
                                                 flex flex-row items-center p-6 group
                                                 ${
                                                     isSelected
@@ -206,7 +206,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                                         )}
                                     </div>
                                 </div>
-                                <button className='px-8 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-cyan-500/25 active:scale-95'>
+                                <button className='px-8 py-3 bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-cyan-500/25 active:scale-95'>
                                     {t.services.modal.btn}
                                 </button>
                             </div>
