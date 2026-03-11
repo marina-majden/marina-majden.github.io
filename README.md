@@ -1,49 +1,51 @@
-# React + Vite
+# Marina Majdenić - Personal Web Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the repository for my personal portfolio and digital laboratory. It serves as a central hub for showcasing my projects, skills, and experiments with modern web technologies.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
 
-## React Compiler
+The project is built using modern front-end technologies, with a focus on strong typing, performance, and advanced UI:
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- **Core**: React, TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS / Custom CSS
+- **3D & Animations**: React Three Fiber, Three.js
+- **Deployment**: GitHub Actions / GitHub Pages
 
-## Expanding the ESLint configuration
+## ✨ Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **3D Interactivity**: Integration of custom 3D models and visualizations within the React ecosystem for a dynamic and immersive user experience.
+- **Modular Architecture**: Clear separation of concerns (separating UI components, static data, and 3D canvas elements) for easier maintenance and scaling.
+- **Responsive Design**: Complete visual adaptation to all screen sizes (Mobile-first approach).
+- **Automated Deployment**: Continuous integration and delivery (CI/CD) set up via GitHub Actions for fast and secure deployment of new code versions.
 
-## PROJECT STRUCTURE
+## 🚀 Local Development
 
-src/
-├── assets/              # Slike, fontovi, lokalne ikone
-├── components/          # Reusable UI komponente
-│   ├── canvas/          # Teške vizualne komponente
-│   │   └── GeometricCanvas.jsx
-│   ├── navigation/
-│   │   └── LanguageSwitcher.jsx
-│   ├── sections/        # Glavne stranice (100vh sekcije)
-│   │   ├── HeroSection.jsx
-│   │   ├── ProjectsSection.jsx
-│   │   ├── ServicesSection.jsx
-│   │   └── ContactSection.jsx
-│   └── ui/              # Manji UI elementi
-│       ├── LandingArch.jsx
-│       ├── MoodSelector.jsx
-│       ├── ProjectDetails.jsx
-│       ├── HeroStorySlider.jsx
-│       └── ContentPage.jsx
-├── data/                # Svi statični podaci (prijevodi, palete)
-│   ├── content.js       # TEXT_CONTENT (HR/EN)
-│   ├── constants.js     # MOOD_PALETTES, PROJECTS_DATA
-│   └── services.js      # SERVICES_DATA
-├── hooks/               # Custom React Hookovi (Logika)
-│   ├── useGemini.js     # API pozivi
-│   └── useScrollEngine.js # Logika za scroll/wheel evente
-├── utils/               # Helper funkcije
-│   └── helpers.js
-├── App.jsx              # Samo orkestracija i globalni state
-└── main.jsx             # Vite entry point
+If you want to run the project locally on your machine:
 
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/marina-majden/marina-majden.github.io.git
+    ```
+
+2. Navigate to the project directory and install dependencies:
+
+    ```bash
+    cd marina-majden.github.io
+    npm install
+    ```
+
+3. Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+---
+
+Designed and coded with 💻 by Marina Majdenić.
