@@ -353,7 +353,7 @@ const CardItem = ({
     return (
         <div
             ref={setRef}
-            className='absolute top-0 left-0 h-70 rounded-2xl will-change-transform'
+            className='absolute top-0 left-0 h-[280px] rounded-2xl will-change-transform'
             style={{ width: CARD_WIDTH }}>
             {/* LAYER 1: Code (Revealed by Scanner) */}
             <div
@@ -564,15 +564,22 @@ export default function CardScanner() {
     });
 
     return (
-        <div className='relative w-full h-screen bg-transparent overflow-hidden font-sans text-slate-200 selection:bg-cyan-500 selection:text-black'>
+        <div className='relative w-screen bg-transparent overflow-hidden text-slate-200 selection:bg-cyan-500 selection:text-black'>
             {/* Inject Styles */}
             <style>{styles}</style>
+            <div className='w-[360px] h-40 mx-auto font-mono text-[10px] text-white/30 tracking-widest uppercase'>
+                Custom-made components • Intuitive UI/UX
+                <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-crosshair'>
+                    <Rocket size={12} className='animate-bounce' /> v3.0.0 //
+                    Production ready
+                </span>
+            </div>
 
             {/* Kartice */}
             <div
                 ref={containerRef}
-                className='relative w-full h-full flex items-center z-10'>
-                <div className='relative w-full h-66'>
+                className='relative w-full h-[360px] flex items-center z-10'>
+                <div className='relative w-full h-[280px]'>
                     {displayCards.map((card, index) => (
                         <CardItem
                             key={`${card.id}-${index}`}
@@ -581,31 +588,21 @@ export default function CardScanner() {
                         />
                     ))}
                 </div>
-            </div>
-
-            {/* Čestice Skenera */}
-            <ScannerCanvas />
-
-            {/* Skener Linija (Overlay) */}
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none flex flex-col items-center'>
-                <div
-                    className='w-0.5 bg-cyan-400 shadow-[0_0_15px_1px_rgba(34,211,238,0.8)] rounded-full relative'
-                    style={{ height: SCANNER_HEIGHT }}>
-                    <div className='absolute left-1/2 -translate-x-1/2 w-8 h-4 bg-cyan-400/50 blur-lg rounded-full animate-pulse top-1/2 -translate-y-1/2' />
+                {/* Skener Linija (Overlay) */}
+                <div className='absolute top-0 left-1/2 -translate-x-1/2 z-40 pointer-events-none flex flex-col items-center'>
+                    <div
+                        className='w-0.5 bg-cyan-400 shadow-[0_0_15px_18px_rgba(34,211,238,0.8)] rounded-full relative'
+                        style={{ height: SCANNER_HEIGHT }}>
+                        <div className='absolute left-1/2 -translate-x-1/2 w-8 h-4 bg-cyan-400/50 blur-2xl rounded-full animate-pulse top-0' />
+                    </div>
                 </div>
-
-                <div className='mt-4 font-mono italic text-[10px] tracking-[0.3em] text-cyan-500 animate-pulse-dynamic bg-black/50 px-2 py-1 rounded'>
+                <div className='w-24 h-10 mx-auto font-mono italic text-[10px] tracking-[0.3em] text-cyan-500 animate-pulse-dynamic bg-black/50 px-2 py-1 rounded'>
                     RENDERING
                 </div>
             </div>
 
-            <div className='absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] text-white/30 tracking-widest uppercase z-10'>
-                Custom-made components • Intuitive UI/UX
-                <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-alias'>
-                    <Rocket size={12} className='animate-bounce' /> v3.0.0 //
-                    Production ready
-                </span>
-            </div>
+            {/* Čestice Skenera */}
+            <ScannerCanvas />
         </div>
     );
 }

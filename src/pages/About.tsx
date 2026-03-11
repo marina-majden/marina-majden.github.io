@@ -5,7 +5,6 @@ import {
     animate,
     type AnimationPlaybackControls,
 } from "framer-motion";
-import Reveal from "../components/Reveal.tsx";
 import SectionTitle from "../components/SectionTitle";
 import { Translation } from "../types";
 import CardScanner from "@/components/CardScanner.tsx";
@@ -22,10 +21,10 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
         switch (index) {
             case 1:
                 return {
-                    rotate: 12,
+                    rotate: 3,
                     color: "text-cyan-400",
                     speed: 30,
-                    y: 20,
+                    y: 10,
                 };
             case 2:
                 return {
@@ -83,20 +82,11 @@ const AnimatedLine = ({ text, index }: { text: string; index: number }) => {
 
 const About: React.FC<AboutProps> = ({ t }) => {
     return (
-        <section
-            id='about'
-            className='py-10 md:py-14 mb-40 flex flex-col justify-center'>
-            <div className='container mx-auto px-6 relative'>
-                <Reveal className='animate-fadeIn'>
-                    <SectionTitle>{t.about.title}</SectionTitle>
-                </Reveal>
-                <AnimatedLine text={t.about.p1} index={1} />
+        <section id='about' className='py-10 md:py-14'>
+            <div className='w-screen h-screen flex flex-col justify-evenly items-center'>
+                <SectionTitle>{t.about.title}</SectionTitle>
 
-                <Reveal className='animate-fadeIn w-screen mx-auto' delay={100}>
-                    <CardScanner />
-                </Reveal>
-
-                <AnimatedLine text={t.about.p2} index={2} />
+                <CardScanner />
             </div>
         </section>
     );

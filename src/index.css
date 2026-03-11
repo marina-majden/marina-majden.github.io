@@ -291,7 +291,10 @@
 
 @layer base {
     body {
-        @apply w-screen min-h-screen p-0 mx-auto overflow-x-hidden bg-background text-offwhite font-sans selection:bg-candy-500 selection:text-neon-cyan  selection:text-shadow-black selection:text-shadow-md transition-colors duration-300;
+        @apply w-screen min-h-screen p-0 mx-auto overflow-x-hidden bg-background text-offwhite font-sans selection:bg-candy-500 selection:text-neon-cyan selection:text-shadow-black selection:text-shadow-md transition-colors duration-300;
+    }
+    section {
+        @apply w-screen p-0 m-0;
     }
     h1,
     h2,
@@ -303,10 +306,10 @@
     }
 
     p {
-        @apply text-offwhite font-sans leading-relaxed;
+        @apply font-sans text-offwhite leading-relaxed;
     }
     a {
-        @apply text-offwhite font-link no-underline p-2 cursor-pointer transition-colors duration-300;
+        @apply font-link text-offwhite  no-underline p-2 cursor-pointer transition-colors duration-300;
     }
     a:hover {
         @apply text-lake-500 no-underline;
@@ -321,7 +324,7 @@
         @apply cursor-pointer font-heading transition-all duration-300;
     }
     .button {
-        @apply px-4 py-2 md:px-6 lg:px-8 md:py-3 lg:py-4 font-link uppercase text-shadow-xs border border-cyan-600 tracking-widest rounded-full cursor-pointer;
+        @apply font-link px-4 py-2 md:px-6 lg:px-8 md:py-3 lg:py-4 uppercase text-shadow-xs border border-cyan-600 tracking-widest rounded-full cursor-pointer;
     }
 }
 

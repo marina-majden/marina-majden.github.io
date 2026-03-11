@@ -2,7 +2,7 @@ import React from "react";
 
 const BackgroundGlows: React.FC = () => {
     return (
-        <div className='absolute w-screen h-screen top-1/2 left-1/2 z-0'>
+        <div className='absolute w-screen h-screen top-1/2 left-1/2 z-0 overflow-visible'>
             <div className='glow-blob glow-1 top-0 left-0 w-74 h-74 border-2 border-yellow-400 '></div>
             <div
                 className='glow-blob glow-2 border-2 border-red-500 w-78 h-70 bottom-0 right-0'
