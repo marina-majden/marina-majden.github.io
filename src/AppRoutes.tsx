@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import Home from "./pages/Home";
+import Home from "./sections/Home";
 const NeedHelp = lazy(() => import("./showcase/NeedHelp"));
 const LitArt = lazy(() => import("./showcase/Litart"));
 const SongFinder = lazy(() => import("./showcase/SongFinder"));

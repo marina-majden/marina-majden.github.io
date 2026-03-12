@@ -64,10 +64,13 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                 <Reveal>
                     <SectionTitle>{t.services.title}</SectionTitle>
                 </Reveal>
-                <div className='inline-flex items-center gap-2 text-[10px] text-cyan-500 px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50  tracking-[0.3em] uppercase mb-4'>
+                <Reveal delay={100}>
+                <div className='inline-flex items-center gap-2 text-[10px] text-lake-500 px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50  tracking-[0.3em] uppercase mb-4'>
                     <span className='loader-pulse'></span>
                     {t.services.subtitle}
                 </div>
+                </Reveal>
+                <Reveal delay={200}>
                 <div className='grid md:grid-cols-2 lg:grid-cols-6 gap-6'>
                     {t.services.list.map(
                         (service: ServiceItem, idx: number) => (
@@ -92,12 +95,12 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                                     <div className='absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors'></div>
                                 </div>
                                 <div className='p-6'>
-                                    <h3 className='text-lg font-heading font-semibold text-lake-500 mb-2 group-hover:text-cyan-300 transition-colors'>
+                                    <h3 className='text-lg font-heading font-semibold text-lake-500 mb-2 group-hover:text-lake-300 transition-colors'>
                                         {service.title}
                                     </h3>
                                     <button
                                         onClick={() => setIsModalOpen(true)}
-                                        className='text-sm text-gray-300 font-sans hover:text-cyan-400 transition-colors underline underline-offset-4 decoration-slate-600 hover:decoration-cyan-500'>
+                                        className='text-sm text-gray-300 font-sans hover:text-lake-400 transition-colors underline underline-offset-4 decoration-slate-600 hover:decoration-lake-500'>
                                         More &rarr;
                                     </button>
                                 </div>
@@ -105,6 +108,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                         ),
                     )}
                 </div>
+                </Reveal>
             </div>
 
             {/* Full Screen Modal */}
@@ -138,7 +142,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                                                 flex flex-row items-center p-6 group
                                                 ${
                                                     isSelected
-                                                        ? "bg-cyan-900/20 border-cyan-500 shadow-[0_0_20px_rgba(34,211,238,0.2)]"
+                                                        ? "bg-lake-900/20 border-lake-500 shadow-[0_0_20px_rgba(62,170,247,0.2)]"
                                                         : "bg-slate-900/40 border-slate-700 hover:border-slate-500 hover:bg-slate-800/60"
                                                 }
                                             `}>
@@ -155,13 +159,13 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                                                 <div className='relative z-10 flex items-end justify-between w-full h-full gap-6'>
                                                     <div className='flex flex-col justify-between items-center h-full'>
                                                         <span
-                                                            className={`font-heading font-bold text-lg md:text-xl transition-colors duration-300 [writing-mode:vertical-rl] rotate-180 ${isSelected ? "text-cyan-100" : "text-slate-300 group-hover:text-white"}`}>
+                                                            className={`font-heading font-bold text-lg md:text-xl transition-colors duration-300 [writing-mode:vertical-rl] rotate-180 ${isSelected ? "text-lake-100" : "text-slate-300 group-hover:text-white"}`}>
                                                             {item.title}
                                                         </span>
                                                         <div
                                                             className={`rounded-full p-1 transition-all duration-300 border ${
                                                                 isSelected
-                                                                    ? "text-cyan-400 bg-cyan-950/50 border-transparent"
+                                                                    ? "text-lake-400 bg-lake-950/50 border-transparent"
                                                                     : "text-transparent bg-slate-800/50 border-slate-700/50"
                                                             }`}>
                                                             <Check size={20} />
@@ -194,7 +198,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                                                 return (
                                                     <span
                                                         key={id}
-                                                        className='px-2 py-1 bg-cyan-900/30 text-cyan-300 text-xs rounded-md border border-cyan-900/50'>
+                                                        className='px-2 py-1 bg-lake-900/30 text-lake-300 text-xs rounded-md border border-lake-900/50'>
                                                         {service?.title}
                                                     </span>
                                                 );
@@ -206,7 +210,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
                                         )}
                                     </div>
                                 </div>
-                                <button className='px-8 py-3 bg-linear-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-cyan-500/25 active:scale-95'>
+                                <button className='px-8 py-3 bg-linear-to-r from-lake-600 to-candy-600 hover:from-lake-500 hover:to-candy-500 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-lake-500/25 active:scale-95'>
                                     {t.services.modal.btn}
                                 </button>
                             </div>

@@ -1,17 +1,19 @@
-import { useState, useEffect } from "react";
-import SpinnerLoader from "@/components/SpinnerLoader.tsx";
+import { useState, useEffect, lazy, Suspense } from "react";
+import { Spinner, SpinnerLoader } from "@/components/SpinnerLoader.tsx";
 import Footer from "./Footer.tsx";
 import Navbar from "@/components/Navbar.tsx";
-import Accordion from "@/components/Accordion.tsx";
 import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
-import Projects from "./Projects.tsx";
 import Skills from "./Skills.tsx";
 import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "@/components/BackgroundCanvas.tsx";
-import BackgroundGlows from "@/showcase/components/BackgroundGlows.tsx";
-import Services from "./Services.tsx";
+import BackgroundGlows from "@/components/BackgroundGlows.tsx";
 import About from "./About.tsx";
+
+const Accordion = lazy(() => import("@/components/Accordion.tsx"));
+const Projects = lazy(() => import("./Projects.tsx"));
+const Services = lazy(() => import("./Services.tsx"));
+const Templates = lazy(() => import("./Templates.tsx"));
 
 const Home: React.FC = () => {
     const [lang, setLang] = useState<"hr" | "en">("hr");
@@ -50,7 +52,7 @@ const Home: React.FC = () => {
     console.log(message);
 
     return (
-        <div className='bg-background/20 w-screen p-0 m-0 min-h-screen overflow-x-hidden'>
+        <div className='bg-background w-screen h-full p-0 m-0 overflow-x-hidden'>
             <BackgroundGlows />
             <BackgroundCanvas />
             <Navbar
@@ -63,12 +65,20 @@ const Home: React.FC = () => {
                 t={t}
             />
             <Hero t={t} scrollToSection={scrollToSection} />
-
             <About t={t} />
             <Skills t={t} />
-            <Services t={t} />
-            <Accordion />
-            <Projects t={t} scrollToSection={scrollToSection} />
+            <Suspense fallback={<Spinner />}>
+                <Templates t={t} scrollToSection={scrollToSection}  />
+            </Suspense>
+            <Suspense fallback={<Spinner />}>
+                <Services t={t} />
+            </Suspense>
+            <Suspense fallback={<Spinner />}>
+                <Accordion />
+            </Suspense>
+            <Suspense fallback={<Spinner />}>
+                <Projects t={t} scrollToSection={scrollToSection} />
+            </Suspense>
             <Contact t={t} />
             <Footer t={t} />
         </div>

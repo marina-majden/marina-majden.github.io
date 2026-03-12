@@ -233,14 +233,16 @@
     --color-offblack: #1b1b1b;
     --color-deepgray: #232222;
     --color-lightgray: #484646;
-    --color-offwhite: #e5f5dc;
+    --color-offwhite: #e5f1f1;
+    --color-white: #e5f1fc;
+    --color-wh: #ffffff;
     --color-deep-space: #0f172a;
     --color-neon-pink: var(--color-candy-600);
     --color-neon-cyan: var(--color-lake-500);
     --color-background: #121213;
     --color-heading: var(--color-offblack);
     --color-link: var(--color-lake-500);
-    --color-accent: var(--color-candy-500);
+    --color-accent: var(--color-candy-600);
     --color-affirmation: var(--color-very-nice);
     --color-problem: var(--color-peach-500);
     --color-link-hover: var(--color-mint-500);
@@ -285,8 +287,8 @@
     --font-display: "Rosaline", cursive;
     --font-display: "Telma", cursive;
     --font-link: "Asap", sans-serif;
-    --font-heading: "Chillax", sans-serif;
-    --font-heading: "Teko", sans-serif;
+    --font-heading: "Asap", sans-serif;
+    
 }
 
 @layer base {

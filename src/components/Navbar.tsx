@@ -31,9 +31,9 @@ const Navbar: React.FC<NavbarProps> = ({
     t,
 }) => (
     <nav
-        className={`fixed top-6 left-0 right-0 z-50 w-11/12 max-w-6xl px-0 py-2 mx-auto transition-all duration-300 ${
+        className={`sticky top-6 left-0 right-0 z-50 w-11/12 max-w-6xl px-0 py-2 mx-auto transition-all duration-300 ${
             scrolled
-                ? "md:glass md:rounded-full md:px-6 md:py-4 md:bg-black/80 backdrop-blur-lg border border-slate-900"
+                ? "md:rounded-full lg:px-6 lg:py-4 bg-black/80 backdrop-blur-lg border border-slate-900"
                 : "bg-transparent backdrop-blur-none border-none"
         }`}>
         <div className='flex justify-between items-center'>
@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 <img src={logo} alt='logo' width={44} height={44} />
             </a>
 
-            <div className='hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
+            <div className='hidden lg:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
                 {["about", "skills", "services", "projects"].map((item) => (
                     <a
                         key={item}
@@ -93,7 +93,7 @@ const Navbar: React.FC<NavbarProps> = ({
                         e.preventDefault();
                         scrollToSection("contact");
                     }}
-                    className='hidden md:block px-6 py-2 rounded-full cursor-pointer border border-white text-white hover:bg-cyan-500 transition-all text-xs uppercase tracking-widest'>
+                    className='hidden lg:block px-6 py-2 rounded-full cursor-pointer border border-white text-white hover:bg-cyan-500 transition-all text-xs uppercase tracking-widest'>
                     {t.nav.contact}
                 </a>
 
@@ -108,14 +108,14 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <button
-                className='md:hidden text-white hover:text-cyan-400 cursor-pointer transition-colors'
+                className='lg:hidden text-white hover:text-cyan-400 cursor-pointer transition-colors'
                 onClick={() => setMenuOpen(!menuOpen)}>
                 {menuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
         </div>
 
         {menuOpen && (
-            <div className='md:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 p-6 flex flex-col gap-4 font-mono animate-in slide-in-from-top-5 duration-300'>
+            <div className='lg:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 p-6 flex flex-col gap-4 font-mono animate-in slide-in-from-top-5 duration-300'>
                 {["about", "skills", "services", "projects"].map((item) => (
                     <a
                         key={item}

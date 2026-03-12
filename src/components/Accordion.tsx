@@ -115,7 +115,7 @@ const ExpandingGallery: React.FC = () => {
                                                 ? "left-0 opacity-100"
                                                 : "left-5 opacity-0"
                                         }`}>
-                                        <div className='text-[1.2rem] font-bold leading-tight'>
+                                        <div className=' text-[1.2rem] font-bold leading-tight'>
                                             {panel.title}
                                         </div>
                                     </div>

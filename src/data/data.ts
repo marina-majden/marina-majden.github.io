@@ -40,6 +40,17 @@ interface ProjectItem {
     urlShowcase: string;
 }
 
+export interface TemplateItem {
+    id: string;
+    title: string;
+    shortDesc: string;
+    longDesc: string;
+    features: string[];
+    coverImage: string;
+    gallery: string[];
+    videoUrl?: string;
+    tags: string[];
+}
 interface ServiceModalItem {
     id: string;
     title: string;
@@ -50,12 +61,17 @@ interface ServiceModalItem {
 interface ContentSection {
     nav: NavItem;
     hero: HeroSection;
-    about: { title: string; p1: string; p2: string; p3: string; };
+    about: { title: string; p1: string; p2: string; p3: string };
     skills: {
         title: string;
         hard: string;
         soft: string;
         softList: SoftSkill[];
+    };
+    templates: {
+        title: string;
+        subtitle: string;
+        items: TemplateItem[];
     };
     services: {
         title: string;
@@ -159,6 +175,181 @@ const content: ContentData = {
                 {
                     title: "Personalizirani pristup",
                     desc: "Posebno me raduju projekti koji se odmiču od šablonskih rješenja; možemo potpuno osloboditi kreativnost i stvoriti jedinstven dizajn skrojen samo po Vašoj mjeri!",
+                },
+            ],
+        },
+        templates: {
+            title: "Web-rješenja u ponudi",
+            subtitle:
+                "Odaberite preložak koji vam se sviđa, a mi ćemo ga prilagoditi Vašim potrebama.",
+            items: [
+                {
+                    id: "sol-1",
+                    title: "Kreativni Portfolio",
+                    shortDesc:
+                        "Minimalistički i elegantni predložak savršen za dizajnere, fotografe i umjetnike.",
+                    longDesc:
+                        "Istaknite svoj rad uz ovaj pročišćeni dizajn koji stavlja vaš vizualni sadržaj u prvi plan. Uključuje glatke CSS animacije, tamni način rada i optimiziranu galeriju koja se savršeno prikazuje na svim uređajima.",
+                    features: [
+                        "Dark/Light mode prebacivanje",
+                        "Zapanjujuća CSS grid galerija",
+                        "Integracija s društvenim mrežama",
+                        "Kontakt forma spremna za korištenje",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Portfolio", "Dizajn", "Osobno"],
+                },
+                {
+                    id: "sol-2",
+                    title: "Moderni Webshop",
+                    shortDesc:
+                        "Sveobuhvatno e-commerce rješenje za prodaju fizičkih ili digitalnih proizvoda.",
+                    longDesc:
+                        "Ovaj predložak pretvara posjetitelje u kupce. Sadrži napredno filtriranje proizvoda, košaricu sa slide-out animacijom i optimiziran proces naplate. Dizajniran prvenstveno za mobilne uređaje (mobile-first).",
+                    features: [
+                        "Sustav košarice i naplate",
+                        "Filtriranje i pretraživanje proizvoda",
+                        "Prikaz recenzija kupaca",
+                        "Optimizirano za visoku konverziju",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Webshop", "Prodaja", "E-commerce"],
+                },
+                {
+                    id: "sol-3",
+                    title: "Premium Restoran",
+                    shortDesc:
+                        "Elegantna web stranica za restorane, kafiće i catering usluge.",
+                    longDesc:
+                        "Predstavite svoj jelovnik i ambijent na najbolji mogući način. Ovaj predložak uključuje interaktivni digitalni meni, modul za rezervaciju stolova i integraciju s Google Kartama za lakši pronalazak vaše lokacije.",
+                    features: [
+                        "Interaktivni digitalni meni",
+                        "Sustav za online rezervacije",
+                        "Google Maps lokacija",
+                        "Galerija ambijenta i hrane",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1414235077428-338988a2e8c0?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Ugostiteljstvo", "Business", "Usluge"],
+                },
+                {
+                    id: "sol-4",
+                    title: "Corporate Pro",
+                    shortDesc:
+                        "Profesionalni korporativni identitet za tvrtke, agencije i startupove.",
+                    longDesc:
+                        "Gradite povjerenje od prvog klika. Predložak nudi detaljne sekcije za usluge, prikaz tima (O nama), studije slučaja te sekciju s čestim pitanjima (FAQ) osmišljenu za odgovaranje na upite potencijalnih klijenata.",
+                    features: [
+                        "Prikaz tima i usluga",
+                        "FAQ harmonika (accordion)",
+                        "Brojači statistike",
+                        "Newsletter pretplata",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Corporate", "Business", "Agencija"],
+                },
+                {
+                    id: "sol-5",
+                    title: "LifeStyle Blog",
+                    shortDesc:
+                        "Sadržajno fokusiran predložak za blogere, pisce i online magazine.",
+                    longDesc:
+                        "Dizajn koji vaše riječi stavlja na pijedestal. Sadrži naprednu tipografiju, kategorizaciju članaka, sekciju za istaknute objave i prostore optimizirane za prikazivanje sponzoriranog sadržaja ili oglasa.",
+                    features: [
+                        "Bogata tipografija",
+                        "Kategorije i tagovi članaka",
+                        "Sekcija za komentare",
+                        "Prostor za sponzorstva",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Blog", "Magazin", "Osobno"],
+                },
+                {
+                    id: "sol-6",
+                    title: "Digitalna Agencija",
+                    shortDesc:
+                        "Hrabar i moderan dizajn s puno animacija za kreativne timove.",
+                    longDesc:
+                        "Pokažite klijentima da pratite najnovije trendove. Ovaj predložak obiluje asimetričnim rasporedima, mikro-animacijama pri skrolanju i upečatljivim naslovima koji zadržavaju pažnju.",
+                    features: [
+                        "Scroll animacije (AOS)",
+                        "Dinamični prikazi projekata",
+                        "Interaktivne cjenovne tablice",
+                        "Moderni asimetrični dizajn",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Agencija", "Dizajn", "Usluge"],
+                },
+                {
+                    id: "sol-7",
+                    title: "Real Estate Hub",
+                    shortDesc:
+                        "Platforma za agencije za nekretnine i prodaju ekskluzivnih objekata.",
+                    longDesc:
+                        "Omogućite klijentima virtualnu šetnju kroz nekretnine. Sadrži naprednu tražilicu lokacija, velike galerije slika za svaki oglas i direktne kontakt forme agenata za brzu komunikaciju.",
+                    features: [
+                        "Napredno filtriranje nekretnina",
+                        "Virtualna 360° integracija",
+                        "Profili agenata",
+                        "Interaktivna mapa",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Business", "Usluge", "Nekretnine"],
+                },
+                {
+                    id: "sol-8",
+                    title: "Fitness & Gym",
+                    shortDesc:
+                        "Energičan predložak za teretane, osobne trenere i fitness centre.",
+                    longDesc:
+                        "Motivirajte svoje korisnike prije nego što uopće dođu na trening. Predložak nudi prikaz rasporeda grupnih treninga, profile trenera i integraciju sa sustavom za online kupovinu članarina.",
+                    features: [
+                        "Tjedni raspored treninga",
+                        "Online kupovina članarina",
+                        "Kalkulator BMI/kalorija",
+                        "Profili trenera",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Sport", "Usluge", "Osobno"],
                 },
             ],
         },
@@ -361,6 +552,181 @@ const content: ContentData = {
                 {
                     title: "Personalized Approach",
                     desc: "I especially enjoy projects that move away from template solutions; we can completely unleash creativity and create a unique design tailored just for you!",
+                },
+            ],
+        },
+        templates: {
+            title: "Web Solutions on Offer",
+            subtitle:
+                "Choose a template you like, and we will customize it to your needs.",
+            items: [
+                {
+                    id: "sol-1",
+                    title: "Creative Portfolio",
+                    shortDesc:
+                        "Minimalist and elegant template perfect for designers, photographers, and artists.",
+                    longDesc:
+                        "Highlight your work with this clean design that puts your visual content front and center. Includes smooth CSS animations, dark mode, and an optimized gallery that looks flawless on all devices.",
+                    features: [
+                        "Dark/Light mode toggle",
+                        "Stunning CSS grid gallery",
+                        "Social media integration",
+                        "Ready-to-use contact form",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Portfolio", "Design", "Personal"],
+                },
+                {
+                    id: "sol-2",
+                    title: "Modern Webshop",
+                    shortDesc:
+                        "Comprehensive e-commerce solution for selling physical or digital products.",
+                    longDesc:
+                        "This template turns visitors into customers. It features advanced product filtering, a slide-out cart animation, and an optimized checkout process. Designed with a mobile-first approach.",
+                    features: [
+                        "Cart and checkout system",
+                        "Product filtering and search",
+                        "Customer reviews display",
+                        "Optimized for high conversion",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Webshop", "Sales", "E-commerce"],
+                },
+                {
+                    id: "sol-3",
+                    title: "Premium Restaurant",
+                    shortDesc:
+                        "Elegant website for restaurants, cafes, and catering services.",
+                    longDesc:
+                        "Showcase your menu and ambiance in the best possible light. This template includes an interactive digital menu, a table reservation module, and Google Maps integration to easily locate your business.",
+                    features: [
+                        "Interactive digital menu",
+                        "Online reservation system",
+                        "Google Maps location",
+                        "Food and ambiance gallery",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1414235077428-338988a2e8c0?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Hospitality", "Business", "Services"],
+                },
+                {
+                    id: "sol-4",
+                    title: "Corporate Pro",
+                    shortDesc:
+                        "Professional corporate identity for companies, agencies, and startups.",
+                    longDesc:
+                        "Build trust from the first click. The template offers detailed service sections, a team showcase (About Us), case studies, and a FAQ section designed to answer inquiries from potential clients.",
+                    features: [
+                        "Team and services showcase",
+                        "FAQ accordion",
+                        "Animated statistics counters",
+                        "Newsletter subscription",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Corporate", "Business", "Agency"],
+                },
+                {
+                    id: "sol-5",
+                    title: "LifeStyle Blog",
+                    shortDesc:
+                        "Content-focused template for bloggers, writers, and online magazines.",
+                    longDesc:
+                        "A design that puts your words on a pedestal. It features advanced typography, article categorization, a featured posts section, and spaces optimized for displaying sponsored content or ads.",
+                    features: [
+                        "Rich typography",
+                        "Article categories and tags",
+                        "Comments section",
+                        "Space for sponsorships",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Blog", "Magazine", "Personal"],
+                },
+                {
+                    id: "sol-6",
+                    title: "Digital Agency",
+                    shortDesc:
+                        "Bold and modern design with plenty of animations for creative teams.",
+                    longDesc:
+                        "Show clients that you follow the latest trends. This template is full of asymmetrical layouts, micro-animations on scroll, and striking headlines that retain attention.",
+                    features: [
+                        "Scroll animations (AOS)",
+                        "Dynamic project showcases",
+                        "Interactive pricing tables",
+                        "Modern asymmetrical design",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Agency", "Design", "Services"],
+                },
+                {
+                    id: "sol-7",
+                    title: "Real Estate Hub",
+                    shortDesc:
+                        "Platform for real estate agencies and the sale of exclusive properties.",
+                    longDesc:
+                        "Provide clients with a virtual tour through properties. It contains an advanced location search engine, large image galleries for each listing, and direct agent contact forms for quick communication.",
+                    features: [
+                        "Advanced property filtering",
+                        "Virtual 360° integration",
+                        "Agent profiles",
+                        "Interactive map",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Business", "Services", "Real Estate"],
+                },
+                {
+                    id: "sol-8",
+                    title: "Fitness & Gym",
+                    shortDesc:
+                        "Energetic template for gyms, personal trainers, and fitness centers.",
+                    longDesc:
+                        "Motivate your users before they even show up for a workout. The template offers a group training schedule, trainer profiles, and integration with a membership online purchasing system.",
+                    features: [
+                        "Weekly training schedule",
+                        "Online membership purchase",
+                        "BMI/Calorie calculator",
+                        "Trainer profiles",
+                    ],
+                    coverImage:
+                        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
+                    gallery: [
+                        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop",
+                        "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop",
+                    ],
+                    tags: ["Sport", "Services", "Personal"],
                 },
             ],
         },
