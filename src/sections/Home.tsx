@@ -7,7 +7,7 @@ import Hero from "./Hero.tsx";
 import Skills from "./Skills.tsx";
 import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "@/components/BackgroundCanvas.tsx";
-import BackgroundGlows from "@/components/BackgroundGlows.tsx";
+
 import About from "./About.tsx";
 
 const Accordion = lazy(() => import("@/components/Accordion.tsx"));
@@ -52,8 +52,7 @@ const Home: React.FC = () => {
     console.log(message);
 
     return (
-        <div className='bg-background w-screen h-full p-0 m-0 overflow-x-hidden'>
-            <BackgroundGlows />
+        <div className='max-w-screen w-full h-full p-0 m-0 overflow-x-hidden'>
             <BackgroundCanvas />
             <Navbar
                 scrolled={scrolled}
@@ -68,7 +67,7 @@ const Home: React.FC = () => {
             <About t={t} />
             <Skills t={t} />
             <Suspense fallback={<Spinner />}>
-                <Templates t={t} scrollToSection={scrollToSection}  />
+                <Templates t={t} scrollToSection={scrollToSection} />
             </Suspense>
             <Suspense fallback={<Spinner />}>
                 <Services t={t} />

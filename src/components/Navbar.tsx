@@ -31,9 +31,9 @@ const Navbar: React.FC<NavbarProps> = ({
     t,
 }) => (
     <nav
-        className={`sticky top-6 left-0 right-0 z-50 w-11/12 max-w-6xl px-0 py-2 mx-auto transition-all duration-300 ${
+        className={`fixed top-6 left-0 right-0 z-50 w-11/12 max-w-6xl px-0 py-2 mx-auto transition-all duration-300 ${
             scrolled
-                ? "md:rounded-full lg:px-6 lg:py-4 bg-black/80 backdrop-blur-lg border border-slate-900"
+                ? "sticky top-6 left-0 right-0 lg:rounded-full lg:px-6 lg:py-4 bg-black/80 backdrop-blur-lg border border-slate-900"
                 : "bg-transparent backdrop-blur-none border-none"
         }`}>
         <div className='flex justify-between items-center'>
