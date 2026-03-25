@@ -4,13 +4,10 @@ import Footer from "./Footer.tsx";
 import Navbar from "@/components/Navbar.tsx";
 import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
-import Skills from "./Skills.tsx";
 import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "@/components/BackgroundCanvas.tsx";
-
 import About from "./About.tsx";
 
-const Accordion = lazy(() => import("@/components/Accordion.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
 const Services = lazy(() => import("./Services.tsx"));
 const Templates = lazy(() => import("./Templates.tsx"));
@@ -24,7 +21,7 @@ const Home: React.FC = () => {
     const t: ContentSection = content[lang];
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
@@ -65,15 +62,11 @@ const Home: React.FC = () => {
             />
             <Hero t={t} scrollToSection={scrollToSection} />
             <About t={t} />
-            <Skills t={t} />
             <Suspense fallback={<Spinner />}>
                 <Templates t={t} scrollToSection={scrollToSection} />
             </Suspense>
             <Suspense fallback={<Spinner />}>
                 <Services t={t} />
-            </Suspense>
-            <Suspense fallback={<Spinner />}>
-                <Accordion />
             </Suspense>
             <Suspense fallback={<Spinner />}>
                 <Projects t={t} scrollToSection={scrollToSection} />

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import {
     Code2,
-    ExternalLink,
     Github,
     Heart,
     Shield,
@@ -65,7 +65,7 @@ const BackgroundGlows = () => (
         <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[120px] will-change-transform'
+            className='absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.2)_0%,transparent_60%)] rounded-full will-change-transform'
         />
         <motion.div
             animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.3, 0.1] }}
@@ -75,9 +75,9 @@ const BackgroundGlows = () => (
                 ease: "easeInOut",
                 delay: 2,
             }}
-            className='absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[120px] will-change-transform'
+            className='absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(234,88,12,0.2)_0%,transparent_60%)] rounded-full will-change-transform'
         />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100 contrast-150 pointer-events-none" />
     </div>
 );
 
@@ -153,6 +153,31 @@ const NeedHelpShowcase: React.FC = () => {
 
     return (
         <div className='min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden'>
+            <Helmet>
+                <title>Need Help | Marina Majdenić</title>
+                <meta
+                    name='description'
+                    content={
+                        lang === "HR"
+                            ? "Anonimna ljudska povezanost. Platforma koja vraća empatiju u digitalni svijet."
+                            : "Anonymous human connection. A platform bringing empathy back to the digital world."
+                    }
+                />
+                <meta
+                    property='og:title'
+                    content='Need Help | Marina Majdenić'
+                />
+                <meta
+                    property='og:description'
+                    content={
+                        lang === "HR"
+                            ? "Anonimna ljudska povezanost. Platforma koja vraća empatiju u digitalni svijet."
+                            : "Anonymous human connection. A platform bringing empathy back to the digital world."
+                    }
+                />
+                <meta property='og:type' content='website' />
+            </Helmet>
+
             <BackgroundGlows />
             <NeonSign />
 
@@ -484,7 +509,7 @@ const NeedHelpShowcase: React.FC = () => {
             <section className='py-24 relative z-10'>
                 <div className='container mx-auto px-6'>
                     <SectionHeading
-                        title='Arhitektura & Funkcionalnosti'
+                        title='Arhitektura & funkcionalnosti'
                         subtitle='Moderan web zahtijeva moderne alate. Need Help je izgrađen na najnovijim inačicama React ekosustava.'
                         align='left'
                     />
@@ -509,7 +534,7 @@ const NeedHelpShowcase: React.FC = () => {
                                         className='text-orange-400'
                                     />
                                 ),
-                                title: "Potpuna Anonimnost",
+                                title: "Potpuna anonimnost",
                                 desc: "Arhitektura dizajnirana da štiti identitet korisnika, potičući iskrenost bez straha od osude.",
                                 variant: "orange",
                             },
@@ -525,7 +550,6 @@ const NeedHelpShowcase: React.FC = () => {
                                 variant: "rose",
                             },
                         ].map((card, i) => (
-                            // @ts-ignore
                             <ColoredGlassCard
                                 key={i}
                                 variant={card.variant}

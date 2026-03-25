@@ -3,21 +3,29 @@ import { useLanguage } from "@/components/LanguageContext";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import TemplateModal from "@/components/TemplateModal";
+import { FALLBACK_IMAGE } from "@/data/constants.ts";
 
 export interface TemplateItem {
     id: string;
     title: string;
-    shortDesc: string;
-    longDesc: string;
-    features: string[];
-    coverImage: string;
-    gallery: string[];
+    subtitle: string;
+    description: string;
+    highlights: {
+        purpose: string;
+        style: string;
+        features: string;
+        special?: string;
+    };
     videoUrl?: string;
-    tags: string[];
+    screenshotHome?: string;
+    screenshotDesktop?: string;
+    screenshotMobile?: string;
+    tags?: string[];
 }
 interface TemplatesContent {
     title: string;
     subtitle: string;
+    standard: string;
     items: TemplateItem[];
 }
 
@@ -30,14 +38,12 @@ interface TemplatesProps {
 
 export const Templates: React.FC<TemplatesProps> = ({ t }) => {
     const { lang } = useLanguage();
-    const taglist = t.templates.items.map((item) => item.tags).flat();
+    const taglist = t.templates.items.map((item) => item.tags || []).flat();
     const uniqueTags = Array.from(new Set(taglist));
-    console.log("Unique Tags:", uniqueTags);
 
     const [visibleCount, setVisibleCount] = useState(6);
     const [selecteditem, setSelecteditem] = useState<TemplateItem | null>(null);
 
-    const [searchTerm, setSearchTerm] = useState("");
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
     const allTags = useMemo(() => {
@@ -52,28 +58,20 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
 
     const filteredItems = useMemo(() => {
         return t.templates.items.filter((item) => {
-            const searchLower = searchTerm.toLowerCase();
-            const matchesSearch =
-                searchTerm === "" ||
-                item.title.toLowerCase().includes(searchLower) ||
-                item.tags?.some((tag) =>
-                    tag.toLowerCase().includes(searchLower),
-                );
-
             const matchesTags =
                 selectedTags.length === 0 ||
                 item.tags?.some((tag) => selectedTags.includes(tag));
 
-            return matchesSearch && matchesTags;
+            return matchesTags;
         });
-    }, [t.templates.items, searchTerm, selectedTags]);
+    }, [t.templates.items, selectedTags]);
 
     const visibleProducts = filteredItems.slice(0, visibleCount);
     const hasMore = visibleCount < filteredItems.length;
 
     useEffect(() => {
         setVisibleCount(6);
-    }, [searchTerm, selectedTags]);
+    }, [selectedTags]);
 
     const handleLoadMore = () => setVisibleCount((prev) => prev + 6);
     const openModal = (item: TemplateItem) => {
@@ -104,6 +102,14 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
     const isAllChecked =
         selectedTags.length === 0 || selectedTags.length === allTags.length;
 
+    // Pomoćna funkcija za klase tagova (DRY princip)
+    const getTagClass = (isActive: boolean) =>
+        `mb-2 px-4 py-1.5 rounded-full transition-all duration-200 ease-in-out font-mono font-semibold text-xs text-shadow-xs text-shadow-black tracking-wide cursor-pointer select-none flex items-center gap-1.5 ${
+            isActive
+                ? "bg-lake-500/30 text-lake-200 active:scale-95 drop-shadow-[0_0_8px_rgba(129,140,248,0.6)] shadow-xs shadow-black"
+                : "bg-lake-500/10 text-lake-500 hover:scale-105 hover:drop-shadow-[0_0_6px_rgba(129,140,248,0.8)]"
+        }`;
+
     return (
         <section
             className='py-16 px-4 md:px-8 bg-transparent min-h-screen'
@@ -113,65 +119,29 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
                     <SectionTitle>{t.templates.title}</SectionTitle>
                 </Reveal>
                 <Reveal delay={100}>
-                    <div className='text-center mb-12'>
-                        <h3 className='text-gray-400 max-w-2xl mx-auto text-lg lg:text-xl'>
-                            {t.templates.subtitle}
-                        </h3>
-                    </div>
+                    <h3 className='text-gray-400 max-w-2xl mx-auto text-lg lg:text-xl text-center mb-12 subtitles'>
+                        {t.templates.subtitle}
+                    </h3>
                 </Reveal>
 
-                {/* Search and filters */}
+                {/* Filters */}
 
                 <div className='max-w-4xl mb-10 mx-auto flex flex-col items-center space-y-6'>
-                    <Reveal delay={200}>
-                        <div className='relative w-full max-w-md'>
-                            <input
-                                type='text'
-                                placeholder={
-                                    lang === "hr"
-                                        ? "Pretraži predloške ili tagove..."
-                                        : "Search templates or tags..."
-                                }
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className='w-full px-5 py-3 pl-12 rounded-full border border-lake-800 bg-lake-800/20 text-gray-400 focus:ring-2 focus:ring-lake-600/50 focus:border-lake-600/80 shadow-sm transition-all outline-none'
-                            />
-                            <svg
-                                className='absolute left-4 top-3.5 h-5 w-5 text-gray-600'
-                                fill='none'
-                                stroke='currentColor'
-                                viewBox='0 0 24 24'>
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth='2'
-                                    d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-                                />
-                            </svg>
-                        </div>
-                    </Reveal>
-
                     {/* Tags */}
-                    <Reveal delay={300}>
+                    <Reveal delay={200}>
                         <div className='flex flex-wrap justify-center gap-2'>
                             <button
                                 onClick={() => setSelectedTags([])}
-                                className={`px-4 py-2 rounded-3xl text-sm font-semibold text-lake-600 border border-lake-600/80 hover:bg-lake-600/60 transition-colors duration-200 ease-in-out ${
-                                    isAllChecked
-                                        ? "bg-lake-600/60 text-lake-100 border-lake-600"
-                                        : "bg-background/50 "
-                                }`}>
+                                className={getTagClass(isAllChecked)}>
                                 {lang === "hr" ? "Sve" : "All"}
                             </button>
                             {allTags.map((tag) => (
                                 <button
                                     key={tag}
                                     onClick={() => toggleTag(tag)}
-                                    className={`px-4 py-2 rounded-3xl text-sm font-semibold tracking-wider text-lake-600 border border-lake-600/80 hover:text-lake-200 hover:bg-lake-600/60  transition-colors duration-100 ease-in-out shadow-md ${
-                                        selectedTags.includes(tag)
-                                            ? "bg-lake-600/60 text-lake-100 border-inset"
-                                            : "bg-background/50 text-lake-600"
-                                    }`}>
+                                    className={getTagClass(
+                                        selectedTags.includes(tag),
+                                    )}>
                                     {tag}
                                 </button>
                             ))}
@@ -189,7 +159,6 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
                         </p>
                         <button
                             onClick={() => {
-                                setSearchTerm("");
                                 setSelectedTags([]);
                             }}
                             className='text-xl text-lake-700 font-link font-semibold hover:underline'>
@@ -205,22 +174,47 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
                     {visibleProducts.map((item: TemplateItem, id: number) => (
                         <div
                             key={id}
+                            onMouseEnter={(e) => {
+                                const video =
+                                    e.currentTarget.querySelector("video");
+                                if (video) video.play();
+                            }}
+                            onMouseLeave={(e) => {
+                                const video =
+                                    e.currentTarget.querySelector("video");
+                                if (video) video.pause();
+                            }}
                             className='bg-slate-900/50 rounded-2xl shadow-lg hover:shadow-xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 border border-slate-700'>
                             <div className='h-56 overflow-hidden relative group'>
-                                <img
-                                    src={item.coverImage}
-                                    alt={item.title}
-                                    className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'
-                                />
-                                <div className='absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+                                {item.videoUrl ? (
+                                    <video
+                                        src={`/templates/videos/${item.videoUrl}#t=0.1`}
+                                        preload='metadata'
+                                        loop
+                                        muted
+                                        playsInline
+                                        className='w-full h-full object-cover cursor-pointer'
+                                    />
+                                ) : (
+                                    <img
+                                        src={
+                                            item.screenshotHome ||
+                                            FALLBACK_IMAGE
+                                        }
+                                        alt={item.title}
+                                        loading='lazy'
+                                        decoding='async'
+                                        className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'
+                                    />
+                                )}
                             </div>
 
                             <div className='p-6 flex flex-col grow relative'>
-                                <div className='flex flex-wrap gap-2 mb-3 -mt-2'>
+                                <div className='flex flex-wrap gap-2 mb-4 -mt-2'>
                                     {item.tags?.map((tag) => (
                                         <span
                                             key={tag}
-                                            className='px-2.5 py-1 text-[10px] md:text-xs font-link font-bold uppercase tracking-wider text-lake-700 bg-lake-50 rounded-xl border border-lake-500 hover:text-background hover:bg-lake-500 transition-colors duration-200 ease-in-out cursor-pointer'>
+                                            className='px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-lake-300 bg-lake-900/30 rounded-full border border-lake-800/60 backdrop-blur-sm'>
                                             {tag}
                                         </span>
                                     ))}
@@ -230,7 +224,7 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
                                     {item.title}
                                 </h3>
                                 <p className='text-gray-300 font-sans text-sm grow mb-6 leading-relaxed'>
-                                    {item.shortDesc}
+                                    {item.subtitle}
                                 </p>
 
                                 {/* Gumbi */}
@@ -268,6 +262,7 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
                 <TemplateModal
                     product={selecteditem}
                     isOpen={!!selecteditem}
+                    standard={t.templates.standard}
                     onClose={closeModal}
                     onOrder={handleOrder}
                 />

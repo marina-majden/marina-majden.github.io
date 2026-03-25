@@ -1,3 +1,6 @@
+const FALLBACK_IMAGE =
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop";
+
 const GLITCH_ANIMATION = {
     opacity: [1, 0.8, 1, 1, 0.1, 1, 0.9, 1, 0.1, 1, 0.95, 1],
     textShadow: [
@@ -25,4 +28,4 @@ const CARD_VARIANTS = {
     cyan: "border-cyan-500/30 bg-cyan-900/10 hover:border-cyan-500/50 hover:bg-cyan-900/20 shadow-[0_0_40px_-10px_rgba(34,211,238,0.1)]",
 };
 
-export { GLITCH_ANIMATION, GLITCH_TRANSITION, CARD_VARIANTS };
+export { FALLBACK_IMAGE, GLITCH_ANIMATION, GLITCH_TRANSITION, CARD_VARIANTS };

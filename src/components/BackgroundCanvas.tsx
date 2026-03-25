@@ -164,7 +164,7 @@ const BackgroundCanvas: React.FC = () => {
                 pointerEvents: "none", // Dozvoljava klikanje na kartice iznad
             }}
         />,
-        document.body
+        document.body,
     );
 };
 

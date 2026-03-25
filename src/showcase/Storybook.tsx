@@ -69,7 +69,7 @@ const BackgroundGlows = () => (
         <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-600/30 rounded-full blur-[120px] will-change-transform'
+            className='absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.4)_0%,transparent_60%)] rounded-full will-change-transform'
         />
         <motion.div
             animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
@@ -79,14 +79,14 @@ const BackgroundGlows = () => (
                 ease: "easeInOut",
                 delay: 2,
             }}
-            className='absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] will-change-transform'
+            className='absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.3)_0%,transparent_60%)] rounded-full will-change-transform'
         />
         <motion.div
             animate={{ x: [0, 50, 0], y: [0, -50, 0] }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className='absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] will-change-transform'
+            className='absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.2)_0%,transparent_60%)] rounded-full will-change-transform'
         />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100 contrast-150 pointer-events-none" />
     </div>
 );
 
@@ -297,8 +297,8 @@ const Storybook: React.FC = () => {
             <section className='relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden'>
                 {/* Background decorative elements */}
                 <div className='absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none'>
-                    <div className='absolute top-[-10%] right-[-5%] w-96 h-96 bg-purple-600/20 rounded-full blur-3xl'></div>
-                    <div className='absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-3xl'></div>
+                    <div className='absolute top-[-10%] right-[-5%] w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(147,51,234,0.3)_0%,transparent_60%)] rounded-full'></div>
+                    <div className='absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.15)_0%,transparent_60%)] rounded-full'></div>
                 </div>
 
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center'>
@@ -324,13 +324,13 @@ const Storybook: React.FC = () => {
                             rel='noopener noreferrer'
                             className='bg-gradient-to-br from-amber-400 to-amber-700 text-slate-900 font-bold px-8 py-4 rounded-full text-lg shadow-lg flex items-center justify-center gap-2 hover:brightness-110 hover:scale-105 transition-all duration-300'>
                             <BookOpen className='w-5 h-5' />
-                            Pogledaj Slikovnicu
+                            Pogledaj slikovnicu
                         </a>
                         <a
                             href='#contact'
                             className='px-8 py-4 rounded-full text-lg border border-white/20 hover:bg-white/10 transition-all flex items-center justify-center gap-2'>
                             <MessageCircle className='w-5 h-5' />
-                            Zatraži Ponudu
+                            Zatraži ponudu
                         </a>
                     </div>
 
@@ -350,7 +350,7 @@ const Storybook: React.FC = () => {
                                             fontFamily:
                                                 "'Playfair Display', serif",
                                         }}>
-                                        Interaktivni Prikaz
+                                        Interaktivni prikaz
                                     </h3>
                                     <p className='text-sm text-slate-300'>
                                         Responzivno • Animirano • Zvučno
@@ -389,7 +389,7 @@ const Storybook: React.FC = () => {
                                 style={{
                                     fontFamily: "'Playfair Display', serif",
                                 }}>
-                                AI Ilustracije po Mjeri
+                                AI Ilustracije po mjeri
                             </h3>
                             <p className='text-slate-400 leading-relaxed'>
                                 Koristeći Adobe Firefly i napredne tehnike
@@ -410,7 +410,7 @@ const Storybook: React.FC = () => {
                                 style={{
                                     fontFamily: "'Playfair Display', serif",
                                 }}>
-                                Stvarne Lokacije
+                                Stvarne lokacije
                             </h3>
                             <p className='text-slate-400 leading-relaxed'>
                                 Radnja se ne odvija u izmišljenom svijetu (osim
@@ -430,7 +430,7 @@ const Storybook: React.FC = () => {
                                 style={{
                                     fontFamily: "'Playfair Display', serif",
                                 }}>
-                                Digitalno & Fizičko
+                                Digitalno & fizičko
                             </h3>
                             <p className='text-slate-400 leading-relaxed'>
                                 Slikovnica je{" "}
@@ -494,7 +494,7 @@ const Storybook: React.FC = () => {
                                     </div>
                                     <div className='ml-4'>
                                         <h4 className='text-lg font-bold text-white'>
-                                            Fotografije i Opisi
+                                            Fotografije i opisi
                                         </h4>
                                         <p className='text-slate-400 text-sm'>
                                             Pošaljite fotografije osoba (lica) i
@@ -525,10 +525,10 @@ const Storybook: React.FC = () => {
                                     </div>
                                     <div className='ml-4'>
                                         <h4 className='text-lg font-bold text-white'>
-                                            Radnja i Žanr
+                                            Radnja i žanr
                                         </h4>
                                         <p className='text-slate-400 text-sm'>
-                                            Odaberite stil: Dječja pustolovna s
+                                            Odaberite stil: dječja pustolovna s
                                             poukom, humoristična priča za
                                             odrasle, basna s ljubimcima? Imate
                                             li interne šale koje želite
@@ -544,7 +544,7 @@ const Storybook: React.FC = () => {
                                 Best Seller
                             </div>
                             <h3 className='text-2xl font-bold text-white mb-2'>
-                                Unikatni Paket
+                                Unikatni paket
                             </h3>
                             <div
                                 className='text-4xl font-bold text-amber-400 mb-6'
@@ -576,7 +576,7 @@ const Storybook: React.FC = () => {
                                 </p>
                                 <p className='flex items-center gap-2'>
                                     <Clock className='text-amber-400 w-4 h-4' />{" "}
-                                    Vrijeme izrade: 7-10 dana
+                                    Vrijeme izrade: oko 14 dana
                                 </p>
                             </div>
                             <a
@@ -585,7 +585,7 @@ const Storybook: React.FC = () => {
                                 Naruči odmah
                             </a>
                             <p className='mt-4 text-xs text-center text-slate-500'>
-                                *Cijena ovisi o kompleksnosti scena i broju
+                                * Cijena ovisi o kompleksnosti scena i broju
                                 likova.
                             </p>
                         </div>
@@ -612,7 +612,7 @@ const Storybook: React.FC = () => {
                             href='mailto:tvoj.email@primjer.com'
                             className='bg-linear-to-br from-amber-400 to-amber-700 text-slate-900 font-bold px-10 py-4 rounded-full text-lg shadow-xl shadow-amber-500/20 flex items-center justify-center gap-3 hover:brightness-110 hover:scale-105 transition-all duration-300'>
                             <Mail className='w-5 h-5' />
-                            Pošalji Upit
+                            Pošalji upit
                         </a>
                         <a
                             href='https://github.com/marina-majden'
@@ -620,7 +620,7 @@ const Storybook: React.FC = () => {
                             rel='noopener noreferrer'
                             className='px-10 py-4 rounded-full text-lg border border-white/20 hover:bg-white/10 text-white flex items-center justify-center gap-3 transition-all'>
                             <Github className='w-5 h-5' />
-                            Moj Portfolio
+                            Moj portfolio
                         </a>
                     </div>
                 </div>
@@ -629,7 +629,7 @@ const Storybook: React.FC = () => {
             {/* Footer */}
             <footer className='py-8 bg-slate-950 border-t border-white/5'>
                 <div className='max-w-7xl mx-auto px-4 text-center text-slate-500 text-sm'>
-                    <p>&copy; 2025 Marina Majden. Sva prava pridržana.</p>
+                    <p>&copy; 2025 Marina Majdenić. Sva prava pridržana.</p>
                     <p className='mt-2'>
                         Projekt: Christmas Storybook Showcase
                     </p>

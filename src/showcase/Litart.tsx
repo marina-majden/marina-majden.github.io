@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
     Code2,
     Server,
@@ -88,6 +89,28 @@ const LitArtShowcase: React.FC = () => {
 
     return (
         <div className='min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden'>
+            <Helmet>
+                <title>Lit Art | Marina Majdenić</title>
+                <meta
+                    name='description'
+                    content={
+                        lang === "HR"
+                            ? "Interdisciplinarna platforma koja spaja književnost i povijest umjetnosti."
+                            : "An interdisciplinary platform combining literature and art history."
+                    }
+                />
+                <meta property='og:title' content='Lit Art | Marina Majdenić' />
+                <meta
+                    property='og:description'
+                    content={
+                        lang === "HR"
+                            ? "Interdisciplinarna platforma koja spaja književnost i povijest umjetnosti."
+                            : "An interdisciplinary platform combining literature and art history."
+                    }
+                />
+                <meta property='og:type' content='website' />
+            </Helmet>
+
             <BackgroundGlows />
             <NeonSign />
 

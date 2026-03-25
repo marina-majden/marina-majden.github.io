@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useMemo } from "react";
-import { useAnimationFrame } from "framer-motion";
+import { useAnimationFrame, useInView } from "framer-motion";
 import {
     Album,
     Aperture,
@@ -232,8 +232,14 @@ const generateCode = (width: number, height: number) => {
 };
 
 // --- Component: Scanner Foreground Particles ---
-const ScannerCanvas = () => {
+const ScannerCanvas = ({ isVisible }: { isVisible: boolean }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const isVisibleRef = useRef(isVisible);
+
+    useEffect(() => {
+        isVisibleRef.current = isVisible;
+    }, [isVisible]);
+
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -285,7 +291,12 @@ const ScannerCanvas = () => {
                 Math.random() > 0.1 ? Math.random() * 100 : -Math.random() * 20;
             particles.push(p);
         }
+        let animId: number;
         const render = () => {
+            if (!isVisibleRef.current) {
+                animId = requestAnimationFrame(render);
+                return;
+            }
             ctx.clearRect(0, 0, width, height);
             ctx.globalCompositeOperation = "lighter";
             const centerX = width / 2;
@@ -316,9 +327,9 @@ const ScannerCanvas = () => {
                 30,
                 SCANNER_HEIGHT,
             );
-            requestAnimationFrame(render);
+            animId = requestAnimationFrame(render);
         };
-        const animId = requestAnimationFrame(render);
+        animId = requestAnimationFrame(render);
         const handleResize = () => {
             width = window.innerWidth;
             height = window.innerHeight;
@@ -353,7 +364,7 @@ const CardItem = ({
     return (
         <div
             ref={setRef}
-            className='absolute top-0 left-0 h-[280px] rounded-2xl will-change-transform'
+            className='absolute top-0 left-0 h-70 rounded-2xl will-change-transform'
             style={{ width: CARD_WIDTH }}>
             {/* LAYER 1: Code (Revealed by Scanner) */}
             <div
@@ -380,9 +391,7 @@ const CardItem = ({
                 <div className='relative z-10 flex flex-col h-full justify-between p-6 text-white'>
                     <div className='flex justify-between items-start'>
                         <div className='p-2 bg-white/10 rounded-lg border border-white/20 shadow-inner'>
-                            {React.cloneElement(
-                                data.icon as React.ReactElement,
-                            )}
+                            {data.icon as React.ReactNode}
                         </div>
                         <div className='flex gap-1'>
                             <div className='w-2 h-2 rounded-full bg-white/50' />
@@ -392,12 +401,12 @@ const CardItem = ({
 
                     <div className='mt-2'>
                         <h2 className='text-3xl font-bold tracking-tight mb-2'>
-                            Code for the runways
+                            Ready For The Runway
                         </h2>
                         <p className='text-md font-medium leading-snug select-none text-balance'>
-                            Our code culture is <i>haute couture </i> –
-                            meticulously crafted, uniquely styled, and always
-                            pushing the boundaries of creativity.
+                            Our code culture is <i>haute couture </i> and our
+                            components are meticulously crafted, uniquely
+                            styled, and always on the front line of innovation.
                         </p>
                     </div>
 
@@ -454,10 +463,11 @@ const fonts = [
     "var(--font-display)",
     "var(--font-heading)",
     "var(--font-sans)",
-    "var(--font-display-2)",
-    "var(--font-display-3)",
-    "var(--font-display-4)",
-    "var(--font-display-5)",
+    "var(--font-link)",
+    "cursive",
+    "monospace",
+    "sans-serif",
+    "serif",
 ];
 
 // Generira gradijent koristeći dvije nasumične boje iz naše konfigurirane liste
@@ -482,6 +492,7 @@ export default function CardScanner() {
     const DIRECTION = 1;
 
     const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef, { margin: "200px" });
     const scrollPosRef = useRef(0);
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const lastTimeRef = useRef<number>(0);
@@ -502,6 +513,10 @@ export default function CardScanner() {
     const totalWidth = displayCards.length * ITEM_WIDTH;
 
     useAnimationFrame((time) => {
+        if (!isInView) {
+            lastTimeRef.current = time; // Keep time synced to prevent jump when returning
+            return;
+        }
         if (!lastTimeRef.current) lastTimeRef.current = time;
         const delta = (time - lastTimeRef.current) / 1000;
         lastTimeRef.current = time;
@@ -567,7 +582,7 @@ export default function CardScanner() {
         <div className='relative w-screen bg-transparent overflow-hidden text-slate-200 selection:bg-cyan-500 selection:text-black'>
             {/* Inject Styles */}
             <style>{styles}</style>
-            <div className='w-[360px] h-40 mx-auto font-mono text-[10px] text-white/30 tracking-widest uppercase'>
+            <div className='w-90 h-40 mx-auto font-mono text-[10px] text-white/30 tracking-widest uppercase'>
                 Custom-made components • Intuitive UI/UX
                 <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-crosshair'>
                     <Rocket size={12} className='animate-bounce' /> v3.0.0 //
@@ -578,8 +593,8 @@ export default function CardScanner() {
             {/* Kartice */}
             <div
                 ref={containerRef}
-                className='relative w-full h-[360px] flex items-center z-10'>
-                <div className='relative w-full h-[280px]'>
+                className='relative w-full h-90 flex items-center z-10'>
+                <div className='relative w-full h-70'>
                     {displayCards.map((card, index) => (
                         <CardItem
                             key={`${card.id}-${index}`}
@@ -591,18 +606,18 @@ export default function CardScanner() {
                 {/* Skener Linija (Overlay) */}
                 <div className='absolute top-0 left-1/2 -translate-x-1/2 z-40 pointer-events-none flex flex-col items-center'>
                     <div
-                        className='w-0.5 bg-cyan-400 shadow-[0_0_15px_18px_rgba(34,211,238,0.8)] rounded-full relative'
+                        className='w-0.5 bg-cyan-400 shadow-[0_0_15px_18px_rgba(34,211,238,0.6)] rounded-full relative'
                         style={{ height: SCANNER_HEIGHT }}>
                         <div className='absolute left-1/2 -translate-x-1/2 w-8 h-4 bg-cyan-400/50 blur-2xl rounded-full animate-pulse top-0' />
                     </div>
                 </div>
-                <div className='w-24 h-10 mx-auto font-mono italic text-[10px] tracking-[0.3em] text-cyan-500 animate-pulse-dynamic bg-black/50 px-2 py-1 rounded'>
+                <div className='w-24 h-10 bg-black/50 px-2 py-1 rounded-md mx-auto font-mono italic text-xs tracking-[0.3em] text-cyan-500 animate-pulse-dynamic '>
                     RENDERING
                 </div>
             </div>
 
             {/* Čestice Skenera */}
-            <ScannerCanvas />
+            <ScannerCanvas isVisible={isInView} />
         </div>
     );
 }

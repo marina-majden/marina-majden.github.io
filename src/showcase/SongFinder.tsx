@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 
 import {
     Code2,
-    ExternalLink,
     Github,
-    Music,
+    Sparkles,
     Search,
     Headphones,
     Zap,
@@ -64,7 +63,7 @@ const BackgroundGlows = () => (
         <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-cyan-600/20 rounded-full blur-[120px] will-change-transform'
+            className='absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(8,145,178,0.3)_0%,transparent_60%)] rounded-full will-change-transform'
         />
         <motion.div
             animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
@@ -74,9 +73,9 @@ const BackgroundGlows = () => (
                 ease: "easeInOut",
                 delay: 2,
             }}
-            className='absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-pink-600/20 rounded-full blur-[120px] will-change-transform'
+            className='absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(219,39,119,0.3)_0%,transparent_60%)] rounded-full will-change-transform'
         />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100 contrast-150 pointer-events-none" />
     </div>
 );
 
@@ -213,18 +212,17 @@ const SongFinder: React.FC = () => {
                     )}
                 </AnimatePresence>
 
-            <Link
-                  to='/'
-                     className='group flex items-center p-3 rounded-full bg-slate-900/80 border border-white/10 backdrop-blur-md text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all shadow-xl'>
-                     <ArrowLeft
-                         size={24}
-                         className='group-hover:-translate-x-1 transition-transform'
-                     />
-                     <span className='max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-[100px] group-hover:pl-2 transition-all duration-300 ease-in-out font-medium'>
-                         Povratak
-                     </span>
+                <Link
+                    to='/'
+                    className='group flex items-center p-3 rounded-full bg-slate-900/80 border border-white/10 backdrop-blur-md text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all shadow-xl'>
+                    <ArrowLeft
+                        size={24}
+                        className='group-hover:-translate-x-1 transition-transform'
+                    />
+                    <span className='max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-[100px] group-hover:pl-2 transition-all duration-300 ease-in-out font-medium'>
+                        Povratak
+                    </span>
                 </Link>
-
             </div>
 
             {/* 1. HERO SECTION */}
@@ -348,7 +346,7 @@ const SongFinder: React.FC = () => {
                                 ),
                                 title: "Asinkroni Dohvat",
                                 desc: "Učenje rada s `fetch` API-jem, Promise-ima i handlanje JSON odgovora s iTunes servera.",
-                                variant: "cyan",
+                                variant: "cyan" as const,
                             },
                             {
                                 icon: (
@@ -359,7 +357,7 @@ const SongFinder: React.FC = () => {
                                 ),
                                 title: "Audio Kontrola",
                                 desc: "Implementacija logike za reprodukciju glazbe (play/pause) i upravljanje stanjem audio elemenata.",
-                                variant: "pink",
+                                variant: "pink" as const,
                             },
                             {
                                 icon: (
@@ -370,10 +368,9 @@ const SongFinder: React.FC = () => {
                                 ),
                                 title: "Imperativni DOM",
                                 desc: "Ručno kreiranje HTML elemenata (`document.createElement`) i manipulacija klasama bez frameworka.",
-                                variant: "violet",
+                                variant: "violet" as const,
                             },
                         ].map((card, i) => (
-                            // @ts-ignore
                             <ColoredGlassCard
                                 key={i}
                                 variant={card.variant}

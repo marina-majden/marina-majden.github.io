@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, lazy, Suspense } from "react";
 import {
     motion,
     useMotionValue,
@@ -7,7 +7,10 @@ import {
 } from "framer-motion";
 import SectionTitle from "../components/SectionTitle";
 import { Translation } from "../types";
-import CardScanner from "@/components/CardScanner.tsx";
+import Reveal from "@/components/Reveal";
+import { Spinner } from "@/components/SpinnerLoader.tsx";
+
+const CardScanner = lazy(() => import("@/components/CardScanner.tsx"));
 interface AboutProps {
     t: Translation;
 }
@@ -84,9 +87,12 @@ const About: React.FC<AboutProps> = ({ t }) => {
     return (
         <section id='about' className='py-10 md:py-14'>
             <div className='w-screen h-screen flex flex-col justify-evenly items-center'>
-                <SectionTitle>{t.about.title}</SectionTitle>
-
-                <CardScanner />
+                <Reveal>
+                    <SectionTitle>{t.about.title}</SectionTitle>
+                </Reveal>
+                <Suspense fallback={<Spinner />}>
+                    <CardScanner />
+                </Suspense>
             </div>
         </section>
     );

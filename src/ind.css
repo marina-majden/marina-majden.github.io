@@ -1,0 +1,345 @@
+@import "tailwindcss";
+
+@layer base {
+    :root {
+        --color-primary: oklch(53.5% 0.13553 248.026);
+        --color-secondary: oklch(58% 0.20741 355.95);
+        --color-affirmation: oklch(64.672% 0.11155 161.21);
+        --color-problem: oklch(58.32% 0.15635 23.24);
+        --color-bg-dark: oklch(13% 0.03967 309.942);
+        --color-text-main: oklch(90% 0.01919 248.165);
+
+        --color-lake-100: hsl(205, 92%, 82%);
+        --color-lake-200: hsl(205, 92%, 78%);
+        --color-lake-300: hsl(205, 92%, 72%);
+        --color-lake-400: hsl(205, 92%, 66%);
+        --color-lake-500: hsl(205, 92%, 61%);
+        --color-lake-600: hsl(205, 92%, 55%);
+        --color-lake-700: hsl(205, 92%, 45%);
+        --color-lake-800: hsl(205, 92%, 35%);
+        --color-lake-900: hsl(205, 92%, 25%);
+        --color-candy-100: hsl(332, 55%, 80%);
+        --color-candy-200: hsl(332, 55%, 75%);
+        --color-candy-300: hsl(332, 55%, 65%);
+        --color-candy-400: hsl(332, 55%, 60%);
+        --color-candy-500: #c73c7e;
+        --color-candy-600: #a13166;
+        --color-candy-700: #8c2d59;
+        --color-candy-800: #72284b;
+        --color-candy-900: #5c233d;
+
+        --color-turq-100: hsl(176, 50%, 80%);
+        --color-turq-200: hsl(176, 50%, 75%);
+        --color-turq-300: hsl(176, 50%, 70%);
+        --color-turq-400: hsl(176, 50%, 65%);
+        --color-turq-500: hsl(176, 50%, 60%);
+        --color-turq-600: hsl(176, 50%, 50%);
+        --color-turq-700: hsl(176, 50%, 40%);
+        --color-turq-800: hsl(176, 50%, 30%);
+        --color-turq-900: hsl(176, 50%, 20%);
+
+        --color-peach-500: #ee7752;
+        --color-mint-500: #23d5ab;
+        --color-lake-500: #3eaaf7;
+        --color-offblack: #1b1b1b;
+        --color-deepgray: #232222;
+        --color-lightgray: #484646;
+        --color-offwhite: #e5f1f1;
+        --color-white: #e5f1fc;
+        --color-wh: #ffffff;
+        --color-deep-space: #0f172a;
+        --color-neon-pink: var(--color-candy-600);
+        --color-neon-cyan: var(--color-lake-500);
+
+        --color-background: #121213;
+        --color-heading: var(--color-offblack);
+        --color-link: var(--color-lake-500);
+        --color-accent: var(--color-candy-600);
+        --color-affirmation: var(--color-mint-500);
+        --color-problem: var(--color-peach-500);
+        --color-link-hover: var(--color-mint-500);
+
+        --color-glass: rgba(0, 0, 0, 0.03);
+        --color-glass-hover: rgba(255, 255, 255, 0.08);
+        --color-glass-effect: rgba(255, 255, 255, 0.1);
+        --color-glass-border: rgba(0, 0, 0, 0.1);
+
+        --text-shadow-thin-br: 1px 1px 1px 3px;
+        --text-shadow-thin-tl: -1px -1px 1px 3px;
+        --text-shadow-thin: 1px 1px 1px rgba(0, 0, 0, 0.5);
+
+        --box-shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.2);
+        --box-shadow-glass-hover: 0 0 25px rgba(255, 255, 255, 0.1);
+
+        --font-mono: "Fira Mono", monospace;
+        --font-sans: "Satoshi", sans-serif;
+        --font-display: "Telma", cursive;
+        --font-link: "Asap", sans-serif;
+        --font-heading: "Asap", sans-serif;
+
+        --animate-float: float 8s infinite ease-in-out;
+        --animate-pulse-dynamic: pulse-dynamic 3s infinite ease;
+        --animate-neon-glow: neon-glow 3s infinite ease-in-out;
+        --animate-cruising: cruising 5s linear infinite;
+        --animate-gradient-x: gradient-x 5s ease infinite;
+        --animate-shimmer: shimmer 2s linear infinite;
+        --animate-spin: spin 4s linear infinite;
+        --animate-spin-slow: spin 8s linear infinite;
+        --animate-progressBar: progressBar 2s ease-in-out infinite;
+        --animate-fadeIn: fadeIn 1s ease-out forwards;
+    }
+
+    body {
+        @apply bg-slate-900 text-slate-50 antialiased;
+        font-family: "Inter", sans-serif; /* Zamijeni svojim glavnim fontom */
+    }
+
+    h1 {
+        @apply text-4xl md:text-6xl font-bold tracking-tight mb-6;
+    }
+
+    h2 {
+        @apply text-3xl font-semibold mb-4 text-indigo-400;
+    }
+
+    p {
+        @apply text-lg leading-relaxed text-slate-300 mb-4;
+    }
+    a {
+        @apply font-link text-lake-700 no-underline p-2 cursor-pointer hover:text-lake-500 active:text-lake-200 transition-colors duration-300;
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium 
+           transition-all duration-300 hover:bg-indigo-500 
+           hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] active:scale-95;
+    }
+
+    .btn-secondary {
+        @apply px-6 py-3 border-2 border-slate-700 text-slate-300 rounded-lg font-medium 
+           transition-all duration-300 hover:border-indigo-400 hover:text-white;
+    }
+
+    .card-glass {
+        @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6
+           transition-transform duration-500 hover:-translate-y-2;
+    }
+
+    .input-field {
+        @apply w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 
+           text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500;
+    }
+}
+
+@layer utilities {
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+    @keyframes letter-animation {
+        0% {
+            stroke-dashoffset: 2600;
+        }
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        50% {
+            transform: translate(50px, -50px) scale(1.3);
+        }
+
+        100% {
+            transform: translate(0, 0) scale(1);
+        }
+    }
+    @keyframes pulse-dynamic {
+        0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        }
+        70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        }
+        100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+    }
+    @keyframes neon-glow {
+        0%,
+        100% {
+            box-shadow:
+                0 0 5px var(--color-neon-cyan),
+                0 0 20px var(--color-neon-cyan),
+                0 0 30px var(--color-neon-cyan),
+                0 0 40px var(--color-neon-cyan);
+        }
+        50% {
+            box-shadow:
+                0 0 10px var(--color-neon-pink),
+                0 0 30px var(--color-neon-pink),
+                0 0 40px var(--color-neon-pink),
+                0 0 50px var(--color-neon-pink);
+        }
+    }
+    @keyframes cruising {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+
+        50% {
+            transform: translateX(-30%) translateY(20%);
+        }
+
+        100% {
+            transform: translateX(0) translateY(0);
+        }
+    }
+    @keyframes gradient-x {
+        0%,
+        100% {
+            background-size: 200% 200%;
+            background-position: left center;
+        }
+        50% {
+            background-size: 200% 200%;
+            background-position: right center;
+        }
+    }
+    @keyframes shimmer {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes move {
+        0% {
+            transform: translateX(0em) translateY(0em);
+        }
+        25% {
+            transform: translateY(-1em) translateX(-1em);
+            rotate: -10deg;
+        }
+        50% {
+            transform: translateY(1em) translateX(-1em);
+        }
+        75% {
+            transform: translateY(-1.25em) translateX(1em);
+            rotate: 10deg;
+        }
+        100% {
+            transform: translateX(0em) translateY(0em);
+        }
+    }
+    @keyframes glowing-stars {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+    @keyframes shootingStar {
+        0% {
+            transform: translateX(0) translateY(0);
+            opacity: 1;
+        }
+        50% {
+            transform: translateX(-55em) translateY(0);
+            opacity: 1;
+        }
+        70% {
+            transform: translateX(-70em) translateY(0);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0) translateY(0);
+            opacity: 0;
+        }
+    }
+    @keyframes ani {
+        0% {
+            transform: translateX(0%) scale(1);
+        }
+        50% {
+            transform: translateX(-100%) scale(0.8);
+        }
+        100% {
+            transform: translateX(0%) scale(1);
+        }
+    }
+    @keyframes shine {
+        0% {
+            top: 100%;
+            left: -100%;
+        }
+        50%,
+        100% {
+            top: 0%;
+            left: 70%;
+        }
+    }
+    @keyframes progressBar {
+        0% {
+            width: 0%;
+        }
+        50% {
+            width: 60%;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes scanEffect {
+        0% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+}

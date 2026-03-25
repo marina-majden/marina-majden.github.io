@@ -69,7 +69,7 @@ const BackgroundGlows = () => (
         <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className='absolute top-[-10%] left-[10%] w-[700px] h-[700px] bg-emerald-900/20 rounded-full blur-[120px] will-change-transform'
+            className='absolute top-[-10%] left-[10%] w-[700px] h-[700px] bg-[radial-gradient(circle_at_center,rgba(6,78,59,0.3)_0%,transparent_60%)] rounded-full will-change-transform'
         />
         <motion.div
             animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.3, 0.1] }}
@@ -79,9 +79,9 @@ const BackgroundGlows = () => (
                 ease: "easeInOut",
                 delay: 2,
             }}
-            className='absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-teal-800/20 rounded-full blur-[120px] will-change-transform'
+            className='absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(17,94,89,0.3)_0%,transparent_60%)] rounded-full will-change-transform'
         />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100 contrast-150 pointer-events-none" />
     </div>
 );
 
