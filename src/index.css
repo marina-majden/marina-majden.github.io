@@ -1,3 +1,53 @@
+@font-face {
+    font-family: Deadline;
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/DEADLINE.TTF") format("ttf");
+}
+@font-face {
+    font-family: Amper;
+    font-style: italic;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/Ampero-BoldItalic.otf") format("otf");
+}
+@font-face {
+    font-family: Bemock;
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/Bemock.ttf") format("ttf");
+}
+@font-face {
+    font-family: BoldnessOutline;
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/Boldness Outline.otf") format("otf");
+}
+@font-face {
+    font-family: Boldness;
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/Boldness.otf") format("otf");
+}
+@font-face {
+    font-family: ChortleFaces;
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/ChortleFaces.ttf") format("ttf");
+}
+@font-face {
+    font-family: Consequences;
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/ConsequencesShadow.ttf") format("ttf");
+}
+
 @import "tailwindcss";
 
 @theme {
@@ -302,9 +352,16 @@
 
     --font-mono: "Fira Mono", monospace;
     --font-sans: "Satoshi", sans-serif;
-    --font-display: "Telma", cursive;
+    --font-display: "Edu SA Beginner", cursive;
     --font-link: "Asap", sans-serif;
     --font-heading: "Asap", sans-serif;
+    --font-display1: "Deadline";
+    --font-display2: "Amper";
+    --font-display3: "Bemock";
+    --font-display4: "Boldness";
+    --font-display5: "BoldnessOutline";
+    --font-display6: "Chortle Faces";
+    --font-display7: "Consequences";
 }
 
 @layer base {

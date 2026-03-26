@@ -30,7 +30,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
     return (
         <section
             id='home'
-            className='w-screen h-[50vh] md:h-screen mx-auto relative overflow-hidden pt-8 mt-8 mb-2 md:mt-10 lg:mt-16'>
+            className='w-screen h-[50vh] md:h-full mx-auto relative overflow-hidden pt-8 mt-8 mb-2 md:mt-10 lg:mt-16'>
             <div className='container md:h-[80vh] flex flex-col justify-around items-center mx-auto px-6 text-center relative z-10'>
                 <div
                     className={`inline-block my-4 px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50 backdrop-blur-sm transition-all duration-800 ${
@@ -43,16 +43,72 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
                         // Portfolio initialized
                     </span>
                 </div>
-
                 <h1 className='w-4/5 mt-4 mb-8'>
                     <span
-                        className={`block text-6xl md:text-7xl lg:text-9xl text-center leading-none bg-clip-text text-transparent font-display bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                        className={`block text-6xl md:text-7xl lg:text-9xl text-center leading-40 bg-clip-text text-transparent font-display1 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
                             heroLoaded
                                 ? "opacity-100 translate-x-0"
                                 : "opacity-0 -translate-x-10"
                         }`}>
                         {t.hero.line1}
                     </span>
+                    <span
+                        className={`block text-6xl md:text-7xl lg:text-9xl text-center leading-40 bg-clip-text text-transparent font-display2 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-10"
+                        }`}>
+                        {t.hero.line1}
+                    </span>
+                    <span
+                        className={`block text-6xl  text-center leading-40 bg-clip-text text-transparent font-display3 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-10"
+                        }`}>
+                        {t.hero.line1}
+                    </span>
+                    <span
+                        className={`block text-6xl text-center leading-40 bg-clip-text text-transparent font-display4 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-10"
+                        }`}>
+                        {t.hero.line1}
+                    </span>
+                    <span
+                        className={`block text-6xl text-center leading-40 bg-clip-text text-transparent font-display5 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-10"
+                        }`}>
+                        {t.hero.line1}
+                    </span>
+                    <span
+                        className={`block text-6xl text-center leading-40 bg-clip-text text-transparent font-display6 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-10"
+                        }`}>
+                        {t.hero.line1}
+                    </span>
+                    <span
+                        className={`block text-6xl text-center leading-40 bg-clip-text text-transparent font-display7 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-10"
+                        }`}>
+                        {t.hero.line1}
+                    </span>
+                    <span
+                        className={`block text-6xl text-center leading-40 bg-clip-text text-transparent font-display8 bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
+                            heroLoaded
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-10"
+                        }`}>
+                        {t.hero.line1}
+                    </span>
+
                     <br></br>
                     {/*     <span
                         className={`block text-6xl md:text-7xl lg:text-9xl mb-4 leading-none text-right font-link text-lake-600 text-shadow-lake-900 text-shadow-xs font-bold  z-40  transition-all duration-500 delay-400 ${
@@ -62,17 +118,15 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
                         }`}>
                         {t.hero.line2}
                     </span> */}
-
-                    <span
-                        className={`block text-2xl text-slate-200 font-link mt-4 font-semibold uppercase z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
-                            heroLoaded
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-20"
-                        }`}>
-                        {t.hero.line3}
-                    </span>
-                </h1>
-
+                </h1>{" "}
+                <span
+                    className={`block text-2xl text-slate-200 font-link mt-4 font-semibold uppercase z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
+                        heroLoaded
+                            ? "opacity-100 translate-x-0"
+                            : "opacity-0 -translate-x-20"
+                    }`}>
+                    {t.hero.line3}
+                </span>
                 <div
                     className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 delay-1000 ${
                         heroLoaded
