@@ -91,7 +91,6 @@
 
     body {
         @apply bg-slate-900 text-slate-50 antialiased;
-        font-family: "Inter", sans-serif; /* Zamijeni svojim glavnim fontom */
     }
 
     h1 {

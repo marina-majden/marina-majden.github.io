@@ -1,54 +1,41 @@
-@font-face {
-    font-family: Deadline;
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: url("/fonts/DEADLINE.TTF") format("ttf");
-}
-@font-face {
-    font-family: Amper;
-    font-style: italic;
-    font-weight: 800;
-    font-display: swap;
-    src: url("/fonts/Ampero-BoldItalic.otf") format("otf");
-}
-@font-face {
-    font-family: Bemock;
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: url("/fonts/Bemock.ttf") format("ttf");
-}
-@font-face {
-    font-family: BoldnessOutline;
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: url("/fonts/Boldness Outline.otf") format("otf");
-}
-@font-face {
-    font-family: Boldness;
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: url("/fonts/Boldness.otf") format("otf");
-}
-@font-face {
-    font-family: ChortleFaces;
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: url("/fonts/ChortleFaces.ttf") format("ttf");
-}
-@font-face {
-    font-family: Consequences;
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: url("/fonts/ConsequencesShadow.ttf") format("ttf");
-}
-
 @import "tailwindcss";
+
+@layer base {
+    @font-face {
+        font-family: "Another Typewriter";
+        src: url("/fonts/atwriter.ttf") format("truetype");
+        font-display: swap;
+    }
+    @font-face {
+        font-family: "Barber chop";
+        src: url("/fonts/BarberChop.otf") format("opentype");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Satoshi";
+        src: url("/fonts/Satoshi-Variable.ttf") format("truetype");
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: "Satoshi";
+        src: url("/fonts/Satoshi-VariableItalic.ttf") format("truetype");
+        font-style: italic;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Gnuolane";
+        src: url("/fonts/Gnuolane Rg.otf") format("opentype");
+        font-display: swap;
+    }
+    @font-face {
+        font-family: "Devina Garden";
+        src: url("/fonts/Devina Garden.otf") format("opentype");
+        font-display: block;
+    }
+}
 
 @theme {
     @keyframes letter-animation {
@@ -310,7 +297,8 @@
     --color-neon-pink: var(--color-candy-600);
     --color-neon-cyan: var(--color-lake-500);
 
-    --color-background: #121213;
+    --color-background: #161111;
+    --color-background-transparent: #12121375;
     --color-heading: var(--color-offblack);
     --color-link: var(--color-lake-500);
     --color-accent: var(--color-candy-600);
@@ -352,16 +340,12 @@
 
     --font-mono: "Fira Mono", monospace;
     --font-sans: "Satoshi", sans-serif;
-    --font-display: "Edu SA Beginner", cursive;
+    --font-uppercase: "Barber chop", monospace;
     --font-link: "Asap", sans-serif;
-    --font-heading: "Asap", sans-serif;
-    --font-display1: "Deadline";
-    --font-display2: "Amper";
-    --font-display3: "Bemock";
-    --font-display4: "Boldness";
-    --font-display5: "BoldnessOutline";
-    --font-display6: "Chortle Faces";
-    --font-display7: "Consequences";
+    --font-heading: "Barber chop", sans-serif;
+    --font-cursive: "Devina Garden", sans-serif;
+    --font-alter-title: "Gnuolane", sans-serif;
+    --font-typewriter: "Another Typewriter", monospace;
 }
 
 @layer base {

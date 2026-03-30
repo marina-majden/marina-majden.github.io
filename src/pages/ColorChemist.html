@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ColorChemist | Kolor-kemičar </title>
+
+        <!-- Tailwind CSS putem CDN-a -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- React & ReactDOM putem CDN-a -->
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+        <!-- Babel putem CDN-a za prevođenje JSX-a u pregledniku -->
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <style>
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                background-color: #020617;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div id="root"></div>
+
+        <script type="text/babel">
+            const { useState, useEffect, useMemo, useRef } = React;
+
+            // --- INLINE SVG IKONE ---
+            const IconPaintBucket = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z"></path>
+                    <path d="m5 2 5 5"></path>
+                    <path d="M2 13h15"></path>
+                    <path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"></path>
+                </svg>
+            );
+            const IconDroplet = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg>
+            );
+            const IconCheck = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"></polyline></svg>
+            );
+            const IconRefreshCcw = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 2v6h6"></path><path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path><path d="M21 22v-6h-6"></path><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path></svg>
+            );
+            const IconArrowRight = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            );
+            const IconInfo = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            );
+            const IconBeaker = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4.5 3h15"></path><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"></path><path d="M6 14h12"></path></svg>
+            );
+            const IconLightbulb = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    <path d="M12 2a7 7 0 0 0-7 7c0 3.04 1.63 5.73 4 6.92V20h6v-4.08A7 7 0 0 0 19 9a7 7 0 0 0-7-7z"></path>
+                </svg>
+            );
+            const IconHistory = ({ size = 24, className = "" }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                    <path d="M3 3v5h5"></path>
+                    <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"></path>
+                    <path d="M12 7v5l4 2"></path>
+                </svg>
+            );
+
+            const AnimatedNumber = ({ value }) => {
+                const [displayValue, setDisplayValue] = useState(value);
+                const displayValueRef = useRef(value);
+
+                useEffect(() => {
+                    displayValueRef.current = displayValue;
+                }, [displayValue]);
+
+                useEffect(() => {
+                    const startValue = displayValueRef.current;
+                    const endValue = value;
+
+                    if (startValue === endValue) return;
+
+                    const duration = 750; // ms
+                    let startTime = null;
+
+                    const step = (timestamp) => {
+                        if (!startTime) startTime = timestamp;
+                        const progress = Math.min((timestamp - startTime) / duration, 1);
+                        const easeOutProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+                        const currentDisplay = Math.round(startValue + (endValue - startValue) * easeOutProgress);
+                        setDisplayValue(currentDisplay);
+
+                        if (progress < 1) {
+                            requestAnimationFrame(step);
+                        }
+                    };
+
+                    const animationFrameId = requestAnimationFrame(step);
+
+                    return () => cancelAnimationFrame(animationFrameId);
+                }, [value]);
+
+                return <>{displayValue}</>;
+            };
+
+            // --- BAZA BOJA I KONSTANTE ---
+            const BASE_COLORS = [
+                { name: "Red", label: "Crimson", css: "#d72638", rgb: [215, 38, 56] },
+                { name: "Yellow", label: "Cadmium Yellow", css: "#fcde00", rgb: [252, 222, 0] },
+                { name: "Blue", label: "Cerulean", css: "#007cc3", rgb: [0, 124, 195] },
+                { name: "White", label: "Titanium White", css: "#f8fafc", rgb: [255, 255, 255] },
+                { name: "Black", label: "Ivory Black", css: "#0f172a", rgb: [0, 0, 0] },
+            ];
+
+            // Koristi se realističniji, subtraktivni model miješanja boja (pigmenata)
+            const mixColorsSubtractive = (pours, totalPours) => {
+                if (totalPours === 0) return null;
+                let r = 0, g = 0, b = 0;
+                const gamma = 2.2; // Gamma korekcija za realističnije miješanje
+
+                BASE_COLORS.forEach(c => {
+                    const count = pours[c.name] || 0;
+                    if (count > 0) {
+                        const weight = count / totalPours;
+                        r += Math.pow(c.rgb[0], gamma) * weight;
+                        g += Math.pow(c.rgb[1], gamma) * weight;
+                        b += Math.pow(c.rgb[2], gamma) * weight;
+                    }
+                });
+
+                return [
+                    Math.round(Math.pow(r, 1 / gamma)),
+                    Math.round(Math.pow(g, 1 / gamma)),
+                    Math.round(Math.pow(b, 1 / gamma))
+                ];
+            };
+
+            const computeTarget = (recipe) => {
+                const pours = {};
+                let totalPours = 0;
+                recipe.forEach(({ name, count }) => {
+                    pours[name] = count;
+                    totalPours += count;
+                });
+                return mixColorsSubtractive(pours, totalPours);
+            };
+
+            const rgbToHex = (rgb) => {
+                if (!rgb) return "transparent";
+                return "#" + rgb.map(v => Math.min(255, Math.max(0, v)).toString(16).padStart(2, "0")).join("");
+            };
+
+            const colorAccuracy = (a, b) => {
+                const dist = Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2) + Math.pow(a[2] - b[2], 2));
+                const maxDist = Math.sqrt(3 * 255 * 255);
+                return Math.max(0, 1 - dist / maxDist);
+            };
+
+            const RAW_ORDERS = [
+                { name: "Vermilion", hint: "Osnovno miješanje: Crimson i Cadmium Yellow.", level: "Lako", recipe: [{ name: "Red", count: 1 }, { name: "Yellow", count: 1 }] },
+                { name: "Viridian", hint: "Osnovno miješanje: Cadmium Yellow i Cerulean.", level: "Lako", recipe: [{ name: "Yellow", count: 1 }, { name: "Blue", count: 1 }] },
+                { name: "Dioxazine Purple", hint: "Osnovno miješanje: Crimson i Cerulean.", level: "Lako", recipe: [{ name: "Red", count: 1 }, { name: "Blue", count: 1 }] },
+                { name: "Neutral Grey", hint: "Ivory Black i Titanium White u jednakom omjeru.", level: "Lako", recipe: [{ name: "Black", count: 1 }, { name: "White", count: 1 }] },
+                { name: "Lavender", hint: "Ljubičasta s puno Titanium White.", level: "Srednje", recipe: [{ name: "Red", count: 1 }, { name: "Blue", count: 1 }, { name: "White", count: 4 }] },
+                { name: "Olive Green", hint: "Zelena s malo Ivory Black.", level: "Srednje", recipe: [{ name: "Yellow", count: 1 }, { name: "Blue", count: 1 }, { name: "Black", count: 1 }] },
+                { name: "Flesh Tint", hint: "Narančasta s puno Titanium White.", level: "Srednje", recipe: [{ name: "Red", count: 1 }, { name: "Yellow", count: 2 }, { name: "White", count: 4 }] },
+                { name: "Burnt Sienna", hint: "Sve tri osnovne boje zajedno.", level: "Teško", recipe: [{ name: "Red", count: 1 }, { name: "Yellow", count: 1 }, { name: "Blue", count: 1 }] },
+                { name: "Burgundy", hint: "Crimson s malo Cerulean i Ivory Black.", level: "Teško", recipe: [{ name: "Red", count: 4 }, { name: "Blue", count: 1 }, { name: "Black", count: 1 }] },
+                { name: "Lime Green", hint: "Puno Cadmium Yellow s malo Cerulean.", level: "Lako", recipe: [{ name: "Yellow", count: 3 }, { name: "Blue", count: 1 }] },
+                { name: "Sky Blue", hint: "Cerulean s puno Titanium White.", level: "Lako", recipe: [{ name: "Blue", count: 1 }, { name: "White", count: 5 }] },
+                { name: "Teal", hint: "Više Cerulean nego Cadmium Yellow, s malo Titanium White.", level: "Srednje", recipe: [{ name: "Blue", count: 2 }, { name: "Yellow", count: 1 }, { name: "White", count: 1 }] },
+                { name: "Salmon Pink", hint: "Vermilion s puno Titanium White.", level: "Srednje", recipe: [{ name: "Red", count: 1 }, { name: "Yellow", count: 1 }, { name: "White", count: 6 }] },
+                { name: "Dark Chocolate", hint: "Smeđa boja s dodatkom Crimson i Ivory Black.", level: "Teško", recipe: [{ name: "Red", count: 2 }, { name: "Yellow", count: 1 }, { name: "Blue", count: 1 }, { name: "Black", count: 1 }] },
+            ];
+
+            const ORDERS = RAW_ORDERS.map(o => ({ ...o, target: computeTarget(o.recipe) }));
+
+            // --- GLAVNA KOMPONENTA ---
+            const ColorChef = () => {
+                const [orderNum, setOrderNum] = useState(1);
+                const [score, setScore] = useState(0);
+                const [bestScore, setBestScore] = useState(0);
+                const [currentOrder, setCurrentOrder] = useState(ORDERS[0]);
+                const [pours, setPours] = useState({});
+                const [totalPours, setTotalPours] = useState(0);
+
+                const [showResult, setShowResult] = useState(false);
+                const [pastOrders, setPastOrders] = useState([]);
+                const [resultData, setResultData] = useState(null);
+
+                const [toast, setToast] = useState(null);
+
+                useEffect(() => {
+                    loadNextOrder(1);
+                }, []);
+
+                useEffect(() => {
+                    if (toast) {
+                        const timer = setTimeout(() => setToast(null), 2000);
+                        return () => clearTimeout(timer);
+                    }
+                }, [toast]);
+
+                const loadNextOrder = (newOrderNum) => {
+                    const shuffled = [...ORDERS].sort(() => Math.random() - 0.5);
+                    const idx = (newOrderNum - 1) % ORDERS.length;
+                    setCurrentOrder(shuffled[idx] || ORDERS[idx]);
+                    setOrderNum(newOrderNum);
+                };
+
+                const pourColor = (colorName, colorLabel) => {
+                    setPours(prev => ({ ...prev, [colorName]: (prev[colorName] || 0) + 1 }));
+                    setTotalPours(prev => prev + 1);
+                    setToast(`+1 kap: ${colorLabel}`);
+                };
+
+                const clearBowl = () => {
+                    setPours({});
+                    setTotalPours(0);
+                };
+
+                const serveIt = () => {
+                    if (totalPours === 0) {
+                        setToast("Prvo ulijte neku boju!");
+                        return;
+                    }
+
+                    // Recalculate RGB values inside the handler to ensure we're using
+                    // the state from the exact moment of the click, preventing potential bugs.
+                    const currentMixedRGB = mixColorsSubtractive(pours, totalPours);
+                    const currentTargetRGB = currentOrder.target;
+
+                    if (!currentMixedRGB || !currentTargetRGB) return;
+
+                    const accuracy = colorAccuracy(currentMixedRGB, currentTargetRGB);
+                    const earned = Math.round(accuracy * 100);
+
+                    let newScore = score + earned;
+                    setScore(newScore);
+                    if (newScore > bestScore) setBestScore(newScore);
+
+                    let stars = "";
+                    let msg = "";
+
+                    if (accuracy >= 0.99) {
+                        stars = "⭐⭐⭐⭐⭐";
+                        msg = `Savršeno! Otkrili ste boju: ${currentOrder.name}!`;
+                    } else if (accuracy >= 0.95) {
+                        stars = "⭐⭐⭐⭐";
+                        msg = "Izvrsno!";
+                    } else if (accuracy >= 0.90) {
+                        stars = "⭐⭐⭐";
+                        msg = "Vrlo dobro!";
+                    } else if (accuracy >= 0.80) {
+                        stars = "⭐⭐";
+                        msg = "Može i bolje.";
+                    } else if (accuracy >= 0.70) {
+                        stars = "⭐";
+                        msg = "Treba još vježbe...";
+                    } else {
+                        stars = " ";
+                        msg = "Potpuni promašaj, stari moj!";
+                    }
+
+                    const newPastOrder = {
+                        orderNum: orderNum,
+                        name: currentOrder.name,
+                        // By converting to hex here, we save the actual color value
+                        // instead of a reference that might change later.
+                        targetHex: rgbToHex(currentTargetRGB),
+                        mixedHex: rgbToHex(currentMixedRGB),
+                        accuracy: accuracy,
+                    };
+                    setPastOrders(prev => [newPastOrder, ...prev]);
+                    setResultData({ accuracy, msg, stars, earned });
+                    setShowResult(true);
+                };
+
+                const handleNextOrder = () => {
+                    setShowResult(false);
+                    clearBowl();
+                    loadNextOrder(orderNum + 1);
+                };
+
+                const mixedRGB = useMemo(() => mixColorsSubtractive(pours, totalPours), [pours, totalPours]);
+                const mixedHex = rgbToHex(mixedRGB);
+                const targetHex = rgbToHex(currentOrder.target || [0, 0, 0]);
+
+                const getContrastText = (rgb) => {
+                    const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+                    return brightness > 125 ? 'text-slate-900' : 'text-white';
+                };
+                return (
+                    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans p-4 md:p-8 relative selection:bg-purple-500/30">
+
+                        {/* Toast Notifikacija */}
+                        <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-slate-800 border border-slate-700 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 transition-all duration-300 ${toast ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
+                            <IconDroplet size={18} className="text-blue-400" />
+                            <span className="font-bold">{toast}</span>
+                        </div>
+
+                        <header className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 mb-10 bg-slate-900/50 p-6 rounded-3xl border border-slate-800">
+                            <div>
+                                <h1 className="text-3xl md:text-4xl font-black flex items-center gap-3 text-white">
+                                    <IconPaintBucket className="text-purple-500" size={36} />
+                                    Kemija boja
+                                </h1>
+                                <p className="text-slate-400 mt-2">Pokušaj smiksati nijansu identičnu traženoj.</p>
+                            </div>
+
+                            <div className="flex gap-6 bg-slate-900 p-4 rounded-2xl border border-slate-800">
+                                <div className="text-center px-4 border-r border-slate-700">
+                                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Rezultat</div>
+                                    <div className="text-2xl font-black text-purple-400"><AnimatedNumber value={score} /></div>
+                                </div>
+                                <div className="text-center px-4 border-r border-slate-700">
+                                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Narudžba</div>
+                                    <div className="text-2xl font-black text-blue-400">#{orderNum}</div>
+                                </div>
+                                <div className="text-center px-4">
+                                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Najbolje</div>
+                                    <div className="text-2xl font-black text-slate-300"><AnimatedNumber value={bestScore} /></div>
+                                </div>
+                            </div>
+                        </header>
+
+                        <main className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
+
+                            {/* --- LIJEVI PANEL: Narudžba --- */}
+                            <div className="bg-slate-900 rounded-3xl border border-slate-800 p-6 shadow-xl flex flex-col gap-6">
+                                <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                                    <IconBeaker size={16} /> Tražena boja
+                                </h2>
+                                <div className="flex justify-between items-end gap-3">
+                                    <h3 className="text-xl font-black uppercase text-white mb-1">Narudžba #{orderNum}</h3>
+                                    <div className="relative group">
+                                        <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border ${currentOrder.level === 'Lako' ? 'bg-green-950/50 text-green-400 border-green-900/50' :
+                                            currentOrder.level === 'Srednje' ? 'bg-yellow-950/50 text-yellow-400 border-yellow-900/50' :
+                                                'bg-red-950/50 text-red-400 border-red-900/50'
+                                            }`}>
+                                            {currentOrder.level}
+                                        </span>
+                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1.5 bg-slate-800 text-slate-200 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg border border-slate-700">
+                                            Razina težine
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex justify-between items-end gap-3">
+
+                                    <div className="grow">
+                                        <details>
+                                            <summary className="inline-block cursor-pointer list-none">
+                                                <p className="text-md font-black text-white/50 mb-1 flex items-center gap-2"><IconLightbulb size={16} className="text-yellow-400" />Klikni za hint</p>
+                                            </summary>
+                                            <p className="text-sm text-slate-400 italic flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-800">
+                                                <IconInfo size={14} /> {currentOrder.hint}
+                                            </p>
+                                        </details>
+                                    </div>
+
+                                </div>
+                                <div className="bg-slate-950 rounded-2xl border border-slate-800 p-5 relative overflow-hidden group">
+                                    <div className="absolute top-0 left-4 bg-purple-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-b-lg z-10 shadow-lg">
+                                        Narudžba #{orderNum}
+                                    </div>
+
+                                    <div
+                                        className="w-full h-32 md:h-40 rounded-xl mt-6 mb-5 flex items-center justify-center shadow-md border border-white/10 transition-colors duration-500 relative"
+                                        style={{ backgroundColor: targetHex }}
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl"></div>
+                                        <span className="font-mono text-sm bg-black/40 backdrop-blur-md px-3 py-1 rounded-lg text-white font-bold opacity-0 group-hover:opacity-100 transition-opacity z-10 border border-white/20">
+                                            {targetHex.toUpperCase()}
+                                        </span>
+                                    </div>
+
+
+                                </div>
+
+                                <div className="flex-grow flex flex-col min-h-0">
+                                    <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
+                                        <IconHistory size={16} /> Prošle narudžbe
+                                    </h2>
+                                    <div className="overflow-y-auto pr-2 -mr-2 flex-grow space-y-3">
+                                        {pastOrders.length === 0 ? (
+                                            <p className="text-sm text-slate-600 italic text-center py-8">Ovdje će biti povijest tvojih narudžbi.</p>
+                                        ) : (
+                                            pastOrders.map((order) => (
+                                                <div key={order.orderNum} className="bg-slate-800/50 p-3 rounded-xl border border-slate-800">
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-sm font-bold text-white">#{order.orderNum} {order.name}</span>
+                                                        <span className={`text-xs font-mono font-bold ${order.accuracy >= 0.95 ? 'text-green-400' : order.accuracy > 0.8 ? 'text-yellow-400' : 'text-red-400'}`}>{Math.round(order.accuracy * 100)}%</span>
+                                                    </div>
+                                                    <div className="flex gap-2 mt-2">
+                                                        <div className="w-1/2 h-8 rounded-md border border-white/10" style={{ backgroundColor: order.targetHex }} title="Tražena boja"></div>
+                                                        <div className="w-1/2 h-8 rounded-md border border-white/10" style={{ backgroundColor: order.mixedHex }} title="Tvoja boja"></div>
+                                                    </div>
+                                                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mt-1 flex justify-between">
+                                                        <span>Cilj</span>
+                                                        <span>Tvoje</span>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            {/* --- DESNI PANEL: Posuda i Sastojci --- */}
+                            <div className="bg-slate-900 rounded-3xl border border-slate-800 p-6 shadow-xl flex flex-col gap-6">
+                                <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                                    <IconBeaker size={16} /> Posuda za miješanje
+                                </h2>
+
+                                <div
+                                    className={`w-full h-32 md:h-40 rounded-2xl flex items-center justify-center border-2 transition-all duration-300 shadow-inner overflow-hidden relative ${totalPours === 0 ? 'bg-slate-950 border-slate-800' : 'border-transparent'}`}
+                                    style={{ backgroundColor: totalPours > 0 ? mixedHex : undefined }}
+                                >
+                                    {totalPours > 0 && (
+                                        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent mix-blend-overlay"></div>
+                                    )}
+
+                                    {totalPours === 0 ? (
+                                        <span className="text-sm text-slate-600 italic">Dodaj neku boju!</span>
+                                    ) : (
+                                        <span className={`font-mono text-lg font-bold z-10 drop-shadow-md ${mixedRGB ? getContrastText(mixedRGB) : ''}`}>
+                                            {mixedHex.toUpperCase()}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="bg-slate-800/30 rounded-2xl p-5 border border-slate-800 flex-grow">
+                                    <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Tvoj omjer</h3>
+                                    <div className="flex flex-col gap-3">
+                                        {Object.keys(pours).length === 0 ? (
+                                            <p className="text-sm text-slate-600 italic">Ovdje će pisati tvoja formula</p>
+                                        ) : (
+                                            Object.entries(pours).map(([name, count]) => {
+                                                const colorInfo = BASE_COLORS.find(c => c.name === name);
+                                                if (!colorInfo || count === 0) return null;
+                                                const pct = Math.round((count / totalPours) * 100);
+
+                                                return (
+                                                    <div key={name} className="flex items-center gap-4 text-sm font-medium">
+                                                        <span className="w-20 text-slate-300">{colorInfo.label}</span>
+                                                        <div className="flex-grow h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                                                            <div
+                                                                className="h-full transition-all duration-300 rounded-full"
+                                                                style={{ width: `${pct}%`, backgroundColor: colorInfo.css }}
+                                                            ></div>
+                                                        </div>
+                                                        <span className="w-10 text-right text-slate-400 font-mono">{pct}%</span>
+                                                    </div>
+                                                );
+                                            })
+                                        )}
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
+                                        Boje na raspolaganju
+                                    </h2>
+                                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                                        {BASE_COLORS.map(c => (
+                                            <button
+                                                key={c.name}
+                                                onClick={() => pourColor(c.name, c.label)}
+                                                className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all duration-200 transform hover:-translate-y-1 active:scale-95 border border-slate-800 shadow-sm"
+                                                style={{
+                                                    backgroundColor: c.css,
+                                                    color: getContrastText(c.rgb),
+                                                    boxShadow: `inset 0 -4px 0 rgba(0,0,0,0.2)`
+                                                }}
+                                            >
+                                                <IconDroplet size={20} className="drop-shadow-sm opacity-80" />
+                                                <span className="text-[10px] sm:text-xs font-bold tracking-wider drop-shadow-md">{c.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 mt-auto pt-4 border-t border-slate-800">
+                                    <button
+                                        onClick={clearBowl}
+                                        className="flex-1 py-3 rounded-xl font-bold text-slate-300 bg-slate-800 hover:bg-slate-700 transition-colors flex justify-center items-center gap-2"
+                                    >
+                                        <IconRefreshCcw size={18} /> Očisti
+                                    </button>
+                                    <button
+                                        onClick={serveIt}
+                                        className="flex-[2] py-3 rounded-xl font-black text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg hover:shadow-purple-500/25 transition-all flex justify-center items-center gap-2"
+                                    >
+                                        <IconArrowRight size={20} /> Predaj ovu nijansu
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* --- REZULTAT (OVERLAY) --- */}
+                            {showResult && resultData && (
+                                <div className="absolute inset-0 z-40 bg-slate-950/80 backdrop-blur-md rounded-3xl flex items-center justify-center p-6 animate-in fade-in zoom-in duration-300">
+                                    <div className="bg-slate-900 border border-slate-700 p-8 rounded-3xl shadow-2xl max-w-md w-full text-center flex flex-col items-center">
+
+                                        <div className="text-4xl mb-4 tracking-widest">{resultData.stars}</div>
+                                        <h2 className="text-5xl font-black text-purple-400 mb-2">{Math.round(resultData.accuracy * 100)}%</h2>
+                                        <p className="text-xl font-bold text-white mb-8">{resultData.msg}</p>
+
+                                        <div className="flex justify-center items-center gap-6 mb-8 w-full">
+                                            <div className="flex flex-col items-center">
+                                                <div className="w-20 h-20 rounded-2xl shadow-inner border border-white/10 mb-2" style={{ backgroundColor: targetHex }}></div>
+                                                <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Cilj</span>
+                                            </div>
+                                            <div className="text-slate-600 font-black">VS</div>
+                                            <div className="flex flex-col items-center">
+                                                <div className="w-20 h-20 rounded-2xl shadow-inner border border-white/10 mb-2" style={{ backgroundColor: mixedHex }}></div>
+                                                <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Tvoje</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="text-sm text-slate-400 mb-8 border-t border-slate-800 pt-4 w-full">
+                                            Osvojeno bodova: <strong className="text-white">+{resultData.earned}</strong>
+                                        </div>
+                                        <button
+                                            onClick={handleNextOrder}
+                                            className="w-full py-4 rounded-xl font-black text-white bg-blue-600 hover:bg-blue-500 transition-colors flex justify-center items-center gap-2 shadow-lg hover:shadow-blue-500/25"
+                                        >
+                                            Sljedeća narudžba <IconArrowRight size={18} />
+                                        </button>
+
+                                    </div>
+                                </div>
+                            )}
+
+                        </main>
+                    </div>
+                );
+            };
+            // Renderiranje React komponente u DOM
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<ColorChef />);
+        </script>
+    </body>
+
+</html>

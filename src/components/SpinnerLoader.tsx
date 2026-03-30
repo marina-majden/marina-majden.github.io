@@ -55,7 +55,7 @@ const Spinner: React.FC = () => {
 
 const SpinnerLoader: React.FC = () => {
     return (
-        <div className='flex min-h-screen items-center justify-center bg-deep-space'>
+        <div className='flex min-h-screen items-center justify-center bg-background'>
             <div className='relative'>
                 {/* Main Container Size */}
                 <div className='relative h-32 w-32'>
