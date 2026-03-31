@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-unused
+
 
 # Editor directories and files
 .vscode/*
@@ -24,4 +24,8 @@ unused
 *.sln
 *.sw?
 
+# my files and folders
+
+unused
+pages
 .move-unused-components.js
