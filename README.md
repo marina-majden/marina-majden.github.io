@@ -24,28 +24,6 @@ The project is built using modern front-end technologies, with a focus on strong
 - **Responsive Design**: Complete visual adaptation to all screen sizes (Mobile-first approach).
 - **Automated Deployment**: Continuous integration and delivery (CI/CD) set up via GitHub Actions for fast and secure deployment of new code versions.
 
-## 🚀 Local Development
-
-If you want to run the project locally on your machine:
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/marina-majden/marina-majden.github.io.git
-    ```
-
-2. Navigate to the project directory and install dependencies:
-
-    ```bash
-    cd marina-majden.github.io
-    npm install
-    ```
-
-3. Start the development server:
-    ```bash
-    npm run dev
-    ```
-
 ---
 
 Designed and coded with 💻 by Marina Majdenić.
