@@ -25,7 +25,7 @@ const NotFound: React.FC = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                     }}
-                    className='absolute top-[20%] left-[20%] w-[400px] h-[400px] bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.15)_0%,transparent_60%)] rounded-full will-change-transform'
+                    className='absolute top-[20%] left-[20%] w-100400px] bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.15)_0%,transparent_60%)] rounded-full will-change-transform'
                 />
                 <motion.div
                     animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.3, 0.1] }}
@@ -35,7 +35,7 @@ const NotFound: React.FC = () => {
                         ease: "easeInOut",
                         delay: 2,
                     }}
-                    className='absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.15)_0%,transparent_60%)] rounded-full will-change-transform'
+                    className='absolute bottom-[20%] right-[20%] w-125 h-125 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.15)_0%,transparent_60%)] rounded-full will-change-transform'
                 />
                 {/* Grainy overlay */}
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100 contrast-150 pointer-events-none" />
@@ -62,7 +62,7 @@ const NotFound: React.FC = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.7, type: "spring", bounce: 0.4 }}
-                    className='text-8xl md:text-[150px] font-extrabold tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-br from-pink-400 via-purple-500 to-cyan-400 drop-shadow-2xl'>
+                    className='text-8xl md:text-[150px] font-extrabold tracking-tighter mb-4 text-transparent bg-clip-text bg-linear-to-brrom-pink-400 via-purple-500 to-cyan-400 drop-shadow-2xl'>
                     404
                 </motion.h1>
 
@@ -108,7 +108,7 @@ const NotFound: React.FC = () => {
                                 initial={{ scale: 0, opacity: 0.6 }}
                                 animate={{ scale: 4, opacity: 0 }}
                                 transition={{ duration: 0.6, ease: "easeOut" }}
-                                className='pointer-events-none absolute left-1/2 top-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-400/70 via-purple-400/50 to-pink-400/40 blur-xl transform -translate-x-1/2 -translate-y-1/2'
+                                className='pointer-events-none absolute left-1/2 top-1/2 w-6 h-6 rounded-full bg-linear-to-r from-cyan-400/70 via-purple-400/50 to-pink-400/40 blur-xl transform -translate-x-1/2 -translate-y-1/2'
                             />
                         ))}
                     </motion.div>
