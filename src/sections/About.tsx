@@ -90,6 +90,9 @@ const About: React.FC<AboutProps> = ({ t }) => {
                 <Reveal>
                     <SectionTitle>{t.about.title}</SectionTitle>
                 </Reveal>
+                <AnimatedLine text={t.about.p1} index={0} />
+                <AnimatedLine text={t.about.p2} index={1} />
+                
                 <Suspense fallback={<Spinner />}>
                     <CardScanner />
                 </Suspense>

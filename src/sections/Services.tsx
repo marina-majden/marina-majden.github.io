@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { Coil, Spinner, Tiles } from "@/components/SpinnerLoader.tsx";
+import {Spinner} from "@/components/SpinnerLoader.tsx";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import { useLanguage } from "@/components/LanguageContext";

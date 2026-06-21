@@ -38,8 +38,8 @@ interface TemplatesProps {
 
 export const Templates: React.FC<TemplatesProps> = ({ t }) => {
     const { lang } = useLanguage();
-    const taglist = t.templates.items.map((item) => item.tags || []).flat();
-    const uniqueTags = Array.from(new Set(taglist));
+  //  const taglist = t.templates.items.map((item) => item.tags || []).flat();
+  //  const uniqueTags = Array.from(new Set(taglist));
 
     const [visibleCount, setVisibleCount] = useState(6);
     const [selecteditem, setSelecteditem] = useState<TemplateItem | null>(null);

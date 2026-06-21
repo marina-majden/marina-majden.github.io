@@ -8,7 +8,7 @@ const NotFound: React.FC = () => {
     const { lang } = useLanguage();
     const [explosions, setExplosions] = useState<number[]>([]);
 
-    const handleExplode = (e: React.MouseEvent) => {
+    const handleExplode = (_e: React.MouseEvent) => {
         const id = Date.now();
         setExplosions((s) => [...s, id]);
         window.setTimeout(() => setExplosions((s) => s.filter((x) => x !== id)), 700);

@@ -24,6 +24,5 @@ The project is built using modern front-end technologies, with a focus on strong
 - **Responsive Design**: Complete visual adaptation to all screen sizes (Mobile-first approach).
 - **Automated Deployment**: Continuous integration and delivery (CI/CD) set up via GitHub Actions for fast and secure deployment of new code versions.
 
----
 
 Designed and coded with 💻 by Marina Majdenić.

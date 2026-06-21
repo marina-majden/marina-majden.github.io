@@ -30,7 +30,9 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        // Handle input changes here
+        e.preventDefault();
+        // Handle input change logic here
+        
     };
 
     return (
