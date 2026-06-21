@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
-import { Routes, Route, useLocation, Link } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import NotFound from "./components/NotFound";
 import Home from "./sections/Home";
 const NeedHelp = lazy(() => import("./showcase/NeedHelp"));
 const LitArt = lazy(() => import("./showcase/Litart"));
@@ -22,7 +23,7 @@ const LoadingScreen = () => (
                 <div className='absolute inset-0 border-4 border-t-emerald-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin' />
             </div>
             <span className='text-slate-400 font-mono text-sm animate-pulse'>
-                Loading Project...
+                Loading...
             </span>
         </motion.div>
     </div>
@@ -39,21 +40,6 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => (
     </motion.div>
 );
 
-const NotFound = () => (
-    <div className='min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white p-4 text-center'>
-        <h1 className='text-9xl font-bold text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-pink-600 mb-4'>
-            404
-        </h1>
-        <p className='text-xl text-slate-400 mb-8'>
-            Izgubili ste se u svemiru koda?
-        </p>
-        <Link
-            to='/'
-            className='px-8 py-3 bg-slate-800 hover:bg-slate-700 rounded-full transition-all border border-slate-700 hover:border-purple-500'>
-            Povratak u bazu
-        </Link>
-    </div>
-);
 
 export const AppRoutes = () => {
     const location = useLocation();

@@ -2,8 +2,8 @@
 interface NavItem {
     [key: string]: string;
     home: string;
-    about: string;
-    skills: string;
+    mission: string;
+    webshop: string;
     services: string;
     projects: string;
     lab: string;
@@ -144,8 +144,8 @@ const content: ContentData = {
     hr: {
         nav: {
             home: "Početna",
-            about: "O meni",
-            skills: "Vještine",
+            mission: "Misija",
+            webshop: "Web Shop",
             services: "Usluge",
             projects: "Projekti",
             lab: "Laboratorij",
@@ -629,8 +629,8 @@ const content: ContentData = {
     en: {
         nav: {
             home: "Home",
-            about: "Mission",
-            skills: "Skills",
+            mission: "Mission",
+            webshop: "Web Shop",
             services: "Services",
             projects: "Projects",
             lab: "Lab",

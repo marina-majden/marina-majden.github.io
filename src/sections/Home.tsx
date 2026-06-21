@@ -6,7 +6,7 @@ import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
 import { content, type ContentSection } from "../data/data";
 import BackgroundCanvas from "@/components/BackgroundCanvas.tsx";
-import About from "./About.tsx";
+import Mission from "./Mission.tsx";
 
 const Projects = lazy(() => import("./Projects.tsx"));
 const Services = lazy(() => import("./Services.tsx"));
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
                 t={t}
             />
             <Hero t={t} scrollToSection={scrollToSection} />
-            <About t={t} />
+            <Mission t={t} />
             <Suspense fallback={<Spinner />}>
                 <Templates t={t} scrollToSection={scrollToSection} />
             </Suspense>

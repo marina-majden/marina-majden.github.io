@@ -113,7 +113,7 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
     return (
         <section
             className='py-16 px-4 md:px-8 bg-transparent min-h-screen'
-            id='templates'>
+            id='webshop'>
             <div className='max-w-7xl mx-auto'>
                 <Reveal>
                     <SectionTitle>{t.templates.title}</SectionTitle>

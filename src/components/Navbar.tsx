@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({
         }`}>
         <div className='flex justify-between items-center'>
             <a
-                href='#home'
+                href='#'
                 className='cursor-pointer hover:scale-105 transition-transform duration-300 ease-in block'
                 onClick={(e) => {
                     e.preventDefault();
@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </a>
 
             <div className='hidden lg:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
-                {["about", "skills", "services", "projects"].map((item) => (
+                {["mission", "webshop", "services", "projects"].map((item) => (
                     <a
                         key={item}
                         href={`#${item}`}
@@ -116,7 +116,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
         {menuOpen && (
             <div className='lg:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 p-6 flex flex-col gap-4 font-mono animate-in slide-in-from-top-5 duration-300'>
-                {["about", "skills", "services", "projects"].map((item) => (
+                {["mission", "webshop", "services", "projects"].map((item) => (
                     <a
                         key={item}
                         href={`#${item}`}

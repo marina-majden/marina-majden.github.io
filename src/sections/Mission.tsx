@@ -17,7 +17,7 @@ interface AboutProps {
 
 const Mission: React.FC<AboutProps> = ({ t }) => {
     return (
-        <section id='about' className='min-h-screen w-screen'>
+        <section id='mission' className='min-h-screen w-screen'>
             <div className='w-screen h-screen flex flex-col justify-evenly items-center'>
                 <Reveal>
                     <SectionTitle>{t.about.title}</SectionTitle>
