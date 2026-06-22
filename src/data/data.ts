@@ -186,7 +186,7 @@ const content: ContentData = {
             ],
         },
         templates: {
-            title: "Web Web-Shop",
+            title: "Web-Shop",
             subtitle:
                 "Originalni, jedinstveni i gotovi predlošci koje ne možete pronaći nigdje drugdje; čim se jedan kupi, više nije dostupan. Međutim, ako ne želite kupiti predložak, već želite custom web-stranicu inspiriranu nekim od ovih dizajna, slobodno se javite.",
             standard:
@@ -640,10 +640,10 @@ const content: ContentData = {
         hero: {
             line1: "The Art of Coding",
             line2: "Turning thoughts and ideas",
-            line3: "into digital masterpieces.",
+            line3: "Wanna make some digital masterpieces?",
             subtitle:
                 "Everyone needs a digital space to present themselves, their work, and their vision. My job is to create that space to authentically convey your story to your desired audience.",
-            cta: "Let's do it",
+            cta: "Let's do together!",
         },
         about: {
             title: "Mission",
@@ -671,7 +671,7 @@ const content: ContentData = {
             ],
         },
         templates: {
-            title: "Templates",
+            title: "Web Shop",
             subtitle:
                 "Original, unique and ready-made templates you can't find anywhere else; as soon as one is bought, it is no longer available. However, if you do not want to buy the template, but want a custom website inspired by one of these designs, feel free to let us know.",
             standard:
@@ -693,6 +693,10 @@ const content: ContentData = {
                         special:
                             "Interactive 3D WebGL element that breathes and rotates on scroll",
                     },
+                      videoUrl: "Oasis.webm",
+                    screenshotHome: "VerySpecialConvo-home.png",
+                    screenshotDesktop: "oasis-trebaodrezat.png",
+                    screenshotMobile: "oasis.png",
                     tags: ["3D", "Minimalism", "Zen", "Organic"],
                 },
                 {
