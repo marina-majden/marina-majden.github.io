@@ -3,7 +3,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import TemplateModal from "@/components/TemplateModal";
-import { FALLBACK_IMAGE } from "@/data/constants.ts";
+import { FALLBACK_IMAGE } from "@/constants";
 
 export interface TemplateItem {
     id: string;
@@ -38,8 +38,8 @@ interface TemplatesProps {
 
 export const Templates: React.FC<TemplatesProps> = ({ t }) => {
     const { lang } = useLanguage();
-  //  const taglist = t.templates.items.map((item) => item.tags || []).flat();
-  //  const uniqueTags = Array.from(new Set(taglist));
+    //  const taglist = t.templates.items.map((item) => item.tags || []).flat();
+    //  const uniqueTags = Array.from(new Set(taglist));
 
     const [visibleCount, setVisibleCount] = useState(6);
     const [selecteditem, setSelecteditem] = useState<TemplateItem | null>(null);
@@ -197,10 +197,7 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
                                     />
                                 ) : (
                                     <img
-                                        src={
-                                            item.screenshotHome ||
-                                            FALLBACK_IMAGE
-                                        }
+                                        src={FALLBACK_IMAGE}
                                         alt={item.title}
                                         loading='lazy'
                                         decoding='async'

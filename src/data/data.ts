@@ -698,10 +698,7 @@ const content: ContentData = {
                         special:
                             "Interactive 3D WebGL element that breathes and rotates on scroll",
                     },
-                    videoUrl: "Oasis.webm",
-                    screenshotHome: "VerySpecialConvo-home.png",
-                    screenshotDesktop: "oasis-trebaodrezat.png",
-                    screenshotMobile: "oasis.png",
+
                     tags: ["3D", "Minimalism", "Zen", "Organic"],
                 },
                 {
