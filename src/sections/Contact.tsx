@@ -4,6 +4,7 @@ import SectionTitle from "../components/SectionTitle";
 import ReflectionIcons from "../components/ReflectionIcons";
 import { SendIcon } from "lucide-react";
 
+
 interface ContactContent {
     title: string;
     text: string;

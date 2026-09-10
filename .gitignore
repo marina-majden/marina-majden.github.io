@@ -29,3 +29,7 @@ dist-ssr
 unused
 pages
 .move-unused-components.js
+
+GEMINI.md
+
+.css

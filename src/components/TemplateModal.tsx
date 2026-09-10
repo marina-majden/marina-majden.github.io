@@ -209,7 +209,7 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
                                         key={currentMedia.url}
                                         src={currentMedia.url}
                                         alt={`${product.title} - prikaz`}
-                                        className='w-full h-full object-cover animate-fadeIn'
+                                        className='w-full h-full object-scale-down animate-fadeIn'
                                     />
                                 )}
                             </div>

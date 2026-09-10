@@ -1,5 +1,4 @@
-const FALLBACK_IMAGE =
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop";
+const FALLBACK_IMAGE = "/grainradient.svg";
 
 const GLITCH_ANIMATION = {
     opacity: [1, 0.8, 1, 1, 0.1, 1, 0.9, 1, 0.1, 1, 0.95, 1],

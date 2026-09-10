@@ -208,7 +208,10 @@ const content: ContentData = {
                         special:
                             "Interaktivni 3D WebGL element koji 'diše' i rotira pri skrolanju",
                     },
-
+                    videoUrl: "Sillage.webm",
+                    screenshotHome: "VerySpecialConvo-home.png",
+                    screenshotDesktop: "oasis-trebaodrezat.png",
+                    screenshotMobile: "oasis.png",
                     tags: ["3D", "Minimalizam", "Zen", "Organički"],
                 },
                 {
@@ -227,8 +230,8 @@ const content: ContentData = {
                     },
                     videoUrl: "Oasis.webm",
                     screenshotHome: "VerySpecialConvo-home.png",
-                    screenshotDesktop: "oasis-trebaodrezat.png",
-                    screenshotMobile: "oasis.png",
+                    screenshotDesktop: "screenshots/oasis-trebaodrezat.png",
+                    screenshotMobile: "screenshots/oasis.png",
                     tags: ["Glassmorphism", "Svijetlo", "Zen", "Organički"],
                 },
                 {
@@ -245,7 +248,7 @@ const content: ContentData = {
                         features:
                             "Organske animacije koje 'dišu', Viskozna otkrivanja pri skrolanju, Interaktivna 'bento box' mreža",
                     },
-                    videoUrl: "TheRythm.webm",
+                    videoUrl: "TheRhythm.webm",
                     screenshotHome: "VerySpecialConvo-home.png",
                     screenshotDesktop: "sillage.webp",
                     screenshotMobile: "sillage2.webp",
@@ -266,9 +269,9 @@ const content: ContentData = {
                             "Avangardni urednički layout, Otkrivanja u stilu okretanja stranice, Geometrijsko maskiranje slika",
                     },
                     videoUrl: "Sillage.webm",
-                    screenshotHome: "VerySpecialConvo-home.png",
-                    screenshotDesktop: "sillage.webp",
-                    screenshotMobile: "sillage2.webp",
+                    screenshotHome: "/templates/screenshots/sillage.webp",
+                    screenshotDesktop: "/templates/screenshots/sillage.webp",
+                    screenshotMobile: "/templates/screenshots/sillage2.webp",
                     tags: [
                         "E-commerce",
                         "Web-shop",
@@ -292,9 +295,11 @@ const content: ContentData = {
                             "Galerija s vodoravnim skrolanjem, Nativni CSS sloj filmskog zrna, Brutalistički drop-shadow hoveri",
                     },
                     videoUrl: "SkyArchitecture.webm",
-                    screenshotHome: "VerySpecialConvo-home.png",
-                    screenshotDesktop: "sky-desk.png",
-                    screenshotMobile: "sky-mob.webp",
+                    screenshotHome: "/templates/screenshots/sky-desk.png",
+                    screenshotDesktop:
+                        "/public/templates/screenshots/sky-desktop.png",
+                    screenshotMobile:
+                        "/public/templates/screenshots/sky-mob.webp",
                     tags: [
                         "Portfolio",
                         "Zen",
@@ -693,7 +698,7 @@ const content: ContentData = {
                         special:
                             "Interactive 3D WebGL element that breathes and rotates on scroll",
                     },
-                      videoUrl: "Oasis.webm",
+                    videoUrl: "Oasis.webm",
                     screenshotHome: "VerySpecialConvo-home.png",
                     screenshotDesktop: "oasis-trebaodrezat.png",
                     screenshotMobile: "oasis.png",

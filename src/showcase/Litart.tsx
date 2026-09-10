@@ -139,7 +139,7 @@ const LitArtShowcase: React.FC = () => {
                             exit={{ opacity: 0, scale: 0.5, y: 20 }}
                             onClick={scrollToTop}
                             className='p-3 rounded-full bg-indigo-600/80 border border-indigo-500/50 backdrop-blur-md text-white hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/30 group'
-                            aria-label='Scroll to top'>
+aria-label='Scroll to top'>
                             <ArrowUp
                                 size={24}
                                 className='group-hover:-translate-y-1 transition-transform'
