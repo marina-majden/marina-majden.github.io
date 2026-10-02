@@ -35,11 +35,10 @@ export const TemplateModal: React.FC<TemplateModalProps> = ({
         return () => window.removeEventListener("keydown", handleEsc);
     }, [onClose]);
 
-    // 1. Sigurnosna provjera: Ako modal nije otvoren ili proizvod nije definiran, prekini renderiranje.
-    // NAPOMENA: Ovo uvijek mora ići ISPOD useState i ostalih React Hookova.
-    if (!isOpen || !product) return null;
+    const { lang } = useLanguage();
 
-    const lang = useLanguage().lang;
+    // 1. Sigurnosna provjera: Ako modal nije otvoren ili proizvod nije definiran, prekini renderiranje.
+    if (!isOpen || !product) return null;
 
     // 2. Kombiniramo video (ako postoji) i galeriju slika u jedan niz za prikaz
     // Koristimo opcionalno ulančavanje (?.) za svaki slučaj, te dodajemo fallback na cover sliku ako nema ni videa ni galerije.

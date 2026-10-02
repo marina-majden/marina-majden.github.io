@@ -407,7 +407,7 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({
 
                 // Generate Logical Network
                 const nodes: Node[] = [];
-                let rootNode = new Node(new THREE.Vector3(0, 0, 0), 0, 0);
+                const rootNode = new Node(new THREE.Vector3(0, 0, 0), 0, 0);
                 rootNode.size = 2.0;
                 nodes.push(rootNode);
                 const layers = 5;

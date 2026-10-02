@@ -17,8 +17,8 @@ import {
     Github,
     Languages,
     ArrowLeft,
+    ArrowUp,
 } from "lucide-react";
-import { ArrowUp } from "react-feather";
 
 const GLITCH_ANIMATION = {
     opacity: [1, 0.8, 1, 1, 0.1, 1, 0.9, 1, 0.1, 1, 0.95, 1],

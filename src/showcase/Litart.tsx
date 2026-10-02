@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import {
     Code2,
     Server,
@@ -89,27 +88,25 @@ const LitArtShowcase: React.FC = () => {
 
     return (
         <div className='min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden'>
-            <Helmet>
-                <title>Lit Art | Marina Majdenić</title>
-                <meta
-                    name='description'
-                    content={
-                        lang === "HR"
-                            ? "Interdisciplinarna platforma koja spaja književnost i povijest umjetnosti."
-                            : "An interdisciplinary platform combining literature and art history."
-                    }
-                />
-                <meta property='og:title' content='Lit Art | Marina Majdenić' />
-                <meta
-                    property='og:description'
-                    content={
-                        lang === "HR"
-                            ? "Interdisciplinarna platforma koja spaja književnost i povijest umjetnosti."
-                            : "An interdisciplinary platform combining literature and art history."
-                    }
-                />
-                <meta property='og:type' content='website' />
-            </Helmet>
+            <title>Lit Art | Marina Majdenić</title>
+            <meta
+                name='description'
+                content={
+                    lang === "HR"
+                        ? "Interdisciplinarna platforma koja spaja književnost i povijest umjetnosti."
+                        : "An interdisciplinary platform combining literature and art history."
+                }
+            />
+            <meta property='og:title' content='Lit Art | Marina Majdenić' />
+            <meta
+                property='og:description'
+                content={
+                    lang === "HR"
+                        ? "Interdisciplinarna platforma koja spaja književnost i povijest umjetnosti."
+                        : "An interdisciplinary platform combining literature and art history."
+                }
+            />
+            <meta property='og:type' content='website' />
 
             <BackgroundGlows />
             <NeonSign />
@@ -302,10 +299,9 @@ aria-label='Scroll to top'>
                                 variant: "indigo",
                             },
                         ].map((card, i) => (
-                            // @ts-ignore
                             <ColoredGlassCard
                                 key={i}
-                                variant={card.variant}
+                                variant={card.variant as "cyan" | "indigo" | "purple"}
                                 className='p-8 group hover:-translate-y-2'>
                                 <div className='mb-6 bg-slate-950/30 w-16 h-16 rounded-2xl flex items-center justify-center shadow-inner border border-white/5 group-hover:scale-110 transition-transform duration-300'>
                                     {card.icon}

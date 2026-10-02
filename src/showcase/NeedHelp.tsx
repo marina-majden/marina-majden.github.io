@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 
 import {
     Code2,
@@ -153,30 +152,28 @@ const NeedHelpShowcase: React.FC = () => {
 
     return (
         <div className='min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden'>
-            <Helmet>
-                <title>Need Help | Marina Majdenić</title>
-                <meta
-                    name='description'
-                    content={
-                        lang === "HR"
-                            ? "Anonimna ljudska povezanost. Platforma koja vraća empatiju u digitalni svijet."
-                            : "Anonymous human connection. A platform bringing empathy back to the digital world."
-                    }
-                />
-                <meta
-                    property='og:title'
-                    content='Need Help | Marina Majdenić'
-                />
-                <meta
-                    property='og:description'
-                    content={
-                        lang === "HR"
-                            ? "Anonimna ljudska povezanost. Platforma koja vraća empatiju u digitalni svijet."
-                            : "Anonymous human connection. A platform bringing empathy back to the digital world."
-                    }
-                />
-                <meta property='og:type' content='website' />
-            </Helmet>
+            <title>Need Help | Marina Majdenić</title>
+            <meta
+                name='description'
+                content={
+                    lang === "HR"
+                        ? "Anonimna ljudska povezanost. Platforma koja vraća empatiju u digitalni svijet."
+                        : "Anonymous human connection. A platform bringing empathy back to the digital world."
+                }
+            />
+            <meta
+                property='og:title'
+                content='Need Help | Marina Majdenić'
+            />
+            <meta
+                property='og:description'
+                content={
+                    lang === "HR"
+                        ? "Anonimna ljudska povezanost. Platforma koja vraća empatiju u digitalni svijet."
+                        : "Anonymous human connection. A platform bringing empathy back to the digital world."
+                }
+            />
+            <meta property='og:type' content='website' />
 
             <BackgroundGlows />
             <NeonSign />
@@ -552,7 +549,7 @@ const NeedHelpShowcase: React.FC = () => {
                         ].map((card, i) => (
                             <ColoredGlassCard
                                 key={i}
-                                variant={card.variant}
+                                variant={card.variant as "amber" | "orange" | "rose"}
                                 className='p-8 group hover:-translate-y-2'>
                                 <div className='mb-6 bg-slate-950/30 w-16 h-16 rounded-2xl flex items-center justify-center shadow-inner border border-white/5 group-hover:scale-110 transition-transform duration-300'>
                                     {card.icon}

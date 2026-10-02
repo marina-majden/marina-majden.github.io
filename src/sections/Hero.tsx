@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Terminal, ArrowRight } from "react-feather";
+import { Terminal, ArrowRight } from "lucide-react";
 
 interface HeroContent {
     line1: string;

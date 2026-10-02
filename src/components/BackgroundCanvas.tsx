@@ -14,7 +14,7 @@ const BackgroundCanvas: React.FC = () => {
         let width: number, height: number, particles: Particle[];
         let animationFrameId: number;
 
-        let mouse = { x: -1000, y: -1000 };
+        const mouse = { x: -1000, y: -1000 };
 
         const handleMouseMove = (e: MouseEvent) => {
             mouse.x = e.clientX;

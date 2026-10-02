@@ -27,13 +27,4 @@ dist-ssr
 # my files and folders
 
 unused
-pages
 .move-unused-components.js
-
-GEMINI.md
-
-.css
-
-/public
-public 
-public/templates

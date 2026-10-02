@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Složimo vaš idealan digitalni paket - Interaktivni Labirint</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/4.3.3/lib.min.js"></script>
+        <!-- GSAP za animacije i logiku kamere -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@400;600&display=swap');
+
+            :root {
+                --bg-color: #020617;
+                /* Slate 950 */
+                --grid-color: rgba(255, 255, 255, 0.04);
+
+                /* Tematske boje za grane */
+                --color-main: #f8fafc;
+                --color-web: #3b82f6;
+                /* Blue */
+                --color-design: #ec4899;
+                /* Pink */
+                --color-seo: #10b981;
+                /* Emerald */
+                --color-tech: #f59e0b;
+                /* Amber */
+            }
+
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                /* Skrivamo nativne scrollbare, koristimo custom kameru */
+                background-color: var(--bg-color);
+                font-family: 'Inter', sans-serif;
+                color: white;
+            }
+
+            /* Viewport je prozor kroz koji gledamo */
+            #viewport {
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                background-image:
+                    linear-gradient(var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+                background-size: 50px 50px;
+                background-position: center center;
+            }
+
+            /* Camera pomiče cijeli canvas unutar viewporta */
+            #camera {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                transform-origin: 0 0;
+                will-change: transform;
+            }
+
+            /* Canvas sadrži sve elemente, fiksne je veličine (npr. 4000x4000) */
+            #canvas {
+                position: absolute;
+                top: -2000px;
+                left: -2000px;
+                width: 4000px;
+                height: 4000px;
+            }
+
+            /* SVG za crtanje puteva - prekriva cijeli canvas */
+            #svg-layer {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            /* Stilovi za moguće linije (labirint) */
+            .path-ghost {
+                fill: none;
+                stroke: rgba(255, 255, 255, 0.1);
+                stroke-width: 2;
+                stroke-dasharray: 8 8;
+            }
+
+            /* Stilovi za odabrane linije (osvjetljene) */
+            .path-active {
+                fill: none;
+                stroke-width: 4;
+                stroke-linecap: round;
+                filter: drop-shadow(0 0 10px currentColor);
+                /* Sakrij u početku za animaciju iscrtavanja */
+                stroke-dasharray: 2000;
+                stroke-dashoffset: 2000;
+            }
+
+            .node {
+                position: absolute;
+                width: 380px;
+                background: rgba(15, 23, 42, 0.85);
+                /* Slate 900 uz blur */
+                backdrop-filter: blur(10px);
+                padding: 30px;
+                z-index: 10;
+                opacity: 0;
+                /* Inicijalno skriveno */
+                pointer-events: none;
+                transform: scale(0.9);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+                transition: border-color 0.3s;
+            }
+
+            .node.active {
+                opacity: 1;
+                pointer-events: auto;
+                transform: scale(1);
+            }
+
+            .node.completed {
+                opacity: 0.6;
+                pointer-events: none;
+                /* Zaključano nakon odabira */
+                filter: grayscale(40%);
+            }
+
+            /* Oblici bazirani na tipu */
+            .node-start {
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                border-radius: 20px;
+                text-align: center;
+            }
+
+            .node-web {
+                border: 1px solid rgba(59, 130, 246, 0.3);
+                border-top: 5px solid var(--color-web);
+                border-radius: 12px;
+            }
+
+            .node-design {
+                border: 1px solid rgba(236, 72, 153, 0.3);
+                border-radius: 40px;
+                /* Pilulasti oblik */
+                box-shadow: 0 10px 30px rgba(236, 72, 153, 0.1);
+            }
+
+            .node-seo {
+                border: 1px solid rgba(16, 185, 129, 0.3);
+                border-radius: 0 24px 0 24px;
+                /* Asimetrično */
+                border-left: 4px solid var(--color-seo);
+            }
+
+            .node-tech {
+                border: 1px solid rgba(245, 158, 11, 0.3);
+                border-radius: 8px;
+                clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+                /* Lagani trapez/nagib na vanjskom kontejneru, no radi boljeg teksta zadržat ćemo samo specifične rubove */
+                clip-path: none;
+                border-bottom: 4px solid var(--color-tech);
+            }
+
+            .node-result {
+                background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(15, 23, 42, 0.9));
+                border: 2px solid #a855f7;
+                border-radius: 24px;
+                width: 500px;
+                box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
+                text-align: center;
+            }
+
+            /* Tipografija u node-ovima */
+            .node-tag {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                margin-bottom: 12px;
+                display: inline-block;
+            }
+
+            .node h2 {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 10px;
+                line-height: 1.2;
+            }
+
+            .node p {
+                color: #94a3b8;
+                font-size: 0.9rem;
+                margin-bottom: 24px;
+                line-height: 1.5;
+            }
+
+            /* Gumbi za odgovore */
+            .btn-answer {
+                display: block;
+                width: 100%;
+                text-align: left;
+                padding: 14px 20px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                margin-bottom: 10px;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-weight: 600;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .btn-answer:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateX(5px);
+            }
+
+            /* Specifične boje gumbova prilikom hovera ovisno o tipu */
+            .node-web .btn-answer:hover {
+                border-color: var(--color-web);
+            }
+
+            .node-design .btn-answer:hover {
+                border-color: var(--color-design);
+            }
+
+            .node-seo .btn-answer:hover {
+                border-color: var(--color-seo);
+            }
+
+            .node-tech .btn-answer:hover {
+                border-color: var(--color-tech);
+            }
+
+            .btn-answer.selected {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: currentColor;
+            }
+
+            .btn-answer.dimmed {
+                opacity: 0.2;
+            }
+
+            /* UI Kontrole (Zoom out) */
+            #ui-controls {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                z-index: 100;
+                display: flex;
+                gap: 10px;
+            }
+
+            .btn-ui {
+                background: rgba(15, 23, 42, 0.8);
+                backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 30px;
+                cursor: pointer;
+                font-family: 'Space Grotesk', sans-serif;
+                transition: all 0.3s;
+            }
+
+            .btn-ui:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- UI iznad canvasa -->
+        <div id="ui-controls">
+            <button class="btn-ui" onclick="zoomToFit()" id="btn-zoom" style="display: none;">Sagledaj cijelu
+                sliku</button>
+            <button class="btn-ui" onclick="location.reload()">Kreni ispočetka</button>
+        </div>
+
+        <div id="viewport">
+            <div id="camera">
+                <div id="canvas">
+                    <!-- SVG za crtanje linija -->
+                    <svg id="svg-layer"></svg>
+                    <!-- Ovdje će JS generirati sve node-ove (boxove) -->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            /**
+             * MAPA LABIRINTA - Sadrži točne (x, y) koordinate na golemom platnu
+             * (Platno je 4000x4000, centar je cca 2000,2000)
+             */
+            const nodesData = {
+                // POČETAK
+                q_start: {
+                    type: 'start',
+                    tag: 'Početak',
+                    color: '#f8fafc',
+                    title: 'Trebate li novu web stranicu?',
+                    desc: 'Vaše glavno prisustvo na internetu. Radimo li novu stranicu ili već imate postojeću koju želite nadograditi drugim uslugama?',
+                    x: 2000, y: 500,
+                    options: [
+                        { label: 'Da, trebam web stranicu', target: 'q_web_type' },
+                        { label: 'Ne, stranicu već imam', target: 'q_design_only' }
+                    ]
+                },
+
+                // --- GRANA: WEB DEVELOPMENT (Lijeva strana mape) ---
+                q_web_type: {
+                    type: 'web',
+                    tag: 'Web Development',
+                    color: '#3b82f6',
+                    title: 'Kakav pristup želite?',
+                    desc: 'Nudimo brza rješenja bazirana na predlošcima ili luksuzna, 100% custom izrađena rješenja.',
+                    x: 1600, y: 900,
+                    options: [
+                        { label: 'Gotov predložak (Brže, povoljnije)', target: 'q_web_complex', service: 'Izrada Weba (Predložak)' },
+                        { label: 'Custom dizajn (Unikatno, premium)', target: 'q_web_complex', service: 'Izrada Weba (Custom Premium)' }
+                    ]
+                },
+                q_web_complex: {
+                    type: 'web',
+                    tag: 'Web Development',
+                    color: '#3b82f6',
+                    title: 'Koje funkcionalnosti trebate?',
+                    desc: 'Je li to samo prezentacijska stranica ili složeni sustav?',
+                    x: 1600, y: 1300,
+                    options: [
+                        { label: 'Osnovno (Prezentacija, kontakt)', target: 'q_design_check', service: 'Osnovne funkcionalnosti' },
+                        { label: 'Napredno (Web shop, CMS, logini)', target: 'q_design_check', service: 'Napredne funkcionalnosti (Shop/CMS)' }
+                    ]
+                },
+                q_design_check: {
+                    type: 'design',
+                    tag: 'Vizualni Identitet',
+                    color: '#ec4899',
+                    title: 'Imate li već vizualni identitet?',
+                    desc: 'Logo, boje, tipografija - imamo li definiran stil koji ćemo pratiti na webu?',
+                    x: 1600, y: 1700,
+                    options: [
+                        { label: 'Imam sve spremno', target: 'q_seo' },
+                        { label: 'Trebam dizajn i kreiranje brenda', target: 'q_seo', service: 'Kreiranje vizualnog identiteta' }
+                    ]
+                },
+
+                // --- GRANA: OSTALE USLUGE (Desna strana mape) ---
+                q_design_only: {
+                    type: 'design',
+                    tag: 'Brending i Dizajn',
+                    color: '#ec4899',
+                    title: 'Trebate li novi vizualni identitet ili web dizajn?',
+                    desc: 'Možemo modernizirati vaš logo ili izraditi potpuno novi grafički paket (ilustracije, boje).',
+                    x: 2400, y: 900,
+                    options: [
+                        { label: 'Da, trebam dizajn / brending', target: 'q_seo', service: 'Kreiranje vizualnog identiteta (Redizajn)' },
+                        { label: 'Ne treba mi u ovom trenutku', target: 'q_seo' }
+                    ]
+                },
+
+                // --- SPOJNE TOČKE (Zajedničko za obje grane) ---
+                q_seo: {
+                    type: 'seo',
+                    tag: 'Vidljivost',
+                    color: '#10b981',
+                    title: 'SEO Optimizacija',
+                    desc: 'Želite li da vaša stranica bude visoko rangirana na Googleu i prilagođena AI agentima koji pretražuju web?',
+                    x: 2000, y: 2100, // Centraliziramo natrag
+                    options: [
+                        { label: 'Da, vidljivost mi je ključna', target: 'q_hosting', service: 'SEO Optimizacija & AI Prilagodba' },
+                        { label: 'Ne trebam SEO optimizaciju', target: 'q_hosting' }
+                    ]
+                },
+                q_hosting: {
+                    type: 'tech',
+                    tag: 'Infrastruktura',
+                    color: '#f59e0b',
+                    title: 'Hosting i Domena',
+                    desc: 'Imate li osiguran server (hosting) i adresu (domenu)?',
+                    x: 2000, y: 2500,
+                    options: [
+                        { label: 'Imam vlastiti hosting', target: 'q_maint' },
+                        { label: 'Trebam postavljanje hostinga', target: 'q_maint', service: 'Postavljanje domene i hostinga' }
+                    ]
+                },
+                q_maint: {
+                    type: 'tech',
+                    tag: 'Dugoročno',
+                    color: '#f59e0b',
+                    title: 'Mjesečno održavanje',
+                    desc: 'Trebate li nekoga tko će redovito brinuti o sigurnosti, backupu i ažuriranju sustava kako bi sve radilo besprijekorno?',
+                    x: 2000, y: 2900,
+                    options: [
+                        { label: 'Želim mjesečno održavanje', target: 'result', service: 'Mjesečno tehničko održavanje (Retainer)' },
+                        { label: 'Brinut ću se samostalno', target: 'result' }
+                    ]
+                },
+
+                // REZULTAT
+                result: {
+                    type: 'result',
+                    tag: 'Analiza Zvršena',
+                    color: '#a855f7',
+                    title: 'Vaš Idealan Paket',
+                    desc: 'Na temelju vaših odgovora, iscrtali smo vaš put i mapirali potrebne usluge.',
+                    x: 2000, y: 3400,
+                    options: [] // Nema opcija, kraj
+                }
+            };
+
+            // Globalno stanje
+            let collectedServices = [];
+            let zoomLevel = 1;
+            const canvasEl = document.getElementById('canvas');
+            const cameraEl = document.getElementById('camera');
+            const svgLayer = document.getElementById('svg-layer');
+
+            function initMap() {
+                // 1. Kreiraj sve node-ove u DOM-u
+                for (const [id, data] of Object.entries(nodesData)) {
+                    createNodeHTML(id, data);
+                }
+
+                // Kratka pauza da DOM obradi elemente (zbog dimenzija)
+                setTimeout(() => {
+                    // 2. Nacrtaj "duh" linije (labirint mogućnosti)
+                    drawGhostPaths();
+
+                    // 3. Postavi kameru na početni node
+                    centerCameraOn('q_start', true, 0);
+
+                    // 4. Prikaži početni node
+                    showNode('q_start');
+                }, 100);
+            }
+
+            function createNodeHTML(id, data) {
+                const el = document.createElement('div');
+                el.className = `node node-${data.type}`;
+                el.id = `node-${id}`;
+                // Centriramo node na x,y koordinate (oduzimamo pola širine)
+                el.style.left = `${data.x - 190}px`;
+                el.style.top = `${data.y}px`;
+
+                let buttonsHtml = '';
+                if (id !== 'result') {
+                    data.options.forEach((opt, index) => {
+                        // Spremamo podatke u atribute gumba za lakše čitanje kasnije
+                        const srv = opt.service ? `data-service="${opt.service}"` : '';
+                        buttonsHtml += `
+                        <button class="btn-answer" 
+                                style="color: ${data.color}"
+                                onclick="handleSelection('${id}', '${opt.target}', this)"
+                                ${srv}>
+                            ${opt.label}
+                        </button>
+                    `;
+                    });
+                } else {
+                    buttonsHtml = `
+                    <div id="result-services" class="mt-4 mb-6 text-left space-y-2"></div>
+                    <button class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-4 px-6 rounded-xl transition-colors">
+                        Zatraži neobvezujuću ponudu
+                    </button>
+                `;
+                }
+
+                el.innerHTML = `
+                <span class="node-tag" style="color: ${data.color}">${data.tag}</span>
+                <h2>${data.title}</h2>
+                <p>${data.desc}</p>
+                <div>${buttonsHtml}</div>
+            `;
+
+                canvasEl.appendChild(el);
+            }
+
+            function drawGhostPaths() {
+                for (const [id, data] of Object.entries(nodesData)) {
+                    if (data.options.length > 0) {
+                        const startNodeEl = document.getElementById(`node-${id}`);
+                        const startRect = {
+                            bottom: data.y + startNodeEl.offsetHeight,
+                            centerX: data.x
+                        };
+
+                        data.options.forEach(opt => {
+                            const targetData = nodesData[opt.target];
+                            // Računamo Bezierovu krivulju od dna trenutnog do vrha ciljanog
+                            const d = calculateBezier(startRect.centerX, startRect.bottom, targetData.x, targetData.y);
+
+                            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                            path.setAttribute('d', d);
+                            path.setAttribute('class', 'path-ghost');
+                            svgLayer.appendChild(path);
+                        });
+                    }
+                }
+            }
+
+            function calculateBezier(x1, y1, x2, y2) {
+                // Kontrolne točke za glatku vertikalnu krivulju
+                const offset = (y2 - y1) * 0.5;
+                return `M ${x1} ${y1} C ${x1} ${y1 + offset}, ${x2} ${y2 - offset}, ${x2} ${y2}`;
+            }
+
+            function drawActivePath(btnElement, targetId, color) {
+                // Dobivanje točnih koordinata kliknutog gumba obzirom na platno
+                const btnRect = btnElement.getBoundingClientRect();
+                const canvasRect = canvasEl.getBoundingClientRect();
+
+                // Start točka je sredina desnog ruba gumba ili dno kontejnera ovisno o dizajnu. 
+                // Koristit ćemo sredinu gumba
+                const startX = (btnRect.left - canvasRect.left + btnRect.width / 2) / zoomLevel;
+                const startY = (btnRect.top - canvasRect.top + btnRect.height / 2) / zoomLevel;
+
+                const targetData = nodesData[targetId];
+
+                const d = calculateBezier(startX, startY, targetData.x, targetData.y);
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'path-active');
+                path.setAttribute('stroke', color);
+                svgLayer.appendChild(path);
+
+                // Animiramo iscrtavanje koristeći GSAP
+                gsap.to(path, {
+                    strokeDashoffset: 0,
+                    duration: 1,
+                    ease: "power2.inOut"
+                });
+            }
+
+            function handleSelection(currentId, targetId, btnElement) {
+                const currentNodeEl = document.getElementById(`node-${currentId}`);
+
+                // Zaključaj trenutni node
+                currentNodeEl.classList.add('completed');
+
+                // Zatamni ostale gumbe, posvijetli odabrani
+                const siblings = currentNodeEl.querySelectorAll('.btn-answer');
+                siblings.forEach(btn => {
+                    if (btn !== btnElement) {
+                        btn.classList.add('dimmed');
+                    } else {
+                        btn.classList.add('selected');
+                    }
+                });
+
+                // Bilježi uslugu
+                const srv = btnElement.getAttribute('data-service');
+                if (srv) {
+                    collectedServices.push(srv);
+                }
+
+                // Boja linije prema grani iz koje izlazimo
+                const pathColor = nodesData[currentId].color;
+
+                // 1. Nacrtaj aktivnu liniju
+                drawActivePath(btnElement, targetId, pathColor);
+
+                // 2. Ako je kraj, pripremi podatke
+                if (targetId === 'result') {
+                    prepareResultNode();
+                    document.getElementById('btn-zoom').style.display = 'block';
+                }
+
+                // 3. Pomakni kameru i prikaži idući node
+                setTimeout(() => {
+                    centerCameraOn(targetId);
+                    showNode(targetId);
+                }, 300);
+            }
+
+            function centerCameraOn(nodeId, immediate = false, delay = 0) {
+                const data = nodesData[nodeId];
+                // Želimo centrirati node u sredinu viewporta
+                // Zbog toga pomičemo kameru u suprotnom smjeru od koordinata objekta
+
+                // Uzimamo u obzir trenutni zoomLevel (za vrijeme normalnog protoka je 1)
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+
+                // Y offset malo pomaknemo prema gore da box ne bude skroz u centru nego malo iznad, zbog linija ispod
+                const targetX = (vw / 2) - data.x;
+                const targetY = (vh / 2.5) - data.y;
+
+                if (immediate) {
+                    gsap.set(cameraEl, { x: targetX, y: targetY });
+                } else {
+                    gsap.to(cameraEl, {
+                        x: targetX,
+                        y: targetY,
+                        duration: 1.2,
+                        delay: delay,
+                        ease: "power3.inOut"
+                    });
+                }
+            }
+
+            function showNode(nodeId) {
+                const el = document.getElementById(`node-${nodeId}`);
+
+                gsap.to(el, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.8,
+                    delay: 0.6, // Čeka da kamera obavi veći dio puta
+                    ease: "back.out(1.2)",
+                    onStart: () => {
+                        el.classList.add('active');
+                    }
+                });
+            }
+
+            function prepareResultNode() {
+                const container = document.getElementById('result-services');
+                if (collectedServices.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400 italic">Sudeći po odgovorima, trenutno nemate potrebu za našim ključnim uslugama, no slobodno nas kontaktirajte za besplatne konzultacije!</p>`;
+                } else {
+                    let html = '<ul class="space-y-3">';
+                    collectedServices.forEach(srv => {
+                        html += `
+                        <li class="flex items-center text-[15px] p-3 rounded-lg bg-white/5 border border-white/10">
+                            <svg class="w-5 h-5 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            ${srv}
+                        </li>`;
+                    });
+                    html += '</ul>';
+                    container.innerHTML = html;
+                }
+            }
+
+            function zoomToFit() {
+                // Izračunavamo optimalni zoom da stane cijela "mapa" od Y=500 do Y=3500
+                // Gruba aproksimacija kamere za pregled mape
+
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+
+                const targetZoom = 0.25; // Odzumiraj na 25%
+                const targetX = (vw / 2) - (2000 * targetZoom); // Centar X mreže
+                const targetY = (vh / 2) - (1900 * targetZoom); // Sredina Y mreže
+
+                gsap.to(cameraEl, {
+                    x: targetX,
+                    y: targetY,
+                    scale: targetZoom,
+                    duration: 2,
+                    ease: "power3.inOut"
+                });
+
+                // Sakrij gumb za zoom jer smo već zumirani out
+                document.getElementById('btn-zoom').style.display = 'none';
+            }
+
+            // --- POKRETANJE ---
+            window.addEventListener('load', initMap);
+
+            // Osvježavanje pozicije kamere pri resize-u
+            window.addEventListener('resize', () => {
+                // Ako nismo odzumirani, ponovno centriraj aktivni (zadnji) node
+                if (zoomLevel === 1) {
+                    const activeNodes = document.querySelectorAll('.node.active:not(.completed)');
+                    if (activeNodes.length > 0) {
+                        const activeId = activeNodes[0].id.replace('node-', '');
+                        centerCameraOn(activeId, true);
+                    } else if (document.getElementById('node-result').classList.contains('active')) {
+                        centerCameraOn('result', true);
+                    }
+                }
+            });
+
+        </script>
+    </body>
+
+</html>

@@ -209,6 +209,112 @@ const workflowSteps: WorkflowStep[] = [
     },
 ];
 
+export interface ExperimentalApp {
+    id: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    tags: string[];
+    route: string;
+    directUrl: string;
+    badge?: string;
+}
+
+export const experimentalApps: ExperimentalApp[] = [
+    {
+        id: "elementos",
+        title: "Elementos",
+        subtitle: "Digitalni mikrosvijet elemenata",
+        description: "Bilingvalno interaktivno istraživanje elemenata s fluidnim animacijama i zvučnom kulisom.",
+        tags: ["Canvas", "Interactive", "Bilingual", "CSS Art"],
+        route: "/apps/elementos",
+        directUrl: "/apps/elementos/index.html",
+        badge: "Novo / New",
+    },
+    {
+        id: "dreamlike",
+        title: "Dreamlike",
+        subtitle: "Kreativni ambijentalni prostor",
+        description: "Eksperimentalni vizualni san s nestvarnim gradijentima i taktilnim pokretima.",
+        tags: ["Experimental", "Visual", "Ambient"],
+        route: "/apps/dreamlike",
+        directUrl: "/apps/dreamlike/index.html",
+        badge: "Novo / New",
+    },
+    {
+        id: "liquid",
+        title: "Liquid Cube",
+        subtitle: "Fluidna 3D kocka",
+        description: "Interaktivna simulacija tekućine unutar 3D kocke s fizikom u stvarnom vremenu.",
+        tags: ["3D", "Physics", "WebGL", "Simulation"],
+        route: "/apps/liquid",
+        directUrl: "/apps/liquid/liquid-cube.html",
+    },
+    {
+        id: "chromalab",
+        title: "ChromaLab",
+        subtitle: "Laboratorij spektralnih boja",
+        description: "Reaktivni eksperiment s modernim OKLCH bojama, CSS @property animacijama i prizmama.",
+        tags: ["React", "OKLCH", "CSS @property", "Shader-like"],
+        route: "/pages/ChromaLab",
+        directUrl: "/pages/ChromaLab",
+    },
+    {
+        id: "neural-network",
+        title: "Neural Network",
+        subtitle: "3D neuronska mreža",
+        description: "Trodimenzionalna vizualizacija sinaptičkih veza s Three.js-om i bloom postprocessingom.",
+        tags: ["Three.js", "Bloom", "3D", "Graph"],
+        route: "/pages/NeuralNetwork",
+        directUrl: "/pages/NeuralNetwork",
+    },
+    {
+        id: "color-chemist",
+        title: "Color Chemist",
+        subtitle: "Kemija pigmenata i tonova",
+        description: "Interaktivna miješalica tonova i vizualni laboratorij za testiranje paleta.",
+        tags: ["Color Science", "Tool", "Canvas"],
+        route: "/apps/color-chemist",
+        directUrl: "/apps/color-chemist/index.html",
+    },
+    {
+        id: "flowchart",
+        title: "Flowchart Labirint",
+        subtitle: "2D vizualna zagonetka",
+        description: "Proceduralni labirint dijagrama toka kroz koji navigirate logičkim koracima.",
+        tags: ["Game", "2D", "Puzzle"],
+        route: "/apps/flowchart",
+        directUrl: "/apps/flowchart/index.html",
+    },
+    {
+        id: "countdown",
+        title: "3D Countdown",
+        subtitle: "Vremenska skulptura",
+        description: "Skulpturalni brojač vremena s Three.js orbit kontrolama i proceduralnom geometrijom.",
+        tags: ["Three.js", "OrbitControls", "3D"],
+        route: "/apps/countdown",
+        directUrl: "/apps/countdown/index.html",
+    },
+    {
+        id: "deltarune",
+        title: "Deltarune Experience",
+        subtitle: "Pikselizirana avantura",
+        description: "Retro interaktivna web prezentacija s retro pikselnom estetikom.",
+        tags: ["Pixel Art", "Retro", "Interactive"],
+        route: "/apps/deltarune",
+        directUrl: "/apps/deltarune/index.html",
+    },
+    {
+        id: "plur",
+        title: "Plur Visualizer",
+        subtitle: "Audio-vizualni eksperiment",
+        description: "3D generativni visualizer s ritmičkim svjetlosnim efektima.",
+        tags: ["Audio-Visual", "Three.js", "Canvas"],
+        route: "/apps/plur",
+        directUrl: "/apps/plur/index.html",
+    },
+];
+
 export {
     COMPLEX_CODE_SNIPPET,
     themes,

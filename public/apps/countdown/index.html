@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Great Synchronization</title>
+
+        <!-- Tailwind CSS via CDN for UI styling -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;900&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700&display=swap"
+            rel="stylesheet">
+
+        <style>
+            :root {
+                --glass-bg: rgba(20, 20, 25, 0.4);
+                --glass-border: rgba(255, 255, 255, 0.1);
+                --glass-highlight: rgba(255, 255, 255, 0.2);
+                --text-main: rgba(255, 255, 255, 0.95);
+                --text-muted: rgba(255, 255, 255, 0.6);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                user-select: none;
+                -webkit-user-select: none;
+            }
+
+            body {
+                /* Changed to auto overflow so we can scroll down to read the theory */
+                overflow-x: hidden;
+                overflow-y: auto;
+                background: #050508;
+                font-family: 'Outfit', sans-serif;
+                color: var(--text-main);
+            }
+
+            /* Standard scrollbar for Firefox */
+            html {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(147, 51, 234, 0.6) #050508;
+            }
+
+            /* Custom Webkit scrollbar for Chrome, Safari, Edge */
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #050508;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(to bottom, rgba(236, 72, 153, 0.5), rgba(147, 51, 234, 0.5));
+                border-radius: 10px;
+                border: 2px solid #050508;
+                /* Gives the thumb some breathing room against the edges */
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(to bottom, rgba(236, 72, 153, 0.8), rgba(147, 51, 234, 0.8));
+            }
+
+            /* Lock canvas to viewport background */
+            canvas {
+                display: block;
+                width: 100vw;
+                height: 100vh;
+                cursor: crosshair;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            .glass-panel {
+                backdrop-filter: blur(24px) saturate(120%);
+                -webkit-backdrop-filter: blur(24px) saturate(120%);
+                background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+                border: 1px solid var(--glass-border);
+                border-top: 1px solid var(--glass-highlight);
+                border-left: 1px solid var(--glass-highlight);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            }
+
+            .participate-btn {
+                background: linear-gradient(to right, rgba(236, 72, 153, 0.8), rgba(147, 51, 234, 0.8));
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+                transition: all 0.3s ease;
+            }
+
+            .participate-btn:hover:not(:disabled) {
+                transform: scale(1.05);
+                box-shadow: 0 0 40px rgba(236, 72, 153, 0.6);
+            }
+
+            .participate-btn:disabled {
+                background: rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.5);
+                cursor: default;
+                box-shadow: none;
+            }
+
+            .plur-btn {
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+
+            .plur-btn.active {
+                transform: translateY(-2px);
+                background: rgba(255, 255, 255, 0.2);
+                border-color: rgba(255, 255, 255, 0.8);
+                box-shadow: 0 0 15px currentColor;
+            }
+
+            /* 3D Flip Card CSS */
+            .perspective-1000 {
+                perspective: 1000px;
+            }
+
+            .preserve-3d {
+                transform-style: preserve-3d;
+            }
+
+            .backface-hidden {
+                backface-visibility: hidden;
+            }
+
+            .rotate-y-180 {
+                transform: rotateY(180deg);
+            }
+
+            .grid-stack {
+                display: grid;
+            }
+
+            .grid-stack>* {
+                grid-column: 1 / -1;
+                grid-row: 1 / -1;
+            }
+
+            /* Font classes for specific scripts */
+            .font-jp {
+                font-family: 'Noto Sans JP', sans-serif;
+            }
+
+            .font-zh {
+                font-family: 'Noto Sans SC', sans-serif;
+            }
+
+            .font-ar {
+                font-family: 'Noto Kufi Arabic', sans-serif;
+            }
+
+            /* Language Tab Transitions */
+            .lang-panel {
+                display: none;
+                animation: fadeIn 0.4s ease forwards;
+            }
+
+            .lang-panel.active {
+                display: block;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(5px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8NZRH70MN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-H8NZRH70MN');
+    </script>
+
+    <body class="relative">
+
+        <!-- Neural Network Canvas (Fixed background) -->
+        <canvas id="neural-network-canvas"></canvas>
+
+        <!-- Main Scrollable Content Layer -->
+        <div id="ui-layer" class="relative z-10 pointer-events-none flex flex-col min-h-screen">
+
+            <!-- TOP SECTION: Header & Countdown (min-h-screen ensures it takes full first viewport) -->
+            <div class="flex flex-col justify-between p-4 md:p-8 min-h-screen">
+
+                <div class="pointer-events-auto flex flex-col items-center justify-start w-full max-w-4xl mx-auto pt-4">
+
+                    <!-- 3D Flipping Header Container -->
+                    <div id="header-container" class="perspective-1000 w-full max-w-3xl mx-auto">
+                        <div id="header-flipper"
+                            class="grid-stack w-full transition-transform duration-700 preserve-3d">
+
+                            <!-- FRONT SIDE -->
+                            <div
+                                class="front glass-panel rounded-3xl p-6 md:p-8 text-center w-full backface-hidden relative z-20">
+
+                                <!-- 'What is this?' Button -->
+                                <div class="absolute top-4 right-4 md:top-6 md:right-6 group">
+                                    <button id="info-btn"
+                                        class="w-8 h-8 rounded-full border border-white/40 bg-white/5 text-white/80 font-bold hover:bg-white/20 hover:text-white transition-all flex items-center justify-center cursor-pointer shadow-lg backdrop-blur-sm">?</button>
+                                    <div
+                                        class="absolute right-0 top-10 w-28 px-2 py-1.5 bg-black/90 backdrop-blur-md text-[10px] text-white/90 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none uppercase tracking-widest border border-white/10 shadow-xl">
+                                        What is this?
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 mb-4 mt-2 md:mt-0">
+                                    <span class="text-xs font-medium tracking-widest text-cyan-300 uppercase">global
+                                        event countdown</span>
+                                </div>
+
+                                <h1 class="text-4xl md:text-6xl font-black mb-3 tracking-tight drop-shadow-lg">
+                                    The Great
+                                    <span
+                                        class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400">
+                                        Synchronization
+                                    </span>
+                                </h1>
+                                <p class="text-sm md:text-base text-white/80 max-w-xl mx-auto mb-6 leading-relaxed">
+                                    Organized by ordinary people. Just you, five minutes, and a shared intention.
+                                </p>
+                                <p class="text-md md:text-lg text-white/80 max-w-xl mx-auto mb-6 leading-relaxed">
+                                    Check regularly to know when it is time to engage:
+                                </p>
+
+                                <!-- Timer -->
+                                <div id="countdown-container" class="flex justify-center gap-4 md:gap-8 items-start">
+                                    <div class="flex flex-col items-center">
+                                        <span id="cd-days"
+                                            class="text-4xl md:text-6xl font-black drop-shadow-md">00</span>
+                                        <span
+                                            class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Days</span>
+                                    </div>
+                                    <span
+                                        class="text-3xl md:text-5xl font-black text-white/30 mt-1 animate-pulse">:</span>
+                                    <div class="flex flex-col items-center">
+                                        <span id="cd-hours"
+                                            class="text-4xl md:text-6xl font-black drop-shadow-md">00</span>
+                                        <span
+                                            class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Hours</span>
+                                    </div>
+                                    <span
+                                        class="text-3xl md:text-5xl font-black text-white/30 mt-1 animate-pulse">:</span>
+                                    <div class="flex flex-col items-center">
+                                        <span id="cd-minutes"
+                                            class="text-4xl md:text-6xl font-black drop-shadow-md">00</span>
+                                        <span
+                                            class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Mins</span>
+                                    </div>
+                                    <span
+                                        class="text-3xl md:text-5xl font-black text-white/30 mt-1 animate-pulse">:</span>
+                                    <div class="flex flex-col items-center">
+                                        <span id="cd-seconds"
+                                            class="text-4xl md:text-6xl font-black drop-shadow-md">00</span>
+                                        <span
+                                            class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Secs</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BACK SIDE -->
+                            <div
+                                class="back glass-panel rounded-3xl p-6 md:p-10 text-center w-full backface-hidden rotate-y-180 relative z-10 flex flex-col justify-center items-center">
+                                <h2
+                                    class="text-2xl md:text-3xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-400">
+                                    About the Event</h2>
+                                <p class="text-white/90 leading-relaxed text-sm md:text-base font-medium max-w-xl">
+                                    <strong>The Great Synchronization</strong> is a massive, decentralized moment of
+                                    collective focus.
+                                    On March 21st, exactly at 1 PM Eastern Time, millions around the world will stop for
+                                    5 minutes to hold four basic thoughts:
+                                    <span class="text-cyan-300">Peace</span>, <span class="text-pink-300">Love</span>,
+                                    <span class="text-purple-300">Unity</span>, and <span
+                                        class="text-yellow-300">Respect</span>.
+                                </p>
+                                <p class="text-white/60 leading-relaxed text-sm mt-4 max-w-xl">
+                                    No leaders, no traveling required, no streaming necessary. Scroll down to read about
+                                    the 1% theory and why we are doing this.
+                                </p>
+                                <p class="text-xs uppercase tracking-widest text-white/40 font-bold mt-8 animate-pulse">
+                                    (Move mouse away to return)
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MIDDLE SECTION: Interactive Space -->
+                <div class="grow flex items-center justify-center pointer-events-none my-8">
+                    <span
+                        class="text-white/40 text-xs md:text-sm tracking-widest uppercase font-semibold animate-pulse drop-shadow-md text-center bg-black/20 px-4 py-2 rounded-full backdrop-blur-sm border border-white/5">
+                        click on the collective network to send your energy
+                    </span>
+                </div>
+
+                <!-- BOTTOM SECTION: Actions & PLUR -->
+                <div class="pointer-events-auto flex flex-col items-center w-full max-w-4xl mx-auto pb-4 gap-6">
+                    <!-- Participate Button -->
+                    <div class="flex flex-col items-center">
+                        <button id="btn-participate"
+                            class="participate-btn px-10 py-4 rounded-full font-bold text-xl mb-4 text-white">
+                            I Will Participate
+                        </button>
+                    </div>
+
+                    <!-- PLUR Reactions -->
+                    <div class="glass-panel rounded-3xl p-5 md:p-6 w-full max-w-2xl text-center">
+                        <h3 class="text-xs uppercase tracking-widest text-white/70 font-bold mb-4">Check-in: Collective
+                            consciousness lights up in the idea of our choosing</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button data-theme="0" data-type="peace"
+                                class="plur-btn flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/5 text-cyan-400 hover:bg-white/10">
+                                <span class="text-lg">☮</span> <span class="text-white font-medium text-sm">Peace</span>
+                            </button>
+                            <button data-theme="1" data-type="love"
+                                class="plur-btn flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/5 text-pink-400 hover:bg-white/10">
+                                <span class="text-lg">♥</span> <span class="text-white font-medium text-sm">Love</span>
+                            </button>
+                            <button data-theme="2" data-type="unity"
+                                class="plur-btn flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/5 text-purple-400 hover:bg-white/10">
+                                <span class="text-lg">∞</span> <span class="text-white font-medium text-sm">Unity</span>
+                            </button>
+                            <button data-theme="3" data-type="respect"
+                                class="plur-btn flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/5 text-yellow-400 hover:bg-white/10">
+                                <span class="text-lg">☀</span> <span
+                                    class="text-white font-medium text-sm">Respect</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW SECTION: The Theory (Scroll down area) -->
+            <div class="w-full max-w-4xl mx-auto px-4 pb-24 pt-12 pointer-events-auto">
+                <div class="glass-panel rounded-3xl p-6 md:p-10 w-full relative overflow-hidden">
+                    <!-- Decorative background elements -->
+                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-purple-600/10 rounded-full blur-[80px]"></div>
+                    <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-600/10 rounded-full blur-[80px]"></div>
+
+                    <h2 class="text-2xl md:text-4xl font-black text-center mb-8">The 1% Theory</h2>
+
+                    <!-- Language Tabs Header -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-8" id="lang-tabs">
+                        <button data-lang="en"
+                            class="lang-btn active group relative overflow-hidden px-6 py-2.5 rounded-full border border-white/50 text-white text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/gb.png')] bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">EN</span>
+                        </button>
+                        <button data-lang="es"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/es.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">ES</span>
+                        </button>
+                        <button data-lang="de"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/de.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">DE</span>
+                        </button>
+                        <button data-lang="ja"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/jp.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">JA</span>
+                        </button>
+                        <button data-lang="zh"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/cn.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">ZH</span>
+                        </button>
+                        <button data-lang="ar"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/sa.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">AR</span>
+                        </button>
+                        <button data-lang="hr"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/hr.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">HR</span>
+                        </button>
+                        <button data-lang="tl"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/ph.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">TL</span>
+                        </button>
+                        <button data-lang="sw"
+                            class="lang-btn group relative overflow-hidden px-6 py-2.5 rounded-full border border-transparent text-white/50 text-xs font-bold tracking-widest transition-all isolate shadow-lg">
+                            <div
+                                class="bg-cover absolute inset-0 bg-[url('https://flagcdn.com/w80/ke.png')] bg-center opacity-20 group-hover:opacity-50 transition-opacity duration-300 z-0 pointer-events-none">
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-0 pointer-events-none"></div>
+                            <span class="relative z-10 drop-shadow-[0_1px_3px_rgba(0,0,0,1)]">SW</span>
+                        </button>
+                    </div>
+
+                    <!-- Language Contents -->
+                    <div id="lang-content-container"
+                        class="relative text-white/80 leading-relaxed text-sm md:text-base font-light">
+
+                        <!-- English -->
+                        <div id="content-en" class="lang-panel active">
+                            <p class="mb-4">
+                                The Great Synchronization is a global experiment in collective attention. The underlying
+                                idea refers to the <strong>"1% theory"</strong> (often linked sociologically to the
+                                Maharishi Effect), which posits that if just one percent of a population concentrates on
+                                a unified positive thought, it can profoundly shift the collective state of mind.
+                            </p>
+                            <p class="mb-4">
+                                Scientifically speaking, while instantaneous quantum telepathy remains speculative, the
+                                <span class="text-white font-medium">sociological impact is very real</span>:
+                                synchronized global movements create powerful cultural shifts, fostering compassion and
+                                unity across borders. When millions focus on the same positive outcome, it alters global
+                                communication, digital footprint, and shared cultural behavior.
+                            </p>
+                            <p>
+                                We aim to reach roughly <strong>80 million people</strong> (approx. 1% of the global
+                                population) to stop and focus on Peace, Love, Unity, and Respect for just five minutes.
+                            </p>
+                        </div>
+
+                        <!-- Spanish -->
+                        <div id="content-es" class="lang-panel">
+                            <p class="mb-4">
+                                La Gran Sincronización es un experimento global de atención colectiva. La idea
+                                subyacente se refiere a la <strong>"teoría del 1%"</strong> (a menudo vinculada
+                                sociológicamente al Efecto Maharishi), que postula que si solo el uno por ciento de una
+                                población se concentra en un pensamiento positivo unificado, puede cambiar profundamente
+                                el estado mental colectivo.
+                            </p>
+                            <p class="mb-4">
+                                Científicamente hablando, aunque la telepatía cuántica instantánea sigue siendo
+                                especulativa, el <span class="text-white font-medium">impacto sociológico es muy
+                                    real</span>: los movimientos globales sincronizados crean poderosos cambios
+                                culturales, fomentando la compasión y la unidad a través de las fronteras. Cuando
+                                millones se enfocan en el mismo resultado positivo, se altera la comunicación global y
+                                el comportamiento cultural compartido.
+                            </p>
+                            <p>
+                                Nuestro objetivo es alcanzar aproximadamente a <strong>80 millones de personas</strong>
+                                (aprox. el 1% de la población mundial) para que se detengan y se enfoquen en la Paz, el
+                                Amor, la Unidad y el Respeto durante solo cinco minutos.
+                            </p>
+                        </div>
+
+                        <!-- German -->
+                        <div id="content-de" class="lang-panel">
+                            <p class="mb-4">
+                                Die Große Synchronisation ist ein globales Experiment kollektiver Aufmerksamkeit. Die
+                                zugrunde liegende Idee bezieht sich auf die <strong>„1%-Theorie“</strong> (soziologisch
+                                oft mit dem Maharishi-Effekt in Verbindung gebracht), die besagt, dass, wenn sich nur
+                                ein Prozent einer Bevölkerung auf einen vereinten positiven Gedanken konzentriert, dies
+                                den kollektiven Geisteszustand tiefgreifend verändern kann.
+                            </p>
+                            <p class="mb-4">
+                                Wissenschaftlich gesehen bleibt die momentane Quantentelepathie spekulativ, aber die
+                                <span class="text-white font-medium">soziologischen Auswirkungen sind sehr real</span>:
+                                Synchronisierte globale Bewegungen schaffen mächtige kulturelle Veränderungen und
+                                fördern Mitgefühl und Einheit über Grenzen hinweg. Wenn sich Millionen auf dasselbe
+                                positive Ergebnis konzentrieren, verändert dies die globale Kommunikation und das
+                                gemeinsame kulturelle Verhalten.
+                            </p>
+                            <p>
+                                Wir wollen rund <strong>80 Millionen Menschen</strong> (ca. 1 % der Weltbevölkerung)
+                                erreichen, damit sie innehalten und sich nur fünf Minuten lang auf Frieden, Liebe,
+                                Einheit und Respekt konzentrieren.
+                            </p>
+                        </div>
+
+                        <!-- Japanese -->
+                        <div id="content-ja" class="lang-panel font-jp">
+                            <p class="mb-4">
+                                大いなる同期（The Great
+                                Synchronization）は、集団的注意のグローバルな実験です。この基本的なアイデアは<strong>「1％の法則」</strong>（社会学的にはマハリシ効果と関連付けられることが多い）に基づいており、人口のわずか1％が統一された肯定的な思考に集中すれば、集団の心理状態を根本的に変化させることができるというものです。
+                            </p>
+                            <p class="mb-4">
+                                科学的に言えば、瞬間的な量子テレパシーは依然として推測の域を出ませんが、<span
+                                    class="text-white font-medium">社会学的な影響は非常に現実的です</span>。同期されたグローバルな運動は、国境を越えて思いやりと結束を育む強力な文化的シフトを生み出します。何百万人もの人々が同じ肯定的な結果に集中するとき、それはグローバルなコミュニケーションと共有される文化的行動を変化させます。
+                            </p>
+                            <p>
+                                私たちは、約<strong>8千万人</strong>（世界人口の約1％）の人々に到達し、わずか5分間、平和、愛、結束、尊重に集中するために立ち止まってもらうことを目指しています。
+                            </p>
+                        </div>
+
+                        <!-- Chinese -->
+                        <div id="content-zh" class="lang-panel font-zh">
+                            <p class="mb-4">
+                                大同步（The Great
+                                Synchronization）是一个全球性的集体注意力实验。其基本理念参考了<strong>“1%理论”</strong>（在社会学上常与马哈里希效应相联系），该理论认为，如果一个群体中哪怕只有1%的人专注于一个统一的积极想法，就能深刻地改变集体的心理状态。
+                            </p>
+                            <p class="mb-4">
+                                从科学角度讲，虽然瞬间的量子心灵感应仍处于推测阶段，但<span
+                                    class="text-white font-medium">社会学影响是非常真实的</span>：同步的全球运动会产生强大的文化转变，促进跨越国界的同情心和团结。当数百万人专注于同一个积极的结果时，它会改变全球交流和共享的文化行为。
+                            </p>
+                            <p>
+                                我们的目标是让大约<strong>8000万人</strong>（约占全球人口的1%）停下来，用短短五分钟时间专注于和平、爱、团结和尊重。
+                            </p>
+                        </div>
+
+                        <!-- Arabic -->
+                        <div id="content-ar" class="lang-panel font-ar" dir="rtl" style="text-align: right;">
+                            <p class="mb-4">
+                                التزامن العظيم هو تجربة عالمية في الاهتمام الجماعي. تشير الفكرة الأساسية إلى
+                                <strong>"نظرية الـ 1%"</strong> (والتي ترتبط غالبًا من الناحية الاجتماعية بتأثير
+                                مهاريشي)، والتي تفترض أنه إذا ركز واحد بالمائة فقط من السكان على فكرة إيجابية موحدة،
+                                فيمكن أن يغير ذلك الحالة الذهنية الجماعية بشكل عميق.
+                            </p>
+                            <p class="mb-4">
+                                من الناحية العلمية، في حين أن التخاطر الكمي اللحظي يظل تخمينيًا، فإن <span
+                                    class="text-white font-medium">التأثير الاجتماعي حقيقي للغاية</span>: تخلق الحركات
+                                العالمية المتزامنة تحولات ثقافية قوية، مما يعزز التعاطف والوحدة عبر الحدود. عندما يركز
+                                الملايين على نفس النتيجة الإيجابية، فإن ذلك يغير التواصل العالمي والسلوك الثقافي
+                                المشترك.
+                            </p>
+                            <p>
+                                نهدف إلى الوصول إلى حوالي <strong>80 مليون شخص</strong> (حوالي 1٪ من سكان العالم) للتوقف
+                                والتركيز على السلام والحب والوحدة والاحترام لمدة خمس دقائق فقط.
+                            </p>
+                        </div>
+
+                        <!-- Croatian -->
+                        <div id="content-hr" class="lang-panel">
+                            <p class="mb-4">
+                                Velika sinkronizacija je globalni eksperiment kolektivne pažnje. Temeljna ideja oslanja
+                                se na <strong>"teoriju 1%"</strong> (često sociološki povezanu s Maharishijevim
+                                efektom), koja pretpostavlja da ako se samo jedan posto populacije usredotoči na
+                                jedinstvenu pozitivnu misao, to može duboko promijeniti kolektivno stanje uma.
+                            </p>
+                            <p class="mb-4">
+                                Znanstveno gledano, dok trenutna kvantna telepatija ostaje spekulativna, <span
+                                    class="text-white font-medium">sociološki utjecaj je vrlo stvaran</span>:
+                                sinkronizirani globalni pokreti stvaraju snažne kulturološke pomake, potičući
+                                suosjećanje i zajedništvo preko granica. Kada se milijuni usredotoče na isti pozitivan
+                                ishod, to mijenja globalnu komunikaciju, digitalni otisak i zajedničko kulturno
+                                ponašanje.
+                            </p>
+                            <p>
+                                Cilj nam je doprijeti do otprilike <strong>80 milijuna ljudi</strong> (oko 1% globalne
+                                populacije) kako bi zastali i usredotočili se na Mir, Ljubav, Jedinstvo i Poštovanje na
+                                samo pet minuta.
+                            </p>
+                        </div>
+
+                        <!-- Filipino (Tagalog) -->
+                        <div id="content-tl" class="lang-panel">
+                            <p class="mb-4">
+                                Ang Dakilang Sinkronisasyon (The Great Synchronization) ay isang pandaigdigang
+                                eksperimento sa sama-samang atensyon. Ang pangunahing ideya nito ay tumutukoy sa
+                                <strong>"1% theory"</strong> (madalas na iniuugnay sa sosyolohiya sa Maharishi Effect),
+                                na nagsasabing kung ang isang porsyento lamang ng populasyon ay nakatuon sa iisang
+                                positibong kaisipan, maaari nitong baguhin nang malalim ang kolektibong pag-iisip.
+                            </p>
+                            <p class="mb-4">
+                                Mula sa siyentipikong pananaw, habang ang agaran at quantum na telepatiya ay
+                                nananatiling haka-haka, ang <span class="text-white font-medium">epekto nito sa
+                                    sosyolohiya ay napakatotoo</span>: ang mga sabay-sabay na pandaigdigang kilusan ay
+                                lumilikha ng malalakas na pagbabago sa kultura, na nagpapaunlad ng habag at pagkakaisa
+                                sa kabila ng mga hangganan. Kapag ang milyun-milyon ay nakatuon sa iisang positibong
+                                resulta, binabago nito ang pandaigdigang komunikasyon, digital footprint, at ibinahaging
+                                pag-uugali ng kultura.
+                            </p>
+                            <p>
+                                Layunin naming maabot ang humigit-kumulang <strong>80 milyong tao</strong> (mga 1% ng
+                                pandaigdigang populasyon) upang huminto at mag-focus sa Kapayapaan, Pag-ibig,
+                                Pagkakaisa, at Paggalang sa loob lamang ng limang minuto.
+                            </p>
+                        </div>
+
+                        <!-- Swahili -->
+                        <div id="content-sw" class="lang-panel">
+                            <p class="mb-4">
+                                Ulinganishaji Mkuu (The Great Synchronization) ni jaribio la kimataifa la umakini wa
+                                pamoja. Wazo la msingi linarejelea <strong>"nadharia ya 1%"</strong> (ambayo mara nyingi
+                                inahusishwa kijamii na Athari ya Maharishi), ambayo inapendekeza kwamba ikiwa asilimia
+                                moja tu ya idadi ya watu itazingatia wazo moja chanya, inaweza kubadilisha sana hali ya
+                                akili ya pamoja.
+                            </p>
+                            <p class="mb-4">
+                                Kisayansi, ingawa telepathia ya papo hapo inabaki kuwa ya kubahatisha, <span
+                                    class="text-white font-medium">athari ya kijamii ni ya kweli kabisa</span>: harakati
+                                za kimataifa zilizounganishwa zinaunda mabadiliko makubwa ya kitamaduni, kukuza huruma
+                                na umoja kuvuka mipaka. Wakati mamilioni wanapozingatia matokeo sawa chanya,
+                                inabadilisha mawasiliano ya kimataifa, nyayo za kidijitali, na tabia za kitamaduni
+                                zinazoshirikiwa.
+                            </p>
+                            <p>
+                                Tunalenga kufikia takriban <strong>watu milioni 80</strong> (takriban 1% ya idadi ya
+                                watu duniani) kusimama na kuzingatia Amani, Upendo, Umoja, na Heshima kwa dakika tano
+                                tu.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Floating Share Button -->
+        <button id="share-btn"
+            class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full border border-white/40 bg-black/40 text-white/90 shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-md flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all group pointer-events-auto cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <div id="share-toast"
+                class="absolute -top-12 right-0 px-3 py-1.5 bg-black/90 backdrop-blur-md text-[10px] text-white/90 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none uppercase tracking-widest border border-white/10 shadow-xl whitespace-nowrap">
+                Podijeli događaj
+            </div>
+        </button>
+
+        <!-- THREE.JS IMPORTS -->
+        <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+        }
+    }
+    </script>
+
+        <!-- MAIN LOGIC (UI + Three.js) -->
+        <script type="module">
+            import * as THREE from 'three';
+            import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+            import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+            import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+            import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+            import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+            // --- UI LOGIC (3D Flip & Tabs) ---
+
+            // 3D Flip Card Logic
+            const infoBtn = document.getElementById('info-btn');
+            const headerContainer = document.getElementById('header-container');
+            const headerFlipper = document.getElementById('header-flipper');
+            let isFlipped = false;
+
+            const toggleFlip = (forceState) => {
+                isFlipped = forceState !== undefined ? forceState : !isFlipped;
+                headerFlipper.style.transform = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+            };
+
+            // Hover events for desktop
+            infoBtn.addEventListener('mouseenter', () => toggleFlip(true));
+            headerContainer.addEventListener('mouseleave', () => toggleFlip(false));
+            // Click fallback for mobile devices
+            infoBtn.addEventListener('click', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                toggleFlip();
+            });
+
+            // Language Tabs Logic
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const langPanels = document.querySelectorAll('.lang-panel');
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Reset all buttons styling
+                    langBtns.forEach(b => {
+                        b.classList.remove('active', 'border-white/50', 'text-white');
+                        b.classList.add('border-transparent', 'text-white/50');
+                        const bgCover = b.querySelector('.bg-cover');
+                        bgCover.classList.remove('opacity-60', 'group-hover:opacity-80');
+                        bgCover.classList.add('opacity-20', 'group-hover:opacity-50');
+                    });
+
+                    // Activate clicked button styling
+                    btn.classList.add('active', 'border-white/50', 'text-white');
+                    btn.classList.remove('border-transparent', 'text-white/50');
+                    const bgCover = btn.querySelector('.bg-cover');
+                    bgCover.classList.remove('opacity-20', 'group-hover:opacity-50');
+                    bgCover.classList.add('opacity-60', 'group-hover:opacity-80');
+
+                    // Show corresponding content
+                    const targetLang = btn.dataset.lang;
+                    langPanels.forEach(panel => {
+                        panel.classList.remove('active');
+                    });
+                    document.getElementById(`content-${targetLang}`).classList.add('active');
+                });
+            });
+
+
+            // --- GLOBAL STATE ---
+            let hasParticipated = false;
+            let activeReaction = null;
+
+            // --- THREE.JS CONFIG & PALETTES ---
+            const config = {
+                paused: false,
+                activePaletteIndex: 0,
+                densityFactor: 1
+            };
+
+            const colorPalettes = [
+                [new THREE.Color(0x4facfe), new THREE.Color(0x00f2fe), new THREE.Color(0x43e97b), new THREE.Color(0x38f9d7), new THREE.Color(0x4484ce)],
+                [new THREE.Color(0xf857a6), new THREE.Color(0xff5858), new THREE.Color(0xff0080), new THREE.Color(0xff6348), new THREE.Color(0xff9068)],
+                [new THREE.Color(0x667eea), new THREE.Color(0x764ba2), new THREE.Color(0xf093fb), new THREE.Color(0x9d50bb), new THREE.Color(0x6e48aa)],
+                [new THREE.Color(0xfeca57), new THREE.Color(0xffa502), new THREE.Color(0xff7f50), new THREE.Color(0xff9f43), new THREE.Color(0xee5253)]
+            ];
+
+            // --- THREE.JS CORE SETUP ---
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x000000, 0.002);
+            const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 8, 28);
+            const canvasElement = document.getElementById('neural-network-canvas');
+            const renderer = new THREE.WebGLRenderer({ canvas: canvasElement, antialias: true, powerPreference: "high-performance" });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000);
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+            // Starfield
+            function createStarfield() {
+                const count = 8000;
+                const positions = []; const colors = []; const sizes = [];
+                for (let i = 0; i < count; i++) {
+                    const r = THREE.MathUtils.randFloat(50, 150);
+                    const phi = Math.acos(THREE.MathUtils.randFloatSpread(2));
+                    const theta = THREE.MathUtils.randFloat(0, Math.PI * 2);
+                    positions.push(r * Math.sin(phi) * Math.cos(theta), r * Math.sin(phi) * Math.sin(theta), r * Math.cos(phi));
+                    const colorChoice = Math.random();
+                    if (colorChoice < 0.7) colors.push(1, 1, 1);
+                    else if (colorChoice < 0.85) colors.push(0.7, 0.8, 1);
+                    else colors.push(1, 0.9, 0.8);
+                    sizes.push(THREE.MathUtils.randFloat(0.1, 0.3));
+                }
+                const geo = new THREE.BufferGeometry();
+                geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+                geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+                geo.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
+                const mat = new THREE.ShaderMaterial({
+                    uniforms: { uTime: { value: 0 } },
+                    vertexShader: `
+                    attribute float size; attribute vec3 color; varying vec3 vColor; uniform float uTime;
+                    void main() {
+                        vColor = color; vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        float twinkle = sin(uTime * 2.0 + position.x * 100.0) * 0.3 + 0.7;
+                        gl_PointSize = size * twinkle * (300.0 / -mvPosition.z);
+                        gl_Position = projectionMatrix * mvPosition;
+                    }`,
+                    fragmentShader: `
+                    varying vec3 vColor;
+                    void main() {
+                        vec2 center = gl_PointCoord - 0.5; float dist = length(center);
+                        if (dist > 0.5) discard;
+                        float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
+                        gl_FragColor = vec4(vColor, alpha * 0.8);
+                    }`,
+                    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+                });
+                return new THREE.Points(geo, mat);
+            }
+            const starField = createStarfield();
+            scene.add(starField);
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; controls.dampingFactor = 0.05; controls.rotateSpeed = 0.6;
+            controls.minDistance = 8; controls.maxDistance = 80; controls.autoRotate = true; controls.autoRotateSpeed = 0.2; controls.enablePan = false;
+
+            const composer = new EffectComposer(renderer);
+            composer.addPass(new RenderPass(scene, camera));
+            const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.8, 0.6, 0.7);
+            composer.addPass(bloomPass);
+            composer.addPass(new OutputPass());
+
+            // Shaders
+            const pulseUniforms = {
+                uTime: { value: 0.0 },
+                uPulsePositions: { value: [new THREE.Vector3(1e3, 1e3, 1e3), new THREE.Vector3(1e3, 1e3, 1e3), new THREE.Vector3(1e3, 1e3, 1e3)] },
+                uPulseTimes: { value: [-1e3, -1e3, -1e3] },
+                uPulseColors: { value: [new THREE.Color(1, 1, 1), new THREE.Color(1, 1, 1), new THREE.Color(1, 1, 1)] },
+                uPulseSpeed: { value: 18.0 },
+                uBaseNodeSize: { value: 0.6 }
+            };
+
+            const noiseFunctions = `
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
+            vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+            float snoise(vec3 v) {
+                const vec2 C = vec2(1.0/6.0, 1.0/3.0); const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+                vec3 i = floor(v + dot(v, C.yyy)); vec3 x0 = v - i + dot(i, C.xxx);
+                vec3 g = step(x0.yzx, x0.xyz); vec3 l = 1.0 - g;
+                vec3 i1 = min(g.xyz, l.zxy); vec3 i2 = max(g.xyz, l.zxy);
+                vec3 x1 = x0 - i1 + C.xxx; vec3 x2 = x0 - i2 + C.yyy; vec3 x3 = x0 - D.yyy;
+                i = mod289(i);
+                vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+                float n_ = 0.142857142857; vec3 ns = n_ * D.wyz - D.xzx;
+                vec4 j = p - 49.0 * floor(p * ns.z * ns.z); vec4 x_ = floor(j * ns.z); vec4 y_ = floor(j - 7.0 * x_);
+                vec4 x = x_ * ns.x + ns.yyyy; vec4 y = y_ * ns.x + ns.yyyy; vec4 h = 1.0 - abs(x) - abs(y);
+                vec4 b0 = vec4(x.xy, y.xy); vec4 b1 = vec4(x.zw, y.zw);
+                vec4 s0 = floor(b0) * 2.0 + 1.0; vec4 s1 = floor(b1) * 2.0 + 1.0; vec4 sh = -step(h, vec4(0.0));
+                vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy; vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+                vec3 p0 = vec3(a0.xy, h.x); vec3 p1 = vec3(a0.zw, h.y); vec3 p2 = vec3(a1.xy, h.z); vec3 p3 = vec3(a1.zw, h.w);
+                vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+                p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+                vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+                m = m * m; return 42.0 * dot(m * m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+            }`;
+
+            const nodeShader = {
+                vertexShader: `${noiseFunctions}
+                attribute float nodeSize; attribute float nodeType; attribute vec3 nodeColor; attribute float distanceFromRoot;
+                uniform float uTime; uniform vec3 uPulsePositions[3]; uniform float uPulseTimes[3]; uniform float uPulseSpeed; uniform float uBaseNodeSize;
+                varying vec3 vColor; varying float vNodeType; varying vec3 vPosition; varying float vPulseIntensity; varying float vDistanceFromRoot; varying float vGlow;
+                float getPulseIntensity(vec3 worldPos, vec3 pulsePos, float pulseTime) {
+                    if (pulseTime < 0.0) return 0.0;
+                    float timeSinceClick = uTime - pulseTime;
+                    if (timeSinceClick < 0.0 || timeSinceClick > 4.0) return 0.0;
+                    float pulseRadius = timeSinceClick * uPulseSpeed; float distToClick = distance(worldPos, pulsePos);
+                    float pulseThickness = 3.0; float waveProximity = abs(distToClick - pulseRadius);
+                    return smoothstep(pulseThickness, 0.0, waveProximity) * smoothstep(4.0, 0.0, timeSinceClick);
+                }
+                void main() {
+                    vNodeType = nodeType; vColor = nodeColor; vDistanceFromRoot = distanceFromRoot;
+                    vec3 worldPos = (modelMatrix * vec4(position, 1.0)).xyz; vPosition = worldPos;
+                    float totalPulseIntensity = 0.0;
+                    for (int i = 0; i < 3; i++) { totalPulseIntensity += getPulseIntensity(worldPos, uPulsePositions[i], uPulseTimes[i]); }
+                    vPulseIntensity = min(totalPulseIntensity, 1.0);
+                    float breathe = sin(uTime * 0.7 + distanceFromRoot * 0.15) * 0.15 + 0.85;
+                    float baseSize = nodeSize * breathe; float pulseSize = baseSize * (1.0 + vPulseIntensity * 2.5);
+                    vGlow = 0.5 + 0.5 * sin(uTime * 0.5 + distanceFromRoot * 0.2);
+                    vec3 modifiedPosition = position;
+                    if (nodeType > 0.5) { float noise = snoise(position * 0.08 + uTime * 0.08); modifiedPosition += normal * noise * 0.15; }
+                    vec4 mvPosition = modelViewMatrix * vec4(modifiedPosition, 1.0);
+                    gl_PointSize = pulseSize * uBaseNodeSize * (1000.0 / -mvPosition.z);
+                    gl_Position = projectionMatrix * mvPosition;
+                }`,
+                fragmentShader: `
+                uniform float uTime; uniform vec3 uPulseColors[3];
+                varying vec3 vColor; varying float vNodeType; varying vec3 vPosition; varying float vPulseIntensity; varying float vDistanceFromRoot; varying float vGlow;
+                void main() {
+                    vec2 center = 2.0 * gl_PointCoord - 1.0; float dist = length(center);
+                    if (dist > 1.0) discard;
+                    float glow1 = 1.0 - smoothstep(0.0, 0.5, dist); float glow2 = 1.0 - smoothstep(0.0, 1.0, dist);
+                    float glowStrength = pow(glow1, 1.2) + glow2 * 0.3;
+                    float breatheColor = 0.9 + 0.1 * sin(uTime * 0.6 + vDistanceFromRoot * 0.25);
+                    vec3 baseColor = vColor * breatheColor; vec3 finalColor = baseColor;
+                    if (vPulseIntensity > 0.0) {
+                        vec3 pulseColor = mix(vec3(1.0), uPulseColors[0], 0.4);
+                        finalColor = mix(baseColor, pulseColor, vPulseIntensity * 0.8);
+                        finalColor *= (1.0 + vPulseIntensity * 1.2); glowStrength *= (1.0 + vPulseIntensity);
+                    }
+                    float coreBrightness = smoothstep(0.4, 0.0, dist); finalColor += vec3(1.0) * coreBrightness * 0.3;
+                    float alpha = glowStrength * (0.95 - 0.3 * dist);
+                    float camDistance = length(vPosition - cameraPosition); float distanceFade = smoothstep(100.0, 15.0, camDistance);
+                    if (vNodeType > 0.5) { finalColor *= 1.1; alpha *= 0.9; }
+                    finalColor *= (1.0 + vGlow * 0.1);
+                    gl_FragColor = vec4(finalColor, alpha * distanceFade);
+                }`
+            };
+
+            const connectionShader = {
+                vertexShader: `${noiseFunctions}
+                attribute vec3 startPoint; attribute vec3 endPoint; attribute float connectionStrength; attribute float pathIndex; attribute vec3 connectionColor;
+                uniform float uTime; uniform vec3 uPulsePositions[3]; uniform float uPulseTimes[3]; uniform float uPulseSpeed;
+                varying vec3 vColor; varying float vConnectionStrength; varying float vPulseIntensity; varying float vPathPosition; varying float vDistanceFromCamera;
+                float getPulseIntensity(vec3 worldPos, vec3 pulsePos, float pulseTime) {
+                    if (pulseTime < 0.0) return 0.0;
+                    float timeSinceClick = uTime - pulseTime;
+                    if (timeSinceClick < 0.0 || timeSinceClick > 4.0) return 0.0;
+                    float pulseRadius = timeSinceClick * uPulseSpeed; float distToClick = distance(worldPos, pulsePos);
+                    float pulseThickness = 3.0; float waveProximity = abs(distToClick - pulseRadius);
+                    return smoothstep(pulseThickness, 0.0, waveProximity) * smoothstep(4.0, 0.0, timeSinceClick);
+                }
+                void main() {
+                    float t = position.x; vPathPosition = t;
+                    vec3 midPoint = mix(startPoint, endPoint, 0.5); float pathOffset = sin(t * 3.14159) * 0.15;
+                    vec3 perpendicular = normalize(cross(normalize(endPoint - startPoint), vec3(0.0, 1.0, 0.0)));
+                    if (length(perpendicular) < 0.1) perpendicular = vec3(1.0, 0.0, 0.0);
+                    midPoint += perpendicular * pathOffset;
+                    vec3 p0 = mix(startPoint, midPoint, t); vec3 p1 = mix(midPoint, endPoint, t); vec3 finalPos = mix(p0, p1, t);
+                    float noiseTime = uTime * 0.15; float noise = snoise(vec3(pathIndex * 0.08, t * 0.6, noiseTime));
+                    finalPos += perpendicular * noise * 0.12;
+                    vec3 worldPos = (modelMatrix * vec4(finalPos, 1.0)).xyz;
+                    float totalPulseIntensity = 0.0;
+                    for (int i = 0; i < 3; i++) { totalPulseIntensity += getPulseIntensity(worldPos, uPulsePositions[i], uPulseTimes[i]); }
+                    vPulseIntensity = min(totalPulseIntensity, 1.0);
+                    vColor = connectionColor; vConnectionStrength = connectionStrength; vDistanceFromCamera = length(worldPos - cameraPosition);
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(finalPos, 1.0);
+                }`,
+                fragmentShader: `
+                uniform float uTime; uniform vec3 uPulseColors[3];
+                varying vec3 vColor; varying float vConnectionStrength; varying float vPulseIntensity; varying float vPathPosition; varying float vDistanceFromCamera;
+                void main() {
+                    float flowPattern1 = sin(vPathPosition * 25.0 - uTime * 4.0) * 0.5 + 0.5;
+                    float flowPattern2 = sin(vPathPosition * 15.0 - uTime * 2.5 + 1.57) * 0.5 + 0.5;
+                    float combinedFlow = (flowPattern1 + flowPattern2 * 0.5) / 1.5;
+                    vec3 baseColor = vColor * (0.8 + 0.2 * sin(uTime * 0.6 + vPathPosition * 12.0));
+                    float flowIntensity = 0.4 * combinedFlow * vConnectionStrength;
+                    vec3 finalColor = baseColor;
+                    if (vPulseIntensity > 0.0) {
+                        vec3 pulseColor = mix(vec3(1.0), uPulseColors[0], 0.3);
+                        finalColor = mix(baseColor, pulseColor * 1.2, vPulseIntensity * 0.7);
+                        flowIntensity += vPulseIntensity * 0.8;
+                    }
+                    finalColor *= (0.7 + flowIntensity + vConnectionStrength * 0.5);
+                    float baseAlpha = 0.7 * vConnectionStrength; float flowAlpha = combinedFlow * 0.3;
+                    float alpha = baseAlpha + flowAlpha; alpha = mix(alpha, min(1.0, alpha * 2.5), vPulseIntensity);
+                    float distanceFade = smoothstep(100.0, 15.0, vDistanceFromCamera);
+                    gl_FragColor = vec4(finalColor, alpha * distanceFade);
+                }`
+            };
+
+            class Node {
+                constructor(position, level = 0, type = 0) {
+                    this.position = position; this.connections = []; this.level = level; this.type = type;
+                    this.size = type === 0 ? THREE.MathUtils.randFloat(0.8, 1.4) : THREE.MathUtils.randFloat(0.5, 1.0);
+                    this.distanceFromRoot = 0;
+                }
+                addConnection(node, strength = 1.0) {
+                    if (!this.isConnectedTo(node)) { this.connections.push({ node, strength }); node.connections.push({ node: this, strength }); }
+                }
+                isConnectedTo(node) { return this.connections.some(conn => conn.node === node); }
+            }
+
+            // Network Generation
+            function generateNeuralNetwork(densityFactor = 1.0) {
+                let nodes = []; let rootNode;
+                function generateCrystallineSphere() {
+                    rootNode = new Node(new THREE.Vector3(0, 0, 0), 0, 0); rootNode.size = 2.0; nodes.push(rootNode);
+                    const layers = 5; const goldenRatio = (1 + Math.sqrt(5)) / 2;
+                    for (let layer = 1; layer <= layers; layer++) {
+                        const radius = layer * 4; const numPoints = Math.floor(layer * 12 * densityFactor);
+                        for (let i = 0; i < numPoints; i++) {
+                            const phi = Math.acos(1 - 2 * (i + 0.5) / numPoints); const theta = 2 * Math.PI * i / goldenRatio;
+                            const pos = new THREE.Vector3(radius * Math.sin(phi) * Math.cos(theta), radius * Math.sin(phi) * Math.sin(theta), radius * Math.cos(phi));
+                            const isLeaf = layer === layers || Math.random() < 0.3;
+                            const node = new Node(pos, layer, isLeaf ? 1 : 0); node.distanceFromRoot = radius; nodes.push(node);
+                            if (layer > 1) {
+                                const prevLayerNodes = nodes.filter(n => n.level === layer - 1 && n !== rootNode);
+                                prevLayerNodes.sort((a, b) => pos.distanceTo(a.position) - pos.distanceTo(b.position));
+                                for (let j = 0; j < Math.min(3, prevLayerNodes.length); j++) {
+                                    const dist = pos.distanceTo(prevLayerNodes[j].position); const strength = 1.0 - (dist / (radius * 2));
+                                    node.addConnection(prevLayerNodes[j], Math.max(0.3, strength));
+                                }
+                            } else { rootNode.addConnection(node, 0.9); }
+                        }
+                        const layerNodes = nodes.filter(n => n.level === layer && n !== rootNode);
+                        for (let i = 0; i < layerNodes.length; i++) {
+                            const node = layerNodes[i];
+                            const nearby = layerNodes.filter(n => n !== node).sort((a, b) => node.position.distanceTo(a.position) - node.position.distanceTo(b.position)).slice(0, 5);
+                            for (const nearNode of nearby) {
+                                const dist = node.position.distanceTo(nearNode.position);
+                                if (dist < radius * 0.8 && !node.isConnectedTo(nearNode)) { node.addConnection(nearNode, 0.6); }
+                            }
+                        }
+                    }
+                }
+                generateCrystallineSphere();
+                return { nodes, rootNode };
+            }
+
+            let neuralNetwork = null; let nodesMesh = null; let connectionsMesh = null;
+
+            function createNetworkVisualization(densityFactor = 1.0) {
+                if (nodesMesh) { scene.remove(nodesMesh); nodesMesh.geometry.dispose(); nodesMesh.material.dispose(); }
+                if (connectionsMesh) { scene.remove(connectionsMesh); connectionsMesh.geometry.dispose(); connectionsMesh.material.dispose(); }
+                neuralNetwork = generateNeuralNetwork(densityFactor);
+
+                const nodesGeometry = new THREE.BufferGeometry();
+                const nodePositions = []; const nodeTypes = []; const nodeSizes = []; const nodeColors = []; const distancesFromRoot = [];
+                const palette = colorPalettes[config.activePaletteIndex];
+
+                neuralNetwork.nodes.forEach((node) => {
+                    nodePositions.push(node.position.x, node.position.y, node.position.z);
+                    nodeTypes.push(node.type); nodeSizes.push(node.size); distancesFromRoot.push(node.distanceFromRoot);
+                    const colorIndex = Math.min(node.level, palette.length - 1);
+                    const baseColor = palette[colorIndex % palette.length].clone();
+                    baseColor.offsetHSL(THREE.MathUtils.randFloatSpread(0.03), THREE.MathUtils.randFloatSpread(0.08), THREE.MathUtils.randFloatSpread(0.08));
+                    nodeColors.push(baseColor.r, baseColor.g, baseColor.b);
+                });
+                nodesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(nodePositions, 3));
+                nodesGeometry.setAttribute('nodeType', new THREE.Float32BufferAttribute(nodeTypes, 1));
+                nodesGeometry.setAttribute('nodeSize', new THREE.Float32BufferAttribute(nodeSizes, 1));
+                nodesGeometry.setAttribute('nodeColor', new THREE.Float32BufferAttribute(nodeColors, 3));
+                nodesGeometry.setAttribute('distanceFromRoot', new THREE.Float32BufferAttribute(distancesFromRoot, 1));
+                const nodesMaterial = new THREE.ShaderMaterial({
+                    uniforms: THREE.UniformsUtils.clone(pulseUniforms),
+                    vertexShader: nodeShader.vertexShader, fragmentShader: nodeShader.fragmentShader,
+                    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+                });
+                nodesMesh = new THREE.Points(nodesGeometry, nodesMaterial);
+                scene.add(nodesMesh);
+
+                const connectionsGeometry = new THREE.BufferGeometry();
+                const connectionColors = []; const connectionStrengths = []; const connectionPositions = []; const startPoints = []; const endPoints = []; const pathIndices = [];
+                const processedConnections = new Set(); let pathIndex = 0;
+
+                neuralNetwork.nodes.forEach((node, nodeIndex) => {
+                    node.connections.forEach(connection => {
+                        const connectedNode = connection.node; const connectedIndex = neuralNetwork.nodes.indexOf(connectedNode);
+                        if (connectedIndex === -1) return;
+                        const key = [Math.min(nodeIndex, connectedIndex), Math.max(nodeIndex, connectedIndex)].join('-');
+                        if (!processedConnections.has(key)) {
+                            processedConnections.add(key);
+                            const startPoint = node.position; const endPoint = connectedNode.position; const numSegments = 20;
+                            for (let i = 0; i < numSegments; i++) {
+                                const t = i / (numSegments - 1);
+                                connectionPositions.push(t, 0, 0); startPoints.push(startPoint.x, startPoint.y, startPoint.z); endPoints.push(endPoint.x, endPoint.y, endPoint.z);
+                                pathIndices.push(pathIndex); connectionStrengths.push(connection.strength);
+                                const avgLevel = Math.min(Math.floor((node.level + connectedNode.level) / 2), palette.length - 1);
+                                const baseColor = palette[avgLevel % palette.length].clone();
+                                baseColor.offsetHSL(THREE.MathUtils.randFloatSpread(0.03), THREE.MathUtils.randFloatSpread(0.08), THREE.MathUtils.randFloatSpread(0.08));
+                                connectionColors.push(baseColor.r, baseColor.g, baseColor.b);
+                            }
+                            pathIndex++;
+                        }
+                    });
+                });
+                connectionsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(connectionPositions, 3));
+                connectionsGeometry.setAttribute('startPoint', new THREE.Float32BufferAttribute(startPoints, 3));
+                connectionsGeometry.setAttribute('endPoint', new THREE.Float32BufferAttribute(endPoints, 3));
+                connectionsGeometry.setAttribute('connectionStrength', new THREE.Float32BufferAttribute(connectionStrengths, 1));
+                connectionsGeometry.setAttribute('connectionColor', new THREE.Float32BufferAttribute(connectionColors, 3));
+                connectionsGeometry.setAttribute('pathIndex', new THREE.Float32BufferAttribute(pathIndices, 1));
+                const connectionsMaterial = new THREE.ShaderMaterial({
+                    uniforms: THREE.UniformsUtils.clone(pulseUniforms),
+                    vertexShader: connectionShader.vertexShader, fragmentShader: connectionShader.fragmentShader,
+                    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+                });
+                connectionsMesh = new THREE.LineSegments(connectionsGeometry, connectionsMaterial);
+                scene.add(connectionsMesh);
+
+                palette.forEach((color, i) => {
+                    if (i < 3) {
+                        connectionsMaterial.uniforms.uPulseColors.value[i].copy(color);
+                        nodesMaterial.uniforms.uPulseColors.value[i].copy(color);
+                    }
+                });
+            }
+
+            function updateTheme(paletteIndex) {
+                config.activePaletteIndex = paletteIndex;
+                if (!nodesMesh || !connectionsMesh || !neuralNetwork) return;
+                const palette = colorPalettes[paletteIndex];
+                const nodeColorsAttr = nodesMesh.geometry.attributes.nodeColor;
+                for (let i = 0; i < nodeColorsAttr.count; i++) {
+                    const node = neuralNetwork.nodes[i]; if (!node) continue;
+                    const colorIndex = Math.min(node.level, palette.length - 1);
+                    const baseColor = palette[colorIndex % palette.length].clone();
+                    baseColor.offsetHSL(THREE.MathUtils.randFloatSpread(0.03), THREE.MathUtils.randFloatSpread(0.08), THREE.MathUtils.randFloatSpread(0.08));
+                    nodeColorsAttr.setXYZ(i, baseColor.r, baseColor.g, baseColor.b);
+                }
+                nodeColorsAttr.needsUpdate = true;
+
+                const connectionColors = []; const processedConnections = new Set();
+                neuralNetwork.nodes.forEach((node, nodeIndex) => {
+                    node.connections.forEach(connection => {
+                        const connectedNode = connection.node; const connectedIndex = neuralNetwork.nodes.indexOf(connectedNode);
+                        if (connectedIndex === -1) return;
+                        const key = [Math.min(nodeIndex, connectedIndex), Math.max(nodeIndex, connectedIndex)].join('-');
+                        if (!processedConnections.has(key)) {
+                            processedConnections.add(key);
+                            for (let i = 0; i < 20; i++) {
+                                const avgLevel = Math.min(Math.floor((node.level + connectedNode.level) / 2), palette.length - 1);
+                                const baseColor = palette[avgLevel % palette.length].clone();
+                                baseColor.offsetHSL(THREE.MathUtils.randFloatSpread(0.03), THREE.MathUtils.randFloatSpread(0.08), THREE.MathUtils.randFloatSpread(0.08));
+                                connectionColors.push(baseColor.r, baseColor.g, baseColor.b);
+                            }
+                        }
+                    });
+                });
+                connectionsMesh.geometry.setAttribute('connectionColor', new THREE.Float32BufferAttribute(connectionColors, 3));
+                connectionsMesh.geometry.attributes.connectionColor.needsUpdate = true;
+                palette.forEach((color, i) => {
+                    if (i < 3) {
+                        nodesMesh.material.uniforms.uPulseColors.value[i].copy(color);
+                        connectionsMesh.material.uniforms.uPulseColors.value[i].copy(color);
+                    }
+                });
+            }
+
+            // --- INTERACTION LOGIC ---
+            const raycaster = new THREE.Raycaster(); const pointer = new THREE.Vector2();
+            const interactionPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0); const interactionPoint = new THREE.Vector3();
+            let lastPulseIndex = 0;
+
+            function triggerPulse(clientX, clientY) {
+                pointer.x = (clientX / window.innerWidth) * 2 - 1; pointer.y = -(clientY / window.innerHeight) * 2 + 1;
+                raycaster.setFromCamera(pointer, camera);
+                interactionPlane.normal.copy(camera.position).normalize();
+                interactionPlane.constant = -interactionPlane.normal.dot(camera.position) + camera.position.length() * 0.5;
+                if (raycaster.ray.intersectPlane(interactionPlane, interactionPoint)) {
+                    const time = clock.getElapsedTime();
+                    if (nodesMesh && connectionsMesh) {
+                        lastPulseIndex = (lastPulseIndex + 1) % 3;
+                        nodesMesh.material.uniforms.uPulsePositions.value[lastPulseIndex].copy(interactionPoint);
+                        nodesMesh.material.uniforms.uPulseTimes.value[lastPulseIndex] = time;
+                        connectionsMesh.material.uniforms.uPulsePositions.value[lastPulseIndex].copy(interactionPoint);
+                        connectionsMesh.material.uniforms.uPulseTimes.value[lastPulseIndex] = time;
+                        const palette = colorPalettes[config.activePaletteIndex];
+                        const randomColor = palette[Math.floor(Math.random() * palette.length)];
+                        nodesMesh.material.uniforms.uPulseColors.value[lastPulseIndex].copy(randomColor);
+                        connectionsMesh.material.uniforms.uPulseColors.value[lastPulseIndex].copy(randomColor);
+                    }
+                }
+            }
+
+            function lightUpNetwork() {
+                // Ciljana snaga sjaja nakon gašenja (0.8 je puno čitljivije od početnih 1.8)
+                const targetReadableStrength = 0.8;
+
+                // Inicijalni veliki bljesak
+                bloomPass.strength = 3.5;
+
+                // Serija brzih pulseva za efekt "vatrometa"
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const randomX = window.innerWidth / 2 + (Math.random() - 0.5) * window.innerWidth;
+                        const randomY = window.innerHeight / 2 + (Math.random() - 0.5) * window.innerHeight;
+                        triggerPulse(randomX, randomY);
+                    }, i * 150);
+                }
+
+                // Započni postepeno gašenje nakon točno 10 sekundi (10000 ms)
+                setTimeout(() => {
+                    let fade = setInterval(() => {
+                        bloomPass.strength -= 0.02; // Manji korak za finiji, filmski prijelaz
+                        if (bloomPass.strength <= targetReadableStrength) {
+                            bloomPass.strength = targetReadableStrength;
+                            clearInterval(fade);
+                        }
+                    }, 30); // Brži interval ažuriranja za glatkiju animaciju
+                }, 10000);
+            }
+
+            renderer.domElement.addEventListener('click', (e) => { if (!config.paused) triggerPulse(e.clientX, e.clientY); });
+            renderer.domElement.addEventListener('touchstart', (e) => {
+                e.preventDefault(); if (e.touches.length > 0 && !config.paused) triggerPulse(e.touches[0].clientX, e.touches[0].clientY);
+            }, { passive: false });
+
+            // --- SHARE BUTTON LOGIC ---
+            const shareBtn = document.getElementById('share-btn');
+            const shareToast = document.getElementById('share-toast');
+
+            shareBtn.addEventListener('click', async () => {
+                const shareData = {
+                    title: 'The Great Synchronization',
+                    text: 'Pridruži se globalnom eksperimentu kolektivne pažnje! Zaustavimo se na 5 minuta i usredotočimo na Mir, Ljubav, Jedinstvo i Poštovanje.',
+                    url: window.location.href
+                };
+
+                // Web Share API (Savršeno za mobilne uređaje)
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        console.log('Dijeljenje otkazano:', err);
+                    }
+                } else {
+                    // Fallback: Kopiranje u međuspremnik (za desktop bez Web Share podrške)
+                    const textArea = document.createElement("textarea");
+                    textArea.value = shareData.url;
+                    textArea.style.position = "fixed";
+                    textArea.style.top = "0";
+                    textArea.style.left = "0";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        // Prikaži obavijest "Kopirano"
+                        const originalText = shareToast.innerText;
+                        shareToast.innerText = "Link kopiran!";
+                        shareToast.classList.remove('group-hover:opacity-100'); // Privremeno nadjačaj hover
+                        shareToast.style.opacity = '1';
+
+                        setTimeout(() => {
+                            shareToast.style.opacity = '';
+                            shareToast.classList.add('group-hover:opacity-100');
+                            setTimeout(() => { shareToast.innerText = originalText; }, 300); // Vrati tekst nakon što fade-out završi
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Greška pri kopiranju', err);
+                    }
+                    document.body.removeChild(textArea);
+                }
+            });
+
+            // --- TIMER & ACTIONS ---
+            function updateTimer() {
+                const targetDate = new Date('2026-03-21T13:00:00-04:00').getTime();
+                const now = new Date().getTime(); const diff = targetDate - now;
+                if (diff > 0) {
+                    document.getElementById('cd-days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                    document.getElementById('cd-hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
+                    document.getElementById('cd-minutes').innerText = Math.floor((diff / 1000 / 60) % 60).toString().padStart(2, '0');
+                    document.getElementById('cd-seconds').innerText = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
+                } else {
+                    document.getElementById('countdown-container').innerHTML = '<h2 class="text-4xl md:text-6xl font-black text-white animate-pulse">IT IS TIME</h2>';
+                }
+            }
+            setInterval(updateTimer, 1000); updateTimer();
+
+            const btnParticipate = document.getElementById('btn-participate');
+            btnParticipate.addEventListener('click', () => {
+                if (hasParticipated) return;
+                hasParticipated = true;
+                btnParticipate.innerText = "Your energy is added!";
+                btnParticipate.disabled = true;
+                lightUpNetwork();
+            });
+
+            const plurButtons = document.querySelectorAll('.plur-btn');
+            plurButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const type = btn.dataset.type;
+                    const themeIdx = parseInt(btn.dataset.theme, 10);
+                    if (activeReaction === type) {
+                        btn.classList.remove('active');
+                        activeReaction = null;
+                        return;
+                    }
+                    if (activeReaction) document.querySelector(`[data-type="${activeReaction}"]`).classList.remove('active');
+                    btn.classList.add('active');
+                    activeReaction = type;
+                    updateTheme(themeIdx);
+                });
+            });
+
+            const clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate);
+                const t = clock.getElapsedTime();
+                if (!config.paused) {
+                    if (nodesMesh) nodesMesh.rotation.y = Math.sin(t * 0.04) * 0.05;
+                    if (connectionsMesh) connectionsMesh.rotation.y = Math.sin(t * 0.04) * 0.05;
+                }
+                starField.rotation.y += 0.0002; starField.material.uniforms.uTime.value = t;
+                controls.update(); composer.render();
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight); composer.setSize(window.innerWidth, window.innerHeight);
+                bloomPass.resolution.set(window.innerWidth, window.innerHeight);
+            }
+            window.addEventListener('resize', onWindowResize);
+
+            createNetworkVisualization(1.0);
+            animate();
+        </script>
+    </body>
+
+</html>

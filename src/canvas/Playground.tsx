@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen } from "react-feather";
+import { ArrowRight, BookOpen } from "lucide-react";
 import Reveal from "../components/Reveal";
 import ContextShifter from "./ContextShifter";
 import VisualContextShifter from "./VisualContextShifter";

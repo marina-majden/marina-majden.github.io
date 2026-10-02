@@ -49,7 +49,7 @@ const Projects: React.FC<ProjectsProps> = ({ t }) => (
                                         ? "lg:w-3/5 h-64 lg:h-full"
                                         : "h-1/2"
                                 }`}>
-                                <div className='absolute inset-0 bg-linear-to-b-to-br from-purple-900/40 to-slate-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-700'>
+                                <div className='absolute inset-0 bg-gradient-to-br from-purple-900/40 to-slate-900 flex items-center justify-center group-hover:scale-110 transition-transform duration-700'>
                                     <span className='font-mono text-slate-600 text-6xl opacity-20 font-bold'>
                                         {idx + 1}
                                     </span>

@@ -39,12 +39,25 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
     const [cart, setCart] = useState<CartItem[]>(() => {
-        const saved = localStorage.getItem("cart");
-        return saved ? JSON.parse(saved) : [];
+        try {
+            if (typeof window !== "undefined" && window.localStorage) {
+                const saved = window.localStorage.getItem("cart");
+                return saved ? JSON.parse(saved) : [];
+            }
+        } catch {
+            // fallback if storage disabled or unavailable
+        }
+        return [];
     });
 
     useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
+        try {
+            if (typeof window !== "undefined" && window.localStorage) {
+                window.localStorage.setItem("cart", JSON.stringify(cart));
+            }
+        } catch {
+            // ignore write error
+        }
     }, [cart]);
 
     const addToCart = (product: TemplateItem) => {
