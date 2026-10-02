@@ -12,6 +12,8 @@ import {
     Loader2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import TemplateModal from "@/components/TemplateModal";
+import { FALLBACK_IMAGE } from "@/constants";
 
 export const WebShop: React.FC = () => {
     const { lang } = useLanguage();
@@ -21,6 +23,7 @@ export const WebShop: React.FC = () => {
         useCart();
 
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<TemplateItem | null>(null);
     const [checkoutStep, setCheckoutStep] = useState<
         "browse" | "checkout" | "success"
     >("browse");
@@ -113,58 +116,194 @@ export const WebShop: React.FC = () => {
 
                         {/* Templates Product Grid */}
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-                            {t.templates.items.map((item: TemplateItem) => {
-                                const price = getTemplatePrice(item.id);
-                                const inCart = isInCart(item.id);
-                                return (
-                                    <div
-                                        key={item.id}
-                                        className='bg-slate-900/40 rounded-2xl border border-slate-800/80 p-5 flex flex-col justify-between hover:border-slate-700/80 transition-all'>
-                                        <div>
-                                            <div className='aspect-video w-full bg-slate-950 rounded-xl overflow-hidden mb-4 relative'>
-                                                {item.screenshotHome ? (
-                                                    <img
-                                                        src={
-                                                            item.screenshotHome
-                                                        }
-                                                        alt={item.title}
-                                                        className='w-full h-full object-cover'
-                                                    />
-                                                ) : (
-                                                    <div className='w-full h-full flex items-center justify-center text-slate-600 text-xs uppercase tracking-wider'>
-                                                        No Image Available
+                            {t.templates.items.map(
+                                (item: TemplateItem, id: number) => {
+                                    const price = getTemplatePrice(item.id);
+                                    const inCart = isInCart(item.id);
+                                    const accent = [
+                                        "var(--neon-blue)",
+                                        "var(--neon-pink)",
+                                        "var(--neon-yellow)",
+                                        "var(--neon-green)",
+                                        "var(--neon-purple)",
+                                        "var(--neon-orange)",
+                                    ][id % 6];
+                                    const initials = item.title
+                                        .split(" ")
+                                        .map((w) => w[0])
+                                        .slice(0, 2)
+                                        .join("")
+                                        .toUpperCase();
+
+                                    return (
+                                        <article
+                                            key={item.id}
+                                            className='cyber-profile-card group'
+                                            style={
+                                                {
+                                                    "--card-accent": accent,
+                                                } as React.CSSProperties
+                                            }>
+                                            {/* Card Header with Monogram & Price */}
+                                            <div className='flex items-start justify-between gap-3'>
+                                                <div className='profile-card-header'>
+                                                    <div className='profile-avatar'>
+                                                        {initials}
                                                     </div>
-                                                )}
-                                                <div className='absolute top-3 right-3 bg-slate-950/80 px-3 py-1 rounded-full text-xs font-mono font-bold text-lake-400 border border-slate-800'>
+                                                    <div className='profile-names'>
+                                                        <h3 className='profile-name font-heading'>
+                                                            {item.title}
+                                                        </h3>
+                                                        <p className='profile-role line-clamp-1'>
+                                                            {
+                                                                item.highlights
+                                                                    .style
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <span className='font-mono font-bold text-sm text-[var(--card-accent)] bg-black/50 px-3 py-1 rounded-full border border-white/10 shrink-0 shadow-sm'>
                                                     €{price}
+                                                </span>
+                                            </div>
+
+                                            {/* Pill-shaped Tags */}
+                                            <div className='flex flex-wrap gap-1.5'>
+                                                {item.tags?.map((tag) => (
+                                                    <span
+                                                        key={tag}
+                                                        className='px-2.5 py-0.5 text-[10.5px] font-mono font-medium rounded-full bg-white/5 border border-white/10 text-slate-300'>
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+
+                                            {/* Viewport Mockup Window */}
+                                            <div
+                                                onMouseEnter={(e) => {
+                                                    const video =
+                                                        e.currentTarget.querySelector(
+                                                            "video",
+                                                        );
+                                                    if (video)
+                                                        video
+                                                            .play()
+                                                            .catch(() => {});
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    const video =
+                                                        e.currentTarget.querySelector(
+                                                            "video",
+                                                        );
+                                                    if (video) video.pause();
+                                                }}
+                                                onClick={() =>
+                                                    setSelectedItem(item)
+                                                }
+                                                className='relative h-48 rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[var(--card-accent)] transition-all duration-300 shadow-inner flex flex-col cursor-pointer'>
+                                                <div className='h-6 bg-[rgba(14,15,28,0.9)] border-b border-white/10 px-3 flex items-center gap-1.5 shrink-0 z-10'>
+                                                    <span className='w-2 h-2 rounded-full bg-rose-500/80' />
+                                                    <span className='w-2 h-2 rounded-full bg-amber-500/80' />
+                                                    <span className='w-2 h-2 rounded-full bg-emerald-500/80' />
+                                                    <span className='ml-2 font-mono text-[9px] text-slate-400 truncate opacity-70'>
+                                                        wm://templates/{item.id}
+                                                    </span>
+                                                </div>
+
+                                                <div className='relative w-full flex-1 overflow-hidden'>
+                                                    {item.videoUrl ? (
+                                                        <video
+                                                            src={`/templates/videos/${item.videoUrl}#t=0.1`}
+                                                            preload='metadata'
+                                                            loop
+                                                            muted
+                                                            playsInline
+                                                            className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+                                                        />
+                                                    ) : (
+                                                        <img
+                                                            src={
+                                                                item.screenshotHome
+                                                                    ? `/templates/images/${item.screenshotHome}`
+                                                                    : FALLBACK_IMAGE
+                                                            }
+                                                            alt={item.title}
+                                                            loading='lazy'
+                                                            decoding='async'
+                                                            onError={(e) => {
+                                                                e.currentTarget.src =
+                                                                    FALLBACK_IMAGE;
+                                                            }}
+                                                            className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
+                                                        />
+                                                    )}
+                                                    <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60' />
                                                 </div>
                                             </div>
-                                            <h3 className='text-lg font-bold text-white mb-1'>
-                                                {item.title}
-                                            </h3>
-                                            <p className='text-slate-400 text-xs mb-3'>
-                                                {item.subtitle}
-                                            </p>
-                                        </div>
-                                        <button
-                                            onClick={() => addToCart(item)}
-                                            disabled={inCart}
-                                            className={`w-full mt-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
-                                                inCart
-                                                    ? "bg-slate-800 text-slate-500 cursor-not-allowed"
-                                                    : "bg-lake-600 hover:bg-lake-700 text-white"
-                                            }`}>
-                                            {inCart
-                                                ? lang === "hr"
-                                                    ? "U košarici"
-                                                    : "In Cart"
-                                                : lang === "hr"
-                                                  ? "Dodaj u košaricu"
-                                                  : "Add to Cart"}
-                                        </button>
-                                    </div>
-                                );
-                            })}
+
+                                            {/* Structured Specification Details */}
+                                            <dl className='profile-details-list'>
+                                                <div className='profile-row'>
+                                                    <dt>
+                                                        {lang === "hr"
+                                                            ? "Namjena"
+                                                            : "Purpose"}
+                                                    </dt>
+                                                    <dd className='text-xs line-clamp-1'>
+                                                        {
+                                                            item.highlights
+                                                                .purpose
+                                                        }
+                                                    </dd>
+                                                </div>
+                                                <div className='profile-row'>
+                                                    <dt>
+                                                        {lang === "hr"
+                                                            ? "Stil"
+                                                            : "Style"}
+                                                    </dt>
+                                                    <dd className='text-xs line-clamp-1'>
+                                                        {item.highlights.style}
+                                                    </dd>
+                                                </div>
+                                            </dl>
+
+                                            {/* Action Buttons */}
+                                            <div className='flex items-center justify-between gap-3 mt-auto pt-1'>
+                                                <button
+                                                    type='button'
+                                                    onClick={() =>
+                                                        setSelectedItem(item)
+                                                    }
+                                                    className='btn btn-outline flex-1 text-xs py-2 min-h-0'>
+                                                    {lang === "hr"
+                                                        ? "Pogledaj ✦"
+                                                        : "Inspect ✦"}
+                                                </button>
+                                                <button
+                                                    type='button'
+                                                    onClick={() =>
+                                                        addToCart(item)
+                                                    }
+                                                    disabled={inCart}
+                                                    className={`btn flex-1 text-xs py-2 min-h-0 ${
+                                                        inCart
+                                                            ? "btn-quiet opacity-60"
+                                                            : "btn-primary"
+                                                    }`}>
+                                                    {inCart
+                                                        ? lang === "hr"
+                                                            ? "U košarici"
+                                                            : "In Cart"
+                                                        : lang === "hr"
+                                                          ? "Dodaj u košaricu"
+                                                          : "Add to Cart"}
+                                                </button>
+                                            </div>
+                                        </article>
+                                    );
+                                },
+                            )}
                         </div>
                     </>
                 )}
@@ -429,6 +568,21 @@ export const WebShop: React.FC = () => {
                     </>
                 )}
             </AnimatePresence>
+
+            {/* Template Preview Modal */}
+            {selectedItem && (
+                <TemplateModal
+                    product={selectedItem}
+                    isOpen={!!selectedItem}
+                    standard={t.templates.standard}
+                    onClose={() => setSelectedItem(null)}
+                    onOrder={() => {
+                        addToCart(selectedItem);
+                        setSelectedItem(null);
+                        setIsCartOpen(true);
+                    }}
+                />
+            )}
         </div>
     );
 };

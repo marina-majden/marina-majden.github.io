@@ -38,31 +38,41 @@ interface ServicesProps {
 }
 
 const Services: React.FC<ServicesProps> = ({ t }) => {
-    const lang = useLanguage().lang;
-    return (
-        <section id='services' className='py-10 mx-auto'>
-            <Reveal>
-                <SectionTitle>{t.services.title}</SectionTitle>
-            </Reveal>
+    const { lang } = useLanguage();
 
-            <Reveal delay={100}>
-                <h2 className='subtitles'>
-                    {lang === "hr"
-                        ? "Odaberite one usluge koje su Vam potrebne!"
-                        : "Choose the services you need!"}
-                </h2>
-            </Reveal>
-            <Reveal delay={200}>
-                <div className='w-fit flex items-center justify-center align-center gap-2 text-[10px] text-lake-500 mx-auto px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50  tracking-[0.3em] uppercase mb-4'>
-                    <span className='loader-pulse'></span>
-                    {t.services.subtitle}
-                </div>
-            </Reveal>
-            <Reveal delay={300}>
-                <Suspense fallback={<Spinner />}>
-                    <Accordion />
-                </Suspense>
-            </Reveal>
+    return (
+        <section
+            id='services'
+            className='py-20 mx-auto relative overflow-hidden'>
+            {/* Ambient Lighting */}
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(circle,rgba(0,255,136,0.06)_0%,rgba(0,245,255,0.04)_50%,transparent_70%)] pointer-events-none blur-3xl -z-10' />
+
+            <div className='max-w-6xl mx-auto px-4'>
+                <Reveal>
+                    <SectionTitle>{t.services.title}</SectionTitle>
+                </Reveal>
+
+                <Reveal delay={100}>
+                    <p className='text-gray-300 max-w-2xl mx-auto text-base lg:text-lg text-center mt-3 mb-6'>
+                        {lang === "hr"
+                            ? "Odaberite usluge koje su Vam potrebne — odabrane stavke automatski se prenose u poruku u kontakt formi ispod!"
+                            : "Choose the services you need — selected options will automatically pre-fill your inquiry message in the contact form below!"}
+                    </p>
+                </Reveal>
+
+                <Reveal delay={150}>
+                    <div className='w-fit flex items-center justify-center gap-2 text-[10px] font-mono text-[var(--neon-green)] mx-auto px-3.5 py-1 border border-white/10 rounded-full bg-[rgba(14,15,28,0.7)] backdrop-blur-md tracking-[0.2em] uppercase mb-8 shadow-sm'>
+                        <span className='w-2 h-2 rounded-full bg-[var(--neon-green)] shadow-[0_0_8px_var(--neon-green)] animate-pulse' />
+                        {t.services.subtitle || "Interdisciplinary Studio"}
+                    </div>
+                </Reveal>
+
+                <Reveal delay={250}>
+                    <Suspense fallback={<Spinner />}>
+                        <Accordion />
+                    </Suspense>
+                </Reveal>
+            </div>
         </section>
     );
 };

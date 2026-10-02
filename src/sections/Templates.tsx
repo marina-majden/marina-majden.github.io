@@ -76,11 +76,9 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
     const handleLoadMore = () => setVisibleCount((prev) => prev + 6);
     const openModal = (item: TemplateItem) => {
         setSelecteditem(item);
-        document.body.style.overflow = "hidden";
     };
     const closeModal = () => {
         setSelecteditem(null);
-        document.body.style.overflow = "auto";
     };
 
     const handleOrder = () => {

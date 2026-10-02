@@ -153,18 +153,18 @@ const content: ContentData = {
             contact: "Kontakt",
         },
         hero: {
-            line1: "Umjetnost kodiranja",
+            line1: "Web Mashina",
             line2: "",
-            line3: "izrada web-stranica s karakterom i stilom.",
+            line3: "stvara iz ljubavi prema ljudima.",
             subtitle:
-                "Svatko treba imati svoj digitalni prostor u kojemu će predstaviti sebe, svoj rad i svoju viziju. Moj je zadatak izraditi taj prostor tako da autentično prenese Vašu priču do željene publike. Trebate li novi dizajn za web-stranicu ili razvoj prema postojećem dizajnu, obratite mi se s povjerenjem.",
+                "Web mašina stvara iz čiste privrženosti ljudima. Pikselizirano srce je živo srce web mašine — gradimo piksel-savršene web stranice koje prenose Vašu priču s karakterom, stilom i toplom digitalnom dušom.",
             cta: "Stvorimo nešto posebno!",
         },
         about: {
             title: "Misija",
-            p1: "1. stvarati jedinstven i autentičan digitalni sadržaj",
-            p2: "2. prenijeti tisuće vaših priča tekstom i dizajnom",
-            p3: "3. promijeniti svijet (stranicu po stranicu!)",
+            p1: "1. stvarati piksel-savršene web stranice s dušom",
+            p2: "2. prenositi vaše priče kroz dizajn, kod i emociju",
+            p3: "3. graditi humani digitalni prostor (piksel po piksel!)",
         },
         skills: {
             title: "Vještine",
@@ -643,18 +643,18 @@ const content: ContentData = {
             contact: "Contact",
         },
         hero: {
-            line1: "The Art of Coding",
-            line2: "Turning thoughts and ideas",
-            line3: "Wanna make some digital masterpieces?",
+            line1: "Web Mashina",
+            line2: "",
+            line3: "creates out of love for humans.",
             subtitle:
-                "Everyone needs a digital space to present themselves, their work, and their vision. My job is to create that space to authentically convey your story to your desired audience.",
-            cta: "Let's do together!",
+                "The web machine creates out of deep love for humans. A pixelated heart is the heart of the web machine — crafting pixel-perfect, tactile websites that convey your story with character, precision, and soul.",
+            cta: "Let's create together!",
         },
         about: {
             title: "Mission",
-            p1: "1. Create unique and authentic digital content",
-            p2: "2. Convey thousands of your stories through text and design",
-            p3: "3. Change the world (page by page!)",
+            p1: "1. Craft pixel-perfect websites with soul",
+            p2: "2. Convey your stories through design, code, and emotion",
+            p3: "3. Build humane digital space (pixel by pixel!)",
         },
         skills: {
             title: "Skills",

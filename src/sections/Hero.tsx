@@ -24,7 +24,8 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
     const [heroLoaded, setHeroLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        setHeroLoaded(true);
+        const id = requestAnimationFrame(() => setHeroLoaded(true));
+        return () => cancelAnimationFrame(id);
     }, []);
 
     return (

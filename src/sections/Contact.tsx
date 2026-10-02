@@ -1,8 +1,17 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import Reveal from "../components/Reveal";
 import SectionTitle from "../components/SectionTitle";
 import ReflectionIcons from "../components/ReflectionIcons";
-import { SendIcon, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import {
+    SendIcon,
+    CheckCircle2,
+    AlertCircle,
+    Loader2,
+    Sparkles,
+} from "lucide-react";
+import { useServices } from "@/context/ServicesContext";
+import { useLanguage } from "@/components/LanguageContext";
+import { showToast } from "@/components/ToastHub";
 
 interface ContactContent {
     title: string;
@@ -22,8 +31,33 @@ interface ContactProps {
 }
 
 const Contact: React.FC<ContactProps> = ({ t }) => {
-    const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+    const { lang } = useLanguage();
+    const { selectedServices, toggleService } = useServices();
+    const [status, setStatus] = useState<
+        "idle" | "submitting" | "success" | "error"
+    >("idle");
     const [statusMsg, setStatusMsg] = useState<string>("");
+    const [messageText, setMessageText] = useState<string>("");
+    const [userHasEdited, setUserHasEdited] = useState<boolean>(false);
+
+    // Sync message body dynamically when selected services change
+    useEffect(() => {
+        if (selectedServices.length > 0) {
+            const servicesList = selectedServices
+                .map((s) => `• ${s}`)
+                .join("\n");
+            const generated =
+                lang === "hr"
+                    ? `Pozdrav!\n\nZanimaju me sljedeće usluge iz Vaše ponude:\n${servicesList}\n\nŽelio/željela bih razgovarati o detaljima i ponudi za moj projekt.`
+                    : `Hello!\n\nI am interested in the following services:\n${servicesList}\n\nI would love to discuss the project scope and possibilities.`;
+
+            if (!userHasEdited || messageText.trim() === "") {
+                setMessageText(generated);
+            }
+        } else if (!userHasEdited) {
+            setMessageText("");
+        }
+    }, [selectedServices, lang]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,100 +76,168 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
             const data = await response.json();
             if (data.success) {
                 setStatus("success");
-                setStatusMsg("Hvala na javljanju! Vaša poruka je uspješno poslana.");
+                const successText =
+                    lang === "hr"
+                        ? "Hvala na javljanju! Vaša poruka je uspješno poslana. Odgovorit ću u najkraćem roku."
+                        : "Thank you for reaching out! Your message was sent successfully. I'll get back to you soon.";
+                setStatusMsg(successText);
+                showToast(successText, "success");
                 form.reset();
+                setMessageText("");
+                setUserHasEdited(false);
             } else {
                 setStatus("error");
-                setStatusMsg("Došlo je do greške prilikom slanja. Molimo pokušajte ponovo.");
+                const errText =
+                    lang === "hr"
+                        ? "Došlo je do greške prilikom slanja. Molimo pokušajte ponovo."
+                        : "An error occurred while sending. Please try again.";
+                setStatusMsg(errText);
+                showToast(errText, "info");
             }
         } catch {
             setStatus("error");
-            setStatusMsg("Došlo je do greške u mreži. Molimo provjerite vezu i pokušajte ponovo.");
+            const errText =
+                lang === "hr"
+                    ? "Došlo je do greške u mreži. Molimo provjerite vezu i pokušajte ponovo."
+                    : "Network error occurred. Please check your connection and retry.";
+            setStatusMsg(errText);
+            showToast(errText, "info");
         }
     };
 
     return (
-        <section id='contact' className='py-10 md:py-14 lg:py-20 relative overflow-hidden'>
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-purple-900/20 to-cyan-900/20 rounded-full blur-[120px] -z-10 before:animate-pulse after:animate-pulse'></div>
+        <section id='contact' className='py-20 relative overflow-hidden'>
+            {/* Background Radial Glow */}
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-[800px] bg-[radial-gradient(circle,rgba(191,0,255,0.08)_0%,rgba(0,245,255,0.06)_50%,transparent_70%)] rounded-full blur-3xl -z-10' />
 
-            <div className='container w-full px-1 md:px-6 mx-auto text-center'>
+            <div className='container max-w-4xl px-4 md:px-6 mx-auto text-center'>
                 <Reveal>
                     <SectionTitle>{t.contact.title}</SectionTitle>
-                    <p className='text-xl text-slate-300 mb-12'>
+                    <p className='text-base md:text-lg text-slate-300 max-w-2xl mx-auto mt-3 mb-10'>
                         {t.contact.text}
                     </p>
-                    <div className='max-w-3xl mx-auto my-4 py-8 relative z-10 bg-background/50 p-8 rounded-lg before:w-32 before:h-32 before:absolute before:bg-purple-600 before:rounded-full before:left-6 before:top-92 before:-z-10 before:blur-2xl before:animate-neon-glow after:w-46 after:h-46 after:absolute after:bg-sky-400 after:rounded-full after:-z-10 after:blur-xl after:top-28 after:-right-12 after:animate-cruising overflow-visible'>
-                        <h2 className='text-2xl font-heading mb-6 text-gradient'>
+
+                    {/* Obsidian Contact Card */}
+                    <div className='my-4 p-6 md:p-10 relative z-10 bg-[rgba(14,15,28,0.85)] border border-(--border-subtle) rounded-3xl backdrop-blur-2xl shadow-[0_24px_64px_rgba(0,0,0,0.8),0_0_35px_rgba(0,245,255,0.1)]'>
+                        <h2 className='text-2xl font-heading font-extrabold mb-6 text-transparent bg-clip-text bg-linear-to-r from-(--neon-blue) via-(--neon-purple) to-[var(--neon-pink)]'>
                             {t.contact.instruction}
                         </h2>
-                        <form onSubmit={handleSubmit}>
-                            <div className='flex col md:row gap-4'>
-                                <div className='mb-4 w-full'>
+
+                        {/* Interactive Service Chips Pill Bar */}
+                        <div className='mb-6 p-3.5 rounded-2xl bg-white/5 border border-white/10 text-left'>
+                            <div className='flex items-center gap-2 mb-2 font-mono text-xs text-[var(--neon-blue)] font-bold uppercase tracking-wider'>
+                                <Sparkles size={13} />
+                                {lang === "hr"
+                                    ? "Odabrane usluge (automatski se unose u poruku):"
+                                    : "Selected services (auto-filled into message):"}
+                            </div>
+
+                            <div className='flex flex-wrap gap-2'>
+                                {selectedServices.length > 0 ? (
+                                    selectedServices.map((service) => (
+                                        <button
+                                            type='button'
+                                            key={service}
+                                            onClick={() =>
+                                                toggleService(service)
+                                            }
+                                            className='px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[rgba(0,245,255,0.15)] text-(--neon-blue) border border-(--neon-blue) hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-400 transition-colors cursor-pointer flex items-center gap-1.5'
+                                            title={
+                                                lang === "hr"
+                                                    ? "Ukloni"
+                                                    : "Remove"
+                                            }>
+                                            <span>{service}</span>
+                                            <span>✕</span>
+                                        </button>
+                                    ))
+                                ) : (
+                                    <span className='font-mono text-xs text-slate-400 italic'>
+                                        {lang === "hr"
+                                            ? "Niti jedna usluga još nije odabrana. Možete ih odabrati gore u 'Uslugama' ili upisati svoju poruku ispod."
+                                            : "No services selected yet. Pick options above in 'Services' or write your message below."}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className='space-y-5'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                                <div className='w-full text-left'>
                                     <label
-                                        className='block text-sm text-left font-medium text-cyan-400 transition-colors uppercase tracking-widest'
+                                        className='block text-xs font-mono font-bold text-(--neon-blue) uppercase tracking-wider mb-2'
                                         htmlFor='name'>
                                         {t.contact.sender}
                                     </label>
                                     <input
-                                        className='mt-1 p-2 w-full bg-background/50 border border-dynamic-cyan rounded-md text-gray-300'
+                                        className='w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-(--neon-blue) focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm'
                                         type='text'
                                         id='name'
                                         name='name'
-                                        placeholder='Person Personic'
+                                        placeholder='Marina'
                                         required
                                     />
                                 </div>
-                                <div className='mb-4 w-full'>
+                                <div className='w-full text-left'>
                                     <label
-                                        className='block text-sm text-left font-medium text-cyan-400 transition-colors uppercase tracking-widest'
+                                        className='block text-xs font-mono font-bold text-(--neon-blue) uppercase tracking-wider mb-2'
                                         htmlFor='email'>
                                         {t.contact.email}
                                     </label>
                                     <input
-                                        className='mt-1 p-2 w-full bg-background/50 border border-dynamic-cyan rounded-md text-gray-300'
+                                        className='w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-(--neon-blue) focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm'
                                         name='email'
                                         id='email'
                                         type='email'
-                                        placeholder='person.personic@something.com'
+                                        placeholder='marina@example.com'
                                         required
                                     />
                                 </div>
                             </div>
-                            <div className='mb-4'>
+
+                            <div className='w-full text-left'>
                                 <label
-                                    className='block text-sm text-left font-medium text-cyan-400 uppercase tracking-widest'
+                                    className='block text-xs font-mono font-bold text-(--neon-blue) uppercase tracking-wider mb-2'
                                     htmlFor='message'>
                                     {t.contact.message}
                                 </label>
                                 <textarea
-                                    className='mt-1 p-2 w-full text-left bg-background/50 border border-dynamic-cyan rounded-md text-gray-300'
-                                    rows={4}
+                                    className='w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-[var(--neon-blue)] focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm'
+                                    rows={5}
                                     name='message'
                                     id='message'
-                                    placeholder='Ovdje upišite svoju poruku.'
+                                    value={messageText}
+                                    onChange={(e) => {
+                                        setMessageText(e.target.value);
+                                        setUserHasEdited(true);
+                                    }}
+                                    placeholder={
+                                        lang === "hr"
+                                            ? "Ovdje upišite svoju poruku ili odaberite usluge iznad..."
+                                            : "Type your message here or pick services above..."
+                                    }
                                     required
                                 />
                             </div>
-                            <div className='mb-4'>
+
+                            <div className='text-left'>
                                 <label
                                     htmlFor='agree'
-                                    className='flex flex-row items-center gap-2.5 font-light text-sm text-left text-gray-300'>
+                                    className='flex items-center gap-3 font-sans text-xs text-slate-300 cursor-pointer select-none'>
                                     <input
                                         id='agree'
                                         name='agree'
                                         type='checkbox'
-                                        className='peer hidden'
+                                        required
+                                        className='w-4 h-4 rounded accent-(--neon-blue) cursor-pointer'
                                     />
-                                    <div className='h-4 w-4 flex rounded-xs border border-dynamic-cyan bg-gray-900 peer-checked:bg-[#9052f3] transition-colors duration-200'>
-                                        <div className='h-3 w-3 m-auto rounded-full peer-checked:bg-[#9052f3]'></div>
-                                    </div>
-                                    {t.contact.agree}
+                                    <span>{t.contact.agree}</span>
                                 </label>
                             </div>
 
                             {statusMsg && (
                                 <div
-                                    className={`mb-6 p-4 rounded-xl flex items-center justify-center gap-3 text-sm font-medium ${
+                                    className={`p-4 rounded-xl flex items-center justify-center gap-3 text-sm font-medium ${
                                         status === "success"
                                             ? "bg-emerald-950/60 border border-emerald-500/40 text-emerald-300"
                                             : "bg-rose-950/60 border border-rose-500/40 text-rose-300"
@@ -149,15 +251,22 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
                                 </div>
                             )}
 
-                            <div className='flex items-center justify-end'>
+                            <div className='flex justify-end pt-2'>
                                 <button
-                                    className='w-fit text-sm text-center bg-linear-to-r from-purple-600 via-purple-400 to-cyan-600 text-white px-6 py-2.5 font-bold rounded-xl hover:opacity-90 disabled:opacity-50 transition-all duration-300 mx-auto cursor-pointer flex items-center gap-2'
+                                    className='btn btn-primary text-sm px-8 py-3 w-full sm:w-auto'
                                     type='submit'
                                     disabled={status === "submitting"}>
                                     {status === "submitting" ? (
                                         <>
-                                            <Loader2 className='animate-spin' size={16} />
-                                            <span>Slanje...</span>
+                                            <Loader2
+                                                className='animate-spin'
+                                                size={16}
+                                            />
+                                            <span>
+                                                {lang === "hr"
+                                                    ? "Slanje..."
+                                                    : "Sending..."}
+                                            </span>
                                         </>
                                     ) : (
                                         <>
@@ -171,8 +280,11 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
                     </div>
                 </Reveal>
 
+                {/* Social icons kept intact as requested */}
                 <Reveal delay={400}>
-                    <ReflectionIcons />
+                    <div className='mt-8'>
+                        <ReflectionIcons />
+                    </div>
                 </Reveal>
             </div>
         </section>

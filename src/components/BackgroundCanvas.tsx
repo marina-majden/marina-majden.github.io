@@ -136,8 +136,20 @@ const BackgroundCanvas: React.FC = () => {
             animationFrameId = requestAnimationFrame(animate);
         };
 
+        const handleToggleParticles = (e: Event) => {
+            const customEvent = e as CustomEvent<{ enabled: boolean }>;
+            const enabled = customEvent.detail?.enabled ?? true;
+            if (!enabled) {
+                cancelAnimationFrame(animationFrameId);
+                if (ctx) ctx.clearRect(0, 0, width, height);
+            } else {
+                animate();
+            }
+        };
+
         window.addEventListener("resize", resize);
         window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("toggle-particles", handleToggleParticles);
         resize();
         initParticles();
         animate();
@@ -146,6 +158,10 @@ const BackgroundCanvas: React.FC = () => {
         return () => {
             window.removeEventListener("resize", resize);
             window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener(
+                "toggle-particles",
+                handleToggleParticles,
+            );
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
@@ -160,7 +176,7 @@ const BackgroundCanvas: React.FC = () => {
                 width: "100%", // 100% sprječava horizontalni scrollbar
                 height: "100dvh", // 100dvh je bolje za mobilne preglednike
                 zIndex: -1, // Stavlja ga iza svega
-                background: "#0a0a0a", // Tamna pozadina
+                background: "var(--dark-bg, #07070e)", // Tamna pozadina
                 pointerEvents: "none", // Dozvoljava klikanje na kartice iznad
             }}
         />,
