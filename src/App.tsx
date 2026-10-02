@@ -1,13 +1,16 @@
 import { BrowserRouter } from "react-router-dom";
-import { AppRoutes } from "./AppRoutes";
+import AppRoutes from "./AppRoutes";
 import { LanguageProvider } from "@/components/LanguageContext";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
     return (
         <LanguageProvider>
-            <BrowserRouter>
-                <AppRoutes />
-            </BrowserRouter>
+            <CartProvider>
+                <BrowserRouter>
+                    <AppRoutes />
+                </BrowserRouter>
+            </CartProvider>
         </LanguageProvider>
     );
 }

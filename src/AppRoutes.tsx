@@ -1,122 +1,87 @@
 import { Suspense, lazy } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import NotFound from "./components/NotFound";
+import { Route, Routes } from "react-router-dom";
 import Home from "./sections/Home";
-const NeedHelp = lazy(() => import("./showcase/NeedHelp"));
-const LitArt = lazy(() => import("./showcase/Litart"));
-const SongFinder = lazy(() => import("./showcase/SongFinder"));
-const Storybook = lazy(() => import("./showcase/Storybook"));
-const Unplugged = lazy(() => import("./showcase/Unplugged"));
-const Lab = lazy(() => import("./lab/Lab"));
+import WebShop from "./webshop/Webshop";
+import Lab from "./lab/Lab.tsx";
+const ChromaLab = lazy(() => import("./pages/ChromaLab"));
+const NeuralNetwork = lazy(() => import("./pages/NeuralNetwork"));
 
-// Loading Screen Component
-const LoadingScreen = () => (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-slate-950'>
-        <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className='flex flex-col items-center gap-4'>
-            <div className='relative w-16 h-16'>
-                <div className='absolute inset-0 border-4 border-slate-800 rounded-full' />
-                <div className='absolute inset-0 border-4 border-t-emerald-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin' />
-            </div>
-            <span className='text-slate-400 font-mono text-sm animate-pulse'>
-                Loading...
-            </span>
-        </motion.div>
-    </div>
-);
-
-const PageTransition = ({ children }: { children: React.ReactNode }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className='w-full h-full'>
-        {children}
-    </motion.div>
-);
-
-
-export const AppRoutes = () => {
-    const location = useLocation();
-
+export default function AppRoutes() {
     return (
-        <Suspense fallback={<LoadingScreen />}>
-            <AnimatePresence
-                mode='wait'
-                onExitComplete={() => window.scrollTo(0, 0)}>
-                <Routes location={location} key={location.pathname}>
-                    <Route
-                        path='/'
-                        element={
-                            <PageTransition>
-                                <Home />
-                            </PageTransition>
-                        }
-                    />
+        <Suspense fallback={<div className='min-h-screen bg-slate-950' />}>
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/webshop' element={<WebShop />} />
+                <Route path='/lab' element={<Lab />} />
+                <Route path='/pages/ChromaLab' element={<ChromaLab />} />
+                <Route
+                    path='/pages/elementos'
+                    element={
+                        <iframe
+                            src='/pages/elementos/index.html'
+                            className='w-full min-h-screen border-0'
+                            title='Elementos'
+                        />
+                    }
+                />
+                <Route
+                    path='/pages/dreamlike'
+                    element={
+                        <iframe
+                            src='/pages/dreamlike/index.html'
+                            className='w-full min-h-screen border-0'
+                            title='Dreamlike'
+                        />
+                    }
+                />
+                <Route
+                    path='/pages/NeuralNetwork'
+                    element={<NeuralNetwork />}
+                />
 
-                    <Route
-                        path='/showcase/need-help'
-                        element={
-                            <PageTransition>
-                                <NeedHelp />
-                            </PageTransition>
-                        }
-                    />
-                    <Route
-                        path='/showcase/lit-art'
-                        element={
-                            <PageTransition>
-                                <LitArt />
-                            </PageTransition>
-                        }
-                    />
-                    <Route
-                        path='/showcase/song-finder'
-                        element={
-                            <PageTransition>
-                                <SongFinder />
-                            </PageTransition>
-                        }
-                    />
-                    <Route
-                        path='/showcase/storybook'
-                        element={
-                            <PageTransition>
-                                <Storybook />
-                            </PageTransition>
-                        }
-                    />
-                    <Route
-                        path='/showcase/unplugged'
-                        element={
-                            <PageTransition>
-                                <Unplugged />
-                            </PageTransition>
-                        }
-                    />
-                    <Route
-                        path='/lab'
-                        element={
-                            <PageTransition>
-                                <Lab />
-                            </PageTransition>
-                        }
-                    />
-                    <Route
-                        path='*'
-                        element={
-                            <PageTransition>
-                                <NotFound />
-                            </PageTransition>
-                        }
-                    />
-                </Routes>
-            </AnimatePresence>
+                <Route
+                    path='/pages/flowchart'
+                    element={
+                        <iframe
+                            src='/pages/2d_flowchart_labirint.html'
+                            className='w-full min-h-screen border-0'
+                            title='Flowchart'
+                        />
+                    }
+                />
+                <Route
+                    path='/pages/liquid'
+                    element={
+                        <iframe
+                            src='/pages/liquid/liquid-cube.html'
+                            className='w-full min-h-screen border-0'
+                            title='Liquid Cube'
+                        />
+                    }
+                />
+                <Route
+                    path='/pages/color-chemist'
+                    element={
+                        <iframe
+                            src='/pages/ColorChemist.html'
+                            className='w-full min-h-screen border-0'
+                            title='Color Chemist'
+                        />
+                    }
+                />
+                <Route
+                    path='/pages/countdown'
+                    element={
+                        <iframe
+                            src='/pages/Countdown.html'
+                            className='w-full min-h-screen border-0'
+                            title='Countdown'
+                        />
+                    }
+                />
+
+                <Route path='*' element={<Home />} />
+            </Routes>
         </Suspense>
     );
-};
+}

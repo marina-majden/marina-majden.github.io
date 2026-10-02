@@ -1,6 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { FlaskConical, Globe, Menu, Sparkles, X } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import { FlaskConical, Globe, Menu, X } from "lucide-react";
 import logo from "@/assets/logo.svg";
 
 interface ContentNav {
@@ -37,30 +37,41 @@ const Navbar: React.FC<NavbarProps> = ({
                 : "bg-transparent backdrop-blur-none border-none"
         }`}>
         <div className='flex justify-between items-center'>
-            <a
-                href='#'
+            <Link
+                to='/'
                 className='cursor-pointer hover:scale-105 transition-transform duration-300 ease-in block'
-                onClick={(e) => {
-                    e.preventDefault();
+                onClick={() => {
                     scrollToSection("home");
                 }}>
                 <img src={logo} alt='logo' width={44} height={44} />
-            </a>
+            </Link>
 
             <div className='hidden lg:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-gray-300 font-medium'>
-                {["mission", "webshop", "services", "projects"].map((item) => (
+                {["mission", "services", "projects"].map((item) => (
                     <a
                         key={item}
-                        href={`#${item}`}
+                        href={`/#${item}`}
                         onClick={(e) => {
-                            e.preventDefault();
-                            scrollToSection(item);
+                            if (window.location.pathname === "/") {
+                                e.preventDefault();
+                                scrollToSection(item);
+                            }
                         }}
                         className='relative group hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest py-2'>
                         {t.nav[item]}
                         <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full'></span>
                     </a>
                 ))}
+                <NavLink
+                    to='/webshop'
+                    className={({ isActive }) =>
+                        `relative group hover:text-cyan-400 cursor-pointer transition-colors uppercase tracking-widest py-2 ${
+                            isActive ? "text-cyan-400 font-bold" : ""
+                        }`
+                    }>
+                    {t.nav.webshop}
+                    <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full'></span>
+                </NavLink>
                 <NavLink
                     to='/lab'
                     className={({ isActive }) =>
@@ -74,6 +85,48 @@ const Navbar: React.FC<NavbarProps> = ({
                     />{" "}
                     {t.nav.lab}
                 </NavLink>
+                {/*     <Link
+                    to='/pages/ChromaLab'
+                    className='cursor-pointer hover:scale-105 transition-transform duration-300 ease-in block'>
+                    Chroma
+                </Link>
+                <NavLink
+                    to='/pages/liquid'
+                    className={({ isActive }) =>
+                        `text-candy-500 hover:text-candy-600 transition-colors cursor-pointer uppercase tracking-widest flex items-center gap-1 group ${
+                            isActive ? "text-candy-400" : ""
+                        }`
+                    }>
+                    Liquid
+                </NavLink> */}
+                <NavLink
+                    to='/pages/color-chemist'
+                    className={({ isActive }) =>
+                        `text-candy-500 hover:text-candy-600 transition-colors cursor-pointer uppercase tracking-widest flex items-center gap-1 group ${
+                            isActive ? "text-candy-400" : ""
+                        }`
+                    }>
+                    Chemist
+                </NavLink>
+                {/*     <NavLink
+                    to='/pages/NeuralNetwork'
+                    className={({ isActive }) =>
+                        `text-candy-500 hover:text-candy-600 transition-colors cursor-pointer uppercase tracking-widest flex items-center gap-1 group ${
+                            isActive ? "text-candy-400" : ""
+                        }`
+                    }>
+                    Neural
+                </NavLink> */}
+                <NavLink
+                    to='/pages/countdown'
+                    className={({ isActive }) =>
+                        `text-candy-500 hover:text-candy-600 transition-colors cursor-pointer uppercase tracking-widest flex items-center gap-1 group ${
+                            isActive ? "text-candy-400" : ""
+                        }`
+                    }>
+                    Coundown
+                </NavLink>
+
                 <NavLink
                     to='/showcase/lit-art'
                     className={({ isActive }) =>
@@ -81,10 +134,6 @@ const Navbar: React.FC<NavbarProps> = ({
                             isActive ? "text-candy-400" : ""
                         }`
                     }>
-                    <Sparkles
-                        size={14}
-                        className='group-hover:-rotate-45 group-hover:scale-105 transition-transform transition-300 ease'
-                    />{" "}
                     {t.nav.litart}
                 </NavLink>
                 <a
@@ -116,18 +165,27 @@ const Navbar: React.FC<NavbarProps> = ({
 
         {menuOpen && (
             <div className='lg:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 p-6 flex flex-col gap-4 font-mono animate-in slide-in-from-top-5 duration-300'>
-                {["mission", "webshop", "services", "projects"].map((item) => (
+                {["mission", "services", "projects"].map((item) => (
                     <a
                         key={item}
-                        href={`#${item}`}
+                        href={`/#${item}`}
                         onClick={(e) => {
-                            e.preventDefault();
-                            scrollToSection(item);
+                            if (window.location.pathname === "/") {
+                                e.preventDefault();
+                                scrollToSection(item);
+                            }
+                            setMenuOpen(false);
                         }}
                         className='text-left py-2 cursor-pointer hover:text-cyan-400 hover:pl-2 transition-all'>
                         {t.nav[item]}
                     </a>
                 ))}
+                <NavLink
+                    to='/webshop'
+                    onClick={() => setMenuOpen(false)}
+                    className='text-left py-2 cursor-pointer text-cyan-400 hover:pl-2 transition-all'>
+                    {t.nav.webshop}
+                </NavLink>
                 <NavLink
                     to='/lab'
                     onClick={() => setMenuOpen(false)}

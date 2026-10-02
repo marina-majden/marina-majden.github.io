@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const VIBES = [
     { id: "cyber", hue: 280, label: "Cyber" },

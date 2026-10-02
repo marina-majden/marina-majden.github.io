@@ -698,7 +698,6 @@ const content: ContentData = {
                         special:
                             "Interactive 3D WebGL element that breathes and rotates on scroll",
                     },
-
                     tags: ["3D", "Minimalism", "Zen", "Organic"],
                 },
                 {
