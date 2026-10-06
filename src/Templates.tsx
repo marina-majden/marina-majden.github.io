@@ -350,9 +350,7 @@ export const Templates: React.FC<TemplatesProps> = ({ t }) => {
                                         type='button'
                                         onClick={() => openModal(item)}
                                         className='btn-secondary flex-1 text-xs py-2.5 min-h-0 cursor-pointer'>
-                                        {lang === "hr"
-                                            ? "Pogledaj"
-                                            : "Inspect"}
+                                        {lang === "hr" ? "Pogledaj" : "Inspect"}
                                     </button>
                                     <button
                                         type='button'

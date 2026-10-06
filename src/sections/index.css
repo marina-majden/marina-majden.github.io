@@ -1160,9 +1160,21 @@ details > summary::-webkit-details-marker {
 .cyber-profile-card {
     background: var(--card-bg-raised);
     border: 1px solid var(--border-subtle);
+    border-color: color-mix(
+        in srgb,
+        var(--card-accent, var(--neon-blue)) 28%,
+        rgba(255, 255, 255, 0.08)
+    );
     border-radius: var(--radius-lg);
     padding: 1.6rem;
-    box-shadow: var(--shadow-md);
+    box-shadow:
+        var(--shadow-md),
+        0 0 24px
+            color-mix(
+                in srgb,
+                var(--card-accent, var(--neon-blue)) 8%,
+                transparent
+            );
     position: relative;
     overflow: hidden;
     display: flex;
@@ -1182,7 +1194,7 @@ details > summary::-webkit-details-marker {
     right: 0;
     height: 3px;
     background: var(--card-accent, var(--neon-blue));
-    box-shadow: 0 0 12px var(--card-accent, var(--neon-blue));
+    box-shadow: 0 0 14px var(--card-accent, var(--neon-blue));
 }
 
 .cyber-profile-card:hover {
@@ -1190,7 +1202,16 @@ details > summary::-webkit-details-marker {
     border-color: var(--card-accent, var(--neon-blue));
     box-shadow:
         var(--shadow-lg),
-        0 0 28px rgba(0, 245, 255, 0.15);
+        0 0 32px
+            color-mix(
+                in srgb,
+                var(--card-accent, var(--neon-blue)) 28%,
+                transparent
+            );
+}
+
+.cyber-profile-card:hover .profile-name {
+    color: var(--card-accent, var(--neon-blue));
 }
 
 .profile-card-header {
@@ -1200,18 +1221,31 @@ details > summary::-webkit-details-marker {
 }
 
 .profile-avatar {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border-medium);
+    background: linear-gradient(
+        135deg,
+        color-mix(
+            in srgb,
+            var(--card-accent, var(--neon-blue)) 20%,
+            transparent
+        ),
+        rgba(255, 255, 255, 0.04)
+    );
+    border: 1px solid
+        color-mix(
+            in srgb,
+            var(--card-accent, var(--neon-blue)) 50%,
+            rgba(255, 255, 255, 0.15)
+        );
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-mono);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--card-accent, var(--neon-blue));
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     text-shadow: 0 0 8px currentColor;
     flex-shrink: 0;
 }
@@ -1228,6 +1262,7 @@ details > summary::-webkit-details-marker {
     color: #fff;
     margin: 0;
     line-height: 1.2;
+    transition: color 0.2s ease;
 }
 
 .profile-role {
@@ -1456,121 +1491,6 @@ details > summary::-webkit-details-marker {
     border-color: var(--neon-purple);
     box-shadow: 0 0 16px var(--neon-purple-glow);
     transform: scale(1.08);
-}
-
-/* Secondary / Interactive Link Button (Inspired by Elementos) */
-.button-link,
-.btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    min-height: 2.85rem;
-    padding: 0.75rem 1.4rem;
-    color: #b6fbff;
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 0.88rem;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    background: linear-gradient(
-        135deg,
-        rgba(0, 245, 255, 0.1),
-        rgba(191, 0, 255, 0.1)
-    );
-    border: 1px solid rgba(0, 245, 255, 0.3);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    outline: none;
-    transition: all var(--duration-fast) var(--ease-spring);
-    white-space: nowrap;
-}
-
-.button-link::after,
-.btn-secondary::after {
-    content: "↗";
-    color: var(--neon-blue);
-    font-size: 0.95em;
-    transition: transform var(--duration-fast) var(--ease-spring);
-}
-
-.button-link:hover:not(:disabled),
-.btn-secondary:hover:not(:disabled) {
-    color: #ffffff;
-    background: linear-gradient(
-        135deg,
-        rgba(0, 245, 255, 0.22),
-        rgba(191, 0, 255, 0.2)
-    );
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 18px var(--neon-blue-glow, rgba(0, 245, 255, 0.45));
-    transform: translateY(-2px);
-}
-
-.button-link:hover:not(:disabled)::after,
-.btn-secondary:hover:not(:disabled)::after {
-    transform: translate(2px, -2px);
-}
-
-.button-link:active:not(:disabled),
-.btn-secondary:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-.button-link:focus-visible,
-.btn-secondary:focus-visible {
-    outline: 2px solid var(--neon-blue);
-    outline-offset: 3px;
-}
-
-/* Card-scoped adaptation when placed inside .cyber-profile-card */
-.cyber-profile-card .button-link,
-.cyber-profile-card .btn-secondary {
-    color: color-mix(
-        in srgb,
-        var(--card-accent, var(--neon-blue)) 75%,
-        #ffffff
-    );
-    background: linear-gradient(
-        135deg,
-        color-mix(
-            in srgb,
-            var(--card-accent, var(--neon-blue)) 14%,
-            transparent
-        ),
-        rgba(191, 0, 255, 0.1)
-    );
-    border-color: color-mix(
-        in srgb,
-        var(--card-accent, var(--neon-blue)) 40%,
-        rgba(255, 255, 255, 0.1)
-    );
-}
-
-.cyber-profile-card .button-link::after,
-.cyber-profile-card .btn-secondary::after {
-    color: var(--card-accent, var(--neon-blue));
-}
-
-.cyber-profile-card .button-link:hover:not(:disabled),
-.cyber-profile-card .btn-secondary:hover:not(:disabled) {
-    color: #ffffff;
-    background: linear-gradient(
-        135deg,
-        color-mix(
-            in srgb,
-            var(--card-accent, var(--neon-blue)) 26%,
-            transparent
-        ),
-        rgba(191, 0, 255, 0.22)
-    );
-    border-color: var(--card-accent, var(--neon-blue));
-    box-shadow: 0 0 18px
-        color-mix(
-            in srgb,
-            var(--card-accent, var(--neon-blue)) 45%,
-            transparent
-        );
 }
 
 /* Toast Notifications */

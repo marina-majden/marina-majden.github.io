@@ -24,5 +24,11 @@ The project is built using modern front-end technologies, with a focus on strong
 - **Responsive Design**: Complete visual adaptation to all screen sizes (Mobile-first approach).
 - **Automated Deployment**: Continuous integration and delivery (CI/CD) set up via GitHub Actions for fast and secure deployment of new code versions.
 
+##  Content
+
+- **WebShop**: Finished and polished unique websites you can buy, fill it up with your own content and publish all by yourself. Or you can also take some of my services with the website and I will do the work for you.
+-- **Lab**: Place where you can play with design and functionalities with no obligations, just a fun platform that gives you a little UI experience and maybe even inspires your own design ideas!
+-- **
+
 
 Designed and coded with 💻 by Marina Majdenić.
