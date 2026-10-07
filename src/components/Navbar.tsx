@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Globe, Menu, X, Sparkles } from "lucide-react";
-import { WMHeartLogo } from "@/components/PixelArt";
+import { PixelHeartHero, WMHeartLogo } from "@/components/PixelArt";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 interface ContentNav {
@@ -55,10 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     to='/'
                     className='flex items-center gap-2.5 cursor-pointer group select-none'
                     onClick={(e) => handleSectionClick(e, "home")}>
-                    <WMHeartLogo
-                        size='sm'
-                        className='group-hover:scale-110 transition-transform'
-                    />
+                    <PixelHeartHero />
                     <span className='font-heading text-lg md:text-xl font-extrabold text-white tracking-wide group-hover:text-[var(--neon-blue)] transition-colors'>
                         Web Mashina
                     </span>

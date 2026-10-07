@@ -345,6 +345,9 @@
     --font-heading: "Gnuolane", sans-serif;
     --font-cursive: "Devina Garden", sans-serif;
     --font-typewriter: "Another Typewriter", monospace;
+    --font-alt: "Mulish", sans-serif;
+    --font-san: "Open Sans", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
 }
 /* ── 04. Animated Cosmic Universe Background ── */
 .universe-bg {

@@ -10,6 +10,7 @@ import Mission from "./Mission.tsx";
 import { useLanguage } from "@/components/LanguageContext";
 import { ServicesProvider } from "@/context/ServicesContext";
 import ToastHub from "@/components/ToastHub";
+import InteractiveCard from "@/components/InteractiveCard.tsx";
 
 const BentoLab = lazy(() => import("./BentoLab.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
@@ -55,6 +56,7 @@ const Home: React.FC = () => {
                 />
                 <Hero t={t} scrollToSection={scrollToSection} />
                 <Mission t={t} />
+                <InteractiveCard />
 
                 {/* Templates Section (Structured Identity Profile Cards) */}
                 <Suspense fallback={<Spinner />}>

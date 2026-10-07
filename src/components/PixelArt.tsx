@@ -180,3 +180,50 @@ export const WMHeartLogo: React.FC<{
         </div>
     );
 };
+
+export const PixelHeartHero: React.FC = () => {
+    return (
+        <>
+            <style>
+                {`
+                    .pixel-heart-mini {
+                        position: relative;
+                        width: 5px;
+                        height: 5px;
+                        background: transparent;
+                        /* Matrica od 5px - Ukupna širina: 35px, Visina: 30px */
+                        box-shadow: 
+                            5px 0 var(--neon-pink, #ff00aa), 10px 0 var(--neon-pink, #ff00aa), 20px 0 var(--neon-purple, #bf00ff), 25px 0 var(--neon-purple, #bf00ff),
+                            0 5px var(--neon-pink, #ff00aa), 5px 5px #ffffff, 10px 5px var(--neon-pink, #ff00aa), 15px 5px var(--neon-purple, #bf00ff), 20px 5px var(--neon-purple, #bf00ff), 25px 5px var(--neon-blue, #00f5ff), 30px 5px var(--neon-blue, #00f5ff),
+                            0 10px var(--neon-pink, #ff00aa), 5px 10px var(--neon-pink, #ff00aa), 10px 10px var(--neon-purple, #bf00ff), 15px 10px var(--neon-purple, #bf00ff), 20px 10px var(--neon-blue, #00f5ff), 25px 10px var(--neon-blue, #00f5ff), 30px 10px var(--neon-blue, #00f5ff),
+                            5px 15px var(--neon-pink, #ff00aa), 10px 15px var(--neon-purple, #bf00ff), 15px 15px var(--neon-purple, #bf00ff), 20px 15px var(--neon-blue, #00f5ff), 25px 15px var(--neon-blue, #00f5ff),
+                            10px 20px var(--neon-purple, #bf00ff), 15px 20px var(--neon-purple, #bf00ff), 20px 20px var(--neon-blue, #00f5ff),
+                            15px 25px var(--neon-purple, #bf00ff);
+                        animation: pulsePixelHeartMini 4s ease-in-out infinite;
+                    }
+
+                    /* Smanjen hod animacije kako bi bio proporcionalan manjoj veličini */
+                    @keyframes  pulsePixelHeartMini {
+                        0%, 100% { transform: scale(1); }
+                        50% { transform: scale(1.1); }
+                    }
+
+                    @media (prefers-reduced-motion: reduce) {
+                        .pixel-heart-mini {
+                            animation: none !important;
+                        }
+                    }
+                `}
+            </style>
+
+            {/* Opcionalni wrapper ako element mora fiksno zauzimati točno 36x36 prostor */}
+            <div className='w-[36px] h-[36px]'>
+                <div
+                    className='pixel-heart-mini'
+                    aria-label='Pulsirajuće minijaturno piksel srce'
+                    role='img'
+                />
+            </div>
+        </>
+    );
+};
