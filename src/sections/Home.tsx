@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar.tsx";
 import Contact from "./Contact.tsx";
 import Hero from "./Hero.tsx";
 import { content, type ContentSection } from "../data/data";
-import BackgroundCanvas from "@/components/BackgroundCanvas.tsx";
+import CosmicBackground from "@/components/CosmicBackground.tsx";
 import Mission from "./Mission.tsx";
 import { useLanguage } from "@/components/LanguageContext";
 import { ServicesProvider } from "@/context/ServicesContext";
@@ -41,9 +41,9 @@ const Home: React.FC = () => {
 
     return (
         <ServicesProvider>
-            <div className='max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden bg-[var(--dark-bg)] text-[var(--text-main)] selection:bg-[var(--neon-pink)] selection:text-white'>
+            <div className='max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden text-(--text-main) selection:bg-(--neon-pink) selection:text-white'>
                 <ToastHub />
-                <BackgroundCanvas />
+                <CosmicBackground />
                 <Navbar
                     scrolled={scrolled}
                     menuOpen={menuOpen}
