@@ -29,4 +29,4 @@ dist-ssr
 unused
 .move-unused-components.js
 
-App.test.tsx
+src/App.test.tsx
