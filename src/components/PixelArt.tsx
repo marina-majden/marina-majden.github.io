@@ -225,7 +225,7 @@ export const PixelHeartHero: React.FC = () => {
       </style>
 
       {/* Opcionalni wrapper ako element mora fiksno zauzimati točno 36x36 prostor */}
-      <div className="w-[36px] h-[36px]">
+      <div className="w-9 h-9">
         <div
           className="pixel-heart-mini"
           aria-label="Pulsirajuće minijaturno piksel srce"

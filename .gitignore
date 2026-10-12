@@ -28,3 +28,5 @@ dist-ssr
 
 unused
 .move-unused-components.js
+
+App.test.tsx
