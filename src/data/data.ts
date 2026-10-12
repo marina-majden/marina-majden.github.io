@@ -162,9 +162,9 @@ const content: ContentData = {
         },
         about: {
             title: "Misija",
-            p1: "1. stvarati piksel-savršene web stranice s dušom",
-            p2: "2. prenositi vaše priče kroz dizajn, kod i emociju",
-            p3: "3. graditi humani digitalni prostor (piksel po piksel!)",
+            p1: "1. raskid s monotonim, uniformnim webom koji guši kreativnost i izaziva dosadu",
+            p2: "2. stvarati ",
+            p3: "3. graditi humani digitalni prostor (piksel po piksel)",
         },
         skills: {
             title: "Vještine",
