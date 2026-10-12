@@ -148,11 +148,22 @@
     @apply bg-page-bg text-text-main font-sans;
   }
 }
-@utility bg-specimen-gradient {
-  background-image: var(--specimen-gradient);
-}
+
 @utility bg-title-gradient {
   background-image: var(--title-gradient);
+}
+@utility title-gradient {
+  background: linear-gradient(
+    45deg,
+    var(--color-neon-blue),
+    var(--color-neon-cyan),
+    white,
+    var(--color-neon-blue)
+  );
+  background-size: 200% 200%;
+  color: transparent;
+  background-clip: text;
+  animation: gradient-x 1s ease infinite alternate;
 }
 @utility gallery-loader {
   --color-1: rgba(17, 17, 29, 0.6);
