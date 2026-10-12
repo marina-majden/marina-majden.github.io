@@ -1,94 +1,103 @@
 import React, { useState, useEffect } from "react";
 import { Terminal, ArrowRight } from "lucide-react";
+import FontSpecimen from "@/components/FontSpecimen";
 
 interface HeroContent {
-    line1: string;
-    line2: string;
-    line3: string;
-    cta: string;
+  line1: string;
+  line2: string;
+  line3: string;
+  cta: string;
 }
 
 interface NavContent {
-    projects: string;
+  projects: string;
 }
 
 interface HeroProps {
-    t: {
-        hero: HeroContent;
-        nav: NavContent;
-    };
-    scrollToSection: (section: string) => void;
+  t: {
+    hero: HeroContent;
+    nav: NavContent;
+  };
+  scrollToSection: (section: string) => void;
 }
 
 const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
-    const [heroLoaded, setHeroLoaded] = useState<boolean>(false);
+  const [heroLoaded, setHeroLoaded] = useState<boolean>(false);
+  const [titleFont, setTitleFont] = useState<
+    "font-cursive" | "font-headings" | "font-display"
+  >("font-cursive");
 
-    useEffect(() => {
-        const id = requestAnimationFrame(() => setHeroLoaded(true));
-        return () => cancelAnimationFrame(id);
-    }, []);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setHeroLoaded(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
-    return (
-        <section
-            id='home'
-            className='w-screen h-[50vh] md:h-[90vh] mx-auto relative overflow-hidden pt-8 mt-8 mb-2 md:mt-10'>
-            <div className='h-full container flex flex-col justify-between items-center gap-10 mt-8 mx-auto px-6 text-center relative z-10'>
-                <div
-                    className={`inline-block my-4 px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50 backdrop-blur-sm transition-all duration-800 ${
-                        heroLoaded
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-6"
-                    }`}>
-                    <span className='font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-crosshair'>
-                        <Terminal size={12} className='animate-pulse' /> v3.0.0
-                        // Portfolio initialized
-                    </span>
-                </div>
-                <h1 className='w-full'>
-                    <span
-                        className={`block text-6xl md:text-8xl lg:text-9xl text-center leading-40 bg-clip-text text-transparent font-cursive bg-linear-to-tr from-lake-500 via-indigo-600 to-candy-500 font-bold z-50 animate-gradient-x transition-all duration-300 delay-300 ${
-                            heroLoaded
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-10"
-                        }`}>
-                        {t.hero.line1}
-                    </span>
-
-                    <br></br>
-                </h1>{" "}
-                <br></br>
-                <span
-                    className={`block text-2xl text-slate-200 font-link uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
-                        heroLoaded
-                            ? "opacity-100 translate-x-0"
-                            : "opacity-0 -translate-x-20"
-                    }`}>
-                    {t.hero.line3}
-                </span>
-                <div
-                    className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 delay-1000 ${
-                        heroLoaded
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-10"
-                    }`}>
-                    <button
-                        onClick={() => scrollToSection("contact")}
-                        className='button bg-lake-500 hover:bg-lake-600 backdrop-blur-md text-black text-shadow-black transition-all hover:scale-105 shadow-[0_0_10px_rgba(34,211,238,0.4)] active:scale-95'>
-                        {t.hero.cta}
-                    </button>
-                    <button
-                        onClick={() => scrollToSection("projects")}
-                        className='button text-lake-500 rounded-full hover:bg-lake-400 hover:text-slate-900 hover:border-slate-500 transition-all duration-300 flex items-center gap-2 group'>
-                        {t.nav.projects}{" "}
-                        <ArrowRight
-                            size={18}
-                            className='group-hover:translate-x-1 transition-transform'
-                        />
-                    </button>
-                </div>
-            </div>
-        </section>
-    );
+  return (
+    <section
+      id="home"
+      className="relative mx-auto mt-8 min-h-[calc(100svh-5rem)] w-full py-8 md:mt-10"
+    >
+      <div className="container relative z-10 mx-auto flex min-h-[inherit] flex-col items-center justify-center gap-6 px-6 text-center">
+        <div
+          className={`inline-block my-4 px-3 py-1 border border-slate-700 rounded-full bg-slate-900/50 backdrop-blur-sm transition-all duration-800 ${
+            heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          <span className="font-mono text-xs text-cyan-400 hover:text-cyan-500 transition-colors flex items-center gap-2 cursor-crosshair">
+            <Terminal size={12} className="animate-pulse" /> v3.0.0 // Portfolio
+            initialized
+          </span>
+        </div>
+        <h1
+          className={`w-full bg-title-gradient bg-clip-text text-6xl leading-loose text-transparent animate-gradient-x transition-all duration-300 delay-300 md:text-8xl lg:text-9xl ${titleFont} ${
+            heroLoaded
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-10 opacity-0"
+          }`}
+        >
+          {t.hero.line1}
+        </h1>
+        <FontSpecimen
+          text={t.hero.line1}
+          selectedFont={titleFont}
+          onSelectFont={setTitleFont}
+        />
+        <span
+          className={`block text-2xl text-slate-200 font-links uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
+            heroLoaded
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 -translate-x-20"
+          }`}
+        >
+          {t.hero.line3}
+        </span>
+        <div
+          className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 delay-1000 ${
+            heroLoaded
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          }`}
+        >
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="button-base button-primary backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+          >
+            {t.hero.cta}
+          </button>
+          <button
+            onClick={() => scrollToSection("projects")}
+            className="button-base button-ghost rounded-full transition-all duration-300 group"
+          >
+            {t.nav.projects}{" "}
+            <ArrowRight
+              size={18}
+              className="group-hover:translate-x-1 transition-transform"
+            />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Hero;

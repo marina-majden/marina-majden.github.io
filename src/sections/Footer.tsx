@@ -25,7 +25,7 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
               <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
                 <MiniPixelHeart scale={0.8} />
               </div>
-              <span className="text-xl font-heading font-extrabold text-white">
+              <span className="text-xl font-headings font-extrabold text-white">
                 Web Mashina
               </span>
             </div>
@@ -85,7 +85,7 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
         {/* Bottom Bar: Telemetry Status Dot & Copyright */}
         <div className="footer-bottom-bar">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-(--neon-green) shadow-[0_0_8px_var(--neon-green)] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-neon-green shadow-[0_0_8px_var(--color-neon-green)] animate-pulse" />
             <span className="font-mono text-xs uppercase tracking-wider text-slate-400">
               ALL SYSTEMS NOMINAL • 60 FPS • ZERO ASSET PIXELS
             </span>

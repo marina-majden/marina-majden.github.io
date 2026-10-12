@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { Spinner } from "@/components/SpinnerLoader.tsx";
+import { AtomLoader } from "@/components/SpinnerLoader.tsx";
 import Footer from "./Footer.tsx";
 import Navbar from "@/components/Navbar.tsx";
 import Contact from "./Contact.tsx";
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 
   return (
     <ServicesProvider>
-      <div className="max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden text-(--text-main) selection:bg-(--neon-pink) selection:text-white">
+      <div className="max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden text-text-main selection:bg-neon-pink selection:text-white">
         <ToastHub />
         <CosmicBackground />
         <Navbar
@@ -55,31 +55,22 @@ const Home: React.FC = () => {
         />
         <Hero t={t} scrollToSection={scrollToSection} />
         <Mission t={t} />
-
-        {/* Templates Section (Structured Identity Profile Cards) */}
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<AtomLoader />}>
           <Templates t={t} scrollToSection={scrollToSection} />
         </Suspense>
 
-        {/* Homepage Bento Grid for Lab & Micro-Sites */}
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<AtomLoader />}>
           <BentoLab />
         </Suspense>
-
-        {/* Projects Showcase Slider */}
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<AtomLoader />}>
           <Projects t={t} scrollToSection={scrollToSection} />
         </Suspense>
-
-        {/* Services Section (Moved directly above Contact) */}
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<AtomLoader />}>
           <Services t={t} />
         </Suspense>
 
-        {/* Contact Section (Dynamic Message with Selected Services) */}
         <Contact t={t} />
 
-        {/* Elementos Obsidian Footer */}
         <Footer t={t} />
       </div>
     </ServicesProvider>

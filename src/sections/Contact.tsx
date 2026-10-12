@@ -116,14 +116,14 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
           </p>
 
           {/* Obsidian Contact Card */}
-          <div className="my-4 p-6 md:p-10 relative z-10 bg-[rgba(14,15,28,0.85)] border border-(--border-subtle) rounded-3xl backdrop-blur-2xl shadow-[0_24px_64px_rgba(0,0,0,0.8),0_0_35px_rgba(0,245,255,0.1)]">
-            <h2 className="text-2xl font-heading font-extrabold mb-6 text-transparent bg-clip-text bg-linear-to-r from-(--neon-blue) via-(--neon-purple) to-(--neon-pink)">
+          <div className="my-4 p-6 md:p-10 relative z-10 bg-[rgba(14,15,28,0.85)] border border-card-border rounded-3xl backdrop-blur-2xl shadow-[0_24px_64px_rgba(0,0,0,0.8),0_0_35px_rgba(0,245,255,0.1)]">
+            <h2 className="text-2xl font-headings font-extrabold mb-6 text-transparent bg-clip-text bg-linear-to-r from-neon-blue via-neon-violet to-neon-pink">
               {t.contact.instruction}
             </h2>
 
             {/* Interactive Service Chips Pill Bar */}
             <div className="mb-6 p-3.5 rounded-2xl bg-white/5 border border-white/10 text-left">
-              <div className="flex items-center gap-2 mb-2 font-mono text-xs text-(--neon-blue) font-bold uppercase tracking-wider">
+              <div className="flex items-center gap-2 mb-2 font-mono text-xs text-neon-blue font-bold uppercase tracking-wider">
                 <Sparkles size={13} />
                 {lang === "hr"
                   ? "Odabrane usluge (automatski se unose u poruku):"
@@ -137,7 +137,7 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
                       type="button"
                       key={service}
                       onClick={() => toggleService(service)}
-                      className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[rgba(0,245,255,0.15)] text-(--neon-blue) border border-(--neon-blue) hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-400 transition-colors cursor-pointer flex items-center gap-1.5"
+                      className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[rgba(0,245,255,0.15)] text-neon-blue border border-neon-blue hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-400 transition-colors cursor-pointer flex items-center gap-1.5"
                       title={lang === "hr" ? "Ukloni" : "Remove"}
                     >
                       <span>{service}</span>
@@ -158,13 +158,13 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="w-full text-left">
                   <label
-                    className="block text-xs font-mono font-bold text-(--neon-blue) uppercase tracking-wider mb-2"
+                    className="block text-xs font-mono font-bold text-neon-blue uppercase tracking-wider mb-2"
                     htmlFor="name"
                   >
                     {t.contact.sender}
                   </label>
                   <input
-                    className="w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-(--neon-blue) focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm"
+                    className="w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-neon-blue focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm"
                     type="text"
                     id="name"
                     name="name"
@@ -174,13 +174,13 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
                 </div>
                 <div className="w-full text-left">
                   <label
-                    className="block text-xs font-mono font-bold text-(--neon-blue) uppercase tracking-wider mb-2"
+                    className="block text-xs font-mono font-bold text-neon-blue uppercase tracking-wider mb-2"
                     htmlFor="email"
                   >
                     {t.contact.email}
                   </label>
                   <input
-                    className="w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-(--neon-blue) focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm"
+                    className="w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-neon-blue focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm"
                     name="email"
                     id="email"
                     type="email"
@@ -192,13 +192,13 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
 
               <div className="w-full text-left">
                 <label
-                  className="block text-xs font-mono font-bold text-(--neon-blue) uppercase tracking-wider mb-2"
+                  className="block text-xs font-mono font-bold text-neon-blue uppercase tracking-wider mb-2"
                   htmlFor="message"
                 >
                   {t.contact.message}
                 </label>
                 <textarea
-                  className="w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-(--neon-blue) focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm"
+                  className="w-full px-4 py-3 bg-[rgba(7,7,14,0.7)] border border-white/15 focus:border-neon-blue focus:ring-2 focus:ring-[rgba(0,245,255,0.2)] rounded-xl text-white outline-none transition-all duration-200 placeholder:text-slate-500 font-sans text-sm"
                   rows={5}
                   name="message"
                   id="message"
@@ -226,7 +226,7 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
                     name="agree"
                     type="checkbox"
                     required
-                    className="w-4 h-4 rounded accent-(--neon-blue) cursor-pointer"
+                    className="w-4 h-4 rounded accent-neon-blue cursor-pointer"
                   />
                   <span>{t.contact.agree}</span>
                 </label>
@@ -251,7 +251,7 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
 
               <div className="flex justify-end pt-2">
                 <button
-                  className="btn btn-primary text-sm px-8 py-3 w-full sm:w-auto"
+                  className="button-base button-primary text-sm px-8 py-3 w-full sm:w-auto"
                   type="submit"
                   disabled={status === "submitting"}
                 >

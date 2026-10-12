@@ -17,8 +17,10 @@ export default defineConfig({
     cssMinify: "lightningcss",
     rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"],
+        manualChunks(id) {
+          if (/[\\/]node_modules[\\/](react|react-dom)[\\/]/.test(id)) {
+            return "vendor";
+          }
         },
       },
     },
