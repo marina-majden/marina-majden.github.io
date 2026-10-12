@@ -66,6 +66,7 @@
     line-height: 1.4;
   }
 }
+
 @keyframes gradient-x {
   0% {
     background-size: 200% 200%;
@@ -76,6 +77,7 @@
     background-position: bottom right;
   }
 }
+
 @theme {
   --animate-gradient-x: gradient-x 2s ease-in-out infinite alternate;
 
@@ -135,7 +137,7 @@
 
   --font-sans: "Satoshi", sans-serif;
   --font-mono: "FiraMono", monospace;
-  --font-display: "AnotherTyperwriter", sans-serif;
+  --font-display: "Another Typewriter", sans-serif;
   --font-headings: "Gnu", sans-serif;
   --font-links: "Asap", sans-serif;
   --font-cursive: "Devina Garden", cursive;
