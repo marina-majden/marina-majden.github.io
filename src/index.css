@@ -77,8 +77,6 @@
   }
 }
 @theme {
-  /* prvo animacije, zatim varijable pa ostalo */
-
   --animate-gradient-x: gradient-x 2s ease-in-out infinite alternate;
 
   --color-page-bg: #07070e;

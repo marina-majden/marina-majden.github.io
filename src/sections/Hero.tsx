@@ -49,7 +49,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
           </span>
         </div>
         <h1
-          className={`w-full bg-title-gradient bg-clip-text text-6xl leading-loose text-transparent animate-gradient-x transition-all duration-300 delay-300 md:text-8xl lg:text-9xl ${titleFont} ${
+          className={`w-full font-display bg-title-gradient bg-clip-text text-6xl leading-loose text-transparent animate-gradient-x transition-all duration-300 delay-300 md:text-8xl lg:text-9xl ${
             heroLoaded
               ? "translate-x-0 opacity-100"
               : "-translate-x-10 opacity-0"
@@ -57,11 +57,6 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
         >
           {t.hero.line1}
         </h1>
-        <FontSpecimen
-          text={t.hero.line1}
-          selectedFont={titleFont}
-          onSelectFont={setTitleFont}
-        />
         <span
           className={`block text-2xl text-slate-200 font-links uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
             heroLoaded
