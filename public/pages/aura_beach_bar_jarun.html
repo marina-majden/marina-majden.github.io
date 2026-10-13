@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="hr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA Beach Bar | Jarun, Zagreb</title>
+    <meta name="description" content="Luksuzni beach bar na zagrebačkom Jarunu. Vrhunski kokteli, nezaboravne noći i najbolja atmosfera.">
+    
+    <!-- Učitavanje fontova -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            // Upotrijebit ćemo CSS varijable za Tailwind boje kako bi se dinamički mijenjale
+                            bg: 'var(--color-bg)',
+                            text: 'var(--color-text)',
+                            primary: 'var(--color-primary)',
+                            secondary: 'var(--color-secondary)',
+                            accent: 'var(--color-accent)',
+                            card: 'var(--color-card)',
+                            border: 'var(--color-border)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Default Dark Theme Variables */
+            --color-bg: #0a0a0f;
+            --color-text: #ffffff;
+            --color-primary: #ff007a;   /* Neon Pink */
+            --color-secondary: #00e5ff; /* Cyan */
+            --color-accent: #d4af37;    /* Gold */
+            --color-card: rgba(255, 255, 255, 0.03);
+            --color-card-hover: rgba(255, 255, 255, 0.08);
+            --color-border: rgba(255, 255, 255, 0.1);
+            
+            --glow-primary: 0 0 10px rgba(255, 0, 122, 0.5), 0 0 20px rgba(255, 0, 122, 0.3);
+            --glow-secondary: 0 0 10px rgba(0, 229, 255, 0.5), 0 0 20px rgba(0, 229, 255, 0.3);
+            --text-gradient-main: linear-gradient(to right, #ff007a, #00e5ff);
+            --nav-bg: rgba(10, 10, 15, 0.8);
+            --section-alt-bg: #050508;
+            --hero-overlay: radial-gradient(circle at center, transparent 0%, #0a0a0f 90%);
+        }
+
+        [data-theme="light"] {
+            /* Vibrant Light Theme Variables */
+            --color-bg: #fdfbfb;
+            --color-text: #1e293b; /* Dark text for readability */
+            --color-primary: #ec4899;   /* Bright Pink */
+            --color-secondary: #0ea5e9; /* Sky Blue */
+            --color-accent: #8b5cf6;    /* Purple */
+            --color-card: rgba(255, 255, 255, 0.7);
+            --color-card-hover: rgba(255, 255, 255, 0.95);
+            --color-border: rgba(0, 0, 0, 0.1);
+            
+            --glow-primary: 0 10px 25px -5px rgba(236, 72, 153, 0.3), 0 8px 10px -6px rgba(236, 72, 153, 0.1);
+            --glow-secondary: 0 10px 25px -5px rgba(14, 165, 233, 0.3), 0 8px 10px -6px rgba(14, 165, 233, 0.1);
+            --text-gradient-main: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+            --nav-bg: rgba(253, 251, 251, 0.85);
+            --section-alt-bg: linear-gradient(to bottom right, #fdfbfb, #e0f2fe, #f3e8ff);
+            --hero-overlay: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, rgba(253,251,251,0.9) 100%);
+        }
+        
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
+            cursor: none;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 10px;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: var(--color-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-card {
+            background: var(--color-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--color-border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: var(--color-card-hover);
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-primary);
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: var(--text-gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .text-gradient-gold {
+            background: linear-gradient(to right, var(--color-accent), #f3e5ab);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        [data-theme="light"] .text-gradient-gold {
+            background: linear-gradient(to right, #d97706, #b45309);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #fff; /* Always white so difference makes it contrast */
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #fff;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-hover .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ThreeJS Canvas Container */
+        #canvas-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: auto;
+        }
+
+        .hero-overlay {
+            background: var(--hero-overlay);
+            transition: background 0.4s ease;
+        }
+
+        /* Light mode gradient background */
+        [data-theme="light"] body {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebf8ff 50%, #f3e8ff 100%);
+            background-attachment: fixed;
+        }
+        
+        /* Nav Background specific class */
+        .nav-scrolled {
+            background-color: var(--nav-bg);
+            border-bottom-color: var(--color-border);
+        }
+
+        .section-alt {
+            background-color: var(--section-alt-bg);
+            transition: background-color 0.4s ease;
+        }
+
+        /* Animated SVG floating */
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .menu-item-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        /* Light mode specific overrides for text legibility */
+        [data-theme="light"] .text-gray-400,
+        [data-theme="light"] .text-gray-300 {
+            color: #475569;
+        }
+        [data-theme="light"] .text-gray-500 {
+            color: #64748b;
+        }
+        [data-theme="light"] .text-white {
+            color: #1e293b;
+        }
+        [data-theme="light"] .btn-text-white,
+        [data-theme="light"] button.text-white,
+        [data-theme="light"] .hover\:text-white:hover {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] a.text-white {
+            color: #1e293b;
+        }
+        [data-theme="light"] .bg-white\/5 {
+            background-color: rgba(0,0,0,0.05);
+        }
+        [data-theme="light"] .border-white\/10 {
+            border-color: rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-primary selection:text-white" data-theme="dark">
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6 px-8 flex justify-between items-center border-b border-transparent">
+        <a href="#" class="text-3xl font-serif font-bold tracking-widest text-brand-text hover-trigger z-50">
+            AURA<span class="text-brand-primary">.</span>
+        </a>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-8 items-center glass px-8 py-3 rounded-full">
+            <a href="#hero" class="text-sm font-medium hover:text-brand-secondary transition-colors hover-trigger">Početna</a>
+            <a href="#philosophy" class="text-sm font-medium hover:text-brand-secondary transition-colors hover-trigger">Priča</a>
+            <a href="#menu" class="text-sm font-medium hover:text-brand-secondary transition-colors hover-trigger">Cjenik</a>
+            <a href="#gallery" class="text-sm font-medium hover:text-brand-secondary transition-colors hover-trigger">Galerija</a>
+            <a href="#location" class="text-sm font-medium hover:text-brand-secondary transition-colors hover-trigger">Lokacija</a>
+        </div>
+
+        <div class="hidden md:flex items-center gap-4">
+            <!-- Theme Switcher -->
+            <button id="theme-toggle" class="w-10 h-10 rounded-full glass flex items-center justify-center text-brand-text hover:text-brand-primary transition-colors hover-trigger" aria-label="Toggle theme">
+                <i class="fas fa-moon hidden" id="icon-dark"></i>
+                <i class="fas fa-sun" id="icon-light"></i>
+            </button>
+            
+            <button class="glass px-6 py-2 rounded-full text-sm font-bold text-brand-primary hover:bg-brand-primary hover:text-white btn-text-white transition-all hover-trigger shadow-[var(--glow-primary)]">
+                REZERVIRAJ STOL
+            </button>
+        </div>
+
+        <!-- Mobile Controls -->
+        <div class="md:hidden flex items-center gap-4 z-50">
+            <button id="mobile-theme-toggle" class="w-8 h-8 rounded-full flex items-center justify-center text-brand-text hover-trigger">
+                <i class="fas fa-moon hidden" id="mobile-icon-dark"></i>
+                <i class="fas fa-sun" id="mobile-icon-light"></i>
+            </button>
+            <button id="mobile-menu-btn" class="text-brand-text text-2xl hover-trigger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-bg/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500">
+        <a href="#hero" class="mobile-link text-3xl font-serif text-brand-text">Početna</a>
+        <a href="#philosophy" class="mobile-link text-3xl font-serif text-brand-text">Priča</a>
+        <a href="#menu" class="mobile-link text-3xl font-serif text-brand-text">Cjenik</a>
+        <a href="#gallery" class="mobile-link text-3xl font-serif text-brand-text">Galerija</a>
+        <a href="#location" class="mobile-link text-3xl font-serif text-brand-text">Lokacija</a>
+    </div>
+
+    <header id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <!-- 3D Canvas goes here -->
+        <div id="canvas-container"></div>
+        <div class="absolute inset-0 hero-overlay pointer-events-none"></div>
+
+        <div class="relative z-10 text-center px-4 flex flex-col items-center max-w-4xl mx-auto pointer-events-none">
+            <h2 class="text-brand-secondary tracking-[0.3em] text-sm md:text-md uppercase font-bold mb-4 opacity-0" id="hero-subtitle">Jarun, Zagreb</h2>
+            <h1 class="text-5xl md:text-6xl lg:text-8xl font-serif font-bold mb-6 leading-tight opacity-0" id="hero-title">
+                Kokteli uz <br><span class="text-gradient">Dobru vibru.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl font-light opacity-0" id="hero-desc">
+                Ekskluzivni beach bar na zagrebačkom moru. Vrhunska miksologija, luksuzan ambijent i ritam koji ne staje.
+            </p>
+            
+            <div class="opacity-0 pointer-events-auto" id="hero-cta">
+                <a href="#menu" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-brand-text transition-all duration-200 bg-transparent border-2 border-brand-primary rounded-full hover:bg-brand-primary hover:text-white btn-text-white hover:shadow-[var(--glow-primary)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary hover-trigger">
+                    ISTRAŽI PONUDU
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce text-brand-text">
+            <span class="text-xs tracking-widest uppercase">Scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <section id="philosophy" class="py-24 relative overflow-hidden bg-brand-bg">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="philosophy-text space-y-8">
+                <h3 class="text-brand-accent tracking-widest text-sm font-bold uppercase">Umjetnost u čaši</h3>
+                <h2 class="text-4xl md:text-6xl font-serif font-bold leading-tight text-brand-text">
+                    Više od pića.<br>
+                    <span class="text-gradient">Doživljaj.</span>
+                </h2>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    U Auri, svaki koktel je remek-djelo pažljivo osmišljeno da probudi sva vaša osjetila. Koristimo samo najsvježije botaničke sastojke, premium alkohol i inovativne tehnike miksologije. 
+                    Smješteni na obali Jaruna, nudimo vam savršen bijeg od gradske vreve u oazu luksuza.
+                </p>
+                <div class="flex gap-4 pt-4">
+                    <div class="glass p-4 rounded-xl text-center w-32 hover:border-brand-primary transition-colors cursor-pointer hover-trigger">
+                        <i class="fas fa-lemon text-2xl text-brand-primary mb-2"></i>
+                        <p class="text-xs font-bold uppercase text-brand-text">Svježe</p>
+                    </div>
+                    <div class="glass p-4 rounded-xl text-center w-32 hover:border-brand-secondary transition-colors cursor-pointer hover-trigger">
+                        <i class="fas fa-fire-flame-curved text-2xl text-brand-secondary mb-2"></i>
+                        <p class="text-xs font-bold uppercase text-brand-text">Inovativno</p>
+                    </div>
+                    <div class="glass p-4 rounded-xl text-center w-32 hover:border-brand-accent transition-colors cursor-pointer hover-trigger">
+                        <i class="fas fa-gem text-2xl text-brand-accent mb-2"></i>
+                        <p class="text-xs font-bold uppercase text-brand-text">Premium</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative philosophy-img">
+                <div class="absolute inset-0 bg-gradient-to-tr from-brand-primary/20 to-brand-secondary/20 rounded-3xl blur-2xl"></div>
+                <!-- Slika koktela -->
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="Luksuzni koktel" class="relative z-10 rounded-3xl shadow-2xl border border-brand-border w-full h-[600px] object-cover hover:scale-[1.02] transition-transform duration-500 hover-trigger">
+                
+                <!-- Floating badgets -->
+                <div class="absolute -left-8 top-1/4 glass px-6 py-4 rounded-2xl z-20 flex items-center gap-4 float-anim">
+                    <div class="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center">
+                        <i class="fas fa-star text-white"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-400 uppercase">Ocjena</p>
+                        <p class="font-bold text-lg text-brand-text">4.9/5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="py-32 relative section-alt">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 menu-header">
+                <h3 class="text-brand-secondary tracking-widest text-sm font-bold uppercase mb-4">Naša ponuda</h3>
+                <h2 class="text-5xl md:text-7xl font-serif font-bold mb-6 text-brand-text">Masterpiece <span class="text-gradient">Cjenik</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Otkrijte našu pažljivo kuriranu selekciju signature koktela, klasika i osvježavajućih bezalkoholnih kreacija.</p>
+            </div>
+
+            <!-- Kategorije (Tabovi) -->
+            <div class="flex flex-wrap justify-center gap-4 mb-16 menu-header">
+                <button class="px-8 py-3 rounded-full bg-brand-primary text-white font-bold text-sm tracking-wider hover-trigger shadow-[var(--glow-primary)]">SIGNATURE</button>
+                <button class="px-8 py-3 rounded-full glass text-brand-text font-bold text-sm tracking-wider hover:bg-brand-border transition-colors hover-trigger">CLASSICS</button>
+                <button class="px-8 py-3 rounded-full glass text-brand-text font-bold text-sm tracking-wider hover:bg-brand-border transition-colors hover-trigger">MOCKTAILS</button>
+            </div>
+
+            <!-- Grid Koktela -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Item 1 -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group menu-item-reveal hover-trigger">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-primary/20 rounded-full blur-3xl group-hover:bg-brand-primary/40 transition-all"></div>
+                    <div class="flex justify-between items-start mb-4 relative z-10">
+                        <h4 class="text-2xl font-serif font-bold text-brand-text group-hover:text-brand-primary transition-colors">Jarun Sunset</h4>
+                        <span class="text-xl font-bold text-brand-accent">14€</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10">Premium Gin, pire od marakuje, svježi sok od limete, sirup od vanilije, pjena od bjelanjka, jestivo zlato.</p>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20">Voćno</span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-text/5 border border-brand-border">Slatko</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group menu-item-reveal hover-trigger">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-secondary/20 rounded-full blur-3xl group-hover:bg-brand-secondary/40 transition-all"></div>
+                    <div class="flex justify-between items-start mb-4 relative z-10">
+                        <h4 class="text-2xl font-serif font-bold text-brand-text group-hover:text-brand-secondary transition-colors">Abyss Negroni</h4>
+                        <span class="text-xl font-bold text-brand-accent">16€</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10">Mezcal, Campari infuziran kavom, slatki vermut, bitter od čokolade, dimljena naranča, ružmarin.</p>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-secondary/10 text-brand-secondary border border-brand-secondary/20">Gorko</span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-text/5 border border-brand-border">Dimljeno</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group menu-item-reveal hover-trigger">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand-accent/20 rounded-full blur-3xl group-hover:bg-brand-accent/40 transition-all"></div>
+                    <div class="flex justify-between items-start mb-4 relative z-10">
+                        <h4 class="text-2xl font-serif font-bold text-brand-text group-hover:text-brand-accent transition-colors">Aura Spritz</h4>
+                        <span class="text-xl font-bold text-brand-accent">12€</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10">Liker od bazge, Prosecco DOCG, svježa menta, limeta, soda voda, dehidrirana ruža.</p>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-accent/10 text-brand-accent border border-brand-accent/20">Osvježavajuće</span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-text/5 border border-brand-border">Lagano</span>
+                    </div>
+                </div>
+
+                 <!-- Item 4 -->
+                 <div class="glass-card p-6 rounded-3xl relative overflow-hidden group menu-item-reveal hover-trigger">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl group-hover:bg-purple-500/40 transition-all"></div>
+                    <div class="flex justify-between items-start mb-4 relative z-10">
+                        <h4 class="text-2xl font-serif font-bold text-brand-text group-hover:text-purple-500 transition-colors">Cyberpunk Margarita</h4>
+                        <span class="text-xl font-bold text-brand-accent">15€</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10">Tequila Blanco, Blue Curacao, svježa limeta, agavin sirup, sol sa crnom lavom na rubu čaše.</p>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span class="text-xs px-3 py-1 rounded-full bg-purple-500/10 text-purple-500 border border-purple-500/20">Citrusno</span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-text/5 border border-brand-border">Snažno</span>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group menu-item-reveal hover-trigger">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl group-hover:bg-emerald-500/40 transition-all"></div>
+                    <div class="flex justify-between items-start mb-4 relative z-10">
+                        <h4 class="text-2xl font-serif font-bold text-brand-text group-hover:text-emerald-500 transition-colors">Botanical Smash</h4>
+                        <span class="text-xl font-bold text-brand-accent">13€</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10">Vodka infuzirana krastavcem, svježi bosiljak, limun, simple sirup, ginger beer.</p>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Biljno</span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-text/5 border border-brand-border">Pikantno</span>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="glass-card p-6 rounded-3xl relative overflow-hidden group menu-item-reveal hover-trigger">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-red-500/20 rounded-full blur-3xl group-hover:bg-red-500/40 transition-all"></div>
+                    <div class="flex justify-between items-start mb-4 relative z-10">
+                        <h4 class="text-2xl font-serif font-bold text-brand-text group-hover:text-red-500 transition-colors">Velvet Espresso</h4>
+                        <span class="text-xl font-bold text-brand-accent">14€</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6 relative z-10">Premium Vodka, svježi espresso, liker od kave, slana karamela, zrna kave posuta zlatnim prahom.</p>
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span class="text-xs px-3 py-1 rounded-full bg-red-500/10 text-red-500 border border-red-500/20">Kremasto</span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-brand-text/5 border border-brand-border">Budi</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <p class="text-gray-500 text-sm italic">* U cijenu je uključen PDV. Za informacije o alergenima obratite se našem osoblju.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-24 bg-brand-bg overflow-hidden transition-colors duration-400">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-serif font-bold text-brand-text"><span class="text-gradient-gold">Atmosfera</span></h2>
+        </div>
+        
+        <!-- Scrolling Marquee of Images -->
+        <div class="flex gap-6 overflow-hidden w-full" id="marquee-container">
+            <div class="flex gap-6 min-w-max animate-marquee" id="marquee-content">
+                <img src="https://images.unsplash.com/photo-1574966739987-65e38f2ebadd?auto=format&fit=crop&w=600&h=800&q=80" alt="Bar atmosphere" class="w-72 h-96 object-cover rounded-3xl border border-brand-border hover:scale-105 transition-transform duration-500 hover-trigger shadow-lg">
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&h=800&q=80" alt="Cocktail pouring" class="w-72 h-96 object-cover rounded-3xl border border-brand-border hover:scale-105 transition-transform duration-500 hover-trigger shadow-lg">
+                <img src="https://images.unsplash.com/photo-1541585452861-0375331f10bc?auto=format&fit=crop&w=600&h=800&q=80" alt="DJ Party" class="w-72 h-96 object-cover rounded-3xl border border-brand-border hover:scale-105 transition-transform duration-500 hover-trigger shadow-lg">
+                <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&h=800&q=80" alt="Night lights" class="w-72 h-96 object-cover rounded-3xl border border-brand-border hover:scale-105 transition-transform duration-500 hover-trigger shadow-lg">
+                <img src="https://images.unsplash.com/photo-1575037614876-c3852d2874dc?auto=format&fit=crop&w=600&h=800&q=80" alt="Beach bar exterior" class="w-72 h-96 object-cover rounded-3xl border border-brand-border hover:scale-105 transition-transform duration-500 hover-trigger shadow-lg">
+            </div>
+            <!-- Duplicate for infinite scroll effect via JS or CSS -->
+            <div class="flex gap-6 min-w-max animate-marquee" aria-hidden="true">
+                <img src="https://images.unsplash.com/photo-1574966739987-65e38f2ebadd?auto=format&fit=crop&w=600&h=800&q=80" alt="Bar atmosphere" class="w-72 h-96 object-cover rounded-3xl border border-brand-border shadow-lg">
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&h=800&q=80" alt="Cocktail pouring" class="w-72 h-96 object-cover rounded-3xl border border-brand-border shadow-lg">
+                <img src="https://images.unsplash.com/photo-1541585452861-0375331f10bc?auto=format&fit=crop&w=600&h=800&q=80" alt="DJ Party" class="w-72 h-96 object-cover rounded-3xl border border-brand-border shadow-lg">
+                <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&h=800&q=80" alt="Night lights" class="w-72 h-96 object-cover rounded-3xl border border-brand-border shadow-lg">
+                <img src="https://images.unsplash.com/photo-1575037614876-c3852d2874dc?auto=format&fit=crop&w=600&h=800&q=80" alt="Beach bar exterior" class="w-72 h-96 object-cover rounded-3xl border border-brand-border shadow-lg">
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-24 bg-brand-dark overflow-hidden">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-serif font-bold"><span class="text-gradient-gold">Atmosfera</span></h2>
+        </div>
+        
+        <!-- Scrolling Marquee of Images -->
+        <div class="flex gap-6 overflow-hidden w-full" id="marquee-container">
+            <div class="flex gap-6 min-w-max animate-marquee" id="marquee-content">
+                <img src="https://images.unsplash.com/photo-1574966739987-65e38f2ebadd?auto=format&fit=crop&w=600&h=800&q=80" alt="Bar atmosphere" class="w-72 h-96 object-cover rounded-3xl border border-white/10 hover:scale-105 transition-transform duration-500 hover-trigger">
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&h=800&q=80" alt="Cocktail pouring" class="w-72 h-96 object-cover rounded-3xl border border-white/10 hover:scale-105 transition-transform duration-500 hover-trigger">
+                <img src="https://images.unsplash.com/photo-1541585452861-0375331f10bc?auto=format&fit=crop&w=600&h=800&q=80" alt="DJ Party" class="w-72 h-96 object-cover rounded-3xl border border-white/10 hover:scale-105 transition-transform duration-500 hover-trigger">
+                <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&h=800&q=80" alt="Night lights" class="w-72 h-96 object-cover rounded-3xl border border-white/10 hover:scale-105 transition-transform duration-500 hover-trigger">
+                <img src="https://images.unsplash.com/photo-1575037614876-c3852d2874dc?auto=format&fit=crop&w=600&h=800&q=80" alt="Beach bar exterior" class="w-72 h-96 object-cover rounded-3xl border border-white/10 hover:scale-105 transition-transform duration-500 hover-trigger">
+            </div>
+            <!-- Duplicate for infinite scroll effect via JS or CSS -->
+            <div class="flex gap-6 min-w-max animate-marquee" aria-hidden="true">
+                <img src="https://images.unsplash.com/photo-1574966739987-65e38f2ebadd?auto=format&fit=crop&w=600&h=800&q=80" alt="Bar atmosphere" class="w-72 h-96 object-cover rounded-3xl border border-white/10">
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&h=800&q=80" alt="Cocktail pouring" class="w-72 h-96 object-cover rounded-3xl border border-white/10">
+                <img src="https://images.unsplash.com/photo-1541585452861-0375331f10bc?auto=format&fit=crop&w=600&h=800&q=80" alt="DJ Party" class="w-72 h-96 object-cover rounded-3xl border border-white/10">
+                <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&h=800&q=80" alt="Night lights" class="w-72 h-96 object-cover rounded-3xl border border-white/10">
+                <img src="https://images.unsplash.com/photo-1575037614876-c3852d2874dc?auto=format&fit=crop&w=600&h=800&q=80" alt="Beach bar exterior" class="w-72 h-96 object-cover rounded-3xl border border-white/10">
+            </div>
+        </div>
+        <style>
+            .animate-marquee {
+                animation: marquee 30s linear infinite;
+            }
+            @keyframes marquee {
+                0% { transform: translateX(0%); }
+                100% { transform: translateX(-100%); }
+            }
+        </style>
+    </section>
+
+    <section id="location" class="py-24 relative bg-[#050508] border-t border-white/5">
+    <section id="location" class="py-24 relative section-alt border-t border-brand-border">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
+            <!-- Info -->
+            <div class="space-y-10 loc-reveal">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-brand-text">Pronađi nas.</h2>
+                    <p class="text-gray-400 text-lg">Smješteni na samoj obali Jarunskog jezera, nudimo spektakularan pogled na zalazak sunca.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full glass flex items-center justify-center text-brand-primary flex-shrink-0">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-brand-text font-bold text-lg mb-1">Adresa</h4>
+                            <p class="text-gray-400">Aleja Matije Ljubeka 11, <br>10000 Zagreb, Hrvatska (Jarun)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full glass flex items-center justify-center text-brand-secondary flex-shrink-0">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-brand-text font-bold text-lg mb-1">Radno Vrijeme</h4>
+                            <p class="text-gray-400">Pon - Čet: 09:00 - 00:00<br>Pet - Sub: 09:00 - 04:00 (Klub)<br>Ned: 09:00 - 00:00</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full glass flex items-center justify-center text-brand-accent flex-shrink-0">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-brand-text font-bold text-lg mb-1">Kontakt & Rezervacije</h4>
+                            <p class="text-gray-400 cursor-pointer hover:text-brand-primary transition-colors" onclick="copyToClipboard('+385912001406')">+385 91 200 1406 <i class="fas fa-copy ml-2 text-xs"></i></p>
+                            <p class="text-gray-400">info@aurabeachbar.hr</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Socials -->
+                <div class="flex gap-4 pt-4">
+                    <a href="#" class="w-12 h-12 rounded-full glass hover:bg-brand-primary text-brand-text hover:text-white btn-text-white flex items-center justify-center transition-all hover-trigger hover:-translate-y-2"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="w-12 h-12 rounded-full glass hover:bg-brand-secondary text-brand-text hover:text-white btn-text-white flex items-center justify-center transition-all hover-trigger hover:-translate-y-2"><i class="fab fa-facebook-f text-xl"></i></a>
+                    <a href="#" class="w-12 h-12 rounded-full glass hover:text-white text-brand-text btn-text-white flex items-center justify-center transition-all hover-trigger hover:-translate-y-2" style="hover:background-color: #000;"><i class="fab fa-tiktok text-xl"></i></a>
+                </div>
+            </div>
+
+            <!-- Stylized Map / Image Placeholder -->
+            <div class="relative rounded-3xl overflow-hidden glass p-2 loc-reveal h-[500px]">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-bg to-transparent z-10 pointer-events-none transition-colors duration-400"></div>
+                <!-- Prikazujemo predivnu sliku obale umjesto dosadne karte zbog vizualnog dojma -->
+                <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1000&q=80" alt="Jarun obala" class="w-full h-full object-cover rounded-2xl grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+                <div class="absolute bottom-8 left-8 z-20">
+                    <button class="bg-brand-primary text-white btn-text-white px-6 py-3 rounded-full font-bold shadow-lg hover-trigger">
+                        <i class="fas fa-location-arrow mr-2"></i> Otvori u Maps
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-brand-bg text-center border-t border-brand-border relative z-10 transition-colors duration-400">
+        <p class="text-gray-500 text-sm">© 2026 AURA Beach Bar Jarun. Sva prava pridržana. Design by Gemini.</p>
+    </footer>
+
+    <!-- Obavijest / Message Box (Zamjena za alert) -->
+    <div id="msg-box" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-brand-primary text-white px-6 py-3 rounded-full shadow-lg translate-y-24 opacity-0 transition-all duration-300 z-[100] font-medium">
+        Kopirano u međuspremnik!
+    </div>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // Theme Management
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle');
+        const iconDark = document.getElementById('icon-dark');
+        const iconLight = document.getElementById('icon-light');
+        const mobileIconDark = document.getElementById('mobile-icon-dark');
+        const mobileIconLight = document.getElementById('mobile-icon-light');
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        document.body.setAttribute('data-theme', savedTheme);
+        updateThemeIcons(savedTheme);
+
+        function updateThemeIcons(theme) {
+            if (theme === 'dark') {
+                iconDark.classList.add('hidden');
+                iconLight.classList.remove('hidden');
+                mobileIconDark.classList.add('hidden');
+                mobileIconLight.classList.remove('hidden');
+            } else {
+                iconDark.classList.remove('hidden');
+                iconLight.classList.add('hidden');
+                mobileIconDark.classList.remove('hidden');
+                mobileIconLight.classList.add('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcons(newTheme);
+
+            // Emit event so Three.js can update its colors
+            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: newTheme } }));
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        mobileThemeToggleBtn.addEventListener('click', toggleTheme);
+
+
+        // Registracija GSAP plugina
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor Logic
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const hoverTriggers = document.querySelectorAll('.hover-trigger, a, button');
+
+        if(window.innerWidth > 768) {
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+
+                // Dodajemo malo zakašnjenja za outline radi boljeg efekta
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 150, fill: "forwards" });
+            });
+
+            hoverTriggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => {
+                    document.body.classList.add('cursor-hover');
+                });
+                trigger.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('cursor-hover');
+                });
+            });
+        }
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if(isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                isMenuOpen = false;
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled', 'backdrop-blur-md', 'shadow-lg');
+                navbar.classList.remove('py-6', 'border-transparent');
+                navbar.classList.add('py-4');
+            } else {
+                navbar.classList.remove('nav-scrolled', 'backdrop-blur-md', 'shadow-lg');
+                navbar.classList.add('py-6', 'border-transparent');
+                navbar.classList.remove('py-4');
+            }
+        });
+
+        // Copy to clipboard (Bez alerta)
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            // Prikaz obavijesti
+            const msgBox = document.getElementById('msg-box');
+            msgBox.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                msgBox.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            
+            // Kamera
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 15;
+            camera.position.y = 2;
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Define Colors
+            const colors = {
+                dark: {
+                    ambient: 0xffffff,
+                    primary: 0xff007a,
+                    secondary: 0x00e5ff,
+                    liquid: 0x00e5ff, // Aqua color for dark mode
+                    particles: 0x00e5ff
+                },
+                light: {
+                    ambient: 0x404040,
+                    primary: 0xec4899,
+                    secondary: 0x0ea5e9,
+                    liquid: 0x00e5ff, // Kept exactly the same as dark mode
+                    particles: 0x00e5ff // Kept exactly the same as dark mode
+                }
+            };
+
+            let currentTheme = document.body.getAttribute('data-theme') || 'dark';
+
+            // Svjetla
+            const ambientLight = new THREE.AmbientLight(colors[currentTheme].ambient, currentTheme === 'light' ? 0.8 : 0.2);
+            scene.add(ambientLight);
+
+            const neonPinkLight = new THREE.PointLight(colors[currentTheme].primary, 2, 50);
+            neonPinkLight.position.set(-5, 5, 5);
+            scene.add(neonPinkLight);
+
+            const neonCyanLight = new THREE.PointLight(colors[currentTheme].secondary, 2, 50);
+            neonCyanLight.position.set(5, -5, 5);
+            scene.add(neonCyanLight);
+
+            // Glavni objekt: Apstraktni 3D oblik
+            const geometry = new THREE.IcosahedronGeometry(4, 30);
+            
+            const material = new THREE.MeshPhysicalMaterial({
+                color: colors[currentTheme].liquid,
+                metalness: 0.2, // Reduced metalness for a glassier look
+                roughness: 0.05, // Lower roughness for shinier surface
+                transmission: 0.9, // High transmission for glass effect
+                thickness: 2.5,
+                wireframe: false,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.1,
+                ior: 1.5 // Index of refraction for glass
+            });
+
+            const liquidMesh = new THREE.Mesh(geometry, material);
+            scene.add(liquidMesh);
+
+            // Dekoracije: plutajuće kocke (led)
+            const iceGeo = new THREE.BoxGeometry(1, 1, 1);
+            const iceMat = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                transmission: 0.9,
+                opacity: 1,
+                metalness: 0,
+                roughness: 0.1,
+                ior: 1.3
+            });
+
+            const iceCubes = [];
+            for(let i=0; i<5; i++) {
+                const ice = new THREE.Mesh(iceGeo, iceMat);
+                ice.position.set(
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10
+                );
+                ice.rotation.set(Math.random(), Math.random(), Math.random());
+                scene.add(ice);
+                iceCubes.push({
+                    mesh: ice,
+                    speedY: Math.random() * 0.02 + 0.01,
+                    speedRot: Math.random() * 0.02
+                });
+            }
+
+            // Čestice (mjehurići)
+            const particlesGeo = new THREE.BufferGeometry();
+            const particlesCount = 500;
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for(let i=0; i<particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 30;
+            }
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMat = new THREE.PointsMaterial({
+                size: 0.05,
+                color: colors[currentTheme].particles,
+                transparent: true,
+                opacity: 0.8,
+                blending: currentTheme === 'dark' ? THREE.AdditiveBlending : THREE.NormalBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+            scene.add(particlesMesh);
+
+            // Listen for theme changes to update 3D materials
+            window.addEventListener('themeChanged', (e) => {
+                const theme = e.detail.theme;
+                
+                // Smoothly interpolate colors (simple direct set for now to ensure reliability)
+                ambientLight.color.setHex(colors[theme].ambient);
+                ambientLight.intensity = theme === 'light' ? 0.8 : 0.2;
+                
+                neonPinkLight.color.setHex(colors[theme].primary);
+                neonCyanLight.color.setHex(colors[theme].secondary);
+                
+                material.color.setHex(colors[theme].liquid);
+                
+                particlesMat.color.setHex(colors[theme].particles);
+                particlesMat.blending = theme === 'dark' ? THREE.AdditiveBlending : THREE.NormalBlending;
+                particlesMat.needsUpdate = true;
+            });
+
+            // Interakcija s mišem
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - windowHalfX);
+                mouseY = (event.clientY - windowHalfY);
+            });
+
+            // Animacijska petlja
+            const clock = new THREE.Clock();
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+
+                targetX = mouseX * 0.001;
+                targetY = mouseY * 0.001;
+
+                // Animacija glavnog objekta (deformacija vertexa imitirajući tekućinu)
+                liquidMesh.rotation.y += 0.005;
+                liquidMesh.rotation.z += 0.002;
+                
+                // Suptilno praćenje miša
+                liquidMesh.rotation.y += 0.05 * (targetX - liquidMesh.rotation.y);
+                liquidMesh.rotation.x += 0.05 * (targetY - liquidMesh.rotation.x);
+
+                // Efekt disanja
+                const scale = 1 + Math.sin(elapsedTime * 2) * 0.05;
+                liquidMesh.scale.set(scale, scale, scale);
+
+                // Boja svjetla se lagano mijenja
+                neonPinkLight.intensity = 2 + Math.sin(elapsedTime * 3) * 0.5;
+
+                // Animacija leda
+                iceCubes.forEach(cubeData => {
+                    cubeData.mesh.rotation.x += cubeData.speedRot;
+                    cubeData.mesh.rotation.y += cubeData.speedRot;
+                    cubeData.mesh.position.y += Math.sin(elapsedTime * 2 + cubeData.mesh.position.x) * 0.01;
+                });
+
+                // Rotacija čestica
+                particlesMesh.rotation.y = elapsedTime * 0.05;
+                particlesMesh.rotation.x = -mouseY * 0.0005;
+
+                renderer.render(scene, camera);
+            }
+
+            // Resizing
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate();
+        }
+
+        window.onload = function() {
+            // Pokreni 3D Scenu
+            initThreeJS();
+
+            // Hero sekcija GSAP Timeline
+            const tlHero = gsap.timeline();
+            
+            tlHero.to("#hero-subtitle", { y: -20, opacity: 1, duration: 1, ease: "power3.out", delay: 0.5 })
+                  .to("#hero-title", { y: -20, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.7")
+                  .to("#hero-desc", { y: -20, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.7")
+                  .to("#hero-cta", { y: -20, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.7");
+
+            // ScrollTrigger za Philosophy sekciju
+            gsap.from(".philosophy-text > *", {
+                scrollTrigger: {
+                    trigger: "#philosophy",
+                    start: "top 70%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            gsap.from(".philosophy-img", {
+                scrollTrigger: {
+                    trigger: "#philosophy",
+                    start: "top 60%",
+                },
+                x: 100,
+                opacity: 0,
+                duration: 1.5,
+                ease: "power3.out"
+            });
+
+            // ScrollTrigger za Menu Header
+            gsap.from(".menu-header > *", {
+                scrollTrigger: {
+                    trigger: "#menu",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "back.out(1.7)"
+            });
+
+            // ScrollTrigger za Menu Items (Cjenik kartice)
+            gsap.to(".menu-item-reveal", {
+                scrollTrigger: {
+                    trigger: "#menu",
+                    start: "top 60%",
+                },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out"
+            });
+
+            // ScrollTrigger za Lokaciju
+            gsap.from(".loc-reveal", {
+                scrollTrigger: {
+                    trigger: "#location",
+                    start: "top 75%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.3,
+                ease: "power2.out"
+            });
+        };
+    </script>
+</body>
+</html>

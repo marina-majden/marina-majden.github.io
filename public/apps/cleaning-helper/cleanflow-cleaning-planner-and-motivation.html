@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CleanFlow - Step-by-Step Cleaning Planner & Dynamic Audio Visualizers</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.4);
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: rgba(75, 85, 99, 0.5);
+    }
+    
+    /* Animations */
+    .fade-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 250ms ease-out, transform 250ms ease-out;
+    }
+
+    @keyframes wipeMotion {
+      0%, 100% { transform: translateX(-8px) rotate(-5deg); }
+      50% { transform: translateX(12px) rotate(8deg); }
+    }
+    .animate-wipe {
+      animation: wipeMotion 1.8s ease-in-out infinite;
+    }
+
+    @keyframes vacuumMotion {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(0.96); }
+    }
+    .animate-vacuum {
+      animation: vacuumMotion 1.4s ease-in-out infinite;
+    }
+
+    @keyframes dustFloat {
+      0% { transform: translateY(0px) opacity(0.8); }
+      50% { transform: translateY(-6px) opacity(0.3); }
+      100% { transform: translateY(0px) opacity(0.8); }
+    }
+    .animate-dust {
+      animation: dustFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(20, 184, 166, 0.4); }
+      50% { box-shadow: 0 0 28px rgba(20, 184, 166, 0.8); }
+    }
+    .animate-orb-glow {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes bobble {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-bobble {
+      animation: bobble 2s ease-in-out infinite;
+    }
+
+    /* Music equalizer bar animation */
+    @keyframes barEq {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+    .animate-eq-1 { animation: barEq 0.6s ease-in-out infinite; }
+    .animate-eq-2 { animation: barEq 0.8s ease-in-out infinite 0.2s; }
+    .animate-eq-3 { animation: barEq 0.5s ease-in-out infinite 0.4s; }
+
+    /* Fullscreen Visualizer container style */
+    #visualizer-wrapper:fullscreen {
+      width: 100vw !important;
+      height: 100vh !important;
+      background: #020617 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 1.5rem !important;
+      border-radius: 0 !important;
+    }
+    #visualizer-wrapper:fullscreen canvas {
+      height: 85vh !important;
+      border-radius: 1.5rem !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="app.goHome()">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-teal-500/20">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg tracking-tight leading-none flex items-center gap-2">
+            CleanFlow
+            <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300">v2.0</span>
+          </h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Dynamic Audio Visualizer & Cleaning Reset</p>
+        </div>
+      </div>
+
+      <!-- Right controls -->
+      <div class="flex items-center gap-2">
+        <!-- Quick Music Toggle Button in Header -->
+        <button onclick="musicPlayer.togglePlay()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-500/30 text-xs font-semibold hover:bg-teal-100 transition-all">
+          <i data-lucide="music" class="w-4 h-4"></i>
+          <span id="header-music-label" class="hidden sm:inline">Play Music</span>
+        </button>
+
+        <div class="hidden sm:flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-medium">
+          <i data-lucide="flame" class="w-4 h-4 text-orange-500"></i>
+          <span>Streak: <strong id="streak-count">0</strong> days</span>
+        </div>
+
+        <button id="theme-toggle" onclick="app.toggleTheme()" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Toggle Light/Dark Theme">
+          <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6">
+
+    <!-- VIEW 1: SELECTION SCREEN -->
+    <div id="view-select" class="space-y-8 fade-enter-active">
+      
+      <!-- Welcome Hero -->
+      <div class="bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-xl">
+          <span class="text-xs uppercase tracking-wider font-semibold text-teal-200 bg-teal-900/40 px-3 py-1 rounded-full inline-block mb-3 border border-teal-400/20">Quick Assessment</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold mb-2">How does your space feel right now?</h2>
+          <p class="text-teal-100 text-sm sm:text-base leading-relaxed">Select your cleaning routine below. We'll generate an interactive guide paired with an animated body-double partner, dynamic canvas visualizers & focus music!</p>
+        </div>
+      </div>
+
+      <!-- Step 1: Routine Selector -->
+      <div>
+        <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800 dark:text-slate-200">
+          <i data-lucide="layers" class="w-5 h-5 text-teal-500"></i>
+          1. Choose Cleaning Intensity
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="routine-cards">
+          <!-- Maintenance -->
+          <div onclick="app.selectRoutine('maintenance')" id="card-maintenance" class="routine-card cursor-pointer border-2 border-slate-200 dark:border-slate-800 hover:border-teal-500 dark:hover:border-teal-500 bg-white dark:bg-slate-900 p-5 rounded-2xl transition-all shadow-sm hover:shadow-md relative">
+            <div class="flex items-start justify-between mb-3">
+              <div class="p-3 rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400">
+                <i data-lucide="zap" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">~10-15 min</span>
+            </div>
+            <h4 class="font-bold text-base mb-1">Quick Maintenance</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">Keep-up mode. Reset surfaces, clear trash, and prevent mess from building up.</p>
+          </div>
+
+          <!-- Standard Clean -->
+          <div onclick="app.selectRoutine('standard')" id="card-standard" class="routine-card cursor-pointer border-2 border-teal-500 bg-teal-50/50 dark:bg-teal-950/20 p-5 rounded-2xl transition-all shadow-sm hover:shadow-md relative">
+            <div class="flex items-start justify-between mb-3">
+              <div class="p-3 rounded-xl bg-teal-100 text-teal-600 dark:bg-teal-950/60 dark:text-teal-400">
+                <i data-lucide="sparkles" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200">~30 min</span>
+            </div>
+            <h4 class="font-bold text-base mb-1">Standard Reset</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">Comprehensive routine. Vacuum, wipe counters, sanitize bathroom & tidy up.</p>
+          </div>
+
+          <!-- Deep Clean -->
+          <div onclick="app.selectRoutine('deep')" id="card-deep" class="routine-card cursor-pointer border-2 border-slate-200 dark:border-slate-800 hover:border-teal-500 dark:hover:border-teal-500 bg-white dark:bg-slate-900 p-5 rounded-2xl transition-all shadow-sm hover:shadow-md relative">
+            <div class="flex items-start justify-between mb-3">
+              <div class="p-3 rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-950/60 dark:text-purple-400">
+                <i data-lucide="shield-alert" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">~60+ min</span>
+            </div>
+            <h4 class="font-bold text-base mb-1">Thorough Deep Clean</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">Heavy-duty mode. Scrub baseboards, deep scrub kitchen, appliances & tile grout.</p>
+          </div>
+
+          <!-- Specific Focus -->
+          <div onclick="app.selectRoutine('specific')" id="card-specific" class="routine-card cursor-pointer border-2 border-slate-200 dark:border-slate-800 hover:border-teal-500 dark:hover:border-teal-500 bg-white dark:bg-slate-900 p-5 rounded-2xl transition-all shadow-sm hover:shadow-md relative">
+            <div class="flex items-start justify-between mb-3">
+              <div class="p-3 rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
+                <i data-lucide="target" class="w-6 h-6"></i>
+              </div>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Targeted</span>
+            </div>
+            <h4 class="font-bold text-base mb-1">Specific Task Focus</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">Focus on single heavy tasks: Drapes, Carpets, Fridge reset, or Windows.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Specific Task Options -->
+      <div id="specific-options-wrapper" class="hidden bg-slate-100 dark:bg-slate-900/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+        <label class="block text-sm font-semibold mb-3 text-slate-700 dark:text-slate-300">Select Focus Target:</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="specific-targets">
+          <button type="button" onclick="app.setSpecificTarget('carpets', event)" class="target-btn active p-3 rounded-xl border border-teal-500 bg-white dark:bg-slate-800 text-xs font-semibold text-center hover:border-teal-500 transition-colors">
+            🛋️ Carpets & Rugs
+          </button>
+          <button type="button" onclick="app.setSpecificTarget('drapery', event)" class="target-btn p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-center hover:border-teal-500 transition-colors">
+            🪟 Drapes & Curtains
+          </button>
+          <button type="button" onclick="app.setSpecificTarget('appliances', event)" class="target-btn p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-center hover:border-teal-500 transition-colors">
+            🧼 Fridge & Oven
+          </button>
+          <button type="button" onclick="app.setSpecificTarget('bedding', event)" class="target-btn p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-center hover:border-teal-500 transition-colors">
+            🛏️ Bedding & Linen
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Choose Body-Double Partner -->
+      <div>
+        <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800 dark:text-slate-200">
+          <i data-lucide="users" class="w-5 h-5 text-teal-500"></i>
+          2. Choose Body-Double Companion
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button onclick="app.setAvatar('sponge')" id="avatar-sponge" class="avatar-select-btn p-4 rounded-xl border-2 border-teal-500 bg-teal-50/40 dark:bg-teal-950/20 text-left flex items-center gap-3 transition-all">
+            <span class="text-3xl">🧽</span>
+            <div>
+              <div class="font-bold text-xs">Sparky the Sponge</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Upbeat & bubbly buddy</div>
+            </div>
+          </button>
+
+          <button onclick="app.setAvatar('robot')" id="avatar-robot" class="avatar-select-btn p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-left flex items-center gap-3 transition-all hover:border-teal-500">
+            <span class="text-3xl">🤖</span>
+            <div>
+              <div class="font-bold text-xs">Pip the CleanBot</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Methodical & steady partner</div>
+            </div>
+          </button>
+
+          <button onclick="app.setAvatar('bunny')" id="avatar-bunny" class="avatar-select-btn p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-left flex items-center gap-3 transition-all hover:border-teal-500">
+            <span class="text-3xl">🐰</span>
+            <div>
+              <div class="font-bold text-xs">Zen Bunny</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Calm, zero-stress companion</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Add a Twist -->
+      <div>
+        <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800 dark:text-slate-200">
+          <i data-lucide="dices" class="w-5 h-5 text-teal-500"></i>
+          3. Add a Fun Twist (Optional)
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button onclick="app.setTwist('standard')" id="twist-standard" class="twist-btn p-4 rounded-xl border-2 border-teal-500 bg-teal-50/40 dark:bg-teal-950/20 text-left flex items-start gap-3 transition-all">
+            <span class="text-xl">🧘</span>
+            <div>
+              <div class="font-bold text-xs">Standard Flow</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Logical top-to-bottom order</div>
+            </div>
+          </button>
+
+          <button onclick="app.setTwist('shuffle')" id="twist-shuffle" class="twist-btn p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-left flex items-start gap-3 transition-all hover:border-teal-500">
+            <span class="text-xl">🔀</span>
+            <div>
+              <div class="font-bold text-xs">Shuffled Twist</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Randomized task order for variety</div>
+            </div>
+          </button>
+
+          <button onclick="app.setTwist('speedrun')" id="twist-speedrun" class="twist-btn p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-left flex items-start gap-3 transition-all hover:border-teal-500">
+            <span class="text-xl">⚡</span>
+            <div>
+              <div class="font-bold text-xs">Speed Run</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400">Timer active! Beat your best time</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Start Action Button -->
+      <div class="pt-4">
+        <button onclick="app.startSession()" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-bold text-lg shadow-lg shadow-teal-500/25 flex items-center justify-center gap-2 transition-all transform active:scale-[0.99]">
+          <i data-lucide="play-circle" class="w-6 h-6"></i>
+          Start Cleaning Session
+        </button>
+      </div>
+    </div>
+
+    <!-- VIEW 2: ACTIVE SESSION SCREEN -->
+    <div id="view-active" class="hidden space-y-6">
+
+      <!-- Active Header Bar with Progress Orb & Body Double Feed -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Progress Orb & Timer Summary Card (2 cols on md) -->
+        <div class="md:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <span id="active-routine-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 uppercase">
+                  Standard Reset
+                </span>
+                <span id="active-twist-badge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  🧘 Standard Flow
+                </span>
+              </div>
+              <h2 id="session-title" class="text-xl font-extrabold mt-1">Active Cleaning Flow</h2>
+            </div>
+
+            <div class="bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl flex items-center gap-2 font-mono text-sm font-bold">
+              <i data-lucide="clock" class="w-4 h-4 text-teal-500"></i>
+              <span id="timer-display">00:00</span>
+            </div>
+          </div>
+
+          <!-- Glowing Progress Orb & Horizontal Bar -->
+          <div class="flex items-center gap-4 pt-2">
+            <div class="relative w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center overflow-hidden flex-shrink-0 animate-orb-glow border-2 border-teal-500/50">
+              <div id="orb-water" class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-teal-500 to-emerald-400 transition-all duration-500 opacity-80" style="height: 0%;"></div>
+              <span id="orb-percent" class="relative z-10 font-black text-xs text-white drop-shadow-md">0%</span>
+            </div>
+
+            <div class="flex-1 space-y-2">
+              <div class="flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span>Clean Completion</span>
+                <span id="progress-count-text">0/0 steps done</span>
+              </div>
+              <div class="w-full bg-slate-100 dark:bg-slate-800 h-3 rounded-full overflow-hidden">
+                <div id="progress-bar-fill" class="bg-gradient-to-r from-teal-500 to-emerald-400 h-full w-0 transition-all duration-300"></div>
+              </div>
+              <div class="flex justify-end pt-1">
+                <button onclick="app.shuffleActiveTasks()" class="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors flex items-center gap-1.5 text-xs font-medium" title="Mesh up / shuffle remaining tasks">
+                  <i data-lucide="shuffle" class="w-3.5 h-3.5 text-purple-500"></i>
+                  <span>Mash Up Tasks</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body Double Stream Display Box -->
+        <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-2xl p-4 border border-teal-500/30 shadow-lg relative flex flex-col justify-between overflow-hidden">
+          <div class="flex items-center justify-between z-10">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+              <span class="text-[11px] font-bold tracking-wider uppercase text-slate-300">LIVE BODY DOUBLE</span>
+            </div>
+            <span id="companion-name" class="text-xs font-semibold text-teal-400">Sparky</span>
+          </div>
+
+          <div class="my-3 py-4 flex flex-col items-center justify-center relative z-10 min-h-[100px]">
+            <div id="companion-avatar" class="text-5xl animate-bobble filter drop-shadow-lg mb-2">
+              🧽
+            </div>
+            <div id="companion-action-text" class="text-xs font-medium text-center text-teal-200 bg-slate-800/80 px-3 py-1 rounded-full border border-teal-500/30">
+              "We're cleaning together! You got this."
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-[10px] text-slate-400 z-10 border-t border-slate-800 pt-2">
+            <span>Synchronized Flow</span>
+            <div class="flex items-center gap-1">
+              <span class="w-1 h-3 bg-teal-500 animate-pulse"></span>
+              <span class="w-1 h-2 bg-teal-400 animate-pulse delay-75"></span>
+              <span class="w-1 h-4 bg-emerald-400 animate-pulse delay-150"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOCUS BEATS SOUNDSTATION CONTROL PANEL -->
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-500 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="headphones" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">Focus Beats Soundstation</h4>
+              <div id="music-eq-bars" class="hidden items-end gap-0.5 h-4">
+                <span class="w-1 bg-teal-500 rounded-full animate-eq-1"></span>
+                <span class="w-1 bg-teal-400 rounded-full animate-eq-2"></span>
+                <span class="w-1 bg-emerald-400 rounded-full animate-eq-3"></span>
+              </div>
+            </div>
+            <p id="music-track-name" class="text-xs text-slate-500 dark:text-slate-400">Track: Lofi Chill Hop Beats</p>
+          </div>
+        </div>
+
+        <!-- Player Controls -->
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <select id="track-select" onchange="musicPlayer.changeTrack(this.value)" class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 focus:outline-none">
+            <option value="lofi">☕ Lofi Chill Beats</option>
+            <option value="synth">⚡ Upbeat Synthwave</option>
+            <option value="zen">🧘 Zen Ambient Chords</option>
+            <option value="rain">🌧️ Cozy Rain Noise</option>
+          </select>
+
+          <button onclick="musicPlayer.togglePlay()" id="music-play-btn" class="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-600 text-white font-bold text-xs shadow-md shadow-teal-500/20 flex items-center gap-1.5 transition-all">
+            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            <span id="music-btn-text">Play Beats</span>
+          </button>
+
+          <!-- Volume Slider -->
+          <div class="hidden sm:flex items-center gap-1.5">
+            <i data-lucide="volume-2" class="w-4 h-4 text-slate-400"></i>
+            <input type="range" min="0" max="1" step="0.05" value="0.5" oninput="musicPlayer.setVolume(this.value)" class="w-16 accent-teal-500 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg cursor-pointer"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- CANVAS AUDIO VISUALIZER PANEL -->
+      <div id="visualizer-wrapper" class="hidden relative group rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-lg transition-all">
+        <!-- Overlay Hint for Fullscreen -->
+        <div onclick="visualizerRenderer.toggleFullscreen()" class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer z-20 backdrop-blur-[2px]">
+          <span class="px-4 py-2 rounded-full bg-slate-900/90 border border-teal-500/40 text-teal-300 text-xs font-bold flex items-center gap-2 shadow-xl">
+            <i data-lucide="maximize" class="w-4 h-4"></i> Click Canvas for Fullscreen Mode
+          </span>
+        </div>
+
+        <!-- Real-time Web Audio Canvas -->
+        <canvas id="visualizer-canvas" class="w-full h-44 block cursor-pointer" onclick="visualizerRenderer.toggleFullscreen()"></canvas>
+
+        <!-- Dynamic Visualizer Toolbar & Mode Selector -->
+        <div class="px-4 py-2 bg-slate-950/90 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+            <span class="font-bold text-slate-200">Mode:</span>
+            <select id="visualizer-mode-select" onchange="visualizerRenderer.setMode(this.value)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-xs font-medium text-teal-300 focus:outline-none">
+              <option value="starburst">🌟 Neon Starburst (Radial)</option>
+              <option value="ribbon">🌊 Vaporwave Ribbon</option>
+              <option value="cyber">⚡ Cyber Matrix & Drops</option>
+              <option value="liquid">🔮 Liquid Plasma Pulse</option>
+            </select>
+          </div>
+
+          <button onclick="visualizerRenderer.toggleFullscreen()" class="text-teal-400 hover:text-teal-300 font-semibold flex items-center gap-1.5 transition-colors">
+            <i data-lucide="expand" class="w-3.5 h-3.5"></i> Fullscreen Visuals
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Active Task Visualizer Scene -->
+      <div id="active-task-visualizer" class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center gap-6">
+        <div class="w-24 h-24 rounded-2xl bg-teal-500/10 dark:bg-teal-950/40 border border-teal-500/30 flex items-center justify-center relative overflow-hidden flex-shrink-0" id="visualizer-graphic-box">
+          <!-- Dynamic Animated SVG inserted here -->
+        </div>
+        <div class="flex-1 text-center sm:text-left space-y-1">
+          <div class="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">Current Action Visualizer</div>
+          <h3 id="current-action-title" class="font-extrabold text-lg text-slate-800 dark:text-slate-100">Wiping & Resetting Surfaces</h3>
+          <p id="current-action-desc" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Follow the rhythm: spray disinfectant, wipe in smooth circular motions, and put items back in their designated place.</p>
+        </div>
+      </div>
+
+      <!-- Steps List -->
+      <div id="tasks-container" class="space-y-4">
+        <!-- Dynamic Tasks inserted here -->
+      </div>
+
+      <!-- Add Custom Task Input -->
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-dashed border-slate-300 dark:border-slate-700 flex items-center gap-3">
+        <i data-lucide="plus-circle" class="w-5 h-5 text-slate-400"></i>
+        <input type="text" id="custom-task-input" placeholder="Add a custom step to this clean..." class="flex-1 bg-transparent text-sm focus:outline-none placeholder-slate-400 dark:placeholder-slate-500" onkeydown="if(event.key==='Enter') app.addCustomTask()" />
+        <button onclick="app.addCustomTask()" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-teal-50 hover:text-teal-600 dark:hover:bg-teal-950/50 text-xs font-semibold transition-colors">
+          Add Task
+        </button>
+      </div>
+
+      <!-- Complete Session Button -->
+      <div class="pt-4 flex items-center justify-between gap-4">
+        <button onclick="app.goHome()" class="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-semibold transition-colors">
+          Cancel Session
+        </button>
+
+        <button onclick="app.finishSession()" class="flex-1 max-w-xs py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-sm shadow-md shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all">
+          <i data-lucide="check-circle" class="w-5 h-5"></i>
+          Finish & Celebrate
+        </button>
+      </div>
+    </div>
+
+    <!-- VIEW 3: CELEBRATION / SUMMARY SCREEN -->
+    <div id="view-celebrate" class="hidden text-center space-y-6 py-8 fade-enter-active">
+      <div class="inline-flex p-4 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-500 rounded-full mb-2">
+        <i data-lucide="party-popper" class="w-12 h-12"></i>
+      </div>
+
+      <div class="space-y-2">
+        <h2 class="text-3xl font-extrabold text-slate-900 dark:text-slate-100">Space Restored! 🎉</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">Awesome team effort with your body double companion! Enjoy your clean, peaceful home.</p>
+      </div>
+
+      <!-- Stats Card -->
+      <div class="max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Time Elapsed</div>
+          <div id="summary-time" class="text-2xl font-extrabold text-teal-600 dark:text-teal-400 mt-1">12m 45s</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60">
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Steps Completed</div>
+          <div id="summary-count" class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">8 / 8</div>
+        </div>
+      </div>
+
+      <!-- Badge Unlocked -->
+      <div class="max-w-md mx-auto bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-2xl p-4 flex items-center gap-4 text-left">
+        <div class="p-3 bg-amber-500 text-white rounded-xl">
+          <i data-lucide="award" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Reward Earned</div>
+          <div id="summary-badge" class="font-bold text-sm text-slate-800 dark:text-slate-200">Fresh Atmosphere Master</div>
+        </div>
+      </div>
+
+      <!-- Action -->
+      <div class="pt-4">
+        <button onclick="app.goHome()" class="py-3.5 px-8 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold text-sm shadow-md transition-all hover:bg-slate-800 dark:hover:bg-white">
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 py-4 text-center text-xs text-slate-400">
+    CleanFlow &bull; Practical, Friction-Free Home Organization & Dynamic Canvas Visualizers
+  </footer>
+
+  <!-- APP LOGIC -->
+  <script>
+    // PRESET TASK DATABASE
+    const TASK_DATABASE = {
+      maintenance: [
+        {
+          title: "Trash & Recycling Sweep",
+          icon: "trash-2",
+          type: "trash",
+          desc: "Collect all loose waste and take out the bins.",
+          micro: ["Empty kitchen trash", "Collect room bins", "Replace liners"]
+        },
+        {
+          title: "Surface Clutter Reset",
+          icon: "box",
+          type: "wipe",
+          desc: "Return loose items back to their home spots.",
+          micro: ["Clear kitchen island", "Put away shoes & jackets", "Tidy coffee table"]
+        },
+        {
+          title: "Sink & Counter Quick Wipe",
+          icon: "spray-can",
+          type: "wipe",
+          desc: "Disinfect surfaces and wipe sink fixtures.",
+          micro: ["Load dishes into dishwasher", "Spray main counters", "Wipe down sink faucet"]
+        },
+        {
+          title: "High-Traffic Zone Sweep",
+          icon: "wind",
+          type: "vacuum",
+          desc: "Quick sweep or vacuum entryway and hallway.",
+          micro: ["Quick sweep entryway", "Spot clean noticeable spills"]
+        }
+      ],
+      standard: [
+        {
+          title: "Tidy & De-Clutter Main Rooms",
+          icon: "layout-grid",
+          type: "dust",
+          desc: "Gather miscellaneous items and straighten up seating areas.",
+          micro: ["Return items to their home rooms", "Fluff couch cushions", "Fold blankets"]
+        },
+        {
+          title: "Kitchen Counter & Stove Wipe",
+          icon: "utensils",
+          type: "wipe",
+          desc: "Deep wipe counter tops and degrease cooktop.",
+          micro: ["Clear all counters", "Disinfect surfaces", "Wipe stovetop", "Shine sink"]
+        },
+        {
+          title: "Bathroom Refresh",
+          icon: "bath",
+          type: "wipe",
+          desc: "Sanitize sink, mirror, toilet bowl and replace hand towels.",
+          micro: ["Spray & scrub toilet bowl", "Wipe bathroom counter & sink", "Clean mirror", "Replace hand towel"]
+        },
+        {
+          title: "Dust Flat Surfaces",
+          icon: "feather",
+          type: "dust",
+          desc: "Wipe down coffee tables, TV console, and window ledges.",
+          micro: ["Dust TV stand & tables", "Dust shelf edges", "Wipe main light switches"]
+        },
+        {
+          title: "Floors Vacuum & Mop",
+          icon: "sparkles",
+          type: "vacuum",
+          desc: "Vacuum high traffic rugs and damp mop hard floors.",
+          micro: ["Vacuum rugs and carpets", "Vacuum hardwood/tile", "Quick damp mop high traffic areas"]
+        }
+      ],
+      deep: [
+        {
+          title: "Declutter & Dust High Places",
+          icon: "arrow-up",
+          type: "dust",
+          desc: "Clean light fixtures, ceiling fan blades, and tops of doors.",
+          micro: ["Dust ceiling fans & light fixtures", "Wipe top of door frames", "Clean air vents"]
+        },
+        {
+          title: "Deep Kitchen Clean",
+          icon: "chef-hat",
+          type: "wipe",
+          desc: "Clean microwave interior, appliance handles, and stove hood.",
+          micro: ["Clean inside microwave", "Wipe fridge exterior & handles", "Scrub stovetop & degrease hood", "Sanitize trash bin interior"]
+        },
+        {
+          title: "Deep Bathroom Scrub",
+          icon: "droplet",
+          type: "wipe",
+          desc: "Scrub tile grout, shower walls, tub, and toilet base.",
+          micro: ["Scrub tub/shower tile & grout", "Descale showerhead", "Scrub toilet exterior & base", "Wash bathroom rug"]
+        },
+        {
+          title: "Baseboards & Doors Wipe",
+          icon: "layers",
+          type: "wipe",
+          desc: "Wipe down dusty baseboards and door handles.",
+          micro: ["Wipe down baseboards", "Clean door handles & light plates", "Spot clean walls"]
+        },
+        {
+          title: "Floors Deep Edge Vacuum & Mop",
+          icon: "sparkles",
+          type: "vacuum",
+          desc: "Vacuum under furniture and edge mop every corner.",
+          micro: ["Move light furniture to vacuum underneath", "Edge vacuum corners", "Thorough mop with fresh water"]
+        }
+      ],
+      specific: {
+        carpets: [
+          { title: "Vacuum & De-hair Carpets", type: "vacuum", desc: "Cross-pattern vacuum pass to extract trapped dust.", micro: ["Slow vacuum pass north-to-south", "Slow vacuum pass east-to-west", "Use rubber squeegee or brush for pet hair"] },
+          { title: "Spot Treat Carpet Stains", type: "wipe", desc: "Apply carpet cleaner and blot out spots.", micro: ["Apply carpet stain remover", "Blot gently with microfiber cloth", "Rinse with damp towel"] },
+          { title: "Deodorize & Refresh", type: "dust", desc: "Sprinkle baking soda and do a final vacuum pass.", micro: ["Sprinkle baking soda or carpet powder", "Wait 15 minutes", "Final deep vacuum pass"] }
+        ],
+        drapery: [
+          { title: "Curtain & Blind Dusting", type: "dust", desc: "Dust blinds and vacuum fabric drapery.", micro: ["Use brush attachment on curtain tops", "Wipe blind slats with damp cloth", "Check for spots"] },
+          { title: "Window Sill & Track Clean", type: "wipe", desc: "Clear debris from window tracks.", micro: ["Vacuum window tracks", "Wipe sills with soapy water", "Dry with cloth"] },
+          { title: "Glass & Mirror Polish", type: "wipe", desc: "Streak-free shine on glass panes.", micro: ["Spray glass cleaner", "Wipe with lint-free microfiber cloth", "Buff out streaks"] }
+        ],
+        appliances: [
+          { title: "Refrigerator Reset", type: "wipe", desc: "Purge expired items and wipe shelves.", micro: ["Throw out expired food", "Remove and wipe drawers", "Wipe down shelves", "Clean door seal"] },
+          { title: "Oven & Microwave Scrub", type: "wipe", desc: "Loosen baked-on grease and sanitize interior.", micro: ["Microwave bowl of water/lemon 3 mins", "Wipe steam-loosened microwave grime", "Scrub oven interior", "Degrease stove hood filters"] }
+        ],
+        bedding: [
+          { title: "Bed Linen Change", type: "laundry", desc: "Strip dirty sheets and fit fresh linens.", micro: ["Strip bed sheets & pillowcases", "Load into washing machine", "Put on fresh fitted & flat sheet", "Fluff pillows"] },
+          { title: "Mattress Refresh", type: "dust", desc: "Vacuum mattress and air out the room.", micro: ["Vacuum mattress surface", "Sprinkle baking soda", "Vacuum off after 20 mins"] }
+        ]
+      }
+    };
+
+    const AVATARS = {
+      sponge: {
+        name: "Sparky the Sponge",
+        emoji: "🧽",
+        quotes: [
+          "We're scrubbing away the chaos together!",
+          "One small wipe at a time, you're doing great!",
+          "Keep up the momentum! I'm right here with you.",
+          "Look at that progress shine!"
+        ]
+      },
+      robot: {
+        name: "Pip the CleanBot",
+        emoji: "🤖",
+        quotes: [
+          "System status: High efficiency mode activated.",
+          "Task execution at 100% focus. Keep going!",
+          "Optimizing living area space. Outstanding effort.",
+          "Data confirms: Your space is getting cleaner!"
+        ]
+      },
+      bunny: {
+        name: "Zen Bunny",
+        emoji: "🐰",
+        quotes: [
+          "Take a deep breath. Slow and steady wins.",
+          "No rush, just peaceful step-by-step progress.",
+          "Creating a tranquil home together...",
+          "You're creating such a calm atmosphere!"
+        ]
+      }
+    };
+
+    const ANIMATED_SVGS = {
+      wipe: `
+        <svg class="w-14 h-14 animate-wipe text-teal-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 40C12 40 24 34 32 34C40 34 52 40 52 40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="20" cy="20" r="3" fill="#14b8a6" class="animate-ping"/>
+          <circle cx="44" cy="18" r="2" fill="#34d399"/>
+          <rect x="22" y="24" width="20" height="14" rx="4" fill="#2dd4bf" stroke="currentColor" stroke-width="3"/>
+        </svg>
+      `,
+      vacuum: `
+        <svg class="w-14 h-14 animate-vacuum text-emerald-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 52H48M20 44L28 20L36 20L44 44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          <rect x="22" y="44" width="20" height="8" rx="2" fill="#10b981"/>
+          <circle cx="24" cy="54" r="2" fill="currentColor"/>
+          <circle cx="40" cy="54" r="2" fill="currentColor"/>
+        </svg>
+      `,
+      dust: `
+        <svg class="w-14 h-14 text-purple-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="animate-wipe" d="M18 46L38 20" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          <circle class="animate-dust" cx="42" cy="16" r="4" fill="#c084fc"/>
+          <circle class="animate-dust" cx="48" cy="26" r="3" fill="#e9d5ff"/>
+          <circle class="animate-dust" cx="30" cy="12" r="2" fill="#a855f7"/>
+        </svg>
+      `,
+      trash: `
+        <svg class="w-14 h-14 text-amber-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="24" width="24" height="28" rx="3" fill="#f59e0b" stroke="currentColor" stroke-width="3"/>
+          <path d="M16 24H48M26 18H38" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      `,
+      laundry: `
+        <svg class="w-14 h-14 text-blue-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="18" y="16" width="28" height="36" rx="4" stroke="currentColor" stroke-width="3"/>
+          <circle cx="32" cy="36" r="9" stroke="#3b82f6" stroke-width="3" class="animate-spin"/>
+        </svg>
+      `
+    };
+
+    const BADGES = [
+      "Speedy Sparkler ⚡",
+      "Clutter Crusher 🛡️",
+      "Fresh Air Master 🌿",
+      "Sanctuary Builder 🏰",
+      "Clean Sweep Hero 🧹"
+    ];
+
+    // WEB AUDIO ENGINE WITH ANALYSER NODE
+    class MusicPlayerEngine {
+      constructor() {
+        this.ctx = null;
+        this.analyser = null;
+        this.isPlaying = false;
+        this.currentTrack = 'lofi';
+        this.volume = 0.5;
+        this.timer = null;
+        this.masterGain = null;
+        this.rainBufferNode = null;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            this.ctx = new AudioContextClass();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = this.volume;
+
+            // Real-Time Web Audio FFT Analyser
+            this.analyser = this.ctx.createAnalyser();
+            this.analyser.fftSize = 128; // 64 frequency bins
+            this.masterGain.connect(this.analyser);
+            this.analyser.connect(this.ctx.destination);
+          }
+        }
+      }
+
+      setVolume(val) {
+        this.volume = parseFloat(val);
+        if (this.masterGain && this.ctx) {
+          this.masterGain.gain.setValueAtTime(this.volume, this.ctx.currentTime);
+        }
+      }
+
+      togglePlay() {
+        this.init();
+        if (!this.ctx) return;
+        
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+
+        if (this.isPlaying) {
+          this.stop();
+        } else {
+          this.play();
+        }
+      }
+
+      changeTrack(trackKey) {
+        this.currentTrack = trackKey;
+        const names = {
+          lofi: "Track: ☕ Lofi Chill Beats",
+          synth: "Track: ⚡ Upbeat Synthwave",
+          zen: "Track: 🧘 Zen Ambient Chords",
+          rain: "Track: 🌧️ Cozy Rain Noise"
+        };
+        document.getElementById('music-track-name').innerText = names[trackKey] || "Track: Lofi Beats";
+        if (this.isPlaying) {
+          this.stop();
+          this.play();
+        }
+      }
+
+      play() {
+        this.init();
+        if (!this.ctx) return;
+        this.isPlaying = true;
+        this.updateUI(true);
+        visualizerRenderer.start();
+
+        if (this.currentTrack === 'rain') {
+          this.playRain();
+        } else {
+          let step = 0;
+          const tempo = this.currentTrack === 'synth' ? 140 : (this.currentTrack === 'zen' ? 300 : 180);
+          
+          this.timer = setInterval(() => {
+            if (!this.isPlaying) return;
+            this.playBeatStep(step);
+            step = (step + 1) % 16;
+          }, tempo);
+        }
+      }
+
+      stop() {
+        this.isPlaying = false;
+        if (this.timer) clearInterval(this.timer);
+        if (this.rainBufferNode) {
+          try { this.rainBufferNode.stop(); } catch(e){}
+        }
+        this.updateUI(false);
+        visualizerRenderer.stop();
+      }
+
+      updateUI(playing) {
+        const playBtn = document.getElementById('music-play-btn');
+        const eqBars = document.getElementById('music-eq-bars');
+        const headerLabel = document.getElementById('header-music-label');
+        const visualizerWrapper = document.getElementById('visualizer-wrapper');
+
+        if (playing) {
+          playBtn.classList.remove('bg-teal-500', 'hover:bg-teal-600');
+          playBtn.classList.add('bg-amber-500', 'hover:bg-amber-600');
+          document.getElementById('music-btn-text').innerText = "Pause";
+          eqBars.classList.remove('hidden');
+          eqBars.classList.add('flex');
+          if (headerLabel) headerLabel.innerText = "Pause Music";
+          if (visualizerWrapper) visualizerWrapper.classList.remove('hidden');
+        } else {
+          playBtn.classList.remove('bg-amber-500', 'hover:bg-amber-600');
+          playBtn.classList.add('bg-teal-500', 'hover:bg-teal-600');
+          document.getElementById('music-btn-text').innerText = "Play Beats";
+          eqBars.classList.add('hidden');
+          eqBars.classList.remove('flex');
+          if (headerLabel) headerLabel.innerText = "Play Music";
+          if (visualizerWrapper) visualizerWrapper.classList.add('hidden');
+        }
+      }
+
+      playBeatStep(step) {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        
+        if (this.currentTrack === 'lofi') {
+          if (step === 0 || step === 8) {
+            const chord = step === 0 ? [261.63, 329.63, 392.00, 493.88] : [220.00, 261.63, 329.63, 392.00];
+            chord.forEach(freq => {
+              const osc = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+              osc.type = 'triangle';
+              osc.frequency.value = freq;
+              gain.gain.setValueAtTime(0.06, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+              osc.connect(gain);
+              gain.connect(this.masterGain);
+              osc.start(now);
+              osc.stop(now + 1.2);
+            });
+          }
+
+          if (step === 0 || step === 6 || step === 10) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.frequency.setValueAtTime(120, now);
+            osc.frequency.exponentialRampToValueAtTime(30, now + 0.12);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now);
+            osc.stop(now + 0.12);
+          }
+
+          if (step === 4 || step === 12) {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(280, now);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now);
+            osc.stop(now + 0.08);
+          }
+        }
+
+        else if (this.currentTrack === 'synth') {
+          const notes = [130.81, 164.81, 196.00, 261.63, 196.00, 164.81, 293.66, 329.63];
+          const freq = notes[step % notes.length];
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+          osc.connect(gain);
+          gain.connect(this.masterGain);
+          osc.start(now);
+          osc.stop(now + 0.15);
+
+          if (step % 4 === 0) {
+            const kOsc = this.ctx.createOscillator();
+            const kGain = this.ctx.createGain();
+            kOsc.frequency.setValueAtTime(150, now);
+            kOsc.frequency.exponentialRampToValueAtTime(40, now + 0.1);
+            kGain.gain.setValueAtTime(0.3, now);
+            kGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+            kOsc.connect(kGain);
+            kGain.connect(this.masterGain);
+            kOsc.start(now);
+            kOsc.stop(now + 0.1);
+          }
+        }
+
+        else if (this.currentTrack === 'zen') {
+          if (step % 4 === 0) {
+            const chord = [174.61, 220.00, 261.63, 329.63];
+            const freq = chord[(step / 4) % chord.length];
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.05, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now);
+            osc.stop(now + 2.5);
+          }
+        }
+      }
+
+      playRain() {
+        if (!this.ctx) return;
+        const bufferSize = 2 * this.ctx.sampleRate;
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        let lastOut = 0.0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          output[i] = (lastOut + (0.02 * white)) / 1.02;
+          lastOut = output[i];
+          output[i] *= 3.5;
+        }
+
+        this.rainBufferNode = this.ctx.createBufferSource();
+        this.rainBufferNode.buffer = noiseBuffer;
+        this.rainBufferNode.loop = true;
+
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 800;
+
+        this.rainBufferNode.connect(filter);
+        filter.connect(this.masterGain);
+        this.rainBufferNode.start();
+      }
+    }
+
+    const musicPlayer = new MusicPlayerEngine();
+
+    // ADVANCED CANVAS VISUALIZER ENGINE (MULTIPLE MODES)
+    class VisualizerRenderer {
+      constructor() {
+        this.canvas = null;
+        this.ctx = null;
+        this.animId = null;
+        this.mode = 'starburst'; // starburst, ribbon, cyber, liquid
+        this.peaks = [];
+        this.particles = [];
+        this.rotation = 0;
+      }
+
+      init() {
+        this.canvas = document.getElementById('visualizer-canvas');
+        if (this.canvas) {
+          this.ctx = this.canvas.getContext('2d');
+          this.resize();
+          window.addEventListener('resize', () => this.resize());
+        }
+      }
+
+      setMode(modeKey) {
+        this.mode = modeKey;
+      }
+
+      resize() {
+        if (!this.canvas) return;
+        this.canvas.width = this.canvas.clientWidth * (window.devicePixelRatio || 1);
+        this.canvas.height = this.canvas.clientHeight * (window.devicePixelRatio || 1);
+      }
+
+      start() {
+        this.init();
+        if (!this.animId) {
+          this.draw();
+        }
+      }
+
+      stop() {
+        if (this.animId) {
+          cancelAnimationFrame(this.animId);
+          this.animId = null;
+        }
+        if (this.ctx && this.canvas) {
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+      }
+
+      draw() {
+        this.animId = requestAnimationFrame(() => this.draw());
+        if (!this.ctx || !this.canvas || !musicPlayer.analyser) return;
+
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+        const bufferLength = musicPlayer.analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        musicPlayer.analyser.getByteFrequencyData(dataArray);
+
+        this.rotation += 0.008;
+        const time = Date.now() * 0.002;
+
+        // Render selected visualizer mode
+        switch (this.mode) {
+          case 'starburst':
+            this.drawStarburst(width, height, dataArray, bufferLength, time);
+            break;
+          case 'ribbon':
+            this.drawRibbon(width, height, dataArray, bufferLength, time);
+            break;
+          case 'cyber':
+            this.drawCyberMatrix(width, height, dataArray, bufferLength);
+            break;
+          case 'liquid':
+            this.drawLiquidPulse(width, height, dataArray, bufferLength, time);
+            break;
+          default:
+            this.drawStarburst(width, height, dataArray, bufferLength, time);
+        }
+      }
+
+      // MODE 1: NEON STARBURST (RADIAL EXPLOSION)
+      drawStarburst(width, height, dataArray, bufferLength, time) {
+        this.ctx.fillStyle = 'rgba(2, 6, 23, 0.25)'; // smooth trail fade
+        this.ctx.fillRect(0, 0, width, height);
+
+        const cx = width / 2;
+        const cy = height / 2;
+        const baseRadius = Math.min(width, height) * 0.18;
+
+        // Bass average for pulse scale
+        let bassSum = 0;
+        for (let i = 0; i < 8; i++) bassSum += dataArray[i];
+        const bassAvg = bassSum / 8;
+        const pulse = (bassAvg / 255) * 25;
+
+        // Spawn particles on bass hit
+        if (bassAvg > 140 && Math.random() < 0.4) {
+          this.particles.push({
+            x: cx,
+            y: cy,
+            vx: (Math.random() - 0.5) * (bassAvg * 0.05),
+            vy: (Math.random() - 0.5) * (bassAvg * 0.05),
+            radius: Math.random() * 4 + 2,
+            hue: (time * 50 + Math.random() * 60) % 360,
+            life: 1.0
+          });
+        }
+
+        // Draw radial spikes
+        const angleStep = (Math.PI * 2) / bufferLength;
+        for (let i = 0; i < bufferLength; i++) {
+          const angle = i * angleStep + this.rotation;
+          const amp = (dataArray[i] / 255) * (Math.min(width, height) * 0.32);
+          const r = baseRadius + pulse + amp;
+
+          const x1 = cx + Math.cos(angle) * (baseRadius + pulse);
+          const y1 = cy + Math.sin(angle) * (baseRadius + pulse);
+          const x2 = cx + Math.cos(angle) * r;
+          const y2 = cy + Math.sin(angle) * r;
+
+          const hue = (i * 6 + time * 60) % 360;
+          this.ctx.strokeStyle = `hsl(${hue}, 100%, 65%)`;
+          this.ctx.lineWidth = 3;
+          this.ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
+          this.ctx.shadowBlur = 10;
+
+          this.ctx.beginPath();
+          this.ctx.moveTo(x1, y1);
+          this.ctx.lineTo(x2, y2);
+          this.ctx.stroke();
+        }
+
+        // Draw inner pulsating orb core
+        this.ctx.shadowBlur = 25;
+        this.ctx.shadowColor = '#14b8a6';
+        this.ctx.fillStyle = '#0d9488';
+        this.ctx.beginPath();
+        this.ctx.arc(cx, cy, baseRadius * 0.6 + pulse * 0.5, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.shadowBlur = 0;
+
+        // Update floating particles
+        for (let pIdx = this.particles.length - 1; pIdx >= 0; pIdx--) {
+          const p = this.particles[pIdx];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= 0.025;
+          if (p.life <= 0) {
+            this.particles.splice(pIdx, 1);
+            continue;
+          }
+          this.ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${p.life})`;
+          this.ctx.beginPath();
+          this.ctx.arc(p.x, p.y, p.radius * p.life, 0, Math.PI * 2);
+          this.ctx.fill();
+        }
+      }
+
+      // MODE 2: VAPORWAVE RIBBON (FLUID SINE WAVE)
+      drawRibbon(width, height, dataArray, bufferLength, time) {
+        this.ctx.fillStyle = '#020617';
+        this.ctx.fillRect(0, 0, width, height);
+
+        const layers = 3;
+        for (let l = 0; l < layers; l++) {
+          this.ctx.beginPath();
+          const baseHue = (time * 40 + l * 50) % 360;
+          this.ctx.strokeStyle = `hsl(${baseHue}, 90%, 60%)`;
+          this.ctx.fillStyle = `hsla(${baseHue}, 90%, 50%, 0.15)`;
+          this.ctx.lineWidth = 4;
+          this.ctx.shadowColor = `hsl(${baseHue}, 100%, 50%)`;
+          this.ctx.shadowBlur = 12;
+
+          this.ctx.moveTo(0, height);
+          for (let i = 0; i < bufferLength; i++) {
+            const x = (i / bufferLength) * width;
+            const freq = dataArray[i] / 255;
+            const wave = Math.sin(i * 0.15 + time * 3 + l) * 20;
+            const y = height / 2 - (freq * height * 0.45) + wave + (l * 15);
+
+            if (i === 0) this.ctx.moveTo(x, y);
+            else this.ctx.lineTo(x, y);
+          }
+          this.ctx.lineTo(width, height);
+          this.ctx.lineTo(0, height);
+          this.ctx.fill();
+          this.ctx.stroke();
+        }
+        this.ctx.shadowBlur = 0;
+      }
+
+      // MODE 3: CYBER MATRIX (EQUALIZER + FALLING PEAK CAPS)
+      drawCyberMatrix(width, height, dataArray, bufferLength) {
+        this.ctx.fillStyle = '#020617';
+        this.ctx.fillRect(0, 0, width, height);
+
+        const barWidth = (width / bufferLength);
+
+        for (let i = 0; i < bufferLength; i++) {
+          const val = (dataArray[i] / 255) * height * 0.85;
+
+          // Track peaks for falling animation
+          if (!this.peaks[i] || val > this.peaks[i]) {
+            this.peaks[i] = val;
+          } else {
+            this.peaks[i] -= 1.8; // gravity drop rate
+          }
+
+          const x = i * barWidth;
+          const y = height - val;
+
+          // HSL Gradient Bar
+          const hue = (i / bufferLength) * 280 + 160; // Teal to Purple spectrum
+          this.ctx.fillStyle = `hsl(${hue}, 90%, 55%)`;
+          this.ctx.shadowColor = `hsl(${hue}, 100%, 50%)`;
+          this.ctx.shadowBlur = 8;
+          
+          this.ctx.fillRect(x + 2, y, barWidth - 4, val);
+
+          // Draw Peak Cap Dot
+          const peakY = height - this.peaks[i];
+          this.ctx.fillStyle = '#ffffff';
+          this.ctx.fillRect(x + 2, peakY - 4, barWidth - 4, 3);
+        }
+        this.ctx.shadowBlur = 0;
+      }
+
+      // MODE 4: LIQUID PLASMA PULSE
+      drawLiquidPulse(width, height, dataArray, bufferLength, time) {
+        this.ctx.fillStyle = 'rgba(2, 6, 23, 0.3)';
+        this.ctx.fillRect(0, 0, width, height);
+
+        const cx = width / 2;
+        const cy = height / 2;
+        const numPoints = 24;
+        const angleStep = (Math.PI * 2) / numPoints;
+        const baseR = Math.min(width, height) * 0.22;
+
+        this.ctx.beginPath();
+        for (let i = 0; i <= numPoints; i++) {
+          const idx = i % numPoints;
+          const freqVal = (dataArray[idx] / 255) * 45;
+          const warp = Math.sin(idx * 0.8 + time * 4) * 12;
+          const r = baseR + freqVal + warp;
+          const angle = idx * angleStep;
+
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+
+          if (i === 0) this.ctx.moveTo(x, y);
+          else this.ctx.lineTo(x, y);
+        }
+        this.ctx.closePath();
+
+        const plasmaHue = (time * 50) % 360;
+        this.ctx.fillStyle = `hsla(${plasmaHue}, 100%, 60%, 0.4)`;
+        this.ctx.strokeStyle = `hsl(${plasmaHue}, 100%, 70%)`;
+        this.ctx.lineWidth = 5;
+        this.ctx.shadowColor = `hsl(${plasmaHue}, 100%, 50%)`;
+        this.ctx.shadowBlur = 30;
+        this.ctx.fill();
+        this.ctx.stroke();
+        this.ctx.shadowBlur = 0;
+      }
+
+      toggleFullscreen() {
+        const wrapper = document.getElementById('visualizer-wrapper');
+        if (!wrapper) return;
+
+        if (!document.fullscreenElement) {
+          if (wrapper.requestFullscreen) {
+            wrapper.requestFullscreen();
+          } else if (wrapper.webkitRequestFullscreen) {
+            wrapper.webkitRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
+        setTimeout(() => this.resize(), 150);
+      }
+    }
+
+    const visualizerRenderer = new VisualizerRenderer();
+
+    // POP AUDIO EFFECTS
+    class SoundFX {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) this.ctx = new AudioContextClass();
+        }
+      }
+      playPop() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(800, this.ctx.currentTime + 0.08);
+          gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.08);
+        } catch(e) {}
+      }
+      playChime() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const freqs = [523.25, 659.25, 783.99, 1046.50];
+          freqs.forEach((f, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.frequency.value = f;
+            gain.gain.setValueAtTime(0.1, now + i * 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.4);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.06);
+            osc.stop(now + i * 0.06 + 0.4);
+          });
+        } catch(e) {}
+      }
+    }
+
+    const sfx = new SoundFX();
+
+    // MAIN APP CONTROLLER
+    const app = {
+      state: {
+        routine: 'standard',
+        specificTarget: 'carpets',
+        twist: 'standard',
+        avatar: 'sponge',
+        tasks: [],
+        secondsElapsed: 0,
+        timerId: null,
+        quoteIntervalId: null,
+        streak: 0
+      },
+
+      init() {
+        const savedStreak = localStorage.getItem('cleanflow_streak') || 0;
+        this.state.streak = parseInt(savedStreak, 10);
+        document.getElementById('streak-count').innerText = this.state.streak;
+
+        const savedTheme = localStorage.getItem('cleanflow_theme') || 'dark';
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+
+        this.renderIcons();
+      },
+
+      renderIcons() {
+        if (window.lucide && typeof lucide.createIcons === 'function') {
+          lucide.createIcons();
+        }
+      },
+
+      toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('cleanflow_theme', isDark ? 'dark' : 'light');
+      },
+
+      selectRoutine(routineKey) {
+        this.state.routine = routineKey;
+
+        document.querySelectorAll('.routine-card').forEach(card => {
+          card.classList.remove('border-teal-500', 'bg-teal-50/50', 'dark:bg-teal-950/20');
+          card.classList.add('border-slate-200', 'dark:border-slate-800');
+        });
+
+        const selectedCard = document.getElementById(`card-${routineKey}`);
+        if (selectedCard) {
+          selectedCard.classList.remove('border-slate-200', 'dark:border-slate-800');
+          selectedCard.classList.add('border-teal-500', 'bg-teal-50/50', 'dark:bg-teal-950/20');
+        }
+
+        const specificWrapper = document.getElementById('specific-options-wrapper');
+        if (routineKey === 'specific') {
+          specificWrapper.classList.remove('hidden');
+        } else {
+          specificWrapper.classList.add('hidden');
+        }
+      },
+
+      setSpecificTarget(targetKey, evt) {
+        this.state.specificTarget = targetKey;
+        document.querySelectorAll('#specific-targets button').forEach(btn => {
+          btn.classList.remove('border-teal-500');
+          btn.classList.add('border-slate-200', 'dark:border-slate-700');
+        });
+        if (evt && evt.currentTarget) {
+          evt.currentTarget.classList.remove('border-slate-200', 'dark:border-slate-700');
+          evt.currentTarget.classList.add('border-teal-500');
+        }
+      },
+
+      setAvatar(avatarKey) {
+        this.state.avatar = avatarKey;
+        document.querySelectorAll('.avatar-select-btn').forEach(btn => {
+          btn.classList.remove('border-teal-500', 'bg-teal-50/40', 'dark:bg-teal-950/20');
+          btn.classList.add('border-slate-200', 'dark:border-slate-800');
+        });
+
+        const selectedBtn = document.getElementById(`avatar-${avatarKey}`);
+        if (selectedBtn) {
+          selectedBtn.classList.remove('border-slate-200', 'dark:border-slate-800');
+          selectedBtn.classList.add('border-teal-500', 'bg-teal-50/40', 'dark:bg-teal-950/20');
+        }
+      },
+
+      setTwist(twistKey) {
+        this.state.twist = twistKey;
+        document.querySelectorAll('.twist-btn').forEach(btn => {
+          btn.classList.remove('border-teal-500', 'bg-teal-50/40', 'dark:bg-teal-950/20');
+          btn.classList.add('border-slate-200', 'dark:border-slate-800');
+        });
+
+        const selectedTwist = document.getElementById(`twist-${twistKey}`);
+        if (selectedTwist) {
+          selectedTwist.classList.remove('border-slate-200', 'dark:border-slate-800');
+          selectedTwist.classList.add('border-teal-500', 'bg-teal-50/40', 'dark:bg-teal-950/20');
+        }
+      },
+
+      startSession() {
+        let rawTasks = [];
+        if (this.state.routine === 'specific') {
+          rawTasks = TASK_DATABASE.specific[this.state.specificTarget] || [];
+        } else {
+          rawTasks = TASK_DATABASE[this.state.routine] || [];
+        }
+
+        this.state.tasks = JSON.parse(JSON.stringify(rawTasks)).map((t, idx) => ({
+          id: 'task-' + Date.now() + '-' + idx,
+          title: t.title,
+          desc: t.desc || "Step-by-step progress towards a fresh room.",
+          type: t.type || "wipe",
+          icon: t.icon || 'check',
+          completed: false,
+          showMicro: false,
+          microSteps: (t.micro || []).map((m, mIdx) => ({
+            id: 'micro-' + idx + '-' + mIdx,
+            title: m,
+            completed: false
+          }))
+        }));
+
+        if (this.state.twist === 'shuffle') {
+          this.state.tasks.sort(() => Math.random() - 0.5);
+        }
+
+        const avatarInfo = AVATARS[this.state.avatar] || AVATARS.sponge;
+        document.getElementById('companion-name').innerText = avatarInfo.name;
+        document.getElementById('companion-avatar').innerText = avatarInfo.emoji;
+        document.getElementById('companion-action-text').innerText = avatarInfo.quotes[0];
+
+        clearInterval(this.state.quoteIntervalId);
+        this.state.quoteIntervalId = setInterval(() => {
+          const quotes = avatarInfo.quotes;
+          const randomQ = quotes[Math.floor(Math.random() * quotes.length)];
+          document.getElementById('companion-action-text').innerText = `"${randomQ}"`;
+        }, 12000);
+
+        this.state.secondsElapsed = 0;
+        clearInterval(this.state.timerId);
+        this.state.timerId = setInterval(() => {
+          this.state.secondsElapsed++;
+          this.updateTimerDisplay();
+        }, 1000);
+        this.updateTimerDisplay();
+
+        document.getElementById('active-routine-badge').innerText = this.state.routine.toUpperCase() + ' CLEAN';
+        const twistNames = {
+          standard: '🧘 Standard Flow',
+          shuffle: '🔀 Shuffled Twist',
+          speedrun: '⚡ Speed Run'
+        };
+        document.getElementById('active-twist-badge').innerText = twistNames[this.state.twist] || 'Standard';
+
+        document.getElementById('view-select').classList.add('hidden');
+        document.getElementById('view-active').classList.remove('hidden');
+        document.getElementById('view-celebrate').classList.add('hidden');
+
+        this.renderTasks();
+        this.updateProgress();
+        this.updateVisualizer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      updateTimerDisplay() {
+        const mins = Math.floor(this.state.secondsElapsed / 60).toString().padStart(2, '0');
+        const secs = (this.state.secondsElapsed % 60).toString().padStart(2, '0');
+        document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+      },
+
+      renderTasks() {
+        const container = document.getElementById('tasks-container');
+        container.innerHTML = '';
+
+        this.state.tasks.forEach((task, index) => {
+          const isDone = task.completed;
+          const completedMicroCount = task.microSteps.filter(m => m.completed).length;
+          const totalMicroCount = task.microSteps.length;
+
+          const card = document.createElement('div');
+          card.className = `bg-white dark:bg-slate-900 rounded-2xl border ${isDone ? 'border-emerald-300 dark:border-emerald-900 bg-emerald-50/20 dark:bg-emerald-950/10' : 'border-slate-200 dark:border-slate-800'} p-4 sm:p-5 transition-all shadow-sm`;
+
+          card.innerHTML = `
+            <div class="flex items-start gap-3.5">
+              <button onclick="app.toggleTask('${task.id}')" class="mt-0.5 w-6 h-6 rounded-lg border-2 ${isDone ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 dark:border-slate-700 hover:border-teal-500'} flex items-center justify-center transition-all flex-shrink-0">
+                ${isDone ? '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>' : ''}
+              </button>
+
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2">
+                  <h4 class="font-bold text-base ${isDone ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-800 dark:text-slate-100'}">
+                    ${index + 1}. ${task.title}
+                  </h4>
+                  
+                  ${totalMicroCount > 0 ? `
+                    <button onclick="app.toggleMicroAccordion('${task.id}')" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center gap-1 transition-colors">
+                      <span>${completedMicroCount}/${totalMicroCount} Micro-steps</span>
+                      <i data-lucide="${task.showMicro ? 'chevron-up' : 'chevron-down'}" class="w-3.5 h-3.5"></i>
+                    </button>
+                  ` : ''}
+                </div>
+
+                ${totalMicroCount > 0 && task.showMicro ? `
+                  <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
+                    ${task.microSteps.map(m => `
+                      <div class="flex items-center gap-2.5 text-xs">
+                        <button onclick="app.toggleMicroStep('${task.id}', '${m.id}')" class="w-4 h-4 rounded border ${m.completed ? 'bg-teal-500 border-teal-500 text-white' : 'border-slate-300 dark:border-slate-600'} flex items-center justify-center transition-all">
+                          ${m.completed ? '<i data-lucide="check" class="w-3 h-3 stroke-[3]"></i>' : ''}
+                        </button>
+                        <span class="${m.completed ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-700 dark:text-slate-300'}">
+                          ${m.title}
+                        </span>
+                      </div>
+                    `).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+
+          container.appendChild(card);
+        });
+
+        this.renderIcons();
+      },
+
+      toggleTask(taskId) {
+        const task = this.state.tasks.find(t => t.id === taskId);
+        if (task) {
+          task.completed = !task.completed;
+          if (task.completed) {
+            task.microSteps.forEach(m => m.completed = true);
+            sfx.playPop();
+          }
+          this.renderTasks();
+          this.updateProgress();
+          this.updateVisualizer();
+        }
+      },
+
+      toggleMicroAccordion(taskId) {
+        const task = this.state.tasks.find(t => t.id === taskId);
+        if (task) {
+          task.showMicro = !task.showMicro;
+          this.renderTasks();
+        }
+      },
+
+      toggleMicroStep(taskId, microId) {
+        const task = this.state.tasks.find(t => t.id === taskId);
+        if (task) {
+          const micro = task.microSteps.find(m => m.id === microId);
+          if (micro) {
+            micro.completed = !micro.completed;
+            sfx.playPop();
+
+            const allChecked = task.microSteps.every(m => m.completed);
+            task.completed = allChecked;
+
+            this.renderTasks();
+            this.updateProgress();
+            this.updateVisualizer();
+          }
+        }
+      },
+
+      shuffleActiveTasks() {
+        const completed = this.state.tasks.filter(t => t.completed);
+        const uncompleted = this.state.tasks.filter(t => !t.completed);
+        uncompleted.sort(() => Math.random() - 0.5);
+
+        this.state.tasks = [...completed, ...uncompleted];
+        this.renderTasks();
+        this.updateVisualizer();
+        sfx.playPop();
+      },
+
+      addCustomTask() {
+        const input = document.getElementById('custom-task-input');
+        const text = input.value.trim();
+        if (text) {
+          this.state.tasks.push({
+            id: 'custom-' + Date.now(),
+            title: text,
+            desc: "Custom step added to your personal cleaning routine.",
+            type: "wipe",
+            completed: false,
+            showMicro: false,
+            microSteps: []
+          });
+          input.value = '';
+          this.renderTasks();
+          this.updateProgress();
+          this.updateVisualizer();
+        }
+      },
+
+      updateProgress() {
+        if (this.state.tasks.length === 0) return;
+        const doneCount = this.state.tasks.filter(t => t.completed).length;
+        const total = this.state.tasks.length;
+        const pct = Math.round((doneCount / total) * 100);
+
+        document.getElementById('orb-water').style.height = `${pct}%`;
+        document.getElementById('orb-percent').innerText = `${pct}%`;
+        document.getElementById('progress-bar-fill').style.width = `${pct}%`;
+        document.getElementById('progress-count-text').innerText = `${doneCount}/${total} steps completed`;
+      },
+
+      updateVisualizer() {
+        const activeTask = this.state.tasks.find(t => !t.completed) || this.state.tasks[this.state.tasks.length - 1];
+        if (!activeTask) return;
+
+        document.getElementById('current-action-title').innerText = activeTask.title;
+        document.getElementById('current-action-desc').innerText = activeTask.desc;
+
+        const graphicBox = document.getElementById('visualizer-graphic-box');
+        const svgContent = ANIMATED_SVGS[activeTask.type] || ANIMATED_SVGS.wipe;
+        graphicBox.innerHTML = svgContent;
+      },
+
+      finishSession() {
+        clearInterval(this.state.timerId);
+        clearInterval(this.state.quoteIntervalId);
+        musicPlayer.stop();
+        sfx.playChime();
+
+        try {
+          if (typeof confetti === 'function') {
+            confetti({
+              particleCount: 120,
+              spread: 80,
+              origin: { y: 0.6 }
+            });
+          }
+        } catch(e) {}
+
+        this.state.streak += 1;
+        localStorage.setItem('cleanflow_streak', this.state.streak);
+        document.getElementById('streak-count').innerText = this.state.streak;
+
+        const mins = Math.floor(this.state.secondsElapsed / 60);
+        const secs = this.state.secondsElapsed % 60;
+        document.getElementById('summary-time').innerText = `${mins}m ${secs}s`;
+
+        const completedCount = this.state.tasks.filter(t => t.completed).length;
+        document.getElementById('summary-count').innerText = `${completedCount} / ${this.state.tasks.length}`;
+
+        const randomBadge = BADGES[Math.floor(Math.random() * BADGES.length)];
+        document.getElementById('summary-badge').innerText = randomBadge;
+
+        document.getElementById('view-active').classList.add('hidden');
+        document.getElementById('view-celebrate').classList.remove('hidden');
+      },
+
+      goHome() {
+        clearInterval(this.state.timerId);
+        clearInterval(this.state.quoteIntervalId);
+        musicPlayer.stop();
+        document.getElementById('view-active').classList.add('hidden');
+        document.getElementById('view-celebrate').classList.add('hidden');
+        document.getElementById('view-select').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => app.init());
+  </script>
+</body>
+</html>

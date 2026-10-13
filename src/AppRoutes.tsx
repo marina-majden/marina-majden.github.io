@@ -33,7 +33,7 @@ export default function AppRoutes() {
         {/* Experimental Code Pages */}
         <Route path="/pages/ChromaLab" element={<ChromaLab />} />
         <Route path="/pages/NeuralNetwork" element={<NeuralNetwork />} />
-        <Route path="/design-system" element={<DesignSystem />} />
+        <Route path="/pages/liquid" element={<DesignSystem />} />
         <Route path="/pages/design-system" element={<DesignSystem />} />
 
         {/* Dynamic App & Mini-Website Viewer */}

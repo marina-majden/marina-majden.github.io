@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal For Life - OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Osnovne postavke i reset */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --void: #010208;
+            --deep: #020510;
+            --glass: rgba(6, 14, 45, 0.48);
+            --glass-b: rgba(70, 150, 255, 0.16);
+            --glass-bb: rgba(0, 212, 255, 0.38);
+            --cyan: #00d4ff;
+            --cyan-dim: rgba(0, 212, 255, 0.65);
+            --violet: #7c3aed;
+            --magenta: #f0abfc;
+            --electric: #4d9fff;
+            --teal: #00c9a7;
+            --danger: #ff4040;
+            --warning: #fbbf24;
+            --money: #10b981; /* Nova boja za financije */
+            --white: rgba(215, 232, 255, 0.92);
+            --muted: rgba(130, 170, 220, 0.75);
+            --faint: rgba(90, 130, 190, 0.5);
+            --hdr: 68px;
+            --ftr: 44px;
+        }
+
+        html, body {
+            width: 100%; min-height: 100%;
+            background: var(--void); color: var(--white);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden; scrollbar-width: thin;
+            scrollbar-color: rgba(0, 212, 255, .25) transparent;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, .25); border-radius: 2px; }
+
+        #spaceCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        #curglow {
+            position: fixed; width: 380px; height: 380px; border-radius: 50%;
+            pointer-events: none; z-index: 1;
+            background: radial-gradient(circle, rgba(0, 212, 255, .055) 0%, transparent 70%);
+            transform: translate(-50%, -50%); transition: none;
+        }
+
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(22px) saturate(170%);
+            -webkit-backdrop-filter: blur(22px) saturate(170%);
+            border: 1px solid var(--glass-b);
+            border-radius: 16px; position: relative; overflow: hidden;
+        }
+        .glass::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .04) 0%, transparent 55%);
+            pointer-events: none; z-index: 0;
+        }
+        .gtl {
+            position: absolute; top: 0; left: 18%; right: 18%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
+            pointer-events: none;
+        }
+
+        #hdr {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--hdr);
+            z-index: 1000; background: rgba(1, 3, 14, .82);
+            backdrop-filter: blur(28px); border-bottom: 1px solid var(--glass-b); overflow: hidden;
+        }
+        .hdr-in { display: flex; align-items: center; gap: 20px; height: 100%; padding: 0 26px; }
+        
+        .hdr-streak {
+            position: absolute; top: 0; left: -70%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, .035), transparent);
+            animation: streak 9s linear infinite; pointer-events: none;
+        }
+        .hdr-streak:nth-child(2) { animation-delay: 4.5s; }
+        @keyframes streak { 0% { left: -60%; } 100% { left: 110%; } }
+        
+        .logo-zone { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+        .logo-hex { font-size: 34px; color: var(--cyan); filter: drop-shadow(0 0 8px var(--cyan)); animation: lpulse 3s ease-in-out infinite; }
+        @keyframes lpulse { 0%, 100% { filter: drop-shadow(0 0 6px var(--cyan)); } 50% { filter: drop-shadow(0 0 18px var(--cyan)); } }
+        .logo-name { font-family: 'Orbitron', monospace; font-size: 15px; font-weight: 700; letter-spacing: 3px; line-height: 1; text-transform: uppercase; }
+        .logo-sub { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--cyan-dim); letter-spacing: 2px; }
+        
+        .hdivider { width: 1px; height: 28px; background: var(--glass-b); flex-shrink: 0; }
+        
+        .tx-status { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .txdot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal); animation: blink 1.5s ease-in-out infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        .tx-label { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--teal); letter-spacing: 1.5px; }
+        
+        .search-wrap { flex: 1; max-width: 400px; position: relative; }
+        .search-inp {
+            width: 100%; background: rgba(0, 212, 255, .05); border: 1px solid rgba(0, 212, 255, .2);
+            border-radius: 24px; padding: 8px 16px 8px 36px; font-family: 'Rajdhani', sans-serif;
+            font-size: 14px; color: var(--white); outline: none; transition: border-color .3s, box-shadow .3s;
+        }
+        .search-inp::placeholder { color: var(--faint); }
+        .search-inp:focus { border-color: rgba(0, 212, 255, .5); box-shadow: 0 0 16px rgba(0, 212, 255, .1); }
+        .search-ico { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--cyan-dim); font-size: 16px; pointer-events: none; }
+        
+        .hdr-clock { flex-shrink: 0; text-align: right; line-height: 1.2; }
+        .clock-t { font-family: 'Share Tech Mono', monospace; font-size: 17px; color: var(--cyan); letter-spacing: 2px; }
+        .clock-s { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--faint); letter-spacing: 1px; }
+
+        #dash {
+            position: relative; z-index: 10;
+            padding: calc(var(--hdr) + 22px) 22px calc(var(--ftr) + 22px);
+            max-width: 1440px; margin: 0 auto;
+        }
+
+        .slabel {
+            font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 3px;
+            color: var(--cyan-dim); display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+        }
+        .slabel::before {
+            content: ''; display: inline-block; width: 20px; height: 1px;
+            background: var(--cyan); box-shadow: 0 0 4px var(--cyan); flex-shrink: 0;
+        }
+        .slabel::after {
+            content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-b), transparent);
+        }
+
+        .tag {
+            font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 1px;
+            padding: 3px 9px; border-radius: 10px; border: 1px solid; display: inline-block;
+            transition: all 0.2s;
+        }
+        /* Tagovi više nemaju pointer niti hover efekte za automatsko filtriranje */
+
+        .feat-sec { margin-bottom: 28px; }
+        .feat-card {
+            display: grid; grid-template-columns: 350px 1fr;
+            min-height: 310px; box-shadow: 0 10px 40px rgba(0, 0, 0, .2);
+        }
+        
+        .feat-visual {
+            position: relative; border-radius: 16px 0 0 16px; overflow: hidden;
+            background: linear-gradient(135deg, rgba(4,12,40,0.8), rgba(8,24,64,0.6));
+            border-right: 1px solid var(--glass-b);
+            padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        
+        /* Kružni progress za dnevnu metriku */
+        .daily-circle {
+            width: 160px; height: 160px; border-radius: 50%;
+            background: conic-gradient(var(--cyan) 0%, var(--glass-b) 0%);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), inset 0 0 20px rgba(0, 0, 0, 0.5);
+            position: relative; margin-bottom: 20px; transition: background 1s ease-out;
+        }
+        .daily-circle-inner {
+            width: 140px; height: 140px; border-radius: 50%;
+            background: var(--void); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 2;
+        }
+        .dc-val { font-family: 'Orbitron', monospace; font-size: 36px; font-weight: 700; color: var(--white); text-shadow: 0 0 10px var(--cyan-dim); line-height: 1; }
+        .dc-lbl { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--cyan-dim); letter-spacing: 2px; margin-top: 4px; }
+        
+        .daily-stats { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
+        .ds-box { background: rgba(0,212,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(0,212,255,0.1); }
+        .ds-num { font-family: 'Orbitron', monospace; font-size: 18px; font-weight: 700; color: var(--white); }
+        .ds-txt { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; }
+
+        .feat-content {
+            padding: 28px 30px; display: flex; flex-direction: column; gap: 14px;
+            position: relative; z-index: 1;
+        }
+        .feat-headline {
+            font-family: 'Orbitron', monospace; font-size: 20px; font-weight: 700;
+            color: var(--white); text-shadow: 0 0 20px rgba(0, 212, 255, .2);
+            border-bottom: 1px solid var(--glass-b); padding-bottom: 10px; margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .todo-list { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; max-height: 200px; padding-right: 10px; margin-bottom: 10px; }
+        .todo-item {
+            display: flex; align-items: flex-start; gap: 12px; padding: 10px;
+            background: rgba(0, 212, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 8px; transition: all 0.3s; cursor: pointer;
+        }
+        .todo-item:hover { background: rgba(0, 212, 255, 0.08); border-color: rgba(0, 212, 255, 0.3); }
+        .todo-item.done { opacity: 0.6; }
+        .todo-item.done .todo-text { text-decoration: line-through; color: var(--faint); }
+        
+        .custom-checkbox {
+            width: 18px; height: 18px; border: 2px solid var(--cyan-dim); border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            margin-top: 2px; transition: all 0.2s;
+        }
+        .todo-item.done .custom-checkbox { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+        .todo-item.done .custom-checkbox::after { content: '✓'; color: var(--void); font-weight: bold; font-size: 12px; }
+        .todo-content { flex: 1; }
+        .todo-text { font-size: 15px; font-weight: 500; transition: color 0.3s; }
+        
+        /* Unos novog Todo-a */
+        .add-todo-form { display: flex; gap: 10px; margin-top: auto; }
+        .todo-inp {
+            flex: 1; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-b);
+            border-radius: 8px; padding: 10px 14px; font-family: 'Rajdhani', sans-serif;
+            font-size: 14px; color: var(--white); outline: none; transition: all 0.3s;
+        }
+        .todo-inp:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(0,212,255,0.2); }
+        .btn-add {
+            background: rgba(0, 212, 255, 0.15); border: 1px solid var(--cyan-dim);
+            color: var(--cyan); padding: 0 20px; border-radius: 8px; font-family: 'Share Tech Mono', monospace;
+            font-size: 12px; cursor: pointer; transition: all 0.3s; font-weight: bold; letter-spacing: 1px;
+        }
+        .btn-add:hover { background: var(--cyan); color: var(--void); box-shadow: 0 0 15px var(--cyan); }
+
+        .data-entry-panel {
+            background: rgba(4,12,40,0.4); border: 1px solid var(--glass-b);
+            border-radius: 12px; padding: 16px; margin-bottom: 24px;
+        }
+        .entry-tabs { display: flex; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid var(--glass-b); padding-bottom: 10px;}
+        .etab {
+            font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 1px;
+            padding: 6px 16px; border-radius: 6px; background: transparent; border: 1px solid transparent;
+            color: var(--muted); cursor: pointer; transition: all 0.2s;
+        }
+        .etab.active[data-type="task"] { background: rgba(251, 191, 36, 0.15); border-color: var(--warning); color: var(--warning); }
+        .etab.active[data-type="event"] { background: rgba(240, 171, 252, 0.15); border-color: var(--magenta); color: var(--magenta); }
+        .etab.active[data-type="note"] { background: rgba(77, 159, 255, 0.15); border-color: var(--electric); color: var(--electric); }
+        .etab.active[data-type="money"] { background: rgba(16, 185, 129, 0.15); border-color: var(--money); color: var(--money); }
+        
+        .entry-form-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 12px; align-items: end;
+        }
+        .frm-grp { display: flex; flex-direction: column; gap: 6px; }
+        .frm-lbl { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--faint); letter-spacing: 1px; }
+        .frm-inp {
+            background: rgba(0,0,0,0.4); border: 1px solid var(--glass-b); border-radius: 6px;
+            padding: 8px 12px; font-family: 'Rajdhani', sans-serif; font-size: 14px;
+            color: var(--white); outline: none; transition: border-color 0.3s; width: 100%;
+        }
+        .frm-inp:focus { border-color: var(--cyan); }
+        .frm-inp::placeholder { color: rgba(255,255,255,0.2); }
+        
+        .btn-submit {
+            height: 38px; background: rgba(0, 212, 255, 0.1); border: 1px solid var(--cyan);
+            color: var(--cyan); border-radius: 6px; padding: 0 20px; font-family: 'Share Tech Mono', monospace;
+            font-size: 12px; cursor: pointer; transition: all 0.3s; letter-spacing: 1px;
+        }
+        .btn-submit:hover { background: var(--cyan); color: var(--void); box-shadow: 0 0 15px var(--cyan); }
+
+        .clayout {
+            display: grid; grid-template-columns: 1fr 340px; 
+            gap: 22px; margin-bottom: 36px;
+        }
+
+        .feed-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .pills { display: flex; gap: 7px; }
+        .pill {
+            font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 1px;
+            padding: 5px 13px; border-radius: 20px; background: transparent;
+            border: 1px solid var(--glass-b); color: var(--muted); cursor: pointer; transition: all .3s;
+        }
+        .pill:hover, .pill.active { border-color: var(--cyan-dim); color: var(--cyan); }
+        .pill.active { background: rgba(0, 212, 255, .1); box-shadow: 0 0 14px rgba(0, 212, 255, .12); }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        
+        .ncard {
+            cursor: pointer; transition: box-shadow .3s, transform 0.3s;
+            display: flex; flex-direction: column; min-height: 160px; padding: 18px;
+            border-left: 3px solid transparent;
+        }
+        .ncard:hover { box-shadow: 0 10px 30px rgba(0, 212, 255, .15); transform: translateY(-4px); }
+
+        .card-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--glass-b); padding-bottom: 8px;}
+        .card-type { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; font-weight: 600;}
+        
+        /* Color Coding za kartice */
+        .type-note { color: var(--electric); border-left-color: var(--electric); background: linear-gradient(90deg, rgba(77, 159, 255, 0.05), transparent); }
+        .type-task { color: var(--warning); border-left-color: var(--warning); background: linear-gradient(90deg, rgba(251, 191, 36, 0.05), transparent); }
+        .type-event { color: var(--magenta); border-left-color: var(--magenta); background: linear-gradient(90deg, rgba(240, 171, 252, 0.05), transparent); }
+        .type-money { color: var(--money); border-left-color: var(--money); background: linear-gradient(90deg, rgba(16, 185, 129, 0.05), transparent); }
+        
+        .card-date { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--faint); }
+        .card-title { font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; line-height: 1.3;}
+        .card-desc { font-size: 13px; line-height: 1.5; color: var(--muted); margin-bottom: 15px; flex: 1; word-wrap: break-word;}
+        
+        /* Formatiranje iznosa za financije */
+        .money-amt { font-family: 'Orbitron', monospace; font-size: 24px; font-weight: bold; margin: 10px 0; }
+        .money-pos { color: var(--money); text-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+        .money-neg { color: var(--danger); text-shadow: 0 0 10px rgba(255, 64, 64, 0.4); }
+
+        .card-ftr { display: flex; justify-content: space-between; align-items: flex-end; }
+        
+        .wcol { display: flex; flex-direction: column; gap: 18px; }
+        .widget { padding: 18px; }
+        
+        .whdr {
+            display: flex; align-items: center; gap: 8px; margin-bottom: 15px;
+            padding-bottom: 10px; border-bottom: 1px solid var(--glass-b);
+        }
+        .wico { color: var(--cyan); font-size: 16px; }
+        .wtit { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--cyan-dim); flex: 1; }
+
+        /* Widget: Time Flow */
+        .tflow-item { margin-bottom: 12px; }
+        .tflow-item:last-child { margin-bottom: 0; }
+        .tflow-hdr { display: flex; justify-content: space-between; font-family: 'Share Tech Mono', monospace; font-size: 10px; margin-bottom: 4px; color: var(--muted); }
+        .tflow-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+        .tflow-bar-fill { height: 100%; border-radius: 3px; box-shadow: 0 0 8px currentColor; }
+
+        /* Widget: Weekly Workload (Bar Chart) */
+        .bar-chart-container { display: flex; align-items: flex-end; justify-content: space-between; height: 100px; padding-top: 10px; gap: 5px; }
+        .bar-col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+        .bar-wrap { width: 100%; height: 70px; background: rgba(0,0,0,0.3); border-radius: 4px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden;}
+        .bar-fill { width: 100%; background: linear-gradient(0deg, var(--cyan-dim), var(--cyan)); border-radius: 4px; transition: height 0.5s ease; }
+        .bar-lbl { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--muted); }
+
+        /* Widget: Kategorije (Pie Chart) */
+        .chart-wrapper { display: flex; align-items: center; gap: 20px; }
+        .pie-container { position: relative; width: 90px; height: 90px; }
+        .pie-chart {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: conic-gradient(var(--electric) 0% 50%, var(--magenta) 50% 80%, var(--warning) 80% 100%);
+            box-shadow: 0 0 15px rgba(0,212,255,0.1);
+        }
+        .pie-inner {
+            position: absolute; inset: 12px; background: var(--void);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', monospace; font-size: 12px; font-weight: bold; color: var(--white); text-align: center; line-height: 1.1;
+        }
+        .chart-legend { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+        /* Widget: Habit Tracker Summary */
+        .habit-summary { display: flex; flex-direction: column; gap: 10px; }
+        .h-sum-row { display: flex; align-items: center; gap: 10px; }
+        .h-sum-lbl { width: 70px; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--white); text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+        .h-sum-track { flex: 1; height: 8px; background: rgba(0,0,0,0.4); border-radius: 4px; overflow: hidden; display: flex; }
+        .h-sum-fill { height: 100%; border-radius: 4px; }
+        .h-sum-pct { width: 30px; text-align: right; font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--muted); }
+
+        .habit-container { margin-top: 20px; margin-bottom: 16px; }
+        .habit-container:last-child { margin-bottom: 0; }
+        .habit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .habit-title { font-size: 12px; font-weight: 600; color: var(--white); }
+        .habit-type { font-family: 'Share Tech Mono', monospace; font-size: 9px; padding: 2px 6px; border-radius: 4px; }
+        .type-build { background: rgba(0, 201, 167, 0.15); color: var(--teal); border: 1px solid rgba(0, 201, 167, 0.3); }
+        .type-quit { background: rgba(255, 64, 64, 0.15); color: var(--danger); border: 1px solid rgba(255, 64, 64, 0.3); }
+        
+        .habit-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+        .habit-day {
+            aspect-ratio: 1; border-radius: 4px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
+            font-size: 9px; color: var(--faint); cursor: pointer; transition: all 0.2s;
+        }
+        .habit-day:hover { border-color: rgba(255,255,255,0.3); }
+        .habit-day.done-build { background: rgba(0, 201, 167, 0.2); border-color: var(--teal); color: var(--teal); box-shadow: 0 0 5px rgba(0,201,167,0.3); }
+        .habit-day.fail-quit { background: rgba(255, 64, 64, 0.2); border-color: var(--danger); color: var(--danger); box-shadow: 0 0 5px rgba(255,64,64,0.3); }
+        
+        .orb-sec { margin-bottom: 36px; text-align: center; }
+        .orb-wrap { position: relative; display: inline-block; max-width: 720px; width: 100%; }
+        #orbCanvas { display: block; margin: 0 auto; width: 100%; max-width: 700px; height: auto; }
+
+        #ftr {
+            position: fixed; bottom: 0; left: 0; right: 0; height: var(--ftr);
+            background: rgba(1, 2, 12, .9); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-b); z-index: 1000;
+            display: flex; align-items: center; overflow: hidden;
+        }
+        .ftr-live {
+            display: flex; align-items: center; gap: 7px; padding: 0 18px;
+            flex-shrink: 0; border-right: 1px solid var(--glass-b); height: 100%;
+            font-family: 'Share Tech Mono', monospace; font-size: 10px;
+            letter-spacing: 2px; color: var(--teal);
+        }
+        .ftr-scroll { flex: 1; overflow: hidden; white-space: nowrap; }
+        .ftr-inner { display: inline-block; white-space: nowrap; }
+        .tick-item { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--muted); padding: 0 36px; }
+        .tick-item::before { content: '◈'; color: var(--cyan-dim); margin-right: 10px; }
+        .tick-sep { color: var(--faint); padding: 0 16px; }
+        
+        .ftr-info {
+            display: flex; gap: 18px; padding: 0 18px; flex-shrink: 0;
+            border-left: 1px solid var(--glass-b); height: 100%; align-items: center;
+            font-family: 'Share Tech Mono', monospace; font-size: 9px;
+            color: var(--faint); letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Pozadinski canvas efekti -->
+    <canvas id="spaceCanvas"></canvas>
+    <div id="curglow"></div>
+
+    <header id="hdr">
+        <div class="hdr-streak"></div>
+        <div class="hdr-streak"></div>
+        <div class="hdr-in">
+            <div class="logo-zone">
+                <div class="logo-hex">⬡</div>
+                <div>
+                    <div class="logo-name">TERMINAL FOR LIFE</div>
+                    <div class="logo-sub">PERSONAL TELEMETRY · V.3.0</div>
+                </div>
+            </div>
+            <div class="hdivider"></div>
+            <div class="tx-status">
+                <div class="txdot"></div>
+                <span class="tx-label">SYNCING</span>
+            </div>
+            <div class="hdivider"></div>
+            
+            <!-- Tražilica -->
+            <div class="search-wrap">
+                <span class="search-ico">⊕</span>
+                <input class="search-inp" type="text" id="searchInput" placeholder="Upiši pojam ili #tag za pretragu...">
+            </div>
+            
+            <div class="hdr-clock">
+                <div class="clock-t" id="clk">00:00:00</div>
+                <div class="clock-s" id="clks">DATE 2026.000</div>
+            </div>
+        </div>
+    </header>
+
+    <main id="dash">
+        
+        <!-- DNEVNE MISIJE (Metrika + To-Do List) -->
+        <section class="feat-sec">
+            <div class="slabel">DNEVNE MISIJE (TODAY'S MISSION)</div>
+            <div class="glass feat-card">
+                <div class="gtl"></div>
+                <!-- Lijevi dio: Metrika produktivnosti umjesto vizuala -->
+                <div class="feat-visual">
+                    <div class="daily-circle" id="dailyCircle">
+                        <div class="daily-circle-inner">
+                            <span class="dc-val" id="dcVal">0%</span>
+                            <span class="dc-lbl">DOVRŠENO</span>
+                        </div>
+                    </div>
+                    <div class="daily-stats">
+                        <div class="ds-box">
+                            <div class="ds-num" id="dsDone">0</div>
+                            <div class="ds-txt">RJEŠENO</div>
+                        </div>
+                        <div class="ds-box">
+                            <div class="ds-num" id="dsLeft">0</div>
+                            <div class="ds-txt">PREOSTALO</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desni dio: ToDo Lista i Unos -->
+                <div class="feat-content">
+                    <h1 class="feat-headline">
+                        Aktivni zadaci za danas
+                        <span style="font-size:12px; color:var(--cyan-dim); font-family:'Share Tech Mono', monospace;" id="todoDate"></span>
+                    </h1>
+                    <div class="todo-list" id="todoListContainer">
+                        <!-- Generira JS -->
+                    </div>
+                    <form class="add-todo-form" id="formTodo">
+                        <input type="text" class="todo-inp" id="inpTodoText" placeholder="Dodaj novi brzi zadatak..." required>
+                        <button type="submit" class="btn-add">DODAJ</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <div class="clayout">
+            
+            <div>
+                <!-- Panel za unos podataka u Grid -->
+                <div class="data-entry-panel glass">
+                    <div class="entry-tabs" id="entryTabs">
+                        <button class="etab active" data-type="task">☑ ZADATAK</button>
+                        <button class="etab" data-type="event">⌚ DOGAĐAJ</button>
+                        <button class="etab" data-type="note">▤ BILJEŠKA</button>
+                        <button class="etab" data-type="money">$ FINANCIJE</button>
+                    </div>
+                    
+                    <form id="formGridEntry">
+                        <div class="entry-form-grid">
+                            <!-- ZAJEDNIČKO: Naslov / Opis -->
+                            <div class="frm-grp">
+                                <span class="frm-lbl" id="lblTitleDesc">NASLOV / DETALJI</span>
+                                <input type="text" class="frm-inp" id="inpEntryTitle" placeholder="Kratki naslov..." required>
+                            </div>
+                            
+                            <!-- VARIJABILNO: Datum / Iznos -->
+                            <div class="frm-grp" id="grpVariable">
+                                <span class="frm-lbl" id="lblVariable">ROK / DATUM</span>
+                                <input type="text" class="frm-inp" id="inpEntryVar" placeholder="Npr. Danas 15:00" required>
+                            </div>
+                            
+                            <!-- ZAJEDNIČKO: Tagovi -->
+                            <div class="frm-grp">
+                                <span class="frm-lbl">TAGOVI (razdvojeni razmakom)</span>
+                                <input type="text" class="frm-inp" id="inpEntryTags" placeholder="#work #idea">
+                            </div>
+                            
+                            <!-- SUBMIT -->
+                            <div class="frm-grp" style="justify-content: flex-end;">
+                                <button type="submit" class="btn-submit">SPREMI</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="feed-hdr">
+                    <div class="slabel" style="margin-bottom:0">PODATKOVNA BAZA (DATABASE)</div>
+                    <div class="pills" id="filterPills">
+                        <button class="pill active" data-filter="all">Sve</button>
+                        <button class="pill" data-filter="task">Zadaci</button>
+                        <button class="pill" data-filter="event">Događaji</button>
+                        <button class="pill" data-filter="note">Bilješke</button>
+                        <button class="pill" data-filter="money">Financije</button>
+                    </div>
+                </div>
+                <div class="cards-grid" id="cgrid">
+                    <!-- Kartice generira JS -->
+                </div>
+            </div>
+
+            <div class="wcol">
+                
+                <!-- WIDGET 1: Vremenski Tok -->
+                <div class="glass widget">
+                    <div class="gtl"></div>
+                    <div class="whdr"><span class="wico">⏱</span><span class="wtit">VREMENSKI TOK (TIME FLOW)</span></div>
+                    <div class="tflow-item">
+                        <div class="tflow-hdr"><span>DAN</span><span id="tfDayPct">0%</span></div>
+                        <div class="tflow-bar-bg"><div class="tflow-bar-fill" id="tfDayBar" style="width:0%; background:var(--cyan); color:var(--cyan)"></div></div>
+                    </div>
+                    <div class="tflow-item">
+                        <div class="tflow-hdr"><span>TJEDAN</span><span id="tfWeekPct">0%</span></div>
+                        <div class="tflow-bar-bg"><div class="tflow-bar-fill" id="tfWeekBar" style="width:0%; background:var(--electric); color:var(--electric)"></div></div>
+                    </div>
+                    <div class="tflow-item">
+                        <div class="tflow-hdr"><span>MJESEC</span><span id="tfMonthPct">0%</span></div>
+                        <div class="tflow-bar-bg"><div class="tflow-bar-fill" id="tfMonthBar" style="width:0%; background:var(--magenta); color:var(--magenta)"></div></div>
+                    </div>
+                </div>
+
+                <!-- WIDGET 2: Tjedni grafikon opterećenja -->
+                <div class="glass widget">
+                    <div class="gtl"></div>
+                    <div class="whdr"><span class="wico">📊</span><span class="wtit">TJEDNO OPTEREĆENJE OBAVEZAMA</span></div>
+                    <div class="bar-chart-container" id="workloadChart">
+                        <!-- Generira JS (Ponedjeljak - Nedjelja) -->
+                    </div>
+                </div>
+
+                <!-- WIDGET 3: Podjela obaveza (Kategorije) -->
+                <div class="glass widget">
+                    <div class="gtl"></div>
+                    <div class="whdr"><span class="wico">⬡</span><span class="wtit">STRUKTURA OBAVEZA</span></div>
+                    <div class="chart-wrapper">
+                        <div class="pie-container">
+                            <div class="pie-chart" id="categoryPie"></div>
+                            <div class="pie-inner">FOKUS</div>
+                        </div>
+                        <div class="chart-legend" id="categoryLegend">
+                            <!-- Generira JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WIDGET 4: Analitika Navika -->
+                <div class="glass widget">
+                    <div class="gtl"></div>
+                    <div class="whdr"><span class="wico">◈</span><span class="wtit">SUSTAV ZA PRAĆENJE NAVIKA</span></div>
+                    
+                    <!-- Grafički sažetak -->
+                    <div class="habit-summary" id="habitSummary">
+                        <!-- Generira JS -->
+                    </div>
+                    
+                    <div style="height: 1px; background: var(--glass-b); margin: 15px 0;"></div>
+                    
+                    <!-- Minikalendari -->
+                    <div id="habitTrackerContainer">
+                        <!-- Generira JS -->
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <section class="orb-sec">
+            <div class="slabel">KORELACIJSKI SUSTAV (SEMANTIC TAGS)</div>
+            <div class="orb-wrap">
+                <canvas id="orbCanvas" width="700" height="460"></canvas>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="ftr">
+        <div class="ftr-live">
+            <div class="txdot"></div>SISTEM AKTIVAN
+        </div>
+        <div class="ftr-scroll">
+            <div class="ftr-inner" id="tkinner"></div>
+        </div>
+        <div class="ftr-info">
+            <span>MEM: O.K.</span><span>CPU: 12%</span><span>UPLINK: STABILAN</span>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // --- BAZA PODATAKA (Mock Data & State) ---
+        
+        let TODOS = [
+            { id: 1, text: "Pregledati server logove", done: true, tags: ["#work", "#urgent"] },
+            { id: 2, text: "Meditacija (15 min)", done: false, tags: ["#health", "#stress"] },
+            { id: 3, text: "Brainstorming arhitekture koda", done: false, tags: ["#idea", "#project"] },
+            { id: 4, text: "Platiti račune za struju", done: false, tags: ["#personal", "#money"] }
+        ];
+
+        let DB_ITEMS = [
+            {
+                id: 101, type: "note", title: "Zašto je svemirska estetika dobra za fokus",
+                desc: "Tamne teme s neonskim naglascima smanjuju zamor očiju. Ideja: implementirati sličan UI u novi projekt klijenta.",
+                varData: "27. Ruj 2026", tags: ["#idea", "#design", "#work"]
+            },
+            {
+                id: 102, type: "task", title: "Refaktorirati Backend API",
+                desc: "Potrebno je optimizirati GraphQL upite jer se stranica sporo učitava kod velikih setova podataka.",
+                varData: "Rok: 30. Ruj 2026", tags: ["#work", "#urgent", "#project"]
+            },
+            {
+                id: 103, type: "event", title: "Sastanak sa dioničarima",
+                desc: "Pripremiti prezentaciju novog prototipa i financijski izvještaj za Q3.",
+                varData: "1. Lis 2026 - 14:00h", tags: ["#work", "#stress", "#social"]
+            },
+            {
+                id: 104, type: "money", title: "Plaća Q3",
+                desc: "Uplata za freelance projekt A.",
+                varData: "+3200 EUR", tags: ["#work", "#money"]
+            },
+            {
+                id: 105, type: "money", title: "Nova radna stolica",
+                desc: "Ergonomska stolica za ured.",
+                varData: "-450 EUR", tags: ["#personal", "#money", "#health"]
+            },
+            {
+                id: 106, type: "event", title: "Sistematski pregled",
+                desc: "Godišnji pregled kod doktora. Ponijeti stare nalaze.",
+                varData: "10. Lis 2026 - 08:30h", tags: ["#health", "#personal"]
+            }
+        ];
+
+        let HABITS = [
+            { id: 1, name: "Hidratacija (2L vode)", type: "build", target: 30, daysDone: [1, 2, 3, 4, 6, 8, 9, 10, 12, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 26, 27] },
+            { id: 2, name: "Apstinencija od brze hrane", type: "quit", target: 30, daysDone: [5, 13, 20] }, 
+            { id: 3, name: "Tjelovježba (30 min)", type: "build", target: 15, daysDone: [2, 4, 6, 9, 11, 14, 16, 18, 21, 23, 25, 27] }
+        ];
+
+        // Kategorije obaveza za Pie Chart
+        const CATEGORIES = [
+            { id: 'work', name: 'Posao (Work)', color: 'var(--electric)', keywords: ['#work', '#project'] },
+            { id: 'personal', name: 'Osobno (Personal)', color: 'var(--magenta)', keywords: ['#personal', '#health', '#money'] },
+            { id: 'social', name: 'Društveno (Social)', color: 'var(--warning)', keywords: ['#social', '#event'] }
+        ];
+
+        // Mock podaci za tjedni grafikon (Ponedjeljak - Nedjelja)
+        const WEEK_WORKLOAD = [
+            { day: 'PON', count: 5 }, { day: 'UTO', count: 8 }, { day: 'SRI', count: 6 },
+            { day: 'ČET', count: 9 }, { day: 'PET', count: 4 }, { day: 'SUB', count: 2 }, { day: 'NED', count: 1 }
+        ];
+
+        const CURRENT_MONTH_DAYS = 30;
+        let currentFilter = 'all';
+        let searchQuery = '';
+        let currentEntryType = 'task'; // task, event, note, money
+
+        // --- POMOĆNE FUNKCIJE ZA TAGOVE ---
+        function extractTags(itemsArray) {
+            let tagMap = {};
+            itemsArray.forEach(item => {
+                if(item.tags) {
+                    item.tags.forEach(t => {
+                        tagMap[t] = (tagMap[t] || 0) + 1;
+                    });
+                }
+            });
+            // Oboji tagove ovisno o imenu (hash algoritam za dosljedne boje)
+            const colors = ['#00d4ff', '#f0abfc', '#00c9a7', '#ff4040', '#fbbf24', '#7c3aed', '#4d9fff'];
+            
+            return Object.keys(tagMap).map(tagName => {
+                let hash = 0;
+                for (let i = 0; i < tagName.length; i++) hash = tagName.charCodeAt(i) + ((hash << 5) - hash);
+                let col = colors[Math.abs(hash) % colors.length];
+                
+                return {
+                    nm: tagName, col: col,
+                    orb: Math.abs(hash) % 3, // rasporedi po 3 orbite
+                    countInt: tagMap[tagName],
+                    cnt: tagMap[tagName].toString()
+                };
+            });
+        }
+        
+        let TAGS = []; // Generirat će se dinamički
+
+        function getTagHTML(tagName) {
+            const tagData = TAGS.find(t => t.nm === tagName);
+            const color = tagData ? tagData.col : 'var(--cyan)';
+            // Nema više onclick listenera za automatsku pretragu
+            return `<span class="tag" style="color: ${color}; border-color: ${color}40; background: ${color}10">${tagName}</span>`;
+        }
+
+        function renderTodos() {
+            const container = document.getElementById('todoListContainer');
+            container.innerHTML = TODOS.map(todo => `
+                <div class="todo-item ${todo.done ? 'done' : ''}" onclick="toggleTodo(${todo.id})">
+                    <div class="custom-checkbox"></div>
+                    <div class="todo-content">
+                        <div class="todo-text">${todo.text}</div>
+                        <div style="display:flex; gap:5px; margin-top:4px;">
+                            ${(todo.tags || []).map(t => getTagHTML(t)).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateDailyMetrics();
+        }
+
+        function toggleTodo(id) {
+            const todo = TODOS.find(t => t.id === id);
+            if (todo) {
+                todo.done = !todo.done;
+                renderTodos();
+            }
+        }
+
+        function updateDailyMetrics() {
+            const total = TODOS.length;
+            const done = TODOS.filter(t => t.done).length;
+            const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+            
+            document.getElementById('dcVal').innerText = percent + '%';
+            document.getElementById('dsDone').innerText = done;
+            document.getElementById('dsLeft').innerText = total - done;
+            
+            const circle = document.getElementById('dailyCircle');
+            circle.style.background = `conic-gradient(var(--cyan) 0% ${percent}%, var(--glass-b) ${percent}% 100%)`;
+        }
+
+        // Forma za brzi To-Do
+        document.getElementById('formTodo').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const inp = document.getElementById('inpTodoText');
+            const text = inp.value.trim();
+            if(!text) return;
+            
+            // Ekstrakcija hashtagova iz unosa
+            const words = text.split(' ');
+            const tags = words.filter(w => w.startsWith('#'));
+            const cleanText = words.filter(w => !w.startsWith('#')).join(' ');
+
+            TODOS.push({ id: Date.now(), text: cleanText || text, done: false, tags: tags });
+            inp.value = '';
+            
+            updateGlobalTags(); // Ažuriraj svemirski sustav
+            renderTodos();
+        });
+
+        function renderGrid() {
+            const grid = document.getElementById('cgrid');
+            
+            const filtered = DB_ITEMS.filter(item => {
+                const matchType = currentFilter === 'all' || item.type === currentFilter;
+                const searchStr = `${item.title} ${item.desc} ${item.tags.join(' ')} ${item.varData}`.toLowerCase();
+                const matchSearch = searchQuery === '' || searchStr.includes(searchQuery);
+                return matchType && matchSearch;
+            });
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div style="color: var(--faint); padding: 20px;">Nema rezultata za zadanu pretragu.</div>`;
+                return;
+            }
+
+            // Sortiranje - najnoviji (zadnji dodani) na vrh
+            const sorted = [...filtered].reverse();
+
+            grid.innerHTML = sorted.map(item => {
+                let typeIcon, typeClass, typeName, contentHTML;
+                
+                if(item.type === 'note') { 
+                    typeIcon = '▤'; typeClass = 'type-note'; typeName = 'BILJEŠKA';
+                    contentHTML = `<div class="card-desc">${item.desc}</div>`;
+                }
+                else if(item.type === 'task') { 
+                    typeIcon = '☑'; typeClass = 'type-task'; typeName = 'ZADATAK';
+                    contentHTML = `<div class="card-desc">${item.desc}</div>`;
+                }
+                else if(item.type === 'event') { 
+                    typeIcon = '⌚'; typeClass = 'type-event'; typeName = 'DOGAĐAJ';
+                    contentHTML = `<div class="card-desc">${item.desc}</div>`;
+                }
+                else if(item.type === 'money') {
+                    typeIcon = '$'; typeClass = 'type-money'; typeName = 'FINANCIJE';
+                    const isPos = item.varData.trim().startsWith('+');
+                    const amtClass = isPos ? 'money-pos' : 'money-neg';
+                    contentHTML = `<div class="money-amt ${amtClass}">${item.varData}</div><div class="card-desc">${item.desc}</div>`;
+                }
+
+                return `
+                <div class="glass ncard ${typeClass}">
+                    <div class="card-hdr">
+                        <div class="card-type">${typeIcon} ${typeName}</div>
+                        ${item.type !== 'money' ? `<div class="card-date">${item.varData}</div>` : ''}
+                    </div>
+                    <div class="card-title">${item.title}</div>
+                    ${contentHTML}
+                    <div class="card-ftr">
+                        <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                            ${item.tags.map(t => getTagHTML(t)).join('')}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // Tretiranje Forme za unos Grid Kartica
+        const entryTabs = document.querySelectorAll('.etab');
+        const lblVar = document.getElementById('lblVariable');
+        const inpVar = document.getElementById('inpEntryVar');
+
+        entryTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                entryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentEntryType = tab.dataset.type;
+                
+                // Promjena labela i placeholder-a ovisno o tipu
+                if(currentEntryType === 'money') {
+                    lblVar.innerText = 'IZNOS (npr. +100 EUR, -50 EUR)';
+                    inpVar.placeholder = '+ / - Iznos Valuta';
+                } else if(currentEntryType === 'note') {
+                    lblVar.innerText = 'DATUM (Opcionalno)';
+                    inpVar.placeholder = 'Npr. 27. Ruj 2026';
+                    inpVar.required = false;
+                } else {
+                    lblVar.innerText = 'ROK / DATUM';
+                    inpVar.placeholder = 'Npr. Danas 15:00';
+                    inpVar.required = true;
+                }
+            });
+        });
+
+        document.getElementById('formGridEntry').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('inpEntryTitle').value.trim();
+            const varData = document.getElementById('inpEntryVar').value.trim();
+            const tagsStr = document.getElementById('inpEntryTags').value.trim();
+            
+            // Izvlačenje opisa (sve nakon prve crtice u naslovu, ili ostavi prazno)
+            let finalTitle = title;
+            let desc = "";
+            if(title.includes('-')) {
+                const parts = title.split('-');
+                finalTitle = parts[0].trim();
+                desc = parts.slice(1).join('-').trim();
+            }
+
+            const tagsArray = tagsStr.split(' ').filter(t => t.startsWith('#'));
+
+            const newItem = {
+                id: Date.now(),
+                type: currentEntryType,
+                title: finalTitle,
+                desc: desc || "Unos napravljen putem terminala.",
+                varData: varData || new Date().toLocaleDateString('hr-HR'),
+                tags: tagsArray
+            };
+
+            DB_ITEMS.push(newItem);
+            
+            // Očisti formu
+            document.getElementById('inpEntryTitle').value = '';
+            document.getElementById('inpEntryVar').value = '';
+            document.getElementById('inpEntryTags').value = '';
+            
+            updateGlobalTags();
+            updatePieChart();
+            renderGrid();
+        });
+
+        // Pretraga (Ručni unos)
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase();
+            renderGrid();
+        });
+
+        document.querySelectorAll('#filterPills .pill').forEach(p => {
+            p.addEventListener('click', (e) => {
+                document.querySelectorAll('#filterPills .pill').forEach(x => x.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                renderGrid();
+            });
+        });
+
+
+        function updateTimeFlow() {
+            const now = new Date();
+            
+            // Dnevni progress
+            const secondsInDay = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+            const dayPct = Math.min(100, Math.round((secondsInDay / 86400) * 100));
+            document.getElementById('tfDayPct').innerText = dayPct + '%';
+            document.getElementById('tfDayBar').style.width = dayPct + '%';
+
+            // Tjedni progress (Ponedjeljak kao 1. dan)
+            let dayOfWeek = now.getDay() || 7; // 1-7
+            const secondsInWeek = ((dayOfWeek - 1) * 86400) + secondsInDay;
+            const weekPct = Math.min(100, Math.round((secondsInWeek / (7 * 86400)) * 100));
+            document.getElementById('tfWeekPct').innerText = weekPct + '%';
+            document.getElementById('tfWeekBar').style.width = weekPct + '%';
+
+            // Mjesečni progress
+            const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+            const monthPct = Math.min(100, Math.round((now.getDate() / daysInMonth) * 100));
+            document.getElementById('tfMonthPct').innerText = monthPct + '%';
+            document.getElementById('tfMonthBar').style.width = monthPct + '%';
+        }
+
+        function renderWorkloadChart() {
+            const container = document.getElementById('workloadChart');
+            const maxCount = Math.max(...WEEK_WORKLOAD.map(d => d.count));
+            
+            container.innerHTML = WEEK_WORKLOAD.map(data => {
+                const heightPct = Math.round((data.count / maxCount) * 100);
+                return `
+                <div class="bar-col">
+                    <div class="bar-wrap"><div class="bar-fill" style="height: ${heightPct}%"></div></div>
+                    <div class="bar-lbl">${data.day}</div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function updatePieChart() {
+            // Brojimo stavke u DB_ITEMS + TODOS po kategorijama
+            let catCounts = { work: 0, personal: 0, social: 0 };
+            let total = 0;
+
+            const allItems = [...DB_ITEMS, ...TODOS];
+            
+            allItems.forEach(item => {
+                let added = false;
+                if(item.tags) {
+                    for(let cat of CATEGORIES) {
+                        if(item.tags.some(t => cat.keywords.includes(t))) {
+                            catCounts[cat.id]++;
+                            added = true;
+                            break; // Dodaj u prvu pronađenu kategoriju
+                        }
+                    }
+                }
+                if(!added) catCounts['personal']++; // Fallback
+                total++;
+            });
+
+            if(total === 0) return;
+
+            let pctWork = (catCounts.work / total) * 100;
+            let pctPers = (catCounts.personal / total) * 100;
+            
+            const chart = document.getElementById('categoryPie');
+            // Conic gradient format: color 0% X%, color X% Y%, color Y% 100%
+            const cWork = CATEGORIES.find(c=>c.id==='work').color;
+            const cPers = CATEGORIES.find(c=>c.id==='personal').color;
+            const cSoc = CATEGORIES.find(c=>c.id==='social').color;
+
+            chart.style.background = `conic-gradient(
+                ${cWork} 0% ${pctWork}%, 
+                ${cPers} ${pctWork}% ${pctWork + pctPers}%, 
+                ${cSoc} ${pctWork + pctPers}% 100%
+            )`;
+
+            // Render legende
+            const legend = document.getElementById('categoryLegend');
+            legend.innerHTML = CATEGORIES.map(cat => {
+                const count = catCounts[cat.id];
+                const pct = Math.round((count/total)*100);
+                return `
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:${cat.color}"></div>
+                    <span style="flex:1">${cat.name}</span>
+                    <span style="font-family:'Share Tech Mono', monospace;">${pct}%</span>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function renderHabits() {
+            // 1. Render Summary Bars
+            const summaryContainer = document.getElementById('habitSummary');
+            summaryContainer.innerHTML = HABITS.map(habit => {
+                const isBuild = habit.type === 'build';
+                const count = habit.daysDone.length;
+                let pct = Math.round((count / habit.target) * 100);
+                if(pct > 100) pct = 100;
+                
+                // Za loše navike (quit), postotak je manji što je više prekršaja
+                if(!isBuild) pct = Math.max(0, 100 - Math.round((count / 5) * 100)); // Npr. 5 puta je 0% uspjeha
+
+                const color = isBuild ? 'var(--teal)' : (pct > 50 ? 'var(--warning)' : 'var(--danger)');
+                
+                return `
+                <div class="h-sum-row">
+                    <div class="h-sum-lbl" title="${habit.name}">${habit.name}</div>
+                    <div class="h-sum-track">
+                        <div class="h-sum-fill" style="width:${pct}%; background:${color}; box-shadow:0 0 8px ${color}"></div>
+                    </div>
+                    <div class="h-sum-pct">${pct}%</div>
+                </div>
+                `;
+            }).join('');
+
+            // 2. Render Minikalendara
+            const calContainer = document.getElementById('habitTrackerContainer');
+            calContainer.innerHTML = HABITS.map(habit => {
+                const isBuild = habit.type === 'build';
+                const typeClass = isBuild ? 'type-build' : 'type-quit';
+                const typeText = isBuild ? 'ODRŽATI' : 'IZBJEĆI';
+                
+                let daysHTML = '';
+                for(let i = 1; i <= CURRENT_MONTH_DAYS; i++) {
+                    const hasDone = habit.daysDone.includes(i);
+                    let dayClass = '';
+                    if(hasDone) dayClass = isBuild ? 'done-build' : 'fail-quit';
+                    daysHTML += `<div class="habit-day ${dayClass}" onclick="toggleHabit(${habit.id}, ${i})">${i}</div>`;
+                }
+
+                return `
+                <div class="habit-container">
+                    <div class="habit-header">
+                        <div class="habit-title">${habit.name}</div>
+                        <div class="habit-type ${typeClass}">${typeText}</div>
+                    </div>
+                    <div class="habit-grid">
+                        ${daysHTML}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function toggleHabit(habitId, day) {
+            const habit = HABITS.find(h => h.id === habitId);
+            if(habit) {
+                const index = habit.daysDone.indexOf(day);
+                if(index > -1) habit.daysDone.splice(index, 1);
+                else habit.daysDone.push(day);
+                renderHabits();
+            }
+        }
+
+        function updateGlobalTags() {
+            TAGS = extractTags([...DB_ITEMS, ...TODOS]);
+        }
+
+        // --- GLOBALNI SAT I TICKER ---
+        function tick() {
+            const n = new Date();
+            const h = String(n.getHours()).padStart(2, '0'),
+                  m = String(n.getMinutes()).padStart(2, '0'),
+                  s = String(n.getSeconds()).padStart(2, '0');
+            document.getElementById('clk').textContent = `${h}:${m}:${s}`;
+            const doy = Math.floor((n - new Date(n.getFullYear(), 0, 0)) / 86400000);
+            document.getElementById('clks').textContent = `DATE ${n.getFullYear()}.${String(doy).padStart(3, '0')}`;
+            
+            document.getElementById('todoDate').textContent = `${String(n.getDate()).padStart(2,'0')}.${String(n.getMonth()+1).padStart(2,'0')}.${n.getFullYear()}.`;
+        }
+        setInterval(() => { tick(); updateTimeFlow(); }, 1000); 
+
+        const TICKERS = [
+            "Podsjetnik: Zakaži servis računala u idućem mjesecu.",
+            "Sustav bilježi smanjenje razine #stress taga.",
+            "Produktivnost je viša za 14% u odnosu na prethodni mjesec.",
+            "Savjet: Hidratacija je danas na 80% cilja."
+        ];
+
+
+        
+        // 1. Pozadinski Svemir
+        (() => {
+            const cv = document.getElementById('spaceCanvas');
+            const cx = cv.getContext('2d');
+            let W, H, stars = [], t = 0;
+            let tx = 0, ty = 0, px = 0, py = 0;
+
+            function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+            function mkStars() {
+                stars = [];
+                for (let i = 0; i < 520; i++) stars.push({
+                    x: Math.random() * W, y: Math.random() * H,
+                    r: .2 + Math.random() * 1.8, b: Math.random(),
+                    ts: .005 + Math.random() * .02, to: Math.random() * Math.PI * 2
+                });
+            }
+            document.addEventListener('mousemove', e => {
+                tx = (e.clientX / W - .5) * 28;
+                ty = (e.clientY / H - .5) * 18;
+            });
+
+            function drawBg() {
+                const g = cx.createRadialGradient(W * .5, H * .4, 0, W * .5, H * .4, Math.max(W, H) * .85);
+                g.addColorStop(0, '#030a1a'); g.addColorStop(.5, '#010510'); g.addColorStop(1, '#010208');
+                cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+            }
+
+            function drawStars(ox, oy) {
+                stars.forEach(s => {
+                    const b = s.b * (.5 + .5 * Math.sin(t * s.ts + s.to));
+                    if (b < .04) return;
+                    cx.fillStyle = `rgba(255,255,255,${b})`;
+                    cx.beginPath(); cx.arc(s.x + ox * .5, s.y + oy * .5, s.r, 0, Math.PI * 2); cx.fill();
+                });
+            }
+
+            function loop() {
+                t++; px += (tx - px) * .022; py += (ty - py) * .022;
+                drawBg(); drawStars(px, py);
+                requestAnimationFrame(loop);
+            }
+            resize(); mkStars(); loop();
+            window.addEventListener('resize', () => { resize(); mkStars(); });
+        })();
+
+        // Kursor
+        const CG = document.getElementById('curglow');
+        document.addEventListener('mousemove', e => {
+            CG.style.left = e.clientX + 'px'; CG.style.top = e.clientY + 'px';
+        });
+
+        // 2. Korelacijski Sustav (Orbital Tags)
+        (() => {
+            const cv = document.getElementById('orbCanvas');
+            if (!cv) return;
+            const ctx = cv.getContext('2d');
+            const W = 700, H = 460, cx = W / 2, cy = H / 2;
+            const RADII = [110, 172, 230];
+            let t = 0;
+            
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                
+                // Grupiraj dinamički
+                const byOrbit = [[], [], []];
+                TAGS.forEach(c => byOrbit[c.orb].push(c));
+                
+                // Centralno sunce
+                const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 55);
+                cg.addColorStop(0, 'rgba(0,212,255,.45)');
+                cg.addColorStop(.45, 'rgba(0,212,255,.18)');
+                cg.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, 55, 0, Math.PI * 2); ctx.fill();
+                
+                ctx.fillStyle = 'rgba(0,212,255,.9)'; ctx.beginPath(); ctx.arc(cx, cy, 13, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(cx, cy, 5.5, 0, Math.PI * 2); ctx.fill();
+                
+                ctx.fillStyle = 'rgba(0,212,255,.75)'; ctx.font = 'bold 10px Orbitron,monospace';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText('OSJE', cx, cy + 30);
+
+                RADII.forEach((r, i) => {
+                    ctx.save(); ctx.setLineDash([6, 14]);
+                    ctx.strokeStyle = `rgba(0,180,255,${.13 - i * .02})`;
+                    ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+                    ctx.restore();
+                });
+
+                byOrbit.forEach((cats, oi) => {
+                    const r = RADII[oi];
+                    const dir = oi % 2 === 0 ? 1 : -1;
+                    const ba = dir * t * .0045;
+                    
+                    cats.forEach((cat, ci) => {
+                        const ang = ba + (ci / cats.length) * Math.PI * 2;
+                        const nx = cx + r * Math.cos(ang), ny = cy + r * Math.sin(ang);
+                        
+                        // Veličina planeta strogo proporcionalna frekvenciji taga!
+                        // Base veličina 10, svako pojavljivanje povećava za 3, max veličina 40
+                        const planetSize = Math.max(10, Math.min(40, 10 + (cat.countInt * 3)));
+
+                        ctx.save(); ctx.setLineDash([4, 9]); ctx.strokeStyle = cat.col + '25';
+                        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(nx, ny); ctx.stroke(); ctx.restore();
+
+                        const bg = ctx.createRadialGradient(nx, ny, 0, nx, ny, planetSize * 1.5);
+                        bg.addColorStop(0, cat.col + '38'); bg.addColorStop(1, 'rgba(0,0,0,0)');
+                        ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(nx, ny, planetSize * 1.5, 0, Math.PI * 2); ctx.fill();
+                        
+                        ctx.fillStyle = 'rgba(4,10,32,.88)'; ctx.beginPath(); ctx.arc(nx, ny, planetSize, 0, Math.PI * 2); ctx.fill();
+                        ctx.strokeStyle = cat.col; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(nx, ny, planetSize, 0, Math.PI * 2); ctx.stroke();
+                        
+                        ctx.fillStyle = cat.col; ctx.font = 'bold 9px Orbitron,monospace';
+                        ctx.fillText(cat.nm, nx, ny - (planetSize * 0.3));
+                        
+                        ctx.fillStyle = cat.col + 'bb'; ctx.font = '400 8px "Share Tech Mono",monospace';
+                        ctx.fillText(cat.cnt + ' ref', nx, ny + (planetSize * 0.6) + 4);
+                    });
+                });
+                t++; requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        // Footer Ticker
+        (() => {
+            const inner = document.getElementById('tkinner');
+            if (!inner) return;
+            const all = [...TICKERS, ...TICKERS];
+            inner.innerHTML = all.map(item => `<span class="tick-item">${item}</span><span class="tick-sep">·</span>`).join('');
+            let pos = 0;
+            setTimeout(() => {
+                const hw = inner.scrollWidth / 2;
+                function run() {
+                    pos -= .85;
+                    if (pos <= -hw) pos = 0;
+                    inner.style.transform = `translateX(${pos}px)`;
+                    requestAnimationFrame(run);
+                }
+                run();
+            }, 200);
+        })();
+
+        // INIT
+        window.addEventListener('load', () => {
+            tick();
+            updateTimeFlow();
+            updateGlobalTags();
+            
+            renderTodos(); // Ovo zove updateDailyMetrics
+            renderGrid();
+            renderWorkloadChart();
+            updatePieChart();
+            renderHabits();
+
+            if (typeof gsap === 'undefined') return;
+            gsap.from('#hdr', { y: -80, opacity: 0, duration: 1, ease: 'power3.out' });
+            gsap.from('.feat-card', { y: 30, opacity: 0, duration: 1, delay: .2, ease: 'power3.out' });
+            gsap.from('.data-entry-panel', { y: 20, opacity: 0, duration: 0.8, delay: 0.4, ease: 'power2.out' });
+            gsap.from('.feed-hdr', { y: 20, opacity: 0, duration: .8, delay: .5, ease: 'power2.out' });
+            gsap.from('.wcol .widget', { x: 30, opacity: 0, duration: .8, delay: .6, stagger: .1, ease: 'power2.out' });
+            gsap.from('.orb-sec', { y: 40, opacity: 0, duration: .9, delay: .9, ease: 'power2.out' });
+            gsap.from('#ftr', { y: 50, opacity: 0, duration: .8, delay: 1, ease: 'power2.out' });
+        });
+    </script>
+</body>
+</html>

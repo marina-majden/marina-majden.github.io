@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>My Diary - Premium Prototype</title>
+  
+  <!-- Fontovi za Premium izgled -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Uvoz Tailwind CSS-a (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Konfiguracija -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            vintage: {
+              bg: '#EBE3D5',
+              paper: '#FDFBF7',
+              text: '#4A3F35',
+              border: '#D4C5B0',
+              accent: '#8B5E3C'
+            }
+          },
+          boxShadow: {
+            'vintage-paper': '0 20px 40px -10px rgba(139, 94, 60, 0.15), 0 0 20px rgba(139, 94, 60, 0.05)',
+            'modern-glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Uvoz Reacta i Babela (CDN) -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <style>
+    /* Sakrivanje scrollbara za elegantniji izgled u modalima */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body { -webkit-tap-highlight-color: transparent; }
+  </style>
+</head>
+<body class="antialiased transition-colors duration-700">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // Automatska injekcija API ključa u Canvas okruženju
+    const apiKey = "";
+
+    // ==========================================
+    // IKONE (Minijaturna inline SVG biblioteka za standalone rad)
+    // ==========================================
+    const Icon = ({ name, className = "w-5 h-5", ...props }) => {
+      const icons = {
+        book: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />,
+        sun: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />,
+        lock: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />,
+        shield: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />,
+        x: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />,
+        heart: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />,
+        checkSquare: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />,
+        calendar: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />,
+        activity: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />,
+        cloud: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />,
+        history: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />,
+        wand: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />,
+        chat: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />,
+        send: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      };
+      return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={className} {...props}>{icons[name]}</svg>;
+    };
+
+    // ==========================================
+    // GLAVNA APLIKACIJA
+    // ==========================================
+    function App() {
+      // --- STANJA (STATE) ---
+      const [authState, setAuthState] = useState('login'); // login, spy_check, auth
+      const [theme, setTheme] = useState('light'); // 'light' ili 'vintage'
+      
+      // Lokalna baza podataka (localStorage) za trenutnu demonstraciju
+      const [entries, setEntries] = useState(() => {
+        try {
+          const saved = localStorage.getItem('diary_entries');
+          return saved ? JSON.parse(saved) : [];
+        } catch (e) {
+          return [];
+        }
+      });
+
+      // Podaci za novi zapis
+      const [currentEntry, setCurrentEntry] = useState('');
+      const [currentMood, setCurrentMood] = useState(null);
+      const [activeTemplates, setActiveTemplates] = useState({ gratitude: false, todo: false, countdown: false, habit: false, weather: false, onThisDay: false });
+      
+      const [gratitudeData, setGratitudeData] = useState({ item1: '', item2: '', item3: '', learned: '' });
+      const [todoList, setTodoList] = useState([]);
+      const [newTodoText, setNewTodoText] = useState('');
+      const [countdownData, setCountdownData] = useState({ eventName: '', targetDate: '' });
+      const [habitList, setHabitList] = useState([{ name: 'Trening', done: false }, { name: 'Voda 2L', done: false }, { name: 'Čitanje', done: false }]);
+      const [weatherData, setWeatherData] = useState({ temp: '', condition: 'Sunčano' });
+      const [onThisDaySelected, setOnThisDaySelected] = useState('');
+
+      const [selectedEntry, setSelectedEntry] = useState(null); // Za modal
+      const [isAiOpen, setIsAiOpen] = useState(false);
+      const [aiMessages, setAiMessages] = useState([{ role: 'model', text: 'Bok! Ja sam Gem. Kako ti mogu pomoći danas?' }]);
+      const [aiInput, setAiInput] = useState('');
+      const [isAiTyping, setIsAiTyping] = useState(false);
+      const [isEnhancing, setIsEnhancing] = useState(false);
+      const messagesEndRef = useRef(null);
+
+      // Spremanje u localStorage na svaku promjenu zapisa
+      useEffect(() => {
+        localStorage.setItem('diary_entries', JSON.stringify(entries));
+      }, [entries]);
+
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString('hr-HR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const formattedTime = today.toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit' });
+
+      // --- GEMINI AI FUNKCIJE (SA EKSPONENCIJALNIM BACKOFF-OM ZA POUZDANOST) ---
+      const fetchGemini = async (bodyContent) => {
+        const MAX_RETRIES = 5;
+        const delays = [1000, 2000, 4000, 8000, 16000];
+        
+        for (let i = 0; i < MAX_RETRIES; i++) {
+          try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+              method: 'POST', 
+              headers: { 'Content-Type': 'application/json' }, 
+              body: JSON.stringify(bodyContent)
+            });
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            const data = await res.json();
+            if (data && data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+              return data.candidates[0].content.parts[0].text;
+            }
+            return null;
+          } catch (e) {
+            if (i === MAX_RETRIES - 1) {
+              return "Nažalost, trenutno ne mogu komunicirati s mrežom. Pokušajte ponovno kasnije.";
+            }
+            await new Promise(resolve => setTimeout(resolve, delays[i]));
+          }
+        }
+      };
+
+      const enhanceText = async () => {
+        if (!currentEntry.trim()) return;
+        setIsEnhancing(true);
+        const prompt = `Poboljšaj sljedeći dnevnički zapis. Ispravi gramatičke i pravopisne greške, obogati vokabular i poboljšaj stil pisanja, ali strogo zadrži osobni ton, emociju i izvorni smisao. Vrati SAMO poboljšani tekst, bez ikakvih uvoda ili navodnika. Tekst: "${currentEntry}"`;
+        const result = await fetchGemini({ contents: [{ parts: [{ text: prompt }] }] });
+        if (result && !result.includes("Nažalost")) {
+            setCurrentEntry(result.trim());
+        } else {
+            alert(result);
+        }
+        setIsEnhancing(false);
+      };
+
+      const handleAiSubmit = async (e) => {
+        e.preventDefault();
+        if (!aiInput.trim()) return;
+        const newMsg = { role: 'user', text: aiInput };
+        setAiMessages(prev => [...prev, newMsg]);
+        setAiInput('');
+        setIsAiTyping(true);
+
+        const history = [...aiMessages, newMsg].map(m => ({ role: m.role, parts: [{ text: m.text }] }));
+        const reply = await fetchGemini({
+          contents: history,
+          systemInstruction: { parts: [{ text: "Ti si Gem, empatičan dnevnički AI asistent. Odgovaraj na hrvatskom jeziku." }] }
+        });
+        
+        setAiMessages(prev => [...prev, { role: 'model', text: reply }]);
+        setIsAiTyping(false);
+      };
+
+      useEffect(() => { if (messagesEndRef.current) messagesEndRef.current.scrollIntoView({ behavior: "smooth" }); }, [aiMessages, isAiOpen]);
+
+      // --- LOGIKA APLIKACIJE ---
+      const saveEntry = () => {
+        if (!currentEntry.trim() && !currentMood && !activeTemplates.todo && !activeTemplates.gratitude && !activeTemplates.weather && !activeTemplates.countdown && !activeTemplates.habit && !activeTemplates.onThisDay) return;
+        
+        const newEntry = {
+          id: Date.now(), text: currentEntry, mood: currentMood, date: formattedDate, time: formattedTime,
+          gratitude: activeTemplates.gratitude ? { ...gratitudeData } : null,
+          todos: activeTemplates.todo ? [...todoList] : [],
+          countdown: activeTemplates.countdown && countdownData.eventName ? { ...countdownData } : null,
+          habits: activeTemplates.habit ? [...habitList] : [],
+          weather: activeTemplates.weather && weatherData.temp ? { ...weatherData } : null,
+          onThisDay: activeTemplates.onThisDay ? onThisDaySelected : null
+        };
+        setEntries([newEntry, ...entries]);
+        setCurrentEntry(''); setCurrentMood(null);
+        setActiveTemplates({ gratitude: false, todo: false, countdown: false, habit: false, weather: false, onThisDay: false });
+        setTodoList([]);
+        setGratitudeData({ item1: '', item2: '', item3: '', learned: '' });
+      };
+
+      const toggleTemplate = (type) => setActiveTemplates(p => ({ ...p, [type]: !p[type] }));
+      const addTodo = () => { if(newTodoText.trim()){ setTodoList([...todoList, { id: Date.now(), text: newTodoText, completed: false }]); setNewTodoText(''); }};
+      const calculateDaysLeft = (targetDate) => {
+        if (!targetDate) return null;
+        const diffTime = new Date(targetDate) - new Date();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays >= 0 ? diffDays : `Prošlo je (${Math.abs(diffDays)} dana)`;
+      };
+
+      // --- TEME I CSS KLASE ---
+      const isVintage = theme === 'vintage';
+      const bgClass = isVintage ? 'bg-vintage-bg' : 'bg-slate-50';
+      const cardClass = isVintage 
+        ? 'bg-vintage-paper text-vintage-text font-serif border-vintage-border shadow-vintage-paper rounded-sm' 
+        : 'bg-white/80 backdrop-blur-xl text-slate-800 font-sans border-white shadow-modern-glass rounded-2xl border';
+
+      // ==========================================
+      // RENDERIRANJE UI-a
+      // ==========================================
+
+      // 1. EKRAN PRIJAVE
+      if (authState === 'login') {
+        return (
+          <div className={`min-h-screen flex items-center justify-center p-4 ${bgClass} transition-colors duration-700`}>
+            <div className={`w-full max-w-sm p-8 ${cardClass}`}>
+              <div className="flex justify-center mb-6"><Icon name="book" className={`w-12 h-12 ${isVintage ? 'text-vintage-accent' : 'text-slate-800'}`} /></div>
+              <h1 className="text-3xl text-center font-bold mb-8">My Diary</h1>
+              <input type="password" placeholder="Lozinka" className="w-full p-3 mb-6 bg-transparent border-b-2 border-current/20 outline-none focus:border-current transition-colors text-center" />
+              <button onClick={() => setAuthState('spy_check')} className={`w-full p-3 rounded-xl font-semibold transition-transform active:scale-95 ${isVintage ? 'bg-vintage-text text-vintage-paper' : 'bg-slate-800 text-white shadow-xl'}`}>Otključaj</button>
+            </div>
+          </div>
+        );
+      }
+
+      // 2. EKRAN ŠPIJUNSKE PROVJERE
+      if (authState === 'spy_check') {
+        return (
+          <div className={`min-h-screen flex items-center justify-center p-4 ${bgClass}`}>
+            <div className={`w-full max-w-md p-8 ${cardClass} relative overflow-hidden`}>
+              <div className="absolute top-0 left-0 w-full h-1 bg-red-500"></div>
+              <h2 className="text-xl font-bold mb-2 flex items-center gap-2"><Icon name="shield" /> Provjera identiteta</h2>
+              <p className="mb-6 opacity-70 text-sm">Završi dogovorenu rečenicu.</p>
+              <div className="p-4 bg-black/5 border-l-4 border-current mb-6 italic">"Orao je sletio..."</div>
+              <div className="space-y-3">
+                 <button onClick={() => setAuthState('login')} className="w-full p-3 text-left bg-black/5 hover:bg-black/10 rounded-xl transition-colors">...na krov zgrade.</button>
+                 <button onClick={() => setAuthState('auth')} className="w-full p-3 text-left bg-black/5 hover:bg-black/10 rounded-xl font-medium transition-colors">...u gnijezdo crne vrane.</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // 3. GLAVNA APLIKACIJA
+      return (
+        <div className={`min-h-screen pb-24 pt-4 sm:pt-8 px-2 sm:px-6 transition-colors duration-700 ${bgClass}`}>
+          
+          {/* EDITOR ZAPISA */}
+          <div className={`max-w-4xl mx-auto ${cardClass} overflow-hidden`}>
+            {/* Header */}
+            <div className="p-4 sm:p-6 border-b border-current/10 flex justify-between items-center bg-black/5">
+              <div>
+                <h1 className="text-xl sm:text-2xl font-bold">Moj Dnevnik</h1>
+                <p className="opacity-70 text-xs sm:text-sm mt-1">{formattedDate} • {formattedTime}</p>
+              </div>
+              <div className="flex gap-1 sm:gap-2">
+                <button onClick={() => setTheme('light')} className={`p-2 rounded-full transition-colors ${!isVintage ? 'bg-black/10' : 'hover:bg-black/5'}`}><Icon name="sun" /></button>
+                <button onClick={() => setTheme('vintage')} className={`p-2 rounded-full transition-colors ${isVintage ? 'bg-black/10' : 'hover:bg-black/5'}`}><Icon name="book" /></button>
+                <div className="w-px h-6 bg-current/20 my-auto mx-1"></div>
+                <button onClick={() => setAuthState('login')} className="p-2 rounded-full text-red-500 hover:bg-red-500/10"><Icon name="lock" /></button>
+              </div>
+            </div>
+
+            {/* Radni prostor */}
+            <div className="p-4 sm:p-8">
+              {/* Toolbar - Pill Design */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {[
+                  { id: 'gratitude', icon: 'heart', label: 'Zahvalnost', color: 'text-rose-500', bg: 'bg-rose-50 dark:bg-rose-900/30' },
+                  { id: 'todo', icon: 'checkSquare', label: 'Zadaci', color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-900/30' },
+                  { id: 'countdown', icon: 'calendar', label: 'Događaj', color: 'text-amber-500', bg: 'bg-amber-50 dark:bg-amber-900/30' },
+                  { id: 'habit', icon: 'activity', label: 'Navike', color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-900/30' },
+                  { id: 'weather', icon: 'cloud', label: 'Vrijeme', color: 'text-sky-500', bg: 'bg-sky-50 dark:bg-sky-900/30' },
+                ].map(t => (
+                  <button key={t.id} onClick={() => toggleTemplate(t.id)} 
+                    className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs font-semibold shadow-sm transition-all border ${activeTemplates[t.id] ? `${t.bg} ${t.color} border-transparent` : 'bg-transparent border-current/10 hover:bg-black/5 opacity-70 hover:opacity-100'}`}>
+                    <Icon name={t.icon} className="w-3.5 h-3.5" /> <span className="hidden sm:inline">{t.label}</span>
+                  </button>
+                ))}
+                
+                <div className="w-px h-6 bg-current/20 my-auto mx-1"></div>
+                <button onClick={enhanceText} disabled={isEnhancing || !currentEntry.trim()} className="px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs font-bold bg-indigo-50 text-indigo-600 shadow-sm hover:bg-indigo-100 transition-colors">
+                  <Icon name="wand" className={`w-3.5 h-3.5 ${isEnhancing ? 'animate-spin' : ''}`} /> {isEnhancing ? 'Uređivanje...' : 'AI Uredi'}
+                </button>
+              </div>
+
+              <textarea value={currentEntry} onChange={e => setCurrentEntry(e.target.value)} placeholder="Što ti je danas na umu?"
+                className="w-full h-32 sm:h-48 bg-transparent border-none outline-none resize-none text-lg sm:text-xl leading-relaxed placeholder-current/30" />
+
+              {/* RENDER PREDLOŽAKA U EDITORU */}
+              {activeTemplates.gratitude && (
+                <div className="p-4 rounded-xl bg-black/5 my-4 border border-current/10 space-y-3">
+                  <h4 className="text-sm font-bold flex items-center gap-2 text-rose-500"><Icon name="heart" className="w-4 h-4"/> Tri stvari na kojima sam zahvalna:</h4>
+                  <input type="text" placeholder="1." value={gratitudeData.item1} onChange={e=>setGratitudeData({...gratitudeData, item1: e.target.value})} className="w-full p-2 bg-transparent border-b border-current/20 outline-none text-sm"/>
+                  <input type="text" placeholder="2." value={gratitudeData.item2} onChange={e=>setGratitudeData({...gratitudeData, item2: e.target.value})} className="w-full p-2 bg-transparent border-b border-current/20 outline-none text-sm"/>
+                  <input type="text" placeholder="3." value={gratitudeData.item3} onChange={e=>setGratitudeData({...gratitudeData, item3: e.target.value})} className="w-full p-2 bg-transparent border-b border-current/20 outline-none text-sm"/>
+                </div>
+              )}
+
+              {activeTemplates.todo && (
+                <div className="p-4 rounded-xl bg-black/5 my-4 border border-current/10">
+                  <h4 className="text-sm font-bold flex items-center gap-2 mb-3"><Icon name="checkSquare" className="w-4 h-4"/> Zadaci:</h4>
+                  {todoList.map(t => (
+                    <div key={t.id} className="flex items-center gap-2 text-sm mb-2"><input type="checkbox" checked={t.completed} onChange={() => {setTodoList(todoList.map(item => item.id === t.id ? {...item, completed: !item.completed} : item))}}/><span className={t.completed ? 'line-through opacity-50' : ''}>{t.text}</span></div>
+                  ))}
+                  <div className="flex gap-2 mt-2"><input type="text" value={newTodoText} onChange={e=>setNewTodoText(e.target.value)} placeholder="Novi zadatak..." className="flex-1 p-2 bg-transparent border-b border-current/20 outline-none text-sm"/><button onClick={addTodo} className="px-3 py-1 bg-current/10 rounded-lg text-xs font-bold">Dodaj</button></div>
+                </div>
+              )}
+              
+              {activeTemplates.countdown && (
+                <div className="p-4 rounded-xl bg-black/5 my-4 border border-current/10 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-bold block mb-1">Naziv važnog događaja:</label>
+                    <input type="text" placeholder="npr. Rođendan..." value={countdownData.eventName} onChange={e => setCountdownData({...countdownData, eventName: e.target.value})} className="w-full p-2 bg-transparent border-b border-current/20 outline-none text-sm"/>
+                  </div>
+                  <div>
+                    <label className="text-xs font-bold block mb-1">Datum:</label>
+                    <input type="date" value={countdownData.targetDate} onChange={e => setCountdownData({...countdownData, targetDate: e.target.value})} className="w-full p-2 bg-transparent border-b border-current/20 outline-none text-sm text-current"/>
+                  </div>
+                </div>
+              )}
+
+              {activeTemplates.habit && (
+                <div className="p-4 rounded-xl bg-black/5 my-4 border border-current/10">
+                  <h4 className="text-sm font-bold flex items-center gap-2 mb-3"><Icon name="activity" className="w-4 h-4"/> Navike:</h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {habitList.map((h, idx) => (
+                      <button key={idx} onClick={() => { const u = [...habitList]; u[idx].done = !u[idx].done; setHabitList(u); }}
+                        className={`p-2 rounded-lg border text-xs font-medium flex items-center justify-between ${h.done ? 'bg-emerald-500/20 border-emerald-500' : 'border-current/20'}`}>
+                        {h.name} {h.done && <span>✓</span>}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTemplates.weather && (
+                <div className="p-4 rounded-xl bg-black/5 my-4 border border-current/10 flex items-center gap-4">
+                  <h4 className="text-sm font-bold flex items-center gap-2"><Icon name="cloud" className="w-4 h-4"/> Vrijeme:</h4>
+                  <input type="number" placeholder="°C" value={weatherData.temp} onChange={e=>setWeatherData({...weatherData, temp: e.target.value})} className="w-16 p-1 bg-transparent border-b border-current/20 outline-none text-center"/>
+                  <select value={weatherData.condition} onChange={e=>setWeatherData({...weatherData, condition: e.target.value})} className="p-1 bg-transparent border-b border-current/20 outline-none text-sm cursor-pointer [&>option]:text-black">
+                    <option>Sunčano</option><option>Oblačno</option><option>Kišovito</option><option>Snijeg</option>
+                  </select>
+                </div>
+              )}
+
+              <div className="mt-6 border-t border-current/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-6">
+                <div className="flex gap-3 text-2xl">
+                  {['Miserable', 'Sad', 'Neutral', 'Happy', 'Awesome'].map((mood, idx) => (
+                    <button key={mood} onClick={() => setCurrentMood(mood)} className={`transition-transform hover:scale-125 ${currentMood === mood ? 'scale-125 drop-shadow-lg' : 'opacity-30 grayscale'}`}>
+                      {['😭','😔','😐','🙂','🤩'][idx]}
+                    </button>
+                  ))}
+                </div>
+                <button onClick={saveEntry} className="w-full sm:w-auto px-8 py-3 rounded-full font-bold shadow-xl transition-transform active:scale-95 bg-slate-800 text-white">Spremi u dnevnik</button>
+              </div>
+            </div>
+          </div>
+
+          {/* POVIJEST (MASONRY GRID) */}
+          <div className="max-w-6xl mx-auto mt-12 columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+            {entries.map(entry => (
+              <div key={entry.id} onClick={() => setSelectedEntry(entry)} className={`break-inside-avoid p-5 sm:p-6 cursor-pointer hover:-translate-y-1 transition-all duration-300 ${cardClass}`}>
+                <div className="flex justify-between items-center mb-3 opacity-80"><span className="font-bold text-sm">{entry.date}</span></div>
+                {entry.text && <p className="text-sm sm:text-base leading-relaxed mb-4 line-clamp-5">{entry.text}</p>}
+                
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {entry.gratitude && <span className="text-[10px] font-bold px-2 py-1 rounded bg-black/5">💖 Zahvalnost</span>}
+                  {entry.todos && entry.todos.length > 0 && <span className="text-[10px] font-bold px-2 py-1 rounded bg-black/5">📝 {entry.todos.length} Zadataka</span>}
+                  {entry.countdown && <span className="text-[10px] font-bold px-2 py-1 rounded bg-black/5">⏳ Događaj</span>}
+                  {entry.habits && entry.habits.some(h=>h.done) && <span className="text-[10px] font-bold px-2 py-1 rounded bg-black/5">✓ Navike</span>}
+                  {entry.weather && entry.weather.temp && <span className="text-[10px] font-bold px-2 py-1 rounded bg-black/5">☁️ {entry.weather.temp}°C</span>}
+                </div>
+                <div className="flex justify-between items-center mt-4 pt-3 border-t border-current/10 opacity-60">
+                  <span className="text-xs">{entry.time}</span>
+                  {entry.mood && <span className="text-lg">{['😭','😔','😐','🙂','🤩'][['Miserable', 'Sad', 'Neutral', 'Happy', 'Awesome'].indexOf(entry.mood)]}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* MODAL ZA PRIKAZ ZAPISA */}
+          {selectedEntry && (
+            <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
+              <div className={`w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-10 no-scrollbar relative ${cardClass}`}>
+                <button onClick={() => setSelectedEntry(null)} className="absolute top-4 right-4 p-2 bg-black/5 rounded-full hover:bg-black/10"><Icon name="x"/></button>
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-1">{selectedEntry.date}</h2>
+                    <span className="text-sm opacity-60 block">{selectedEntry.time}</span>
+                  </div>
+                  {selectedEntry.mood && <span className="text-4xl">{['😭','😔','😐','🙂','🤩'][['Miserable', 'Sad', 'Neutral', 'Happy', 'Awesome'].indexOf(selectedEntry.mood)]}</span>}
+                </div>
+                
+                <p className="whitespace-pre-wrap leading-relaxed text-lg mb-8">{selectedEntry.text}</p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {selectedEntry.gratitude && (
+                    <div className="p-4 bg-black/5 rounded-xl text-sm">
+                      <b className="text-rose-500 block mb-2 text-xs uppercase">Zahvalnost</b>
+                      {selectedEntry.gratitude.item1 && <p>1. {selectedEntry.gratitude.item1}</p>}
+                      {selectedEntry.gratitude.item2 && <p>2. {selectedEntry.gratitude.item2}</p>}
+                      {selectedEntry.gratitude.item3 && <p>3. {selectedEntry.gratitude.item3}</p>}
+                    </div>
+                  )}
+                  {selectedEntry.todos && selectedEntry.todos.length > 0 && (
+                    <div className="p-4 bg-black/5 rounded-xl text-sm">
+                      <b className="block mb-2 text-xs uppercase">Zadaci</b>
+                      <ul>{selectedEntry.todos.map(t => <li key={t.id} className={t.completed ? 'line-through opacity-50' : ''}>• {t.text}</li>)}</ul>
+                    </div>
+                  )}
+                  {selectedEntry.countdown && (
+                    <div className="p-4 bg-black/5 rounded-xl text-sm">
+                      <b className="text-amber-600 block mb-1 text-xs uppercase">Odbrojavanje: {selectedEntry.countdown.eventName}</b>
+                      <p>Još: {calculateDaysLeft(selectedEntry.countdown.targetDate)} dana</p>
+                    </div>
+                  )}
+                  {selectedEntry.habits && selectedEntry.habits.some(h=>h.done) && (
+                    <div className="p-4 bg-black/5 rounded-xl text-sm">
+                      <b className="text-emerald-600 block mb-2 text-xs uppercase">Odrađene navike</b>
+                      <div className="flex flex-wrap gap-2">{selectedEntry.habits.filter(h=>h.done).map(h => <span key={h.name} className="px-2 py-1 bg-black/5 rounded">{h.name}</span>)}</div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-12 text-right opacity-40 italic text-xl">~ Tvoj potpis</div>
+              </div>
+            </div>
+          )}
+
+          {/* FLOATING AI CHATBOT */}
+          <div className="fixed bottom-6 right-6 z-40">
+            {isAiOpen && (
+              <div className={`mb-4 w-[calc(100vw-3rem)] sm:w-96 h-[32rem] max-h-[70vh] flex flex-col overflow-hidden shadow-2xl ${cardClass}`}>
+                <div className="p-4 bg-indigo-600 text-white flex justify-between items-center">
+                  <h3 className="font-bold flex items-center gap-2"><Icon name="chat" className="w-5 h-5"/> Gem AI Asistent</h3>
+                  <button onClick={() => setIsAiOpen(false)}><Icon name="x" className="w-5 h-5"/></button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black/5 no-scrollbar">
+                  {aiMessages.map((msg, i) => (
+                    <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-[85%] p-3 text-sm shadow-sm ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-2xl rounded-br-sm' : `rounded-2xl rounded-bl-sm ${isVintage ? 'bg-vintage-paper border border-vintage-border' : 'bg-white'}`}`}>
+                        {msg.text}
+                      </div>
+                    </div>
+                  ))}
+                  {isAiTyping && <div className="text-xs opacity-50 ml-2">Gem piše...</div>}
+                  <div ref={messagesEndRef} />
+                </div>
+                <form onSubmit={handleAiSubmit} className="p-3 border-t border-current/10 flex gap-2 bg-black/5">
+                  <input type="text" value={aiInput} onChange={e=>setAiInput(e.target.value)} placeholder="Pitaj me nešto..." className="flex-1 p-2 rounded-full bg-black/5 outline-none px-4 text-sm" />
+                  <button type="submit" disabled={isAiTyping} className="p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700"><Icon name="send" className="w-4 h-4 ml-0.5" /></button>
+                </form>
+              </div>
+            )}
+            <button onClick={() => setIsAiOpen(!isAiOpen)} className={`p-4 rounded-full shadow-2xl text-white transition-transform active:scale-95 ${isAiOpen ? 'bg-slate-800 rotate-90' : 'bg-indigo-600 hover:scale-110'}`}>
+              <Icon name={isAiOpen ? 'x' : 'chat'} className="w-7 h-7" />
+            </button>
+          </div>
+
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

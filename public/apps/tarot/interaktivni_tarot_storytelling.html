@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Storytelling Framework - Arhetipsko Tkanje</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: '#090814',
+                            800: '#121026',
+                            700: '#1d193d',
+                            600: '#2d275e',
+                            gold: '#d4af37',
+                            goldHover: '#f3c846',
+                            accent: '#8b5cf6',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #090814;
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Perspective for card flipping */
+        .card-container {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090814;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d275e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+
+        /* Subtle glowing effects */
+        .gold-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+        }
+        .purple-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .node-pulse {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 22px rgba(212, 175, 55, 0.5); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-mystic-accent selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-mystic-600/40 bg-mystic-900/90 backdrop-blur sticky top-0 z-50 px-4 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-mystic-gold to-purple-700 flex items-center justify-center text-mystic-900 font-bold text-xl shadow-lg">
+                <i class="fa-solid me-0 fa-hat-wizard"></i>
+            </div>
+            <div>
+                <h1 class="font-serif text-lg lg:text-xl font-bold tracking-wide text-mystic-gold">Arhetipsko Tkanje</h1>
+                <p class="text-xs text-slate-400">Tarot Storytelling Generator & Interaktivni Spread</p>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+            <button id="btn-quick-draw" onclick="quickDrawAll()" class="px-3 py-1.5 rounded-lg bg-mystic-gold hover:bg-mystic-goldHover text-mystic-900 font-semibold text-xs lg:text-sm transition flex items-center gap-2 shadow-md">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Izvuci Cijeli Raspored
+            </button>
+            <button id="btn-reset" onclick="resetSpread()" class="px-3 py-1.5 rounded-lg bg-mystic-700 hover:bg-mystic-600 text-slate-200 text-xs lg:text-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-rotate-left"></i> Očisti
+            </button>
+            <button id="btn-toggle-summary" onclick="toggleSummaryModal()" class="px-3 py-1.5 rounded-lg bg-purple-900/60 hover:bg-purple-800 border border-purple-500/30 text-purple-200 text-xs lg:text-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-scroll"></i> Nacrt Priče
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 flex flex-col lg:flex-row relative">
+        
+        <!-- Left Panel: Interactive Visual Spread Canvas -->
+        <section class="flex-1 p-4 lg:p-8 flex flex-col items-center justify-center relative min-h-[700px] overflow-auto bg-gradient-to-b from-mystic-900 via-mystic-800 to-mystic-900" id="canvas-container">
+            
+            <!-- Connection Lines SVG Overlay -->
+            <svg id="svg-connections" class="absolute inset-0 w-full h-full pointer-events-none z-0 stroke-mystic-gold/20" stroke-width="2" stroke-dasharray="4 4"></svg>
+
+            <!-- Grid Structure for Core Spread -->
+            <div id="spread-grid" class="relative z-10 grid grid-cols-3 gap-4 lg:gap-8 max-w-4xl w-full my-auto py-8">
+                
+                <!-- ROW 1: [4] OKRUŽENJE (Top Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-4" class="spread-node" data-id="4"></div>
+                </div>
+
+                <!-- ROW 2: [5] OLAKOTNE (Left), [1] TEMA (Center), [6] OTEGOTNE (Right) -->
+                <div class="col-start-1 flex justify-center items-center">
+                    <div id="node-5" class="spread-node" data-id="5"></div>
+                </div>
+                <div class="col-start-2 flex justify-center items-center">
+                    <div id="node-1" class="spread-node" data-id="1"></div>
+                </div>
+                <div class="col-start-3 flex justify-center items-center">
+                    <div id="node-6" class="spread-node" data-id="6"></div>
+                </div>
+
+                <!-- ROW 3: [2] PROTAGONIST (Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-2" class="spread-node" data-id="2"></div>
+                </div>
+
+                <!-- ROW 4: [3] PROŠLOST / DUŽNOST (Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-3" class="spread-node" data-id="3"></div>
+                </div>
+
+                <!-- ROW 5: [7] KATALIZATOR (Bottom Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-7" class="spread-node" data-id="7"></div>
+                </div>
+            </div>
+
+            <!-- Satellites Container Overlay -->
+            <div id="satellites-container" class="w-full max-w-5xl mt-6 border-t border-mystic-600/30 pt-4 hidden">
+                <h3 class="font-serif text-sm font-semibold text-mystic-gold mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-diagram-project"></i> Satelitske Karte (Detaljna Razrada Elementa)
+                </h3>
+                <div id="satellites-list" class="flex flex-wrap gap-4 justify-center"></div>
+            </div>
+        </section>
+
+        <!-- Right Drawer: Active Card Inspector / Inspector Panel -->
+        <aside id="inspector-panel" class="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-mystic-600/40 bg-mystic-800/80 backdrop-blur p-5 flex flex-col justify-between z-20">
+            <div id="inspector-content">
+                <div class="text-center py-12 text-slate-400">
+                    <i class="fa-solid fa-hand-pointer text-3xl mb-3 text-mystic-600"></i>
+                    <p class="text-sm">Klikni na bilo koju poziciju u rasporedu kako bi izvukao kartu ili istražio njezino značenje u priči.</p>
+                </div>
+            </div>
+            
+            <!-- Bottom Helper Info -->
+            <div class="mt-6 p-3 rounded-lg bg-mystic-900/60 border border-mystic-700/50 text-xs text-slate-400 flex items-start gap-2">
+                <i class="fa-solid fa-circle-info text-mystic-gold mt-0.5"></i>
+                <p><strong>Savjet:</strong> Možeš koristiti tipku <em>"Izvuci Cijeli Raspored"</em> za brzinsku generaciju ideje ili klikati poziciju po poziciju kako bi postepeno gradio priču.</p>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Modal: Story Outline Summary -->
+    <div id="modal-summary" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-mystic-800 border border-mystic-gold/40 rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-mystic-600/40 flex items-center justify-between bg-mystic-900/50">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-scroll text-mystic-gold"></i>
+                    <h2 class="font-serif text-lg font-bold text-slate-100">Generirani Nacrt Priče (Sinopsis)</h2>
+                </div>
+                <button onclick="toggleSummaryModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 text-sm text-slate-300" id="summary-content">
+                <!-- Dynamically filled -->
+            </div>
+            <div class="p-4 border-t border-mystic-600/40 bg-mystic-900/50 flex justify-between items-center">
+                <button onclick="copySummaryText()" class="px-4 py-2 rounded-lg bg-mystic-700 hover:bg-mystic-600 text-xs font-semibold text-white transition flex items-center gap-2">
+                    <i class="fa-solid fa-copy"></i> Kopiraj Nacrt
+                </button>
+                <button onclick="toggleSummaryModal()" class="px-4 py-2 rounded-lg bg-mystic-gold hover:bg-mystic-goldHover text-xs font-bold text-mystic-900 transition">
+                    Zatvori
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Select Manual Card -->
+    <div id="modal-select-card" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-mystic-800 border border-mystic-600/50 rounded-xl max-w-xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-mystic-600/40 flex items-center justify-between">
+                <h3 class="font-serif text-base font-bold text-mystic-gold">Ručni Odabir Karte</h3>
+                <button onclick="closeSelectCardModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-3 border-b border-mystic-700/50">
+                <input type="text" id="card-search-input" onkeyup="filterCardSelection()" placeholder="Pretraži špil (npr. Vitez, Toranj, Pehari)..." class="w-full px-3 py-2 rounded bg-mystic-900 border border-mystic-600 text-sm text-white focus:outline-none focus:border-mystic-gold">
+            </div>
+            <div class="p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 gap-2" id="card-selection-grid">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        /* ==========================================================================
+           1. DATA STRUCTURES: TAROT DECK & CORE SPREAD POSITIONS
+           ========================================================================== */
+        
+        const CORE_POSITIONS = {
+            1: {
+                id: 1,
+                title: "1. Središnja Tema / Motiv",
+                subtitle: "Sjeme priče i unutrašnji konflikt",
+                desc: "Određuje žanr, glavni motiv i temeljno pitanje priče (npr. osveta, izbavljenje, zabranjena ljubav, misterij).",
+                question: "O čemu je zapravo ova priča? Kojoj arhetipskoj borbi svjedočimo?",
+                icon: "fa-compass"
+            },
+            2: {
+                id: 2,
+                title: "2. Protagonist",
+                subtitle: "Bit, narav i unutrašnja želja",
+                desc: "Određuje osobnost, psihu i unutrašnji cilj glavnog lika.",
+                question: "Tko je glavni lik? Što najviše želi, a čega se najviše boji?",
+                icon: "fa-user-ninja"
+            },
+            3: {
+                id: 3,
+                title: "3. Prošlost i Nasljeđe",
+                subtitle: "Korijeni, obitelj i zanimanje",
+                desc: "Obiteljska pozadina, tradicija, porijeklo ili očekivanja društva s kojima lik započinje.",
+                question: "Iz kakvog miljea lik dolazi? Kakav teret ili tradiciju nosi sa sobom?",
+                icon: "fa-anchor"
+            },
+            4: {
+                id: 4,
+                title: "4. Okruženje i Svijet",
+                subtitle: "Mjesto, vrijeme i atmosfera",
+                desc: "Daje fizički i društveni kontekst u kojem se radnja odvija (npr. olujno more, korumpirani grad).",
+                question: "Gdje se nalazimo? Kakva pravila i atmosfera vladaju u ovom svijetu?",
+                icon: "fa-mountain-city"
+            },
+            5: {
+                id: 5,
+                title: "5. Olakotne Okolnosti",
+                subtitle: "Saveznici, resursi i sreća",
+                desc: "Pomagači, unutarnje snage ili nepredviđena sretna okolnost na koju lik može računati.",
+                question: "Tko ili što liku daje snagu ili nadu kada nastupe teški trenuci?",
+                icon: "fa-shield-halved"
+            },
+            6: {
+                id: 6,
+                title: "6. Otegotne Okolnosti",
+                subtitle: "Suparnik, prepreka ili mana",
+                desc: "Glavna prepreka – to može biti neprijatelj, društveni sustav, oluja ili unutarnja mana.",
+                question: "Što ili tko aktivno stoji između protagonista i njegovog cilja?",
+                icon: "fa-skull"
+            },
+            7: {
+                id: 7,
+                title: "7. Katalizator (Inicijalni čin)",
+                subtitle: "Okidač radnje",
+                desc: "Izvanredni događaj koji izbacuje lik iz svakodnevne rutine i započinje priču.",
+                question: "Što se događa na samom početku što ruši dosadašnji mir ili red?",
+                icon: "fa-bolt"
+            }
+        };
+
+        const SATELLITE_QUESTIONS = {
+            character: [
+                { id: 'secret', label: 'Sjena / Tajna', q: 'Što ovaj lik skriva od drugih ili samoga sebe?' },
+                { id: 'weakness', label: 'Ranjivost / Slabost', q: 'Gdje je ova osoba najranjivija?' },
+                { id: 'loyalty', label: 'Odanost / Poticaj', q: 'Kome ili čemu je ovaj lik bezuvjetno odan?' }
+            ],
+            environment: [
+                { id: 'rule', label: 'Pravilo svijeta', q: 'Koje je ključno pisano ili unutrašnje pravilo ovog mjesta?' },
+                { id: 'hidden_place', label: 'Skrivena lokacija', q: 'Koja se tajna lokacija ovdje nalazi?' },
+                { id: 'hazard', label: 'Stalna opasnost', q: 'Kakva prijetnja stalno visi u zraku?' }
+            ],
+            event: [
+                { id: 'aftermath', label: 'Posljedica', q: 'Kakav trag ovaj događaj ostavlja na okolinu?' },
+                { id: 'hidden_motive', label: 'Skriveni uzrok', q: 'Tko je iz sjene zapravo uzrokovao ovaj događaj?' }
+            ]
+        };
+
+        // Complete 78 Tarot Cards Database with Narrative Attributes
+        const TAROT_DECK = [
+            // VELIKA ARKANA
+            { id: 'm0', name: '0. Luda (The Fool)', type: 'major', archetype: 'Autsajder, lutalica, naivac koji kreće na slijepo', location: 'Neistraženi putevi, rub litice, raskrižja', event: 'Iznenadni skok u nepoznato, početak avanture bez plana' },
+            { id: 'm1', name: 'I. Čarobnjak (The Magician)', type: 'major', archetype: 'Manipulator, majstor zanata, iluzionist', location: 'Radionica, laboratorij, pozornica', event: 'Korištenje svih raspoloživih resursa, trik ili prevara' },
+            { id: 'm2', name: 'II. Visoka Svećenica (The High Priestess)', type: 'major', archetype: 'Čuvarica tajni, proročica, tiha promatračica', location: 'Hram, biblioteka, tajna komora', event: 'Otkrivanje skrivene istine, san ili vizija' },
+            { id: 'm3', name: 'III. Carica (The Empress)', type: 'major', archetype: 'Majčinska figura, vladarica, zaštitnica', location: 'Bujna priroda, imanje, dvorac', event: 'Rađanje nečeg novog, obilje, skrb' },
+            { id: 'm4', name: 'IV. Car (The Emperor)', type: 'major', archetype: 'Strogi autoritet, zapovjednik, otac, vladar', location: 'Tvrđava, sjedište vlasti, vojni zapovjedni tabor', event: 'Uvođenje reda sila, donošenje zakona, diktat' },
+            { id: 'm5', name: 'V. Svećenik / Hijerofant (The Hierophant)', type: 'major', archetype: 'Mentor, tradicionalist, vođa kulta ili vjere', location: 'Katedrala, akademija, sudnica', event: 'Pridržavanje tradicije, polaganje zakletve' },
+            { id: 'm6', name: 'VI. Ljubavnici (The Lovers)', type: 'major', archetype: 'Srodna duša, suputnik, ključni izbor', location: 'Vrt, tajno sastajalište', event: 'Sudbonosan izbor između dvije staze, spajanje saveznika' },
+            { id: 'm7', name: 'VII. Kočija (The Chariot)', type: 'major', archetype: 'Ambiciorni vođa, ratnik, osvajač', location: 'Bojište, trkaća staza, putovanje', event: 'Pobjeda kroz čistu volju, brza vožnja/bijeg' },
+            { id: 'm8', name: 'VIII. Snaga (Strength)', type: 'major', archetype: 'Ukrotitelj, krotka ali nepokolebljiva osoba', location: 'Divljina, arena, sklonište', event: 'Obozdavanje zvijeri u sebi, blagost koja pobjeđuje silu' },
+            { id: 'm9', name: 'IX. Pustinjak (The Hermit)', type: 'major', archetype: 'Izopćenik, mudrac, osamljeni tragalac', location: 'Planinski vrh, spilja, napuštena kula', event: 'Povlačenje iz društva, potraga za unutarnjim svjetlom' },
+            { id: 'm10', name: 'X. Kolo Sreće (Wheel of Fortune)', type: 'major', archetype: 'Kockar, sudbina, iznenadni prolaznik', location: 'Kockarnica, tržnica, raskrižje sudbine', event: 'Dramatičan preokret sreće, ekonomski slom ili dobitak' },
+            { id: 'm11', name: 'XI. Pravda (Justice)', type: 'major', archetype: 'Sudac, arbitar, ucjenjivač pravdom', location: 'Sudnica, gradski trg, arhiv', event: 'Polaganje računa, presuda, suočavanje s posljedicama' },
+            { id: 'm12', name: 'XII. Obješeni (The Hanged Man)', type: 'major', archetype: 'Mučenik, zatvorenik, vizionar', location: 'Zatvor, vješala, mjesto čekanja', event: 'Žrtvovanje radi višeg cilja, zastoj u kojem se mijenja perspektiva' },
+            { id: 'm13', name: 'XIII. Smrt (Death)', type: 'major', archetype: 'Glasnik promjene, grobar, neumoljiva sila', location: 'Groblje, napušteni grad, bojište', event: 'Neumitni kraj jedne ere, transformacija, gubitak' },
+            { id: 'm14', name: 'XIV. Umjerenost (Temperance)', type: 'major', archetype: 'Iscjelitelj, alkemija, diplomat', location: 'Izvor vode, utočište, most', event: 'Mirenje zaraćenih strana, pronalaženje ravnoteže' },
+            { id: 'm15', name: 'XV. Vrag (The Devil)', type: 'major', archetype: 'Ucjenjivač, vođa podzemlja, ovisnik, gonič', location: 'Mračni klub, tamnica, podzemlje grada', event: 'Pad u iskušenje, sklapanje ugovora s đavlom, ropstvo' },
+            { id: 'm16', name: 'XVI. Toranj (The Tower)', type: 'major', archetype: 'Rušitelj, anarchist, žrtva katastrofe', location: 'Zapaljena kula, utvrda pod opsadom, ruševina', event: 'Sudneni dan, nagli kolaps strukture ili laži, katastrofa' },
+            { id: 'm17', name: 'XVII. Zvijezda (The Star)', type: 'major', archetype: 'Nadahnuće, vizionar, iscjeliteljica', location: 'Oaza pod noćnim nebom, sveti izvor', event: 'Nalaz nade usred tame, dobivanje duhovnog vodstva' },
+            { id: 'm18', name: 'XVIII. Mjesec (The Moon)', type: 'major', archetype: 'Krivotvoritelj, iluzionist, netko tko živi u zabludi', location: 'Maglovita luka, šuma u noći, labirint', event: 'Izdaja u mraku, obmana, suočavanje s halucinacijama/strahom' },
+            { id: 'm19', name: 'XIX. Sunce (The Sun)', type: 'major', archetype: 'Heroj, dijete, slavna ličnost', location: 'Osunčano polje, palača, trg slavlja', event: 'Razotkrivanje istine, velika pobjeda, javno priznanje' },
+            { id: 'm20', name: 'XX. Posljednji Sud (Judgement)', type: 'major', archetype: 'Osvetnik, duh iz prošlosti, probuđeni heroj', location: 'Dolina odjeka, sudnica, rodno mjesto', event: 'Poziv na buđenje, suočavanje sa starim grijehom' },
+            { id: 'm21', name: 'XXI. Svijet (The World)', type: 'major', archetype: 'Svjetski putnik, ujedinitelj, vladar', location: 'Metropola, granica svijeta, velika luka', event: 'Završetak dugog putovanja, postizanje punog kruga' },
+
+            // MAČEVI (Zrak - Um, Konflikt, Istina, Mač)
+            { id: 's_ace', name: 'As Mačeva', type: 'swords', archetype: 'Beskompromisni mislilac', location: 'Vjetroviti vrh, kula', event: 'Spoznaja oštra poput žileta, objava rata' },
+            { id: 's_2', name: 'Dvojka Mačeva', type: 'swords', archetype: 'Osoba u dilemi, neodlučni stražar', location: 'Slijepa ulica, maglovita obala', event: 'Pat pozicija, namjerno zatvaranje očiju pred istinom' },
+            { id: 's_3', name: 'Trojka Mačeva', type: 'swords', archetype: 'Ožalošćena osoba, izdajnik', location: 'Kišni trg, ratište', event: 'Slomljeno srce, teška izdaja, emotivni udarac' },
+            { id: 's_7', name: 'Sedmica Mačeva', type: 'swords', archetype: 'Špijun, lopov, obmanjivač', location: 'Neprijateljski tabor, sjene', event: 'Tajna operacija, krađa dokumenata, bijeg' },
+            { id: 's_10', name: 'Desetka Mačeva', type: 'swords', archetype: 'Poraženi borac, žrtva zavjere', location: 'Mračni prolaz, pustoš', event: 'Konačni slom, zabijanje noža u leđa' },
+            { id: 's_page', name: 'Pornak Mačeva', type: 'swords', archetype: 'Radoznali izviđač, mladi cinkaroš', location: 'Stražarnica, krovovi', event: 'Presretanje poruke, špijuniranje' },
+            { id: 's_knight', name: 'Vitez Mačeva', type: 'swords', archetype: 'Impulsivni borac, fanatik', location: 'Bojište, jurišna staza', event: 'Iznenadni siloviti napad, sukob bez razmišljanja' },
+            { id: 's_queen', name: 'Kraljica Mačeva', type: 'swords', archetype: 'Pragmatična, oštroumna udovica/sutkinja', location: 'Visoki sud, studij', event: 'Donos hladne, ali pravedne odluke' },
+            { id: 's_king', name: 'Kralj Mačeva', type: 'swords', archetype: 'Vojni zapovjednik, strogi zakonodavac', location: 'Tvrđava, vojna akademija', event: 'Izreka oštre zapovijedi, uspostava vojne uprave' },
+
+            // PEHARI (Voda - Emocije, Odnosi, Intuitivnost)
+            { id: 'c_ace', name: 'As Pehara', type: 'cups', archetype: 'Romantik, iscjelitelj', location: 'Mirni izvor, jezero', event: 'Naleti duboke ljubavi, oprost' },
+            { id: 'c_2', name: 'Dvojka Pehara', type: 'cups', archetype: 'Ljubavni par, odani partneri', location: 'Svadbena dvorana, krčma', event: 'Sklapanje saveza ili zaruka' },
+            { id: 'c_5', name: 'Petica Pehara', type: 'cups', archetype: 'Osoba obuzeta tugom, bivši saveznik', location: 'Ruševine, grob', event: 'Oplakivanje gubitka, fokus na propalo' },
+            { id: 'c_8', name: 'Osmica Pehara', type: 'cups', archetype: 'Lutalica koji napušta sve', location: 'Noćna staza u planini', event: 'Tih odlazak i napuštanje dosadašnjeg života' },
+            { id: 'c_page', name: 'Pornak Pehara', type: 'cups', archetype: 'Sanjar, mlad pjesnik, glasonoša dobrih vijesti', location: 'Obala, umjetnički studio', event: 'Neočekivana emotivna poruka' },
+            { id: 'c_knight', name: 'Vitez Pehara', type: 'cups', archetype: 'Plemeniti spasitelj, zavodnik', location: 'Brod, most', event: 'Dolazak s ponudom pomirenja ili ljubavi' },
+            { id: 'c_queen', name: 'Kraljica Pehara', type: 'cups', archetype: 'Empatična majka, vidovnjakinja', location: 'Obalna kuća, svetište', event: 'Pružanje utočišta i emotivne podrške' },
+            { id: 'c_king', name: 'Kralj Pehara', type: 'cups', archetype: 'Diplomat, mirni obiteljski glavar', location: 'Luka, vijećnica', event: 'Smitivanje strasti u opasnom sukobu' },
+
+            // ŠTAPOVI (Vatra - Akcija, Strast, Ambicija)
+            { id: 'w_ace', name: 'As Štapova', type: 'wands', archetype: 'Pionir, entuzijast', location: 'Radionica, vulkanski teren', event: 'Iskra nove ideje, početak izradnje' },
+            { id: 'w_4', name: 'Četvorka Štapova', type: 'wands', archetype: 'Slavljenik, mještanin', location: 'Selo, slavljenički trg', event: 'Velika gozba, pronalaženje sigurnog utočišta' },
+            { id: 'w_5', name: 'Petica Štapova', type: 'wands', archetype: 'Rival, ulični borac', location: 'Ulični prolaz, trening arena', event: 'Neregulirani sukob, borba za prevlast' },
+            { id: 'w_10', name: 'Desetka Štapova', type: 'wands', archetype: 'Preopterećeni radnik, nosač tereta', location: 'Dugačka strmina, rudnik', event: 'Izgaranje pod teretom obveza' },
+            { id: 'w_page', name: 'Pornak Štapova', type: 'wands', archetype: 'Radoznali istraživač, glasnik', location: 'Logorska vatra, pustinja', event: 'Uzbudljiva vijest o novoj prilici' },
+            { id: 'w_knight', name: 'Vitez Štapova', type: 'wands', archetype: 'Avanturist, pustolov, nemirni duh', location: 'Cesta, divlji zapad/granica', event: 'Nagli polazak u avanturu bez razmišljanja' },
+            { id: 'w_queen', name: 'Kraljica Štapova', type: 'wands', archetype: 'Karizmatična vođa, strastvena vladarica', location: 'Kazalište, imanje u plamenu', event: 'Inspiriranje mase na pobunu ili akciju' },
+            { id: 'w_king', name: 'Kralj Štapova', type: 'wands', archetype: 'Vizionarski vođa, poduzetnik', location: 'Gradilište, kapetanski most', event: 'Preuzimanje zapovjedništva nad projektom' },
+
+            // PENTAKLI (Zemlja - Materijalno, Obitelj, Tradicija, Trgovina)
+            { id: 'p_ace', name: 'As Pentakla', type: 'pentacles', archetype: 'Investitor, trgovac', location: 'Trezor, plodno polje', event: 'Dobivanje dragocjenog dara ili dukata' },
+            { id: 'p_4', name: 'Četvorka Pentakla', type: 'pentacles', archetype: 'Škrtac, čuvar blaga, vlastodržac', location: 'Banka, utvrđena riznica', event: 'Odbijanje dijeljenja resursa, ucjena novcem' },
+            { id: 'p_6', name: 'Šestica Pentakla', type: 'pentacles', archetype: 'Dobrotvor ili dužnik', location: 'Tržnica, sirotište', event: 'Dobivanje zajma ili vraćanje duga' },
+            { id: 'p_page', name: 'Pornak Pentakla', type: 'pentacles', archetype: 'Vrijedni učenik, pripravnik', location: 'Radionica, farma', event: 'Započinjanje dugog naukovanja' },
+            { id: 'p_knight', name: 'Vitez Pentakla', type: 'pentacles', archetype: 'Pouzdan vojnik, radnik, radnik', location: 'Trgovački put, poljoprivredno imanje', event: 'Uporan rad, spor ali siguran napredak' },
+            { id: 'p_queen', name: 'Kraljica Pentakla', type: 'pentacles', archetype: 'Obiteljska hraniteljica, vlastelinka', location: 'Velika Seoska kuća', event: 'Pružanje materijalne sigurnosti' },
+            { id: 'p_king', name: 'Kralj Pentakla', type: 'pentacles', archetype: 'Moćni tajkun, glava bankarske obitelji', location: 'Banka, vlastelinstvo', event: 'Preuzimanje financijske kontrole' }
+        ];
+
+        /* ==========================================================================
+           2. STATE MANAGEMENT
+           ========================================================================== */
+        
+        let spreadState = {
+            // Core nodes 1-7: { card: TarotObject | null }
+            core: { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null },
+            // Satellites: array of { id, parentId, questionLabel, questionText, card }
+            satellites: [],
+            // Selected active node ID
+            activeNodeId: null
+        };
+
+        /* ==========================================================================
+           3. UI INITIALIZATION & RENDERING
+           ========================================================================== */
+
+        window.onload = function() {
+            renderCoreGrid();
+            drawConnectionLines();
+            window.addEventListener('resize', drawConnectionLines);
+        };
+
+        function renderCoreGrid() {
+            for (let i = 1; i <= 7; i++) {
+                const nodeEl = document.getElementById(`node-${i}`);
+                if (!nodeEl) continue;
+
+                const posData = CORE_POSITIONS[i];
+                const card = spreadState.core[i];
+
+                let nodeHtml = `
+                    <div onclick="selectNode(${i})" class="cursor-pointer group relative w-32 sm:w-36 lg:w-40 flex flex-col items-center">
+                        <div class="text-[10px] sm:text-xs font-serif uppercase tracking-wider text-mystic-gold mb-1 font-semibold text-center truncate w-full">
+                            ${posData.title.split('.')[1] || posData.title}
+                        </div>
+                        
+                        <div class="w-full h-44 sm:h-52 rounded-xl border-2 ${card ? 'border-mystic-gold gold-glow bg-mystic-800' : 'border-mystic-600/60 hover:border-mystic-gold/80 bg-mystic-900/80'} transition-all duration-300 flex flex-col items-center justify-center p-2 text-center relative overflow-hidden shadow-lg">
+                `;
+
+                if (card) {
+                    nodeHtml += `
+                        <div class="absolute inset-0 bg-gradient-to-b from-mystic-700/50 to-mystic-900/90 flex flex-col justify-between p-2 sm:p-3">
+                            <span class="text-[9px] sm:text-[10px] font-bold text-mystic-gold uppercase tracking-widest text-left">${card.type}</span>
+                            <div class="my-auto">
+                                <i class="fa-solid ${card.type === 'major' ? 'fa-crown text-mystic-gold' : 'fa-gem text-purple-400'} text-xl sm:text-2xl mb-1"></i>
+                                <h4 class="font-serif text-xs sm:text-sm font-bold text-white leading-tight">${card.name}</h4>
+                            </div>
+                            <span class="text-[9px] text-slate-300 italic truncate">Klikni za detalje</span>
+                        </div>
+                    `;
+                } else {
+                    nodeHtml += `
+                        <i class="fa-solid ${posData.icon} text-2xl text-mystic-600 group-hover:text-mystic-gold transition mb-2"></i>
+                        <span class="text-xs text-slate-400 group-hover:text-slate-200 font-medium px-1">${posData.subtitle}</span>
+                        <span class="mt-2 px-2 py-0.5 rounded bg-mystic-700/50 text-[10px] text-mystic-gold border border-mystic-600/40">Izvuci</span>
+                    `;
+                }
+
+                nodeHtml += `
+                        </div>
+                    </div>
+                `;
+
+                nodeEl.innerHTML = nodeHtml;
+            }
+
+            renderSatellitesList();
+        }
+
+        /* Draw visual connection lines between core cards in SVG */
+        function drawConnectionLines() {
+            const svg = document.getElementById('svg-connections');
+            if (!svg) return;
+            svg.innerHTML = '';
+
+            const connections = [
+                [1, 4], // Theme to Environment
+                [1, 2], // Theme to Protagonist
+                [1, 5], // Theme to Helper
+                [1, 6], // Theme to Obstacle
+                [2, 3], // Protagonist to Past
+                [3, 7]  // Past to Catalyst
+            ];
+
+            const canvasRect = document.getElementById('canvas-container').getBoundingClientRect();
+
+            connections.forEach(([fromId, toId]) => {
+                const elFrom = document.getElementById(`node-${fromId}`);
+                const elTo = document.getElementById(`node-${toId}`);
+
+                if (elFrom && elTo) {
+                    const rectFrom = elFrom.getBoundingClientRect();
+                    const rectTo = elTo.getBoundingClientRect();
+
+                    const x1 = rectFrom.left + rectFrom.width / 2 - canvasRect.left;
+                    const y1 = rectFrom.top + rectFrom.height / 2 - canvasRect.top;
+                    const x2 = rectTo.left + rectTo.width / 2 - canvasRect.left;
+                    const y2 = rectTo.top + rectTo.height / 2 - canvasRect.top;
+
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', x1);
+                    line.setAttribute('y1', y1);
+                    line.setAttribute('x2', x2);
+                    line.setAttribute('y2', y2);
+                    line.setAttribute('stroke', 'rgba(212, 175, 55, 0.25)');
+                    line.setAttribute('stroke-width', '2');
+                    line.setAttribute('stroke-dasharray', '4 4');
+
+                    svg.appendChild(line);
+                }
+            });
+        }
+
+        /* ==========================================================================
+           4. CARD DRAWING & INSPECTION LOGIC
+           ========================================================================== */
+
+        function selectNode(id) {
+            spreadState.activeNodeId = id;
+            renderInspector();
+        }
+
+        function drawCardForActiveNode() {
+            if (!spreadState.activeNodeId) return;
+            
+            // Pick a random card from remaining deck
+            const usedCardIds = Object.values(spreadState.core)
+                .filter(c => c !== null)
+                .map(c => c.id)
+                .concat(spreadState.satellites.map(s => s.card.id));
+
+            const available = TAROT_DECK.filter(c => !usedCardIds.includes(c.id));
+            if (available.length === 0) {
+                alert("Sve karte iz špila su već izvučene!");
+                return;
+            }
+
+            const randomCard = available[Math.floor(Math.random() * available.length)];
+            spreadState.core[spreadState.activeNodeId] = randomCard;
+
+            renderCoreGrid();
+            renderInspector();
+            drawConnectionLines();
+        }
+
+        function quickDrawAll() {
+            let usedIds = [];
+            for (let i = 1; i <= 7; i++) {
+                const available = TAROT_DECK.filter(c => !usedIds.includes(c.id));
+                const randomCard = available[Math.floor(Math.random() * available.length)];
+                spreadState.core[i] = randomCard;
+                usedIds.push(randomCard.id);
+            }
+            spreadState.satellites = [];
+            renderCoreGrid();
+            if (spreadState.activeNodeId) {
+                renderInspector();
+            } else {
+                selectNode(1);
+            }
+            drawConnectionLines();
+        }
+
+        function resetSpread() {
+            spreadState.core = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null };
+            spreadState.satellites = [];
+            spreadState.activeNodeId = null;
+            renderCoreGrid();
+            document.getElementById('inspector-content').innerHTML = `
+                <div class="text-center py-12 text-slate-400">
+                    <i class="fa-solid fa-hand-pointer text-3xl mb-3 text-mystic-600"></i>
+                    <p class="text-sm">Klikni na bilo koju poziciju u rasporedu kako bi izvukao kartu ili istražio njezino značenje u priči.</p>
+                </div>
+            `;
+            drawConnectionLines();
+        }
+
+        /* Render Inspector Drawer Content */
+        function renderInspector() {
+            const id = spreadState.activeNodeId;
+            if (!id) return;
+
+            const pos = CORE_POSITIONS[id];
+            const card = spreadState.core[id];
+            const container = document.getElementById('inspector-content');
+
+            let html = `
+                <div class="space-y-4">
+                    <div class="border-b border-mystic-600/40 pb-3">
+                        <span class="text-xs font-bold text-mystic-gold uppercase tracking-wider">${pos.title}</span>
+                        <h3 class="text-lg font-serif font-bold text-white">${pos.subtitle}</h3>
+                        <p class="text-xs text-slate-400 mt-1">${pos.desc}</p>
+                    </div>
+
+                    <div class="p-3 rounded-lg bg-mystic-900/70 border border-mystic-700/50">
+                        <span class="text-[11px] font-semibold text-purple-300 block mb-1"><i class="fa-solid fa-circle-question"></i> Vodilja za Pripovijedanje:</span>
+                        <p class="text-xs text-slate-200 italic font-serif">"${pos.question}"</p>
+                    </div>
+            `;
+
+            if (card) {
+                html += `
+                    <!-- Card Details Box -->
+                    <div class="p-4 rounded-xl bg-gradient-to-br from-mystic-700/60 to-mystic-900 border border-mystic-gold/50 shadow-xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-serif font-bold text-mystic-gold text-base">${card.name}</h4>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-900/60 text-purple-200 border border-purple-500/30">${card.type.toUpperCase()}</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs">
+                            <div>
+                                <strong class="text-slate-300 block"><i class="fa-solid fa-user-tag text-mystic-gold"></i> Arhetip / Uloga:</strong>
+                                <p class="text-slate-200">${card.archetype}</p>
+                            </div>
+                            <div>
+                                <strong class="text-slate-300 block"><i class="fa-solid fa-location-dot text-mystic-gold"></i> Mjesto / Okruženje:</strong>
+                                <p class="text-slate-200">${card.location}</p>
+                            </div>
+                            <div>
+                                <strong class="text-slate-300 block"><i class="fa-solid fa-bolt text-mystic-gold"></i> Događaj / Akcija:</strong>
+                                <p class="text-slate-200">${card.event}</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex gap-2">
+                            <button onclick="drawCardForActiveNode()" class="flex-1 py-1.5 rounded bg-mystic-700 hover:bg-mystic-600 text-xs font-semibold text-slate-200 transition">
+                                <i class="fa-solid fa-shuffle"></i> Zamijeni Kartu
+                            </button>
+                            <button onclick="openSelectCardModal()" class="py-1.5 px-3 rounded bg-mystic-900 hover:bg-black text-xs font-semibold text-slate-300 border border-mystic-600 transition">
+                                Ručno
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Satellites / Zoom options -->
+                    <div class="pt-2">
+                        <h4 class="text-xs font-bold text-slate-300 mb-2 flex items-center gap-1">
+                            <i class="fa-solid fa-magnifying-glass-plus text-mystic-gold"></i> Zumiraj / Dodaj Satelit:
+                        </h4>
+                        <div class="grid grid-cols-1 gap-1.5">
+                `;
+
+                // Add satellite question options based on position category
+                let qCategory = 'character';
+                if (id === 4) qCategory = 'environment';
+                if (id === 1 || id === 7) qCategory = 'event';
+
+                SATELLITE_QUESTIONS[qCategory].forEach(sq => {
+                    html += `
+                        <button onclick="addSatellite('${sq.label}', '${sq.q}', ${id})" class="text-left p-2 rounded bg-mystic-900/60 hover:bg-mystic-700/80 border border-mystic-700/40 text-xs text-slate-300 hover:text-white transition flex justify-between items-center group">
+                            <span>${sq.label}</span>
+                            <i class="fa-solid fa-plus text-mystic-gold group-hover:scale-110 transition"></i>
+                        </button>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="pt-4 flex flex-col gap-2">
+                        <button onclick="drawCardForActiveNode()" class="w-full py-2.5 rounded-lg bg-mystic-gold hover:bg-mystic-goldHover text-mystic-900 font-bold text-xs sm:text-sm transition shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Izvuci Kartu Nasumično
+                        </button>
+                        <button onclick="openSelectCardModal()" class="w-full py-2 rounded-lg bg-mystic-700 hover:bg-mystic-600 text-xs font-semibold text-slate-200 transition">
+                            Odaberi Iz Špila Ručno
+                        </button>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        /* ==========================================================================
+           5. SATELLITE SYSTEM (ZOOMING IN ON ELEMENTS)
+           ========================================================================== */
+
+        function addSatellite(label, question, parentId) {
+            const usedCardIds = Object.values(spreadState.core)
+                .filter(c => c !== null)
+                .map(c => c.id)
+                .concat(spreadState.satellites.map(s => s.card.id));
+
+            const available = TAROT_DECK.filter(c => !usedCardIds.includes(c.id));
+            if (available.length === 0) {
+                alert("Nema više slobodnih karata u špilu!");
+                return;
+            }
+
+            const card = available[Math.floor(Math.random() * available.length)];
+            const satId = Date.now();
+
+            spreadState.satellites.push({
+                id: satId,
+                parentId: parentId,
+                label: label,
+                question: question,
+                card: card
+            });
+
+            renderCoreGrid();
+            renderInspector();
+        }
+
+        function removeSatellite(satId) {
+            spreadState.satellites = spreadState.satellites.filter(s => s.id !== satId);
+            renderCoreGrid();
+            renderInspector();
+        }
+
+        function renderSatellitesList() {
+            const container = document.getElementById('satellites-container');
+            const list = document.getElementById('satellites-list');
+
+            if (spreadState.satellites.length === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            list.innerHTML = '';
+
+            spreadState.satellites.forEach(sat => {
+                const parentPos = CORE_POSITIONS[sat.parentId];
+                const card = sat.card;
+
+                const itemHtml = `
+                    <div class="bg-mystic-800 border border-mystic-gold/40 rounded-lg p-3 w-60 text-xs relative shadow-lg flex flex-col justify-between space-y-2">
+                        <button onclick="removeSatellite(${sat.id})" class="absolute top-2 right-2 text-slate-400 hover:text-red-400">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <div>
+                            <span class="text-[9px] font-bold text-mystic-gold uppercase tracking-wider block">
+                                Vezano uz: ${parentPos.title.split('.')[1]}
+                            </span>
+                            <h5 class="font-serif font-bold text-white text-sm mt-0.5">${sat.label}</h5>
+                            <p class="text-[11px] text-slate-400 italic mb-2 font-serif">"${sat.question}"</p>
+                        </div>
+                        
+                        <div class="bg-mystic-900/80 p-2 rounded border border-mystic-700/50">
+                            <div class="font-bold text-mystic-gold">${card.name}</div>
+                            <p class="text-[11px] text-slate-300 mt-1">${card.archetype}</p>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += itemHtml;
+            });
+        }
+
+        /* ==========================================================================
+           6. MANUAL CARD SELECTION MODAL
+           ========================================================================== */
+
+        function openSelectCardModal() {
+            document.getElementById('modal-select-card').classList.remove('hidden');
+            filterCardSelection();
+        }
+
+        function closeSelectCardModal() {
+            document.getElementById('modal-select-card').classList.add('hidden');
+        }
+
+        function filterCardSelection() {
+            const query = document.getElementById('card-search-input').value.toLowerCase();
+            const grid = document.getElementById('card-selection-grid');
+            grid.innerHTML = '';
+
+            const usedCardIds = Object.values(spreadState.core)
+                .filter(c => c !== null)
+                .map(c => c.id)
+                .concat(spreadState.satellites.map(s => s.card.id));
+
+            TAROT_DECK.forEach(card => {
+                const isUsed = usedCardIds.includes(card.id);
+                if (card.name.toLowerCase().includes(query) || card.archetype.toLowerCase().includes(query)) {
+                    const cardBtn = document.createElement('button');
+                    cardBtn.className = `p-2 rounded text-left border text-xs transition ${isUsed ? 'bg-mystic-900/40 border-mystic-800 text-slate-600 cursor-not-allowed' : 'bg-mystic-900 hover:bg-mystic-700 border-mystic-600 text-slate-200'}`;
+                    cardBtn.disabled = isUsed;
+                    cardBtn.innerHTML = `
+                        <div class="font-bold text-mystic-gold truncate">${card.name}</div>
+                        <div class="text-[10px] text-slate-400 truncate">${card.archetype}</div>
+                    `;
+                    cardBtn.onclick = () => {
+                        if (spreadState.activeNodeId) {
+                            spreadState.core[spreadState.activeNodeId] = card;
+                            renderCoreGrid();
+                            renderInspector();
+                            closeSelectCardModal();
+                        }
+                    };
+                    grid.appendChild(cardBtn);
+                }
+            });
+        }
+
+        /* ==========================================================================
+           7. STORY SUMMARY GENERATOR
+           ========================================================================== */
+
+        function toggleSummaryModal() {
+            const modal = document.getElementById('modal-summary');
+            if (modal.classList.contains('hidden')) {
+                generateSummaryText();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function generateSummaryText() {
+            const content = document.getElementById('summary-content');
+            const c = spreadState.core;
+
+            let html = `<div class="space-y-4">`;
+
+            if (!c[1] && !c[2] && !c[4]) {
+                html += `<p class="italic text-slate-400">Izvuci barem nekoliko karata u rasporedu da bi se generirao nacrt priče.</p>`;
+            } else {
+                html += `
+                    <div class="p-3 bg-mystic-900/80 rounded border border-mystic-gold/30">
+                        <h4 class="font-serif font-bold text-mystic-gold text-base">Osnovni Sinopsis Priče</h4>
+                        <p class="mt-2 text-xs leading-relaxed text-slate-200">
+                `;
+
+                if (c[2]) html += `Priča prati protagonista u liku koji utjelovljuje <strong>${c[2].archetype}</strong> (${c[2].name}). `;
+                if (c[3]) html += `Glazbom njegove prošlosti dominira <strong>${c[3].archetype}</strong> (${c[3].name}), što postavlja njegova obiteljska ili društvena očekivanja. `;
+                if (c[4]) html += `Radnja se odvija u okruženju kao što je <strong>${c[4].location}</strong> (${c[4].name}). `;
+                if (c[1]) html += `Glavna tema i motiv koji prožima cijelu priču jest <strong>${c[1].archetype}</strong> (${c[1].name}). `;
+                if (c[7]) html += `Status quo se narušava događajem: <strong>${c[7].event}</strong> (${c[7].name}). `;
+                if (c[5]) html += `Kao glavni oslonac i olakotna okolnost pojavljuje se <strong>${c[5].archetype}</strong> (${c[5].name}). `;
+                if (c[6]) html += `Međutim, najveću prepreku predstavlja <strong>${c[6].archetype}</strong> (${c[6].name}).`;
+
+                html += `
+                        </p>
+                    </div>
+
+                    <h4 class="font-serif font-bold text-slate-200 text-sm pt-2">Raščlamba po Pozicijama:</h4>
+                    <ul class="space-y-2 text-xs">
+                `;
+
+                for (let i = 1; i <= 7; i++) {
+                    const card = c[i];
+                    const pos = CORE_POSITIONS[i];
+                    if (card) {
+                        html += `
+                            <li class="p-2 bg-mystic-900/50 rounded border border-mystic-700/40">
+                                <strong class="text-mystic-gold">${pos.title}:</strong> ${card.name} – <em>${card.archetype}</em>
+                            </li>
+                        `;
+                    }
+                }
+
+                if (spreadState.satellites.length > 0) {
+                    html += `</ul><h4 class="font-serif font-bold text-slate-200 text-sm pt-2">Satelitski Detalji:</h4><ul class="space-y-2 text-xs">`;
+                    spreadState.satellites.forEach(s => {
+                        html += `
+                            <li class="p-2 bg-mystic-900/50 rounded border border-mystic-700/40">
+                                <strong class="text-purple-300">${s.label} (${CORE_POSITIONS[s.parentId].title.split('.')[1]}):</strong> ${s.card.name} – <em>${s.card.archetype}</em>
+                            </li>
+                        `;
+                    });
+                }
+
+                html += `</ul>`;
+            }
+
+            html += `</div>`;
+            content.innerHTML = html;
+        }
+
+        function copySummaryText() {
+            const content = document.getElementById('summary-content');
+            const textToCopy = content.innerText;
+            
+            // Clipboard fallback for iframe execution
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                alert("Nacrt priče je kopiran u međuspremnik (clipboard)!");
+            } catch (err) {
+                alert("Neuspješno kopiranje.");
+            }
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+</html>

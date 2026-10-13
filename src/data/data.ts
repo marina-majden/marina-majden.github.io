@@ -143,9 +143,9 @@ interface VisualVariation {
 const content: ContentData = {
     hr: {
         nav: {
-            home: "Doma",
+            home: "🏠︎",
             mission: "Misija",
-            webshop: "Dućam",
+            webshop: "Shop",
             services: "Usluge",
             projects: "Projekti",
             lab: "Lab",
@@ -153,7 +153,7 @@ const content: ContentData = {
             contact: "Kontakt",
         },
         hero: {
-            line1: "mila mashina",
+            line1: "web mashina",
             line2: "povratak načelima i izvorima iz davnina",
             line3: "stil tražimo srcem, duša je u modi!",
             subtitle:
@@ -162,9 +162,9 @@ const content: ContentData = {
         },
         about: {
             title: "Misija",
-            p1: "1. raskid s monotonim, uniformnim webom koji guši kreativnost i izaziva dosadu",
-            p2: "2. stvarati ",
-            p3: "3. graditi humani digitalni prostor (piksel po piksel)",
+            p1: "1. raskid s uniformnim, korporativnim i dosadnim dizajnom stranica (surfanje je nekada bilo puno iznenađenja i zabavno!)",
+            p2: "2. razvoj unikatnog i originalnog, autentičnog digitalnog prostora (gdje će ljudi htjeti doći, umjesto da se vrte između tri iste aplikacije!)  ",
+            p3: "3. izgradnja humanijeg, zanimljivijeg, korisnijeg i kvalitetnijeg weba (piksel po piksel!)",
         },
         skills: {
             title: "Vještine",
