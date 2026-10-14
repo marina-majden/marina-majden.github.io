@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Globe, Menu, X, Sparkles } from "lucide-react";
+import { Globe, Menu, X, Sparkles, FlaskConical  } from "lucide-react";
 import { PixelHeartHero, WMHeartLogo } from "@/components/PixelArt";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 
@@ -63,13 +63,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                 {/* Desktop Navigation Links */}
                 <div className='hidden lg:flex items-center gap-6 font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold'>
-                    <a
-                        href='/'
-                        onClick={(e) => handleSectionClick(e, "home")}
-                        className='text-lg hover:text-neon-blue transition-colors pb-1 relative group'>
-                        {t.nav.home}
-                        <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-neon-blue transition-all duration-200 group-hover:w-full' />
-                    </a>
 
                     <a
                         href='#mission'
@@ -86,12 +79,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                         {t.nav.webshop}
                         <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-neon-blue transition-all duration-200 group-hover:w-full' />
                     </a>
-
-                    <a
+ <a
                         href='#lab'
                         onClick={(e) => handleSectionClick(e, "lab")}
                         className='hover:text-neon-pink transition-colors py-1 relative group flex items-center gap-1'>
                         <Sparkles size={12} className='text-neon-pink' />
+                        Playground
+                        <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-neon-pink transition-all duration-200 group-hover:w-full' />
+                    </a>
+                    <a
+                        href='/lab'
+                        onClick={(e) => handleSectionClick(e, "lab")}
+                        className='hover:text-neon-pink transition-colors py-1 relative group flex items-center gap-1'>
+                        <FlaskConical size={12} className='text-neon-pink' />
                         {t.nav.lab}
                         <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-neon-pink transition-all duration-200 group-hover:w-full' />
                     </a>

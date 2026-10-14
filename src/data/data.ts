@@ -963,7 +963,7 @@ const content: ContentData = {
           stack: ["React", "Node.js", "MongoDB"],
           full: "Interactive language learning platform.",
           url: "https://marina-majden.github.io/litart",
-          urlShowcase: "/showcase/lit-art",
+          urlShowcase: "https://marina-majden.github.io/litart",
         },
         {
           title: "Need Help",
@@ -971,7 +971,7 @@ const content: ContentData = {
           stack: ["Next.js", "Stripe", "Tailwind"],
           full: "When AI provides answers to all questions while affirming every thought and applauding every statement, we must question how good its advice really is and how useful it is when we have real-life problems, not mathematical equations. This is where Need Help comes in – a digital platform that enables anonymous question-asking and receiving warm, empathetic, human responses from experts.",
           url: "https://need-help.netlify.app",
-          urlShowcase: "/showcase/need-help",
+          urlShowcase: "https://marina-majden.github.io/need-help",
         },
         {
           title: "Anđa and Roko Save Christmas",
@@ -986,7 +986,7 @@ const content: ContentData = {
           ],
           full: "Interactive digital storybook with generative art and voice narration. The main characters and locations are created based on real people and places, and the plot is based on the characteristics of the characters and their lives to make it as personalized and unique as they are. A great and emotional gift that leaves no one indifferent! The storybook can be printed, and in digital form, it is available online and locally. Responsiveness allows reading on all devices. Check out the storybook and see more details on the page, where you can also order your own storybook!",
           url: "https://christmas-storybook.netlify.app",
-          urlShowcase: "/showcase/storybook",
+          urlShowcase: "https://marina-majden.github.io/storybook",
         },
         {
           title: "Unplugged App",
@@ -994,7 +994,7 @@ const content: ContentData = {
           stack: ["React", "React Router v7", "TailwindCSS"],
           full: "This is not just a platform or application; it is a project that aims to promote conscious disconnection from the digital world and reconnection with reality.",
           url: "https://unplugged.netlify.app",
-          urlShowcase: "/showcase/unplugged",
+          urlShowcase: "https://marina-majden.github.io/unplugged",
         },
         {
           title: "SongFinder App",
@@ -1002,7 +1002,7 @@ const content: ContentData = {
           stack: ["HTML5", "CSS3", "Vanilla JavaScript", "iTunesAPI"],
           full: "One of my first solo projects to practice asynchronous data fetching from an external API in JSON format and DOM manipulation without a framework. The app includes music playback logic (at least the copyright-permitted 30 seconds of each song) and displays album cover art, artist name, and song title.",
           url: "https://marina-majden.github.io/song-finder/",
-          urlShowcase: "/showcase/songfinder",
+          urlShowcase: "https://marina-majden.github.io/songfinder",
         },
       ],
     },
