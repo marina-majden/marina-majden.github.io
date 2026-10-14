@@ -7,7 +7,7 @@ import Hero from "./Hero.tsx";
 import { content, type ContentSection } from "../data/data";
 import CosmicBackground from "@/components/CosmicBackground.tsx";
 import Mission from "./Mission.tsx";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext.tsx";
 import { ServicesProvider } from "@/context/ServicesContext";
 import ToastHub from "@/components/ToastHub";
 
@@ -54,11 +54,10 @@ const Home: React.FC = () => {
           t={t}
         />
         <Hero t={t} scrollToSection={scrollToSection} />
-        <Mission t={t} />
+        <Mission t={t} />   
         <Suspense fallback={<AtomLoader />}>
           <Templates t={t} scrollToSection={scrollToSection} />
         </Suspense>
-
         <Suspense fallback={<AtomLoader />}>
           <BentoLab />
         </Suspense>
@@ -68,9 +67,7 @@ const Home: React.FC = () => {
         <Suspense fallback={<AtomLoader />}>
           <Services t={t} />
         </Suspense>
-
         <Contact t={t} />
-
         <Footer t={t} />
       </div>
     </ServicesProvider>

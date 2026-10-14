@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { content, TemplateItem } from "@/data/data";
 import { useCart, getTemplatePrice } from "@/context/CartContext";
 import {
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import TemplateModal from "@/components/TemplateModal";
-import { FALLBACK_IMAGE } from "@/constants";
+import { FALLBACK_IMAGE } from "@/data/constants";
 
 export const WebShop: React.FC = () => {
     const { lang } = useLanguage();

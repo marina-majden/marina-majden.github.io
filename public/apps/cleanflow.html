@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CleanFlow - 8-Bit Synthwave Edition</title>
+  
+  <!-- Retro Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            synth: {
+              dark: '#0a0015',
+              purple: '#2d1b4e',
+              magenta: '#ff2a6d',
+              cyan: '#05d9e8',
+              yellow: '#fbe54f',
+              gray: '#1a1a24'
+            }
+          },
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'cursive'],
+            vt: ['"VT323"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #0a0015;
+      color: #e0e0e0;
+      background-image: 
+        linear-gradient(rgba(5, 217, 232, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(5, 217, 232, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      position: relative;
+    }
+
+    .scanlines {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.2) 50%,
+        rgba(0,0,0,0.2)
+      );
+      background-size: 100% 4px;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      pointer-events: none;
+      animation: crt-flicker 0.15s infinite;
+    }
+
+    @keyframes crt-flicker {
+      0% { opacity: 0.95; }
+      50% { opacity: 1; }
+      100% { opacity: 0.98; }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: #0a0015; border-left: 2px solid #2d1b4e; }
+    ::-webkit-scrollbar-thumb { background: #ff2a6d; border: 2px solid #0a0015; }
+
+    .pixel-box {
+      background-color: #1a1a24;
+      border: 4px solid #05d9e8;
+      box-shadow: 6px 6px 0px #ff2a6d;
+      transition: all 0.1s ease-in-out;
+    }
+    .pixel-box.selectable:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0px #ff2a6d;
+      cursor: pointer;
+    }
+    .pixel-box.active {
+      border-color: #ff2a6d;
+      box-shadow: 6px 6px 0px #05d9e8;
+      background-color: #2d1b4e;
+    }
+    
+    .pixel-btn {
+      background-color: #ff2a6d;
+      color: #fff;
+      border: 4px solid #fff;
+      box-shadow: 4px 4px 0px #05d9e8;
+      text-shadow: 2px 2px 0px #000;
+      transition: all 0.1s;
+    }
+    .pixel-btn:hover {
+      background-color: #ff5c8d;
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #05d9e8;
+    }
+    .pixel-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #05d9e8;
+    }
+
+    .blink-text { animation: blinker 1s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0; } }
+    .neon-text { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+
+    #synthwave-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
+      background: #000;
+      border: 4px solid #05d9e8;
+      box-shadow: 0 0 15px #ff2a6d, inset 0 0 20px #ff2a6d;
+      border-radius: 8px;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    #synthwave {
+      position: relative;
+      width: 300px;
+      height: 250px;
+      background-color: #2e0d3f;
+    }
+
+    .washing-machine-container {
+       position: absolute;
+       left: 50%;
+       bottom: 5px;
+       transform: translateX(-50%) scale(0.65);
+       animation: washerHover 2s infinite ease-in-out alternate;
+       z-index: 10;
+    }
+
+    @keyframes washerHover {
+       0% { bottom: 5px; }
+       100% { bottom: 12px; }
+    }
+
+    .washing-machine {
+      width: 120px;
+      height: 150px;
+      background-color: #fff;
+      background-repeat: no-repeat;
+      background-image: linear-gradient(#ddd 50%, #bbb 51%),
+        linear-gradient(#ddd, #ddd), linear-gradient(#ddd, #ddd),
+        radial-gradient(ellipse at center, #aaa 25%, #eee 26%, #eee 50%, #0000 55%),
+        radial-gradient(ellipse at center, #aaa 25%, #eee 26%, #eee 50%, #0000 55%),
+        radial-gradient(ellipse at center, #aaa 25%, #eee 26%, #eee 50%, #0000 55%);
+      background-position: 0 20px, 45px 0, 8px 6px, 55px 3px, 75px 3px, 95px 3px;
+      background-size: 100% 4px, 1px 23px, 30px 8px, 15px 15px, 15px 15px, 15px 15px;
+      position: relative;
+      border-radius: 6%;
+      animation: shake 3s ease-in-out infinite;
+      transform-origin: 60px 180px;
+    }
+
+    .washing-machine:before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 100%;
+      width: 7px;
+      height: 5px;
+      background: #aaa;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 102px 0 #aaa;
+    }
+
+    .washing-machine:after {
+      content: "";
+      position: absolute;
+      width: 95px;
+      height: 95px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      bottom: 20px;
+      background-color: #bbdefb;
+      background-image: linear-gradient( to right, #0004 0%, #0004 49%, #0000 50%, #0000 100% ),
+        linear-gradient(135deg, #64b5f6 50%, #607d8b 51%);
+      background-size: 30px 100%, 90px 80px;
+      border-radius: 50%;
+      background-repeat: repeat, no-repeat;
+      background-position: 0 0;
+      box-sizing: border-box;
+      border: 10px solid #DDD;
+      box-shadow: 0 0 0 4px #999 inset, 0 0 6px 6px #0004 inset;
+      animation: spin 3s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg) }
+      50% { transform: rotate(360deg) }
+      75% { transform: rotate(750deg) }
+      100% { transform: rotate(1800deg) }
+    }
+
+    @keyframes shake {
+      65%, 80%, 88%, 96% { transform: rotate(0.5deg) }
+      50%, 75%, 84%, 92% { transform: rotate(-0.5deg) }
+      0%, 50%, 100% { transform: rotate(0) }
+    }
+
+    #cutout {
+      background-color: transparent;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #cutout::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 260px; height: 225px;
+      background-color: transparent;
+      border-radius: 20px;
+      box-shadow: 0 0 0 1000px #0a0015;
+    }
+    
+    #sun { overflow: hidden; width: 120px; height: 120px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -70%); }
+    #ball { width: 120px; height: 120px; border-radius: 50%; background-color: #fbe54f; }
+
+    #stripe0, #stripe1, #stripe2, #stripe3, #stripe4, #stripe5, #stripe6 {
+      position: absolute; width: 100%; background-color: #2e0d3f; left: 50%; transform: translate(-50%);
+    }
+    #stripe0 { height: 0px; top: 10px; animation: stripe0mov infinite 1s linear; }
+    #stripe1 { height: 3px; top: 20px; animation: stripe1mov infinite 1s linear; }
+    #stripe2 { height: 4px; top: 31px; animation: stripe2mov infinite 1s linear; }
+    #stripe3 { height: 4px; top: 44px; animation: stripe3mov infinite 1s linear; }
+    #stripe4 { height: 5px; top: 58px; animation: stripe4mov infinite 1s linear; }
+    #stripe5 { height: 8px; top: 75px; animation: stripe5mov infinite 1s linear; }
+    #stripe6 { height: 9px; top: 97px; animation: stripe6mov infinite 1s linear; }
+
+    @keyframes stripe0mov { 0%, 100% { height: 0px; top: 10px; } 99% { top: 20px; height: 3px; } }
+    @keyframes stripe1mov { 0%, 100% { top: 20px; height: 3px; } 99% { top: 31px; height: 4px; } }
+    @keyframes stripe2mov { 0%, 100% { top: 31px; height: 4px; } 99% { top: 44px; height: 4px; } }
+    @keyframes stripe3mov { 0%, 100% { top: 44px; height: 4px; } 99% { top: 58px; height: 5px; } }
+    @keyframes stripe4mov { 0%, 100% { top: 58px; height: 5px; } 99% { top: 75px; height: 8px; } }
+    @keyframes stripe5mov { 0%, 100% { top: 75px; height: 8px; } 99% { top: 97px; height: 9px; } }
+    @keyframes stripe6mov { 0%, 100% { top: 97px; height: 9px; } 99% { top: 120px; height: 9px; } }
+
+    #fog { position: absolute; top: 50px; width: 100%; height: 80%; background-image: linear-gradient(transparent, #b811c6); }
+    #fog2 { position: absolute; top: 149px; width: 300px; height: 500px; background-image: linear-gradient(transparent, #b711c63f); transform: rotate(180deg); }
+    #land { width: 100%; height: 40%; bottom: 0; position: absolute; background-color: #120b12; }
+
+    #roadLines {
+      perspective: 800px; position: absolute; left: 50%; transform: translateX(-50%); bottom: -425px; width: 6px; height: 1000px;
+    }
+    #lines {
+      transform: rotateX(85deg); transform-origin: center; box-shadow: 0 10px 20px rgba(252, 255, 26, 0.2);
+      display: grid; grid-template-columns: 1fr; grid-template-rows: repeat(8, 1fr); grid-row-gap: 30px; width: 100%; height: 100%;
+    }
+    .synth-line { border-radius: 20px; background-color: #fcff1a; animation: movingLines infinite 0.5s linear; }
+    #line0 { animation: movingLines0 infinite 0.5s linear; }
+
+    @keyframes movingLines { 0% { transform: translateX(0px); } 100% { transform: translateY(130px); } }
+    @keyframes movingLines0 { 0% { transform: translateX(0px); height: 0%; } 100% { transform: translateY(130px); height: 100%; } }
+
+    #stars { position: absolute; width: 100%; height: 100%; }
+    #stars div { background-color: white; border-radius: 50%; position: absolute; }
+    #star0 { width: 2px; height: 2px; left: 20px; top: 10px; }
+    #star1 { width: 2px; height: 2px; left: 80px; top: 70px; }
+    #star2 { width: 2px; height: 2px; left: 35px; top: 90px; }
+    #star3 { width: 2px; height: 2px; left: 140px; top: 30px; }
+    #star4 { width: 2px; height: 2px; left: 40px; top: 50px; }
+    #star5 { width: 3px; height: 3px; left: 90px; top: 20px; }
+    #star6 { width: 3px; height: 3px; left: 70px; top: 120px; }
+    #star7 { width: 2px; height: 2px; right: 70px; top: 90px; }
+    #star8 { width: 3px; height: 3px; right: 10px; top: 50px; }
+    #star9 { width: 3px; height: 3px; right: 90px; top: 40px; }
+    #star10 { width: 3px; height: 3px; right: 45px; top: 20px; }
+    #star11 { width: 3px; height: 3px; right: 60px; top: 120px; }
+    #star12 { width: 3px; height: 3px; right: 50px; top: 60px; }
+    #star13 { width: 3px; height: 3px; right: 120px; top: 10px; }
+
+    .retro-modal-overlay {
+      background-color: rgba(10, 0, 21, 0.85);
+      backdrop-filter: blur(4px);
+    }
+    
+    #visualizer-wrapper.is-fullscreen {
+        position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important;
+        z-index: 9999 !important; display: flex !important; flex-direction: column !important; border-radius: 0 !important; border: none !important;
+    }
+    #visualizer-wrapper.is-fullscreen canvas { flex: 1 !important; height: 100% !important; border-radius: 0 !important; }
+
+  </style>
+</head>
+<body class="font-vt min-h-screen text-xl relative overflow-x-hidden">
+  
+  <div class="scanlines"></div>
+
+  <header class="bg-synth-dark border-b-4 border-synth-cyan sticky top-0 z-40 shadow-[0_4px_0_#ff2a6d]">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      
+      <!-- LOGO -->
+      <div class="flex items-center gap-4 cursor-pointer" onclick="app.goHome()">
+        <div class="w-16 h-16 bg-synth-gray border-4 border-synth-cyan flex items-center justify-center shadow-[4px_4px_0_#ff2a6d]">
+          <svg width="48" height="48" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="shape-rendering: crispEdges;">
+            <rect x="4" y="4" width="32" height="32" fill="#fff" stroke="#ff2a6d" stroke-width="2"/>
+            <rect x="10" y="16" width="20" height="16" fill="#05d9e8" stroke="#2d1b4e" stroke-width="2"/>
+            <rect x="12" y="24" width="16" height="6" fill="#ff2a6d"/>
+            <rect x="6" y="6" width="28" height="6" fill="#1a1a24"/>
+            <rect x="8" y="8" width="4" height="2" fill="#05d9e8"/>
+            <rect x="14" y="8" width="4" height="2" fill="#05d9e8"/>
+            <rect x="28" y="7" width="4" height="4" fill="#fbe54f"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-pixel text-xl text-synth-cyan neon-text tracking-widest uppercase">CleanFlow</h1>
+          <p class="text-synth-magenta text-sm">SYNTHWAVE EDITION</p>
+        </div>
+      </div>
+
+      <!-- AUDIO BUTTON IN HEADER -->
+      <div class="flex items-center gap-4">
+        <button onclick="musicPlayer.togglePlay()" id="nav-music-btn" class="pixel-btn px-4 py-2 font-pixel text-[10px] uppercase flex items-center gap-2">
+          <i data-lucide="music" class="w-4 h-4"></i>
+          <span id="nav-music-label">AUDIO: OFF</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="max-w-4xl w-full mx-auto px-4 py-8">
+    
+    <!-- VIEW 1: SELECTION -->
+    <div id="view-select" class="space-y-10">
+      
+      <!-- BIG SYNTHWAVE ANIMATION -->
+      <div id="synthwave-container">
+        <div id="synthwave">
+          <div id="stars">
+            <div id="star0"></div><div id="star1"></div><div id="star2"></div><div id="star3"></div>
+            <div id="star4"></div><div id="star5"></div><div id="star6"></div><div id="star7"></div>
+            <div id="star8"></div><div id="star9"></div><div id="star10"></div><div id="star11"></div>
+            <div id="star12"></div><div id="star13"></div>
+          </div>
+          <div id="sun">
+            <div id="ball"></div>
+            <div id="stripe0"></div><div id="stripe1"></div><div id="stripe2"></div><div id="stripe3"></div>
+            <div id="stripe4"></div><div id="stripe5"></div><div id="stripe6"></div>
+          </div>
+          <div id="fog"></div>
+          <div id="land"></div>
+          <div id="roadLines">
+            <div id="lines">
+              <div id="line0" class="synth-line"></div>
+              <div class="synth-line"></div><div class="synth-line"></div><div class="synth-line"></div>
+              <div class="synth-line"></div><div class="synth-line"></div><div class="synth-line"></div>
+              <div class="synth-line"></div>
+            </div>
+          </div>
+          <!-- WASHING MACHINE INSTEAD OF A CAR -->
+          <div class="washing-machine-container">
+             <div class="washing-machine"></div>
+          </div>
+          <div id="fog2"></div>
+        </div>
+        <div id="cutout"></div>
+      </div>
+
+      <!-- TITLE AND LORE -->
+      <div class="text-center space-y-4 mb-8">
+        <h2 class="font-pixel text-2xl text-synth-yellow blink-text">> START GAME <</h2>
+        <p class="text-2xl leading-relaxed text-synth-cyan">System ready. Enter cleaning parameters to initiate the sequence with your body-double AI companion and retro soundstation.</p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <h3 class="font-pixel text-lg text-synth-magenta">LEVEL 1: SELECT DIFFICULTY</h3>
+          <button onclick="app.openModal('difficulty')" class="w-8 h-8 rounded-full border-2 border-synth-cyan text-synth-cyan bg-synth-gray flex items-center justify-center font-pixel hover:bg-synth-cyan hover:text-synth-dark transition-colors" title="Difficulty Explanation">?</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div onclick="app.selectDifficulty('maintenance')" id="diff-maintenance" class="pixel-box selectable p-6">
+            <div class="flex justify-between items-start mb-4 border-b-2 border-synth-cyan pb-2">
+              <h4 class="font-pixel text-sm text-synth-cyan">> QUICK MAINTENANCE</h4>
+              <span class="bg-synth-cyan text-synth-dark px-2 py-1 font-pixel text-[10px]">10 MIN</span>
+            </div>
+            <p class="text-xl text-gray-400">Clear quick surface clutter and collect trash loot.</p>
+          </div>
+
+          <div onclick="app.selectDifficulty('standard')" id="diff-standard" class="pixel-box selectable active p-6">
+            <div class="flex justify-between items-start mb-4 border-b-2 border-synth-cyan pb-2">
+              <h4 class="font-pixel text-sm text-synth-yellow">> STANDARD RESET</h4>
+              <span class="bg-synth-yellow text-synth-dark px-2 py-1 font-pixel text-[10px]">30 MIN</span>
+            </div>
+            <p class="text-xl text-gray-400">Main quest: vacuuming, wiping, tidying up.</p>
+          </div>
+
+          <div onclick="app.selectDifficulty('deep')" id="diff-deep" class="pixel-box selectable p-6">
+            <div class="flex justify-between items-start mb-4 border-b-2 border-synth-cyan pb-2">
+              <h4 class="font-pixel text-sm text-synth-magenta">> BOSS FIGHT</h4>
+              <span class="bg-synth-magenta text-white px-2 py-1 font-pixel text-[10px]">60+ MIN</span>
+            </div>
+            <p class="text-xl text-gray-400">Deep cleaning of baseboards, ovens, and other tough enemies.</p>
+          </div>
+
+          <div onclick="app.selectDifficulty('specific')" id="diff-specific" class="pixel-box selectable p-6">
+            <div class="flex justify-between items-start mb-4 border-b-2 border-synth-cyan pb-2">
+              <h4 class="font-pixel text-sm text-white">> MINI QUEST (TARGETED)</h4>
+              <span class="bg-white text-synth-dark px-2 py-1 font-pixel text-[10px]">SPECIAL</span>
+            </div>
+            <p class="text-xl text-gray-400">Choose a specific zone for a focused grind.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIONS FOR MINI QUEST -->
+      <div id="specific-options" class="hidden border-4 border-dashed border-synth-cyan p-6 bg-synth-gray/50 mt-4">
+        <h4 class="font-pixel text-sm text-synth-yellow mb-4">SELECT ZONE:</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="target-buttons">
+          <button onclick="app.setTarget('carpets', event)" class="target-btn bg-synth-magenta text-white border-2 border-white px-4 py-2 font-pixel text-[10px] hover:bg-synth-yellow hover:text-synth-dark transition-all">CARPETS</button>
+          <button onclick="app.setTarget('drapery', event)" class="target-btn bg-synth-dark text-synth-cyan border-2 border-synth-cyan px-4 py-2 font-pixel text-[10px] hover:bg-synth-cyan hover:text-synth-dark transition-all">DRAPES</button>
+          <button onclick="app.setTarget('appliances', event)" class="target-btn bg-synth-dark text-synth-cyan border-2 border-synth-cyan px-4 py-2 font-pixel text-[10px] hover:bg-synth-cyan hover:text-synth-dark transition-all">APPLIANCES</button>
+          <button onclick="app.setTarget('bedding', event)" class="target-btn bg-synth-dark text-synth-cyan border-2 border-synth-cyan px-4 py-2 font-pixel text-[10px] hover:bg-synth-cyan hover:text-synth-dark transition-all">BEDDING</button>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <h3 class="font-pixel text-lg text-synth-magenta">LEVEL 2: CHOOSE COMPANION</h3>
+          <button onclick="app.openModal('companion')" class="w-8 h-8 rounded-full border-2 border-synth-cyan text-synth-cyan bg-synth-gray flex items-center justify-center font-pixel hover:bg-synth-cyan hover:text-synth-dark transition-colors" title="Body Doubling">?</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div onclick="app.setCompanion('sponge')" id="comp-sponge" class="pixel-box selectable active p-4 text-center">
+            <div class="text-6xl mb-4 hover:animate-bounce">🧽</div>
+            <h4 class="font-pixel text-[10px] text-synth-cyan mb-2">SPARKY (HYPE)</h4>
+            <p class="text-lg text-gray-400 leading-tight">Fun tips and cheerful support.</p>
+          </div>
+
+          <div onclick="app.setCompanion('robot')" id="comp-robot" class="pixel-box selectable p-4 text-center">
+            <div class="text-6xl mb-4 hover:animate-pulse">🤖</div>
+            <h4 class="font-pixel text-[10px] text-synth-yellow mb-2">PIP (RIVAL)</h4>
+            <p class="text-lg text-gray-400 leading-tight">Competitive robot rival.</p>
+          </div>
+
+          <div onclick="app.setCompanion('bunny')" id="comp-bunny" class="pixel-box selectable p-4 text-center">
+            <div class="text-6xl mb-4">🐰</div>
+            <h4 class="font-pixel text-[10px] text-synth-magenta mb-2">ZEN BUNNY (CHILL)</h4>
+            <p class="text-lg text-gray-400 leading-tight">Calm presence with zero stress.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <h3 class="font-pixel text-lg text-synth-magenta">LEVEL 3: GAME MODE</h3>
+          <button onclick="app.openModal('mode')" class="w-8 h-8 rounded-full border-2 border-synth-cyan text-synth-cyan bg-synth-gray flex items-center justify-center font-pixel hover:bg-synth-cyan hover:text-synth-dark transition-colors" title="Play modes">?</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div onclick="app.setMode('standard')" id="mode-standard" class="pixel-box selectable active p-4 flex items-center gap-4">
+            <div class="text-4xl">🧘</div>
+            <div>
+              <h4 class="font-pixel text-[10px] text-synth-cyan">CLASSIC</h4>
+              <p class="text-lg text-gray-400">Logical flow.</p>
+            </div>
+          </div>
+
+          <div onclick="app.setMode('shuffle')" id="mode-shuffle" class="pixel-box selectable p-4 flex items-center gap-4">
+            <div class="text-4xl">🔀</div>
+            <div>
+              <h4 class="font-pixel text-[10px] text-synth-yellow">MYSTERY</h4>
+              <p class="text-lg text-gray-400">Reveals tasks 1 by 1.</p>
+            </div>
+          </div>
+
+          <div onclick="app.setMode('speedrun')" id="mode-speedrun" class="pixel-box selectable p-4 flex items-center gap-4">
+            <div class="text-4xl">⚡</div>
+            <div>
+              <h4 class="font-pixel text-[10px] text-synth-magenta">SPEEDRUN</h4>
+              <p class="text-lg text-gray-400">Race against time!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- START BUTTON -->
+      <div class="pt-8 text-center">
+        <button onclick="app.startSession()" class="pixel-btn text-2xl font-pixel px-10 py-6 uppercase blink-text w-full md:w-auto">
+          > START MISSION <
+        </button>
+      </div>
+
+    </div>
+
+    <div id="view-active" class="hidden space-y-8">
+      
+      <!-- HUD (Heads Up Display) -->
+      <div class="pixel-box p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+          <h2 id="hud-title" class="font-pixel text-xl text-synth-cyan uppercase mb-2">MISSION: ACTIVE</h2>
+          <div class="flex items-center gap-2 font-pixel text-[10px]">
+            <span class="bg-synth-magenta text-white px-2 py-1" id="hud-diff">STANDARD</span>
+            <span class="bg-synth-yellow text-synth-dark px-2 py-1" id="hud-mode">CLASSIC</span>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="font-pixel text-sm text-gray-400 mb-1">SCORE</div>
+          <div id="hud-score" class="font-pixel text-2xl text-synth-yellow">000000</div>
+        </div>
+
+        <div class="text-center">
+          <div class="font-pixel text-sm text-gray-400 mb-1">TIME</div>
+          <div id="hud-timer" class="font-pixel text-3xl text-synth-cyan">00:00</div>
+        </div>
+      </div>
+
+      <!-- COMPANION & VISUALIZER (Top, 50/50 on larger screens) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <!-- Companion Box -->
+        <div class="pixel-box p-4 flex flex-col items-center justify-center min-h-[250px] relative">
+          <div class="absolute top-2 left-2 flex items-center gap-2">
+             <span class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
+             <span class="font-pixel text-[8px] text-gray-400 uppercase">CO-OP LINK</span>
+          </div>
+          
+          <div id="active-comp-avatar" class="text-7xl mb-6">🧽</div>
+          
+          <div class="bg-synth-dark border-2 border-synth-cyan p-3 w-full relative">
+             <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-synth-cyan"></div>
+             <p id="active-comp-quote" class="font-vt text-2xl text-synth-cyan text-center"></p>
+          </div>
+        </div>
+
+        <!-- AUDIO VISUALIZER -->
+        <div class="pixel-box overflow-hidden relative flex flex-col">
+          <div class="bg-synth-dark border-b-2 border-synth-magenta p-2 flex justify-between items-center">
+            <span class="font-pixel text-[10px] text-synth-magenta uppercase">AUDIO VISUALIZER</span>
+            <button onclick="visualizerRenderer.toggleFullscreen()" class="text-synth-cyan hover:text-white font-pixel text-[10px]">
+              [ FULLSCREEN ]
+            </button>
+          </div>
+          
+          <div id="visualizer-wrapper" class="relative flex-1">
+            <canvas id="visualizer-canvas" class="w-full h-full min-h-[160px] block cursor-pointer" onclick="visualizerRenderer.toggleFullscreen()"></canvas>
+          </div>
+          
+          <div class="p-3 bg-synth-gray flex justify-between items-center border-t-2 border-synth-magenta mt-auto">
+            <select id="track-select" onchange="musicPlayer.changeTrack(this.value)" class="bg-synth-dark text-synth-yellow font-pixel text-[8px] p-2 border border-synth-yellow focus:outline-none">
+              <option value="synth">SYNTHWAVE</option>
+              <option value="lofi">LOFI CHILL</option>
+              <option value="zen">ZEN AMBIENT</option>
+            </select>
+            <button onclick="musicPlayer.togglePlay()" id="game-music-btn" class="pixel-btn bg-synth-yellow text-synth-dark px-3 py-1 font-pixel text-[10px]">
+              PLAY
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASKS (Below Companion/Visualizer) -->
+      <div class="space-y-6">
+        <h3 class="font-pixel text-lg text-synth-magenta border-b-4 border-synth-magenta inline-block pb-2">> QUEST LOG <</h3>
+        
+        <div id="tasks-container" class="space-y-4">
+           <!-- JS will generate tasks here -->
+        </div>
+
+        <button onclick="app.openCustomTaskModal()" class="pixel-btn font-pixel text-xs px-4 py-3 w-full flex items-center justify-center gap-3 mt-4">
+           <i data-lucide="plus-circle" class="w-5 h-5"></i>
+           ADD CUSTOM TASK
+        </button>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="flex items-center justify-between border-t-4 border-synth-dark pt-6">
+        <button onclick="app.goHome()" class="font-pixel text-xs text-gray-500 hover:text-white uppercase">> ABORT MISSION</button>
+        <button onclick="app.finishSession()" class="pixel-btn font-pixel text-lg px-8 py-4 uppercase">
+          > FINISH LEVEL <
+        </button>
+      </div>
+
+    </div>
+
+    <div id="view-celebrate" class="hidden text-center space-y-10 py-10">
+      
+      <h2 class="font-pixel text-4xl text-synth-yellow blink-text">> LEVEL COMPLETE <</h2>
+      
+      <div class="pixel-box p-8 max-w-lg mx-auto bg-synth-dark text-left space-y-6">
+         <div class="flex justify-between items-end border-b-2 border-gray-700 pb-2">
+            <span class="font-pixel text-sm text-gray-400">BASE SCORE</span>
+            <span id="summary-base-score" class="font-pixel text-xl text-synth-cyan">000000</span>
+         </div>
+         
+         <div id="summary-speedrun-row" class="flex justify-between items-end border-b-2 border-gray-700 pb-2 hidden">
+            <span class="font-pixel text-sm text-gray-400" id="summary-speedrun-label">TIME BONUS</span>
+            <span id="summary-speedrun-score" class="font-pixel text-xl text-synth-magenta">000000</span>
+         </div>
+         
+         <div class="flex justify-between items-end border-b-4 border-synth-yellow pb-2 pt-4">
+            <span class="font-pixel text-xl text-white">TOTAL SCORE</span>
+            <span id="summary-total-score" class="font-pixel text-3xl text-synth-yellow">000000</span>
+         </div>
+      </div>
+
+      <!-- HIGHSCORE ENTRY -->
+      <div id="highscore-entry" class="max-w-lg mx-auto space-y-4">
+         <h3 class="font-pixel text-sm text-synth-cyan">NEW HIGHSCORE! ENTER INITIALS:</h3>
+         <div class="flex justify-center gap-4">
+            <input type="text" id="hs-initials" maxlength="3" class="bg-synth-dark border-4 border-synth-magenta text-synth-yellow font-pixel text-3xl p-4 w-32 text-center uppercase focus:outline-none focus:border-synth-cyan">
+            <button onclick="app.saveHighscore()" class="pixel-btn font-pixel text-xl px-6 py-2">SAVE</button>
+         </div>
+      </div>
+
+      <!-- HALL OF FAME LEADERBOARD -->
+      <div id="hall-of-fame" class="max-w-lg mx-auto pixel-box p-6 bg-synth-dark text-left hidden">
+         <h3 class="font-pixel text-lg text-synth-magenta text-center mb-6">> HALL OF FAME <</h3>
+         <div id="hs-list" class="space-y-4">
+            <!-- Filled via JS -->
+         </div>
+         <div class="text-center mt-8">
+            <button onclick="app.goHome()" class="pixel-btn font-pixel text-sm px-6 py-3">RETURN TO MAIN MENU</button>
+         </div>
+      </div>
+      
+    </div>
+
+  </main>
+
+  <div id="modal-overlay" class="fixed inset-0 retro-modal-overlay hidden z-50 flex items-center justify-center p-4">
+    <div class="pixel-box p-8 max-w-lg w-full relative bg-synth-dark">
+      <button onclick="app.closeModal()" class="absolute -top-4 -right-4 bg-synth-magenta text-white border-4 border-white w-10 h-10 font-pixel flex items-center justify-center hover:bg-white hover:text-synth-magenta">X</button>
+      <h3 id="modal-title" class="font-pixel text-xl text-synth-yellow mb-6 border-b-4 border-synth-yellow pb-2">TITLE</h3>
+      <div id="modal-content" class="font-vt text-2xl leading-relaxed text-gray-300">
+        Text.
+      </div>
+    </div>
+  </div>
+
+  <div id="custom-task-modal" class="fixed inset-0 retro-modal-overlay hidden z-50 flex items-center justify-center p-4">
+    <div class="pixel-box p-8 max-w-lg w-full relative bg-synth-dark space-y-6">
+      <button onclick="app.closeCustomTaskModal()" class="absolute -top-4 -right-4 bg-synth-magenta text-white border-4 border-white w-10 h-10 font-pixel flex items-center justify-center hover:bg-white hover:text-synth-magenta">X</button>
+      
+      <h3 class="font-pixel text-lg text-synth-cyan border-b-2 border-synth-cyan pb-2">NEW TASK</h3>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="font-pixel text-[10px] text-synth-yellow block mb-2">TASK NAME (REQUIRED):</label>
+          <input type="text" id="custom-title-input" class="w-full bg-synth-gray border-2 border-synth-cyan text-white font-vt text-xl p-3 focus:outline-none" placeholder="E.g.: Clean the litter box">
+        </div>
+        
+        <div>
+          <label class="font-pixel text-[10px] text-synth-magenta block mb-2">MICRO-STEPS (COMMA SEPARATED, OPTIONAL):</label>
+          <textarea id="custom-micro-input" rows="3" class="w-full bg-synth-gray border-2 border-synth-magenta text-white font-vt text-xl p-3 focus:outline-none" placeholder="E.g.: Toss old litter, Wash box, Add new litter"></textarea>
+        </div>
+        
+        <button onclick="app.saveCustomTask()" class="pixel-btn font-pixel text-sm w-full py-4 uppercase mt-2">ADD TO QUEST LOG</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* TASK DATABASE (English) based heavily on Clean Mama routines */
+    const TASK_DATABASE = {
+      maintenance: [
+        { title: "Clear counters & surfaces", type: "wipe", desc: "Collect anything on counters and table.", micro: ["Collect items", "Move out of room"] },
+        { title: "Dishwasher Duty", type: "wipe", desc: "Unload clean or load dirty dishes.", micro: ["Unload clean", "Load dirty"] },
+        { title: "Clean Kitchen Sink", type: "wipe", desc: "Give the sink a little scrub.", micro: ["Scrub sink", "Rinse and shine"] },
+        { title: "Wipe Surfaces", type: "wipe", desc: "Spray down hard surfaces and wipe clean.", micro: ["Spray surfaces", "Wipe clean"] },
+        { title: "Bathroom Mirror", type: "wipe", desc: "Spray and wipe any mirrors clean.", micro: ["Spray mirror", "Wipe glass"] },
+        { title: "Toilet Swish & Swipe", type: "wipe", desc: "Quick clean of the toilet.", micro: ["Brush bowl", "Wipe seat/exterior"] },
+        { title: "Bathroom Sink & Faucet", type: "wipe", desc: "Spray and quickly wipe.", micro: ["Spray sink", "Wipe faucet"] },
+        { title: "Quick Vacuum", type: "vacuum", desc: "Concentrate on high traffic areas.", micro: ["Vacuum entry", "Vacuum kitchen"] },
+        { title: "Quick Floor Touch-Up", type: "wipe", desc: "Use a damp mop for a quick wash.", micro: ["Damp mop kitchen", "Damp mop bathroom"] },
+        { title: "Put Out Fresh Towels", type: "wipe", desc: "Replace towels for a clean look.", micro: ["Fresh kitchen towels", "Fresh bath towels"] }
+      ],
+      standard: [
+        { title: "Kitchen Reset", type: "wipe", desc: "Wipe counters, clean floors, handle dishes, and sink.", micro: ["Wipe down the kitchen counters", "Sweep up crumbs or spot-clean the floor", "Empty the dishwasher or load dirty dishes", "Clean out one shelf or drawer in the fridge", "Shine your sink by quickly scrubbing it"] },
+        { title: "Bathroom Reset", type: "wipe", desc: "Mirrors, toilet, sink, and towels.", micro: ["Spray and wipe the bathroom mirror", "Swish and swipe the toilet", "Wipe down the sink and faucet", "Gather used towels for the laundry", "Replace an empty toilet paper roll"] },
+        { title: "Living Room Reset", type: "dust", desc: "Pillows, blankets, dusting, and trash.", micro: ["Fluff and arrange pillows on the couch", "Fold blankets and place them neatly", "Dust a single surface like the coffee table or TV stand", "Pick up and put away stray items", "Empty the trash or recycling bin"] },
+        { title: "Bedroom Reset", type: "wipe", desc: "Make bed, tidy nightstand, and put away clothes.", micro: ["Make the bed", "Tidy up the nightstand", "Put away stray clothes or toss them into the hamper", "Dust off a single dresser or shelf", "Straighten up shoes or bags"] },
+        { title: "Entryway Reset", type: "vacuum", desc: "Coats, mats, mail, and door handles.", micro: ["Hang up coats or bags that are out of place", "Sweep or vacuum the entry mat", "Organize the mail or sort out junk mail", "Wipe down door handles or light switches", "Shake out your welcome mat"] }
+      ],
+      deep: [
+        { title: "High-Place Dusting", type: "dust", desc: "Clean light fixtures.", micro: ["Chandeliers", "Door frames", "Vents"] },
+        { title: "Deep Kitchen Clean", type: "wipe", desc: "Clean appliance interiors.", micro: ["Microwave", "Fridge exterior", "Hood", "Trash bin"] },
+        { title: "Thorough Bathroom Scrub", type: "wipe", desc: "Scrub grout and sanitary ware.", micro: ["Tub/grout", "Shower head", "Toilet base", "Bath mat"] },
+        { title: "Baseboards & Doors Wash", type: "wipe", desc: "Wipe dusty baseboards.", micro: ["Baseboards", "Handles", "Wall stains"] },
+        { title: "Deep Edge Vacuum & Corners", type: "vacuum", desc: "Move furniture.", micro: ["Under furniture", "Corners", "Thorough floor wiping"] }
+      ],
+      specific: {
+        carpets: [
+          { title: "Deep Carpet Vacuum", type: "vacuum", desc: "Cross-vacuuming.", micro: ["North-South", "East-West", "Hair brush"] },
+          { title: "Carpet Spot Treatment", type: "wipe", desc: "Apply stain remover.", micro: ["Remover", "Blot with cloth", "Rinse"] },
+          { title: "Powder Refresh", type: "dust", desc: "Sprinkle baking soda.", micro: ["Sprinkle powder", "Wait 15 mins", "Vacuum"] }
+        ],
+        drapery: [
+          { title: "Drape Vacuuming", type: "dust", desc: "Remove dust from textiles.", micro: ["Drape brush", "Wipe slats", "Check stains"] },
+          { title: "Window Sill & Track Clean", type: "wipe", desc: "Remove dirt from tracks.", micro: ["Vacuum tracks", "Wipe with soap", "Dry"] },
+          { title: "Glass Polishing", type: "wipe", desc: "Streak-free shine.", micro: ["Cleaner", "Microfiber", "Remove streaks"] }
+        ],
+        appliances: [
+          { title: "Fridge Reset", type: "wipe", desc: "Remove old food and wipe shelves.", micro: ["Toss food", "Remove shelves", "Wipe inside", "Clean seals"] },
+          { title: "Oven & Microwave Scrub", type: "wipe", desc: "Melt dried grease.", micro: ["Bowl with lemon", "Wipe grease", "Oven", "Degrease filters"] }
+        ],
+        bedding: [
+          { title: "Bed Linen Change", type: "laundry", desc: "Put on fresh linens.", micro: ["Remove old", "In washer", "New linens", "Fluff pillows"] },
+          { title: "Mattress Refresh", type: "dust", desc: "Vacuum the mattress.", micro: ["Vacuum surface", "Sprinkle baking soda", "Vacuum after 20 mins"] }
+        ]
+      }
+    };
+
+    const AVATARS = {
+      sponge: { name: "Sparky", emoji: "🧽", quotes: ["Scrubbing everything in our path!", "Look at it shine!", "Don't give up, keep going!", "Excellent combo!"] },
+      robot: { name: "Pip", emoji: "🤖", quotes: ["Efficiency: 100%.", "Mess detected and eliminated.", "Are you sure you can't go faster?", "I don't have battery to waste."] },
+      bunny: { name: "Zen Bunny", emoji: "🐰", quotes: ["Breathe in slowly, clean slowly...", "Every wipe clears the mind.", "No rush, just zen.", "Your home is your temple."] }
+    };
+
+    class SoundFX {
+      constructor() { this.ctx = null; }
+      init() { if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      playClick() {
+        try {
+          this.init(); if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(100, this.ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.1);
+        } catch(e) {}
+      }
+      playCoin() {
+        try {
+          this.init(); if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(987.77, now);
+          osc.frequency.setValueAtTime(1318.51, now + 0.1);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(); osc.stop(now + 0.4);
+        } catch(e) {}
+      }
+      playError() {
+         try {
+          this.init(); if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(150, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(50, this.ctx.currentTime + 0.3);
+          gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.3);
+        } catch(e) {}
+      }
+    }
+    const sfx = new SoundFX();
+
+    class MusicPlayerEngine {
+      constructor() {
+        this.ctx = null;
+        this.analyser = null;
+        this.isPlaying = false;
+        this.currentTrack = 'synth';
+        this.timer = null;
+        this.masterGain = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            this.ctx = new AudioContextClass();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = 0.2;
+            this.analyser = this.ctx.createAnalyser();
+            this.analyser.fftSize = 128;
+            this.masterGain.connect(this.analyser);
+            this.analyser.connect(this.ctx.destination);
+          }
+        }
+      }
+      togglePlay() {
+        this.init();
+        if (!this.ctx) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        if (this.isPlaying) this.stop();
+        else this.play();
+      }
+      changeTrack(key) {
+        this.currentTrack = key;
+        if (this.isPlaying) { this.stop(); this.play(); }
+      }
+      play() {
+        this.init();
+        if (!this.ctx) return;
+        this.isPlaying = true;
+        this.updateUI(true);
+        visualizerRenderer.start();
+        
+        let step = 0;
+        let tempo = this.currentTrack === 'synth' ? 140 : (this.currentTrack === 'zen' ? 300 : 200);
+        
+        this.timer = setInterval(() => {
+          if (!this.isPlaying) return;
+          const now = this.ctx.currentTime;
+          
+          if(this.currentTrack === 'synth') {
+             const notes = [130.81, 164.81, 196.00, 261.63, 196.00, 164.81];
+             const osc = this.ctx.createOscillator();
+             const gain = this.ctx.createGain();
+             osc.type = 'sawtooth';
+             osc.frequency.value = notes[step % notes.length];
+             gain.gain.setValueAtTime(0.05, now);
+             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+             osc.connect(gain); gain.connect(this.masterGain);
+             osc.start(now); osc.stop(now + 0.15);
+             
+             if(step % 4 === 0) {
+                 const kick = this.ctx.createOscillator();
+                 const kg = this.ctx.createGain();
+                 kick.frequency.setValueAtTime(150, now);
+                 kick.frequency.exponentialRampToValueAtTime(40, now+0.1);
+                 kg.gain.setValueAtTime(0.4, now);
+                 kg.gain.exponentialRampToValueAtTime(0.01, now+0.1);
+                 kick.connect(kg); kg.connect(this.masterGain);
+                 kick.start(now); kick.stop(now+0.1);
+             }
+          } else if (this.currentTrack === 'lofi') {
+             if (step === 0 || step === 8) {
+               [220.00, 261.63, 329.63].forEach(f => {
+                 const osc = this.ctx.createOscillator();
+                 const gain = this.ctx.createGain();
+                 osc.type = 'triangle';
+                 osc.frequency.value = f;
+                 gain.gain.setValueAtTime(0.05, now);
+                 gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+                 osc.connect(gain); gain.connect(this.masterGain);
+                 osc.start(); osc.stop(now + 1.2);
+               });
+             }
+          } else if (this.currentTrack === 'zen') {
+             if(step % 4 === 0) {
+                 const osc = this.ctx.createOscillator();
+                 const gain = this.ctx.createGain();
+                 osc.type = 'sine';
+                 osc.frequency.value = [174.61, 220.00, 261.63][(step/4)%3];
+                 gain.gain.setValueAtTime(0.05, now);
+                 gain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+                 osc.connect(gain); gain.connect(this.masterGain);
+                 osc.start(); osc.stop(now + 2.5);
+             }
+          }
+
+          step = (step + 1) % 16;
+        }, tempo);
+      }
+      stop() {
+        this.isPlaying = false;
+        if (this.timer) clearInterval(this.timer);
+        this.updateUI(false);
+        visualizerRenderer.stop();
+      }
+      updateUI(playing) {
+        if(document.getElementById('nav-music-label')) document.getElementById('nav-music-label').innerText = playing ? "AUDIO: ON" : "AUDIO: OFF";
+        if(document.getElementById('nav-music-btn')) {
+           document.getElementById('nav-music-btn').classList.toggle('text-synth-yellow', playing);
+        }
+        if(document.getElementById('game-music-btn')) {
+           document.getElementById('game-music-btn').innerText = playing ? "PAUSE" : "PLAY";
+        }
+      }
+    }
+    const musicPlayer = new MusicPlayerEngine();
+
+    class VisualizerRenderer {
+      constructor() { this.canvas = null; this.ctx = null; this.animId = null; }
+      init() {
+        this.canvas = document.getElementById('visualizer-canvas');
+        if (this.canvas) { this.ctx = this.canvas.getContext('2d'); this.resize(); }
+      }
+      resize() {
+        if (!this.canvas) return;
+        this.canvas.width = this.canvas.clientWidth * (window.devicePixelRatio || 1);
+        this.canvas.height = this.canvas.clientHeight * (window.devicePixelRatio || 1);
+      }
+      start() { this.init(); if (!this.animId) this.draw(); }
+      stop() { if (this.animId) { cancelAnimationFrame(this.animId); this.animId = null; } }
+      draw() {
+        this.animId = requestAnimationFrame(() => this.draw());
+        if (!this.ctx || !this.canvas || !musicPlayer.analyser) return;
+        const w = this.canvas.width, h = this.canvas.height;
+        const data = new Uint8Array(musicPlayer.analyser.frequencyBinCount);
+        musicPlayer.analyser.getByteFrequencyData(data);
+        
+        this.ctx.fillStyle = 'rgba(10, 0, 21, 0.25)';
+        this.ctx.fillRect(0, 0, w, h);
+
+        const barW = w / data.length;
+        for (let i = 0; i < data.length; i++) {
+          const val = (data[i] / 255) * h * 0.9;
+          const isNeon = i % 3 === 0;
+          this.ctx.fillStyle = isNeon ? '#05d9e8' : '#ff2a6d';
+          this.ctx.fillRect(i * barW, h - val, barW - 1, val);
+          
+          // Cube on top of bar
+          this.ctx.fillStyle = '#fbe54f';
+          this.ctx.fillRect(i * barW, h - val - 4, barW - 1, 2);
+        }
+      }
+      toggleFullscreen() {
+        const wrap = document.getElementById('visualizer-wrapper');
+        if (!wrap) return;
+        wrap.classList.toggle('is-fullscreen');
+        setTimeout(() => { this.resize(); }, 100);
+      }
+    }
+    const visualizerRenderer = new VisualizerRenderer();
+
+    const app = {
+      state: {
+        difficulty: 'standard', specificTarget: 'carpets', companion: 'sponge', mode: 'standard',
+        tasks: [], timerId: null, timeElapsed: 0, timeRemaining: 0, score: 0, quoteId: null
+      },
+      
+      init() { lucide.createIcons(); },
+
+      goHome() {
+         sfx.playClick();
+         clearInterval(this.state.timerId);
+         clearInterval(this.state.quoteId);
+         document.getElementById('view-active').classList.add('hidden');
+         document.getElementById('view-celebrate').classList.add('hidden');
+         document.getElementById('view-select').classList.remove('hidden');
+      },
+
+      selectDifficulty(k) {
+         sfx.playClick();
+         this.state.difficulty = k;
+         document.querySelectorAll('#view-select .pixel-box').forEach(el => el.classList.remove('active'));
+         document.getElementById(`diff-${k}`).classList.add('active');
+         document.getElementById('specific-options').classList.toggle('hidden', k !== 'specific');
+      },
+      setTarget(k, e) {
+         sfx.playClick();
+         this.state.specificTarget = k;
+         document.querySelectorAll('.target-btn').forEach(el => {
+             el.classList.remove('bg-synth-magenta', 'text-white', 'border-white');
+             el.classList.add('bg-synth-dark', 'text-synth-cyan', 'border-synth-cyan');
+         });
+         e.currentTarget.classList.add('bg-synth-magenta', 'text-white', 'border-white');
+         e.currentTarget.classList.remove('bg-synth-dark', 'text-synth-cyan', 'border-synth-cyan');
+      },
+      setCompanion(k) {
+         sfx.playClick();
+         this.state.companion = k;
+         document.querySelectorAll('[id^="comp-"]').forEach(el => el.classList.remove('active'));
+         document.getElementById(`comp-${k}`).classList.add('active');
+      },
+      setMode(k) {
+         sfx.playClick();
+         this.state.mode = k;
+         document.querySelectorAll('[id^="mode-"]').forEach(el => el.classList.remove('active'));
+         document.getElementById(`mode-${k}`).classList.add('active');
+      },
+
+      openModal(type) {
+         sfx.playClick();
+         const t = document.getElementById('modal-title');
+         const c = document.getElementById('modal-content');
+         
+         if(type === 'difficulty') {
+             t.innerText = "GAME DIFFICULTY";
+             c.innerHTML = "Adjust the duration and intensity of cleaning to your energy and time. <ul><li><span class='text-synth-cyan'>QUICK MAINTENANCE</span> for a light 'loot' of scattered items.</li><li><span class='text-synth-yellow'>STANDARD RESET</span> for regular hygiene.</li><li><span class='text-synth-magenta'>BOSS FIGHT</span> when you have lots of energy and time for tough stains and dirt!</li></ul>";
+         } else if(type === 'companion') {
+             t.innerText = "BODY DOUBLING (CO-OP)";
+             c.innerHTML = "The concept where the presence of another person helps with focus and motivation (ADHD tool). <ul><li><span class='text-synth-cyan'>SPARKY</span> will cheer you on and give tips.</li><li><span class='text-synth-yellow'>PIP</span> is for competitive spirit - try to be better than him!</li><li><span class='text-synth-magenta'>ZEN BUNNY</span> provides a quiet presence to avoid feeling overwhelmed.</li></ul>";
+         } else if(type === 'mode') {
+             t.innerText = "GAME MODE";
+             c.innerHTML = "How you receive tasks: <ul><li><span class='text-synth-cyan'>CLASSIC:</span> Everything is visible in logical order.</li><li><span class='text-synth-yellow'>MYSTERY (SHUFFLE):</span> For those who get bored quickly. Tasks come randomly and are hidden until the previous one is done!</li><li><span class='text-synth-magenta'>SPEEDRUN:</span> Countdown! The goal is to finish everything in the set time and earn huge bonuses.</li></ul>";
+         }
+         document.getElementById('modal-overlay').classList.remove('hidden');
+      },
+      closeModal() {
+         sfx.playClick();
+         document.getElementById('modal-overlay').classList.add('hidden');
+      },
+
+      openCustomTaskModal() {
+         sfx.playClick();
+         document.getElementById('custom-title-input').value = "";
+         document.getElementById('custom-micro-input').value = "";
+         document.getElementById('custom-task-modal').classList.remove('hidden');
+      },
+      closeCustomTaskModal() {
+         sfx.playClick();
+         document.getElementById('custom-task-modal').classList.add('hidden');
+      },
+      saveCustomTask() {
+         const title = document.getElementById('custom-title-input').value.trim();
+         const microRaw = document.getElementById('custom-micro-input').value.trim();
+         
+         if(!title) { sfx.playError(); return; }
+         
+         let microSteps = [];
+         if(microRaw) {
+             microSteps = microRaw.split(',').map(m => m.trim()).filter(m => m.length > 0).map((mTitle, idx) => {
+                 return { id: 'mc-' + Date.now() + '-' + idx, title: mTitle, completed: false };
+             });
+         }
+         
+         this.state.tasks.push({
+             id: 't-' + Date.now(), title: title, desc: "Custom Side-Quest", type: "wipe",
+             completed: false, showMicro: false, microSteps: microSteps
+         });
+         
+         sfx.playCoin();
+         this.closeCustomTaskModal();
+         
+         if(this.state.mode === 'shuffle') {
+            const done = this.state.tasks.filter(t => t.completed);
+            const pending = this.state.tasks.filter(t => !t.completed).sort(() => Math.random() - 0.5);
+            this.state.tasks = [...done, ...pending];
+         }
+         
+         this.renderTasks();
+         this.updateHUD();
+      },
+
+      startSession() {
+         sfx.playCoin();
+         
+         let raw = this.state.difficulty === 'specific' ? TASK_DATABASE.specific[this.state.specificTarget] : TASK_DATABASE[this.state.difficulty];
+         this.state.tasks = JSON.parse(JSON.stringify(raw)).map((t, i) => ({
+             id: 't-' + i, title: t.title, desc: t.desc, type: t.type, completed: false, showMicro: false,
+             microSteps: (t.micro || []).map((m, mi) => ({ id: 'm-'+i+'-'+mi, title: m, completed: false }))
+         }));
+
+         if(this.state.mode === 'shuffle') {
+             this.state.tasks.sort(() => Math.random() - 0.5);
+         }
+
+         const av = AVATARS[this.state.companion];
+         document.getElementById('active-comp-avatar').innerText = av.emoji;
+         document.getElementById('active-comp-quote').innerText = `"${av.quotes[0]}"`;
+         
+         clearInterval(this.state.quoteId);
+         this.state.quoteId = setInterval(() => {
+             const rIdx = Math.floor(Math.random() * av.quotes.length);
+             document.getElementById('active-comp-quote').innerText = `"${av.quotes[rIdx]}"`;
+         }, 10000);
+
+         this.state.timeElapsed = 0;
+         this.state.score = 0;
+         
+         if(this.state.mode === 'speedrun') {
+             let limitMins = 15;
+             if(this.state.difficulty === 'standard') limitMins = 30;
+             else if(this.state.difficulty === 'deep') limitMins = 60;
+             this.state.timeRemaining = limitMins * 60;
+         }
+
+         clearInterval(this.state.timerId);
+         this.state.timerId = setInterval(() => {
+             if(this.state.mode === 'speedrun') {
+                 if(this.state.timeRemaining > 0) this.state.timeRemaining--;
+                 this.updateTimerDisplay(this.state.timeRemaining, true);
+             } else {
+                 this.state.timeElapsed++;
+                 this.updateTimerDisplay(this.state.timeElapsed, false);
+             }
+         }, 1000);
+
+         document.getElementById('hud-diff').innerText = this.state.difficulty.toUpperCase();
+         document.getElementById('hud-mode').innerText = this.state.mode.toUpperCase();
+
+         document.getElementById('view-select').classList.add('hidden');
+         document.getElementById('view-active').classList.remove('hidden');
+         
+         this.updateHUD();
+         this.renderTasks();
+      },
+
+      updateTimerDisplay(seconds, isCountdown) {
+         const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+         const s = (seconds % 60).toString().padStart(2, '0');
+         const el = document.getElementById('hud-timer');
+         el.innerText = `${m}:${s}`;
+         
+         if(isCountdown && seconds < 60) {
+             el.classList.add('text-synth-magenta', 'blink-text');
+             el.classList.remove('text-synth-cyan');
+         } else {
+             el.classList.remove('text-synth-magenta', 'blink-text');
+             el.classList.add('text-synth-cyan');
+         }
+      },
+
+      updateHUD() {
+          document.getElementById('hud-score').innerText = this.state.score.toString().padStart(6, '0');
+      },
+
+      renderTasks() {
+         const c = document.getElementById('tasks-container');
+         c.innerHTML = '';
+         
+         let firstPendingFound = false;
+
+         this.state.tasks.forEach((t, i) => {
+             let isVisible = true;
+             if (this.state.mode === 'shuffle') {
+                 if (!t.completed) {
+                     if (firstPendingFound) isVisible = false;
+                     else firstPendingFound = true;
+                 }
+             }
+
+             if(!isVisible) return;
+
+             const pointsText = t.microSteps.length > 0 ? (t.microSteps.length * 100) + " PTS" : "500 PTS";
+
+             c.innerHTML += `
+               <div class="pixel-box p-4 ${t.completed ? 'opacity-50 border-gray-600' : ''}">
+                 <div class="flex items-start gap-4">
+                   <button onclick="app.toggleTask('${t.id}')" class="mt-1 w-6 h-6 border-2 flex items-center justify-center flex-shrink-0 ${t.completed ? 'bg-synth-cyan border-synth-cyan text-synth-dark' : 'border-gray-500 bg-synth-dark'}">
+                     ${t.completed ? '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>' : ''}
+                   </button>
+                   
+                   <div class="flex-1">
+                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                         <h4 class="font-pixel text-sm ${t.completed ? 'line-through text-gray-500' : 'text-white'}">${t.title}</h4>
+                         <div class="flex items-center gap-2">
+                             ${t.microSteps.length ? `
+                                 <button onclick="app.toggleMicro('${t.id}')" class="text-synth-cyan hover:text-white font-pixel text-[8px] mr-2 focus:outline-none transition-colors">
+                                     [CLICK TO EXPAND: ${t.microSteps.filter(m=>m.completed).length}/${t.microSteps.length}]
+                                 </button>
+                             ` : ''}
+                             <span class="font-pixel text-[10px] text-synth-yellow">${pointsText}</span>
+                         </div>
+                     </div>
+
+                     ${t.showMicro && t.microSteps.length > 0 ? `
+                       <div class="mt-4 pt-3 border-t border-gray-700 space-y-3 pl-2">
+                           ${t.microSteps.map((m, mIdx) => `
+                             <div class="flex items-start gap-3">
+                                 <button onclick="app.toggleMicroStep('${t.id}','${m.id}')" class="w-4 h-4 border border-gray-500 flex items-center justify-center flex-shrink-0 mt-0.5 ${m.completed?'bg-synth-magenta border-synth-magenta text-white':'bg-synth-dark'}">
+                                     ${m.completed ? '<i data-lucide="check" class="w-3 h-3"></i>' : ''}
+                                 </button>
+                                 <span class="font-vt text-xl ${m.completed?'line-through text-gray-500':'text-gray-300'}">${m.title} <span class="text-synth-magenta text-sm ml-2">+100</span></span>
+                             </div>
+                           `).join('')}
+                       </div>
+                     ` : ''}
+                   </div>
+                 </div>
+               </div>
+             `;
+         });
+         lucide.createIcons();
+      },
+
+      toggleTask(id) {
+         const t = this.state.tasks.find(x => x.id === id);
+         if (t) {
+             t.completed = !t.completed;
+             
+             if(t.completed) {
+                 sfx.playCoin();
+                 t.microSteps.forEach(m => {
+                     if(!m.completed) {
+                         m.completed = true;
+                         this.state.score += 100;
+                     }
+                 });
+                 if(t.microSteps.length === 0) this.state.score += 500;
+             } else {
+                 sfx.playClick();
+                 t.microSteps.forEach(m => {
+                     if(m.completed) {
+                         m.completed = false;
+                         this.state.score -= 100;
+                     }
+                 });
+                 if(t.microSteps.length === 0) this.state.score -= 500;
+             }
+             this.updateHUD();
+             this.renderTasks();
+         }
+      },
+
+      toggleMicro(id) {
+         sfx.playClick();
+         const t = this.state.tasks.find(x => x.id === id);
+         if (t) { t.showMicro = !t.showMicro; this.renderTasks(); }
+      },
+
+      toggleMicroStep(tid, mid) {
+         const t = this.state.tasks.find(x => x.id === tid);
+         const m = t.microSteps.find(x => x.id === mid);
+         if (m) {
+             m.completed = !m.completed;
+             if(m.completed) {
+                 sfx.playCoin();
+                 this.state.score += 100;
+             } else {
+                 sfx.playClick();
+                 this.state.score -= 100;
+             }
+             t.completed = t.microSteps.every(x => x.completed);
+             this.updateHUD();
+             this.renderTasks();
+         }
+      },
+
+      finishSession() {
+         sfx.playCoin();
+         clearInterval(this.state.timerId);
+         clearInterval(this.state.quoteId);
+         musicPlayer.stop();
+         
+         let baseScore = this.state.score;
+         let speedrunScore = 0;
+         let isPerfect = this.state.tasks.every(t => t.completed);
+         
+         document.getElementById('summary-base-score').innerText = baseScore.toString().padStart(6, '0');
+         const sRow = document.getElementById('summary-speedrun-row');
+         
+         if(this.state.mode === 'speedrun') {
+             sRow.classList.remove('hidden');
+             if(isPerfect && this.state.timeRemaining > 0) {
+                 speedrunScore = 1000 + (this.state.timeRemaining * 10);
+                 document.getElementById('summary-speedrun-label').innerText = "TIME BONUS";
+                 document.getElementById('summary-speedrun-score').innerText = "+" + speedrunScore;
+                 document.getElementById('summary-speedrun-score').className = "font-pixel text-xl text-synth-magenta";
+             } else if (!isPerfect && this.state.timeRemaining === 0) {
+                 speedrunScore = -2000;
+                 document.getElementById('summary-speedrun-label').innerText = "TIME OUT PENALTY";
+                 document.getElementById('summary-speedrun-score').innerText = speedrunScore;
+                 document.getElementById('summary-speedrun-score').className = "font-pixel text-xl text-red-500";
+             } else {
+                 document.getElementById('summary-speedrun-label').innerText = "NO BONUS";
+                 document.getElementById('summary-speedrun-score').innerText = "0";
+             }
+         } else {
+             sRow.classList.add('hidden');
+         }
+
+         let totalScore = baseScore + speedrunScore;
+         if (totalScore < 0) totalScore = 0;
+         
+         this.state.score = totalScore;
+         document.getElementById('summary-total-score').innerText = totalScore.toString().padStart(6, '0');
+
+         document.getElementById('view-active').classList.add('hidden');
+         document.getElementById('view-celebrate').classList.remove('hidden');
+         
+         if(totalScore > 0) {
+             document.getElementById('highscore-entry').classList.remove('hidden');
+             document.getElementById('hall-of-fame').classList.add('hidden');
+             document.getElementById('hs-initials').value = "";
+             document.getElementById('hs-initials').focus();
+         } else {
+             document.getElementById('highscore-entry').classList.add('hidden');
+             this.showHighscores();
+         }
+      },
+
+      saveHighscore() {
+          const initials = document.getElementById('hs-initials').value.trim().toUpperCase() || "AAA";
+          sfx.playClick();
+          
+          let hsList = JSON.parse(localStorage.getItem('cleanflow_hs_en') || "[]");
+          hsList.push({ name: initials.substring(0,3), score: this.state.score });
+          hsList.sort((a,b) => b.score - a.score);
+          hsList = hsList.slice(0, 5);
+          
+          localStorage.setItem('cleanflow_hs_en', JSON.stringify(hsList));
+          
+          document.getElementById('highscore-entry').classList.add('hidden');
+          this.showHighscores();
+      },
+
+      showHighscores() {
+          const hsList = JSON.parse(localStorage.getItem('cleanflow_hs_en') || "[]");
+          const container = document.getElementById('hs-list');
+          container.innerHTML = "";
+          
+          if(hsList.length === 0) {
+              container.innerHTML = "<div class='text-center font-vt text-xl text-gray-500'>NO DATA</div>";
+          } else {
+              hsList.forEach((entry, idx) => {
+                  let colorClass = idx === 0 ? "text-synth-yellow" : (idx === 1 ? "text-gray-300" : (idx === 2 ? "text-amber-600" : "text-synth-cyan"));
+                  container.innerHTML += `
+                     <div class="flex justify-between items-center font-pixel text-lg ${colorClass}">
+                         <span>${idx+1}. ${entry.name}</span>
+                         <span>${entry.score.toString().padStart(6, '0')}</span>
+                     </div>
+                  `;
+              });
+          }
+          document.getElementById('hall-of-fame').classList.remove('hidden');
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => app.init());
+  </script>
+</body>
+</html>

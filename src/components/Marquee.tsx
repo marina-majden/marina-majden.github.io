@@ -16,7 +16,7 @@ export const Marquee: React.FC<MarqueeProps> = ({
 
   return (
     <div
-      className={`marquee-container py-4 my-6 select-none border-y border-card-border bg-[rgba(14,15,28,0.45)] backdrop-blur-sm ${className}`}
+      className={`marquee-container py-4 my-6 select-none border-y border-card-border bg-[rgba(14,15,28,0.88)] ${className}`}
       aria-hidden="true"
     >
       <div className="marquee-track" style={{ animationDuration: `${speed}s` }}>

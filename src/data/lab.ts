@@ -221,6 +221,16 @@ export interface ExperimentalApp {
 }
 
 export const experimentalApps: ExperimentalApp[] = [
+     {
+        id: "cleanflow",
+        title: "CleanFlow",
+        subtitle: "Kako kućanske poslove učiniti zanimljivima?",
+        description: "Pretvorili smo čišćenje u izazov i igru! Dok riješavate izazove, aplikacija vodi računa da vaše kućanstvo bude sistematično pospremano. ",
+        tags: ["Igra", "Zadaci", "Organizator", "Kućanstvo", "Spremanje", "Synthwave", "8-bit Pixel Art"],
+        route: "/apps/cleanflow",
+        directUrl: "/apps/cleanflow.html",
+        badge: "Novo / New",
+    },
     {
         id: "elementos",
         title: "Elementos",
@@ -275,7 +285,7 @@ export const experimentalApps: ExperimentalApp[] = [
         description: "Interaktivna miješalica tonova i vizualni laboratorij za testiranje paleta.",
         tags: ["Color Science", "Tool", "Canvas"],
         route: "/apps/color-chemist",
-        directUrl: "/apps/color-chemist/index.html",
+        directUrl: "/apps/colorchemist.html",
     },
     {
         id: "flowchart",
@@ -296,13 +306,13 @@ export const experimentalApps: ExperimentalApp[] = [
         directUrl: "/apps/countdown/index.html",
     },
     {
-        id: "deltarune",
-        title: "Deltarune Experience",
-        subtitle: "Pikselizirana avantura",
-        description: "Retro interaktivna web prezentacija s retro pikselnom estetikom.",
+        id: "tarot",
+        title: "Tarot Storytelling",
+        subtitle: "Kreativno koristimo tarot karte za stvaranje priče",
+        description: "Raspored nam donosi radnju, likove, njihove osobine, odnose i razvoj, a priču pričamo vodeći se slikama tarota!",
         tags: ["Pixel Art", "Retro", "Interactive"],
-        route: "/apps/deltarune",
-        directUrl: "/apps/deltarune/index.html",
+        route: "/apps/tarot",
+        directUrl: "/apps/tarot.html",
     },
     {
         id: "plur",

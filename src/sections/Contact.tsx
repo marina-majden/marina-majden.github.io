@@ -10,7 +10,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useServices } from "../context/ServicesContext";
-import { useLanguage } from "../components/LanguageContext";
+import { useLanguage } from "../context/LanguageContext";
 import { showToast } from "../components/ToastHub";
 
 interface ContactContent {

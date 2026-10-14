@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import TemplateModal from "@/components/TemplateModal";
-import { FALLBACK_IMAGE } from "@/constants";
+import { FALLBACK_IMAGE } from "@/data/constants";
 
 export interface TemplateItem {
   id: string;

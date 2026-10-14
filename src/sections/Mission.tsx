@@ -3,7 +3,7 @@ import SectionTitle from "../components/SectionTitle";
 import Reveal from "@/components/Reveal";
 import Card3D from "@/components/Card3D";
 import Marquee from "@/components/Marquee";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface AboutContent {
   title: string;
@@ -91,7 +91,7 @@ const Mission: React.FC<AboutProps> = ({ t }) => {
         </Reveal>
 
         {/* Marquee underneath looping 'in * love * in * pixel *' */}
-        <div className="w-full mt-10">
+        <div className="w-screen z-50 mt-10">
           <Marquee />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { TemplateItem } from "@/data/data.ts";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { FALLBACK_IMAGE } from "@/data/constants.ts";
 import {
     Target,

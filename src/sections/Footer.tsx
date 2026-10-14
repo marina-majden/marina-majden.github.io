@@ -1,6 +1,6 @@
 import React from "react";
 import { MiniPixelHeart } from "@/components/PixelArt";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface FooterContent {
   copyright: string;

@@ -9,7 +9,7 @@ import {
   Sparkles,
   ArrowDown,
 } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { useServices } from "@/context/ServicesContext";
 import { showToast } from "./ToastHub";
 

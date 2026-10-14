@@ -15,7 +15,7 @@ import {
   ExternalLink,
   Sparkles,
 } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ProjectItem {
   title: string;

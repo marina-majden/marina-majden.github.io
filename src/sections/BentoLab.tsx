@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import { experimentalApps, ExperimentalApp } from "@/data/lab";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   PixelMoon,
   PixelBrush,
@@ -19,19 +19,23 @@ import {
   Compass,
   Timer,
   Music,
+  VenusAndMars
 } from "lucide-react";
+import cleanflowLogo from "@/assets/img/cleanflow-logo.png";
 
 export const BentoLab: React.FC = () => {
   const { lang } = useLanguage();
 
   const getAppIcon = (id: string) => {
     switch (id) {
+      case "cleanflow":
+        return <img src={cleanflowLogo} alt="cleanflow-logo" width="72px" height="72px" />;
       case "elementos":
         return <PixelMoon scale={0.75} className="scale-75" />;
-      case "dreamlike":
+      case "elementos":
         return <PixelBrush scale={0.75} className="scale-75" />;
-      case "deltarune":
-        return <PixelStar scale={0.8} className="scale-75" />;
+      case "tarot":
+        return <VenusAndMars size={36} className="text-neon-violet" />;
       case "liquid":
         return <Box size={24} className="text-neon-blue" />;
       case "neural-network":
@@ -82,11 +86,11 @@ export const BentoLab: React.FC = () => {
     appsById[a.id] = a;
   });
 
+  const cleanflow = appsById["cleanflow"];
   const elementos = appsById["elementos"];
-  const dreamlike = appsById["dreamlike"];
   const liquid = appsById["liquid"];
   const chromalab = appsById["chromalab"];
-  const deltarune = appsById["deltarune"];
+  const tarot = appsById["tarot"];
   const neural = appsById["neural-network"];
   const chemist = appsById["color-chemist"];
   const flowchart = appsById["flowchart"];
@@ -101,22 +105,22 @@ export const BentoLab: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <Reveal>
           <SectionTitle>
-            {lang === "hr" ? "Laboratorij & Mini Webovi" : "Lab & Micro-Sites"}
+            {lang === "hr" ? "Igralište" : "Playground"}
           </SectionTitle>
         </Reveal>
 
         <Reveal delay={100}>
           <p className="text-gray-300 max-w-2xl mx-auto text-base lg:text-lg text-center mt-3 mb-12">
             {lang === "hr"
-              ? "Igralište za kreativno kodiranje, interaktivne eksperimente, 3D svjetove i slatke web projekte s vlastitim pixel art identitetom."
-              : "A creative coding playground of interactive experiments, 3D simulations, and cute websites with custom pixel art emblems."}
+              ? "Prostor za moje autorske projekte rođene iz snova i mašte, razvijane u slobodno vrijeme, bez posebnog cilja. Ako vas ove besplatne aplikacije i stranice barem malo nasmiju i zabave, postigle su više nego smo se mogli nadati!"
+              : "A space for my personal projects born from dreams and imagination, developed in my free time, without any specific goal. If these free apps and websites bring you at least a little laughter and fun, they have achieved more than we could have hoped for!"}
           </p>
         </Reveal>
 
         {/* 12-Column Editorial Bento Grid */}
         <div className="bento-grid">
-          {/* Bento Box 1: Elementos (Hero Featured - 7 cols) */}
-          {elementos && (
+          {/* Bento Box 1: CleanFlow(Hero Featured - 7 cols) */}
+          {cleanflow && (
             <div
               className="bento-card col-span-12 lg:col-span-7 row-span-2 group min-h-80"
               style={
@@ -131,24 +135,80 @@ export const BentoLab: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <span className="bento-eyebrow">
-                    01 // Interactive Microsite
+                    01 // Housekeeping & Cleaning Organization & Motivation App
                   </span>
-                  {elementos.badge && (
+                  {cleanflow.badge && (
                     <span className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold bg-[rgba(0,245,255,0.15)] text-neon-blue border border-neon-blue">
-                      {elementos.badge}
+                      {cleanflow.badge}
                     </span>
                   )}
                 </div>
                 <h3 className="text-3xl font-headings font-extrabold text-white mb-2">
-                  {elementos.title}
+                  {cleanflow.title}
                 </h3>
                 <p className="text-sm text-slate-300 max-w-md leading-relaxed">
-                  {elementos.description}
+                  {cleanflow.description}
                 </p>
               </div>
 
               {/* Center Pixel Emblem */}
               <div className="my-auto flex items-center justify-center py-4">
+                {getAppIcon("cleanflow")}
+              </div>
+
+              <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-4">
+                <div className="flex flex-wrap gap-1.5">
+                  {cleanflow.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 text-slate-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                {renderAppLink(
+                  cleanflow,
+                  <>
+                    <span>{lang === "hr" ? "Pokreni" : "Launch"}</span>
+                    <ArrowUpRight size={22} />
+                  </>,
+                  "button-base button-ghost text-xs px-4 py-1.5 min-h-0",
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Bento Box 2: Elementos (Featured Medium - 5 cols) */}
+          {elementos && (
+            <div
+              className="bento-card col-span-12 lg:col-span-5 row-span-2 group min-h-80"
+              style={
+                {
+                  "--bento-accent": "var(--color-neon-pink)",
+                } as React.CSSProperties
+              }
+            >
+              <div className="absolute bottom-0 right-0 w-64 h-64 bg-[radial-gradient(circle,rgba(255,0,170,0.15)_0%,transparent_70%)] pointer-events-none" />
+
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="bento-eyebrow">02 // Ambient Space</span>
+                  {elementos.badge && (
+                    <span className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold bg-[rgba(255,0,170,0.15)] text-neon-pink border border-neon-pink">
+                      {elementos.badge}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-2xl font-headings font-extrabold text-white mb-2">
+                  {elementos.title}
+                </h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  {elementos.description}
+                </p>
+              </div>
+
+              <div className="my-auto flex items-center justify-center py-2">
                 {getAppIcon("elementos")}
               </div>
 
@@ -165,62 +225,6 @@ export const BentoLab: React.FC = () => {
                 </div>
                 {renderAppLink(
                   elementos,
-                  <>
-                    <span>{lang === "hr" ? "Pokreni" : "Launch"}</span>
-                    <ArrowUpRight size={15} />
-                  </>,
-                  "button-base button-ghost text-xs px-4 py-1.5 min-h-0",
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Bento Box 2: Dreamlike (Featured Medium - 5 cols) */}
-          {dreamlike && (
-            <div
-              className="bento-card col-span-12 lg:col-span-5 row-span-2 group min-h-80"
-              style={
-                {
-                  "--bento-accent": "var(--color-neon-pink)",
-                } as React.CSSProperties
-              }
-            >
-              <div className="absolute bottom-0 right-0 w-64 h-64 bg-[radial-gradient(circle,rgba(255,0,170,0.15)_0%,transparent_70%)] pointer-events-none" />
-
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="bento-eyebrow">02 // Ambient Space</span>
-                  {dreamlike.badge && (
-                    <span className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold bg-[rgba(255,0,170,0.15)] text-neon-pink border border-neon-pink">
-                      {dreamlike.badge}
-                    </span>
-                  )}
-                </div>
-                <h3 className="text-2xl font-headings font-extrabold text-white mb-2">
-                  {dreamlike.title}
-                </h3>
-                <p className="text-sm text-slate-300 leading-relaxed">
-                  {dreamlike.description}
-                </p>
-              </div>
-
-              <div className="my-auto flex items-center justify-center py-2">
-                {getAppIcon("dreamlike")}
-              </div>
-
-              <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-4">
-                <div className="flex flex-wrap gap-1.5">
-                  {dreamlike.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 text-slate-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                {renderAppLink(
-                  dreamlike,
                   <>
                     <span>{lang === "hr" ? "Istraži" : "Explore"}</span>
                     <ArrowUpRight size={15} />
@@ -299,8 +303,8 @@ export const BentoLab: React.FC = () => {
             </div>
           )}
 
-          {/* Bento Box 5: Deltarune Experience (3 cols) */}
-          {deltarune && (
+          {/* Bento Box 5: tarot Experience (3 cols) */}
+          {tarot && (
             <div
               className="bento-card col-span-12 sm:col-span-6 lg:col-span-3 group"
               style={
@@ -311,14 +315,14 @@ export const BentoLab: React.FC = () => {
             >
               <div>
                 <div className="bento-icon-circle">
-                  {getAppIcon("deltarune")}
+                  {getAppIcon("tarot")}
                 </div>
                 <span className="bento-eyebrow">Pixel Art • Retro</span>
                 <h3 className="text-xl font-headings font-bold text-white">
-                  {deltarune.title}
+                  {tarot.title}
                 </h3>
                 <p className="text-xs text-slate-300 line-clamp-2">
-                  {deltarune.description}
+                  {tarot.description}
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-white/10 flex justify-between items-center">
@@ -326,7 +330,7 @@ export const BentoLab: React.FC = () => {
                   Retro 8-bit
                 </span>
                 {renderAppLink(
-                  deltarune,
+                  tarot,
                   <ArrowUpRight size={15} />,
                   "text-neon-yellow hover:scale-125 transition-transform",
                 )}

@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Mashina</title>
+    <meta
+      name="description"
+      content="Showcase of the Pixelated Love design system: neon gradients, glass cards, feature cards, project cards, and reusable class system."
+    />
+    <style>
+      :root {
+        --page-bg: #07070e;
+        --page-bg-soft: #0d1020;
+        --card-bg: rgba(13, 16, 30, 0.8);
+        --card-bg-strong: rgba(17, 20, 36, 0.92);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --text-main: #f7fbff;
+        --text-soft: #d7e3f2;
+        --text-muted: #9aaac0;
+        --neon-cyan: #00f5ff;
+        --neon-violet: #bf00ff;
+        --neon-pink: #ff00aa;
+        --neon-green: #00ff88;
+        --neon-yellow: #ffd24d;
+        --radius-sm: 12px;
+        --radius-md: 18px;
+        --radius-lg: 24px;
+        --radius-xl: 32px;
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background:
+          radial-gradient(
+            circle at top,
+            rgba(191, 0, 255, 0.16),
+            transparent 32%
+          ),
+          radial-gradient(
+            circle at 80% 12%,
+            rgba(0, 245, 255, 0.12),
+            transparent 28%
+          ),
+          var(--page-bg);
+        color: var(--text-main);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 24px 80px;
+      }
+
+      .site-nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(7, 7, 14, 0.78);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .site-nav .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: rgba(17, 20, 36, 0.9);
+        border: 1px solid rgba(0, 245, 255, 0.25);
+      }
+
+      .mini-pixel-heart {
+        width: 6px;
+        height: 6px;
+        background: transparent;
+        box-shadow:
+          6px 0 #ff00aa,
+          12px 0 #ff00aa,
+          18px 0 #bf00ff,
+          24px 0 #bf00ff,
+          0 6px #ff00aa,
+          6px 6px #ffffff,
+          12px 6px #ff00aa,
+          18px 6px #bf00ff,
+          24px 6px #bf00ff,
+          0 12px #ff00aa,
+          6px 12px #ff00aa,
+          12px 12px #bf00ff,
+          18px 12px #bf00ff,
+          24px 12px #00f5ff,
+          12px 18px #bf00ff,
+          18px 18px #bf00ff,
+          18px 24px #bf00ff;
+        transform: translate(-10px, -6px);
+      }
+
+      .brand-copy {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .brand-name {
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-sub {
+        color: var(--neon-cyan);
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: var(--text-soft);
+        padding: 8px 12px;
+        border-radius: 9999px;
+        transition: 180ms ease;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-main);
+      }
+
+      .background-card,
+      .background-bento,
+      .box-text,
+      .box-bento,
+      .card-feature,
+      .card-project,
+      .card-template,
+      .swatch {
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+      }
+
+      .background-card {
+        background: linear-gradient(
+          135deg,
+          rgba(12, 15, 28, 0.88),
+          rgba(16, 20, 35, 0.8)
+        );
+        border-radius: 32px;
+      }
+
+      .background-bento,
+      .box-bento {
+        background: linear-gradient(
+          180deg,
+          rgba(19, 24, 39, 0.85),
+          rgba(12, 15, 24, 0.9)
+        );
+        border-radius: 24px;
+        padding: 1.25rem;
+      }
+
+      .box-text {
+        background: rgba(14, 18, 30, 0.7);
+        border-radius: 18px;
+        padding: 1.25rem;
+      }
+
+      .card-feature,
+      .card-project,
+      .card-template {
+        position: relative;
+        border-radius: 32px;
+        background:
+          radial-gradient(
+            circle at 18% 15%,
+            rgba(191, 0, 255, 0.2),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 80% 22%,
+            rgba(255, 0, 170, 0.18),
+            transparent 30%
+          ),
+          linear-gradient(135deg, rgba(12, 15, 24, 0.9), rgba(7, 7, 14, 0.96));
+        padding: 1.5rem;
+        overflow: hidden;
+      }
+
+      .card-feature::before,
+      .card-project::before,
+      .card-template::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1.25px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 245, 255, 0.85),
+          rgba(255, 255, 255, 0.08) 30%,
+          rgba(255, 255, 255, 0.04) 60%,
+          rgba(255, 0, 170, 0.9)
+        );
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      .card-feature {
+        min-height: 540px;
+      }
+
+      .card-project,
+      .card-template {
+        min-height: 330px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--neon-cyan);
+        font-weight: 700;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .chip,
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-soft);
+        font-size: 0.62rem;
+        line-height: 1;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 0.5rem 0.7rem;
+      }
+
+      .chip-soft {
+        background: rgba(0, 245, 255, 0.08);
+        border-color: rgba(0, 245, 255, 0.2);
+        color: var(--neon-cyan);
+      }
+
+      .badge-live {
+        background: rgba(0, 255, 136, 0.08);
+        border-color: rgba(0, 255, 136, 0.25);
+        color: var(--neon-green);
+      }
+
+      .button-primary,
+      .button-secondary,
+      .button-ghost,
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 9999px;
+        padding: 0.8rem 1.4rem;
+        font-size: 0.72rem;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease,
+          background 0.2s ease;
+        cursor: pointer;
+      }
+
+      .button-primary {
+        background: linear-gradient(
+          135deg,
+          var(--neon-cyan),
+          var(--neon-violet)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #07070e;
+        box-shadow: 0 0 24px rgba(0, 245, 255, 0.2);
+      }
+
+      .button-primary:hover,
+      .button-secondary:hover,
+      .button-ghost:hover,
+      .button-link:hover {
+        transform: translateY(-2px);
+      }
+
+      .button-secondary {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--text-soft);
+      }
+
+      .button-ghost {
+        background: transparent;
+        border: 1px solid rgba(0, 245, 255, 0.35);
+        color: var(--neon-cyan);
+      }
+
+      .button-link {
+        padding-inline: 0;
+        background: transparent;
+        border: 0;
+        color: var(--neon-cyan);
+        letter-spacing: 0.12em;
+      }
+
+      .pixel-heart-hero {
+        position: relative;
+        width: 14px;
+        height: 14px;
+        background: transparent;
+        box-shadow:
+          14px 0 #ff00aa,
+          28px 0 #ff00aa,
+          56px 0 #bf00ff,
+          70px 0 #bf00ff,
+          0 14px #ff00aa,
+          14px 14px #ffffff,
+          28px 14px #ff00aa,
+          42px 14px #bf00ff,
+          56px 14px #bf00ff,
+          70px 14px #00f5ff,
+          84px 14px #00f5ff,
+          0 28px #ff00aa,
+          14px 28px #ff00aa,
+          28px 28px #bf00ff,
+          42px 28px #bf00ff,
+          56px 28px #00f5ff,
+          70px 28px #00f5ff,
+          84px 28px #00f5ff,
+          14px 42px #ff00aa,
+          28px 42px #bf00ff,
+          42px 42px #bf00ff,
+          56px 42px #00f5ff,
+          70px 42px #00f5ff,
+          28px 56px #bf00ff,
+          42px 56px #bf00ff,
+          56px 56px #00f5ff,
+          42px 70px #bf00ff;
+        animation: floatPixelHeart 4s ease-in-out infinite;
+      }
+
+      @keyframes floatPixelHeart {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-2deg);
+          filter: drop-shadow(0 0 15px rgba(255, 0, 170, 0.45));
+        }
+        50% {
+          transform: translateY(-12px) rotate(2deg);
+          filter: drop-shadow(0 0 25px rgba(0, 245, 255, 0.45));
+        }
+      }
+
+      .grid {
+        display: grid;
+        gap: 1.2rem;
+      }
+
+      .two-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .three-col {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .space-between {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .hero {
+        padding: 2rem 0 1rem;
+      }
+
+      .hero-panel {
+        padding: 2rem;
+      }
+
+      .hero-panel h1 {
+        margin: 0.8rem 0 0.8rem;
+        font-size: clamp(2.4rem, 4vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.06em;
+      }
+
+      .hero-panel p {
+        margin: 0;
+        color: var(--text-soft);
+        max-width: 58ch;
+      }
+
+      .head-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 1.4rem;
+      }
+
+      .section {
+        margin-top: 2rem;
+      }
+
+      .section-head {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(1.5rem, 2vw, 2.3rem);
+      }
+
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .swatch {
+        border-radius: 18px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .swatch-color {
+        height: 72px;
+        width: 100%;
+      }
+
+      .swatch-meta {
+        padding: 10px 12px 14px;
+        font-size: 0.72rem;
+      }
+
+      .swatch-meta strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .token-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .token-item {
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .token-item code {
+        display: block;
+        color: var(--neon-cyan);
+        font-size: 0.76rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .token-item span {
+        color: var(--text-muted);
+        font-size: 0.74rem;
+      }
+
+      .class-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .class-card {
+        border-radius: 18px;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--card-border);
+      }
+
+      .class-card pre {
+        margin: 0.8rem 0 0;
+        white-space: pre-wrap;
+        background: rgba(4, 8, 18, 0.7);
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #dffbff;
+        font-size: 0.74rem;
+        overflow: auto;
+      }
+
+      .code-label {
+        color: var(--neon-pink);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.66rem;
+      }
+
+      @media (max-width: 760px) {
+        .two-col,
+        .three-col,
+        .swatches,
+        .token-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .site-nav .container,
+        .section-head,
+        .space-between {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Main navigation">
+      <div class="container">
+        <div class="brand" aria-label="Pixelated Love brand">
+          <div class="brand-mark">
+            <div class="mini-pixel-heart" aria-hidden="true"></div>
+          </div>
+          <div class="brand-copy">
+            <span class="brand-name">Pixelated Love</span>
+            <span class="brand-sub">Design system</span>
+          </div>
+        </div>
+
+        <div class="nav-links" aria-label="Sections">
+          <a href="#tokens">Tokens</a>
+          <a href="#buttons">Buttons</a>
+          <a href="#cards">Cards</a>
+          <a href="#layout">Layout</a>
+          <a href="#classes">Classes</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <header class="hero">
+        <section class="background-card hero-panel">
+          <div class="eyebrow">Pixelated Love — system</div>
+          <h1>Reusable classes for the whole page.</h1>
+          <p>
+            A dark cosmic visual language with glass surfaces, neon contrast,
+            and tactile motion. Every section below is built from reusable
+            components that can be composed without custom CSS.
+          </p>
+
+          <div class="head-actions">
+            <button class="button-primary" type="button">Primary action</button>
+            <button class="button-secondary" type="button">Secondary</button>
+            <button class="button-ghost" type="button">Ghost</button>
+          </div>
+        </section>
+      </header>
+
+      <section id="tokens" class="section">
+        <div class="section-head">
+          <h2>Color tokens and backgrounds</h2>
+          <span class="eyebrow">Foundation</span>
+        </div>
+
+        <div class="grid two-col">
+          <div class="box-text">
+            <p class="eyebrow">box-text</p>
+            <h3 style="margin: 0.8rem 0 0.5rem; font-size: 1.5rem">
+              Narrative block
+            </h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Use text blocks for short explanations, summaries, or supportive
+              context with a consistent soft-glass treatment.
+            </p>
+          </div>
+
+          <div class="box-bento">
+            <div class="space-between">
+              <span class="eyebrow">box-bento</span>
+              <span class="badge-live">live</span>
+            </div>
+            <h3 style="margin: 0.6rem 0 0.25rem; font-size: 1.25rem">
+              Bento panel
+            </h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Ideal for grouped metrics and modular content composition.
+            </p>
+          </div>
+        </div>
+
+        <div class="swatches" style="margin-top: 1.4rem">
+          <div class="swatch">
+            <div class="swatch-color" style="background: #00f5ff"></div>
+            <div class="swatch-meta"><strong>neon-cyan</strong>#00f5ff</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #bf00ff"></div>
+            <div class="swatch-meta"><strong>neon-violet</strong>#bf00ff</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #ff00aa"></div>
+            <div class="swatch-meta"><strong>neon-pink</strong>#ff00aa</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #00ff88"></div>
+            <div class="swatch-meta"><strong>neon-green</strong>#00ff88</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #ffd24d"></div>
+            <div class="swatch-meta"><strong>neon-yellow</strong>#ffd24d</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="buttons" class="section">
+        <div class="section-head">
+          <h2>Buttons</h2>
+          <span class="eyebrow">Actions</span>
+        </div>
+
+        <div
+          class="stack"
+          style="
+            padding: 1rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+          "
+        >
+          <div style="display: flex; flex-wrap: wrap; gap: 12px">
+            <button class="button-primary" type="button">button-primary</button>
+            <button class="button-secondary" type="button">
+              button-secondary
+            </button>
+            <button class="button-ghost" type="button">button-ghost</button>
+            <button class="button-link" type="button">button-link</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="cards" class="section">
+        <div class="section-head">
+          <h2>Cards</h2>
+          <span class="eyebrow">Feature system</span>
+        </div>
+
+        <div class="grid three-col">
+          <article class="card-feature">
+            <div class="space-between">
+              <span class="eyebrow">showcase</span>
+              <span class="badge-live">featured</span>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 2rem;
+              "
+            >
+              <div class="pixel-heart-hero" aria-label="Pixel heart"></div>
+            </div>
+
+            <h3
+              style="margin: 2rem 0 0.6rem; font-size: 1.9rem; line-height: 1.1"
+            >
+              card-feature
+            </h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Largest, most expressive card for major propositions, value
+              narratives, and premium highlight moments.
+            </p>
+          </article>
+
+          <article class="card-project">
+            <span class="chip chip-soft">card-project</span>
+            <h3 style="margin: 1.2rem 0 0.5rem; font-size: 1.4rem">
+              Project card
+            </h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Best used for case studies, work summaries, and portfolio entries.
+            </p>
+
+            <div style="margin-top: 1rem; display: grid; gap: 0.7rem">
+              <div class="box-text" style="padding: 0.8rem 0.9rem">
+                <div
+                  class="space-between"
+                  style="
+                    font-size: 0.66rem;
+                    letter-spacing: 0.16em;
+                    text-transform: uppercase;
+                    color: var(--text-muted);
+                  "
+                >
+                  <span>Brand system</span>
+                  <span>Live</span>
+                </div>
+                <div
+                  style="
+                    margin-top: 0.5rem;
+                    color: var(--text-main);
+                    font-weight: 600;
+                  "
+                >
+                  Neon Commerce
+                </div>
+              </div>
+              <div class="box-text" style="padding: 0.8rem 0.9rem">
+                <div
+                  class="space-between"
+                  style="
+                    font-size: 0.66rem;
+                    letter-spacing: 0.16em;
+                    text-transform: uppercase;
+                    color: var(--text-muted);
+                  "
+                >
+                  <span>UX direction</span>
+                  <span>Concept</span>
+                </div>
+                <div
+                  style="
+                    margin-top: 0.5rem;
+                    color: var(--text-main);
+                    font-weight: 600;
+                  "
+                >
+                  Signal Lab
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card-template">
+            <span class="chip chip-soft">card-template</span>
+            <h3 style="margin: 1.2rem 0 0.5rem; font-size: 1.4rem">
+              Template card
+            </h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Crafted for reusable modules, gallery items, and starter
+              templates.
+            </p>
+
+            <div style="margin-top: 1rem; display: grid; gap: 0.7rem">
+              <div class="background-bento" style="padding: 0.9rem">
+                <div class="space-between">
+                  <span>Landing page</span>
+                  <span class="badge">high conversion</span>
+                </div>
+              </div>
+              <div class="background-bento" style="padding: 0.9rem">
+                <div class="space-between">
+                  <span>Portfolio</span>
+                  <span class="badge">work showcase</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="layout" class="section">
+        <div class="section-head">
+          <h2>Layout blocks</h2>
+          <span class="eyebrow">Structure</span>
+        </div>
+
+        <div class="grid three-col">
+          <div
+            class="background-card"
+            style="padding: 1.25rem; border-radius: 22px"
+          >
+            <span class="eyebrow">background-card</span>
+            <h3 style="margin: 0.8rem 0 0.25rem">Hero / section shell</h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Used as the primary elevated container for campaigns, banners, and
+              calls to action.
+            </p>
+          </div>
+
+          <div class="background-bento" style="padding: 1.25rem">
+            <span class="eyebrow">background-bento</span>
+            <h3 style="margin: 0.8rem 0 0.25rem">Support panel</h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Secondary surface for metadata, summaries, and compact grouped
+              content.
+            </p>
+          </div>
+
+          <div class="box-bento">
+            <span class="eyebrow">box-bento</span>
+            <h3 style="margin: 0.8rem 0 0.25rem">Modular block</h3>
+            <p style="margin: 0; color: var(--text-soft)">
+              Works well for micro-UI blocks that need a consistent layered
+              module treatment.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="classes" class="section">
+        <div class="section-head">
+          <h2>Class reference</h2>
+          <span class="eyebrow">Use directly</span>
+        </div>
+
+        <div class="class-list">
+          <div class="class-card">
+            <span class="code-label">button-primary</span>
+            <pre>
+.button-primary {
+  background: linear-gradient(135deg, #00f5ff, #bf00ff);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #07070e;
+  border-radius: 9999px;
+}</pre
+            >
+          </div>
+
+          <div class="class-card">
+            <span class="code-label">button-secondary</span>
+            <pre>
+.button-secondary {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #d7e3f2;
+  border-radius: 9999px;
+}</pre
+            >
+          </div>
+
+          <div class="class-card">
+            <span class="code-label">card-feature</span>
+            <pre>
+.card-feature {
+  background: radial-gradient(...), linear-gradient(...);
+  border-radius: 32px;
+  min-height: 540px;
+  padding: 1.5rem;
+}</pre
+            >
+          </div>
+
+          <div class="class-card">
+            <span class="code-label">card-project</span>
+            <pre>
+.card-project {
+  border-radius: 32px;
+  min-height: 330px;
+  background: linear-gradient(...);
+  padding: 1.5rem;
+}</pre
+            >
+          </div>
+
+          <div class="class-card">
+            <span class="code-label">card-template</span>
+            <pre>
+.card-template {
+  border-radius: 32px;
+  min-height: 330px;
+  background: linear-gradient(...);
+  padding: 1.5rem;
+}</pre
+            >
+          </div>
+
+          <div class="class-card">
+            <span class="code-label">box-text</span>
+            <pre>
+.box-text {
+  background: rgba(14,18,30,0.7);
+  border-radius: 18px;
+  padding: 1.25rem;
+}</pre
+            >
+          </div>
+
+          <div class="class-card">
+            <span class="code-label">box-bento</span>
+            <pre>
+.box-bento {
+  background: linear-gradient(...);
+  border-radius: 24px;
+  padding: 1.25rem;
+}</pre
+            >
+          </div>
+
+          <div class="class-card">
+            <span class="code-label">background-page</span>
+            <pre>
+.background-page {
+  background:
+    radial-gradient(circle at top, rgba(...)),
+    #07070e;
+}</pre
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

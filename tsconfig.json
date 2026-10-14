@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vite/client", "vitest/globals"]
   },
-  "include": ["src", "unused/InteractiveCard.tsx", "unused/Templates.tsx"]
+  "include": ["src", "unused/InteractiveCard.tsx", "unused/Templates.tsx", "unused/Contact.tsx"]
 }

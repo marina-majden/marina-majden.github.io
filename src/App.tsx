@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./AppRoutes";
-import { LanguageProvider } from "./components/LanguageContext";
+import { LanguageProvider } from "./context/LanguageContext";
 import { CartProvider } from "./context/CartContext";
 
 function App() {

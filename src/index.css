@@ -101,6 +101,12 @@
     --color-neon-pink: #ff00aa;
     --color-neon-green: #00ff88;
     --color-neon-yellow: #ffd24d;
+     --color-neon-cyan: #00f5ff;
+    --color-neon-blue: #00aaff;
+    --color-neon-violet: #bf00ff;
+    --color-neon-pink:  #00FFEA;
+    --color-neon-green: #008CFF;
+    --color-neon-yellow: #B700FF;
 
     --title-gradient:
         radial-gradient(
@@ -1023,31 +1029,17 @@
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    mask-image: linear-gradient(
-        to right,
-        transparent,
-        #000 15%,
-        #000 85%,
-        transparent
-    );
-    -webkit-mask-image: linear-gradient(
-        to right,
-        transparent,
-        #000 15%,
-        #000 85%,
-        transparent
-    );
 }
 
 .marquee-track {
     display: inline-flex;
     align-items: center;
     width: max-content;
-    animation: marqueeScroll 20s linear infinite;
+    animation: marqueeScroll 20s ease infinite;
 }
 
 .marquee-track:hover {
-    animation-play-state: paused;
+    animation: marqueeScroll 10s ease-in-out infinite reverse;
 }
 
 @keyframes marqueeScroll {
