@@ -10,6 +10,12 @@ import Mission from "./Mission.tsx";
 import { useLanguage } from "@/context/LanguageContext.tsx";
 import { ServicesProvider } from "@/context/ServicesContext";
 import ToastHub from "@/components/ToastHub";
+import {
+  MiniPixelHeart,
+  PixelHeart,
+  PixelHeartHero,
+  WMHeartLogo,
+} from "@/components/PixelArt.tsx";
 
 const BentoLab = lazy(() => import("./BentoLab.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
@@ -54,7 +60,8 @@ const Home: React.FC = () => {
           t={t}
         />
         <Hero t={t} scrollToSection={scrollToSection} />
-        <Mission t={t} />   
+
+        <Mission t={t} />
         <Suspense fallback={<AtomLoader />}>
           <Templates t={t} scrollToSection={scrollToSection} />
         </Suspense>

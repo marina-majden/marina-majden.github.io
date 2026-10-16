@@ -1,0 +1,44 @@
+<svg
+        width={52 * scale}
+        height={48 * scale}
+        viewBox="0 0 52 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="overflow-visible"
+      >
+        
+        <rect x="8" y="0" width="8" height="8" fill="#ff00aa" />
+        <rect x="16" y="0" width="8" height="8" fill="#ff3cac" />
+        <rect x="28" y="0" width="8" height="8" fill="#bf00ff" />
+        <rect x="36" y="0" width="8" height="8" fill="#8158ff" />
+
+        <rect x="0" y="8" width="8" height="8" fill="#ff00aa" />
+        <rect x="8" y="8" width="8" height="8" fill="#ffffff" />
+        <rect x="16" y="8" width="8" height="8" fill="#ff5c92" />
+        <rect x="24" y="8" width="8" height="8" fill="#bf00ff" />
+        <rect x="32" y="8" width="8" height="8" fill="#8158ff" />
+        <rect x="40" y="8" width="8" height="8" fill="#00f5ff" />
+
+      
+        <rect x="0" y="16" width="8" height="8" fill="#ff3cac" />
+        <rect x="8" y="16" width="8" height="8" fill="#00f5ff" />
+        <rect x="16" y="16" width="8" height="8" fill="#ffd24d" />
+        <rect x="24" y="16" width="8" height="8" fill="#00ff88" />
+        <rect x="32" y="16" width="8" height="8" fill="#00f5ff" />
+        <rect x="40" y="16" width="8" height="8" fill="#00cef5" />
+
+       
+        <rect x="4" y="24" width="8" height="8" fill="#ff00aa" />
+        <rect x="12" y="24" width="8" height="8" fill="#00f5ff" />
+        <rect x="20" y="24" width="8" height="8" fill="#ff00aa" />
+        <rect x="28" y="24" width="8" height="8" fill="#bf00ff" />
+        <rect x="36" y="24" width="8" height="8" fill="#00f5ff" />
+
+        <rect x="8" y="32" width="8" height="8" fill="#ff00aa" />
+        <rect x="16" y="32" width="8" height="8" fill="#00f5ff" />
+        <rect x="24" y="32" width="8" height="8" fill="#ffd24d" />
+        <rect x="32" y="32" width="8" height="8" fill="#00ff88" />
+
+   
+        <rect x="20" y="40" width="10" height="8" fill="#00f5ff" />
+      </svg>

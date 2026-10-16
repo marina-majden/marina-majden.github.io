@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Texas Hold'em Odds Calculator (9 Players)</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+                background-color: #0f172a;
+                color: #f8fafc;
+            }
+            .card {
+                transition: all 0.2s ease-in-out;
+                cursor: pointer;
+                user-select: none;
+            }
+            .card:hover:not(.disabled) {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            }
+            .card.disabled {
+                opacity: 0.2;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+
+            .suit-hearts,
+            .suit-diams {
+                color: #ef4444;
+            }
+            .suit-spades,
+            .suit-clubs {
+                color: #1e293b;
+            }
+
+            .slot {
+                border: 2px dashed #334155;
+                background-color: #1e293b;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 0.5rem;
+                min-height: 120px;
+            }
+
+            .loader {
+                border: 4px solid #334155;
+                border-top: 4px solid #3b82f6;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                animation: spin 1s linear infinite;
+            }
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body class="min-h-screen p-4 md:p-8">
+
+        <div class="max-w-6xl mx-auto bg-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+        
+            <!-- LEFT SIDE (Mobile: Top) - Inputs and Deck -->
+            <div class="w-full lg:w-1/2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-700 flex flex-col">
+                <h1 class="text-3xl font-bold mb-2 text-blue-400">Hold'em Calculator</h1>
+            
+                <!-- Player count selection -->
+                <div class="flex items-center gap-3 mb-6">
+                    <label for="player-count" class="text-slate-400 text-sm">Total players at table:</label>
+                    <select id="player-count" class="bg-slate-700 text-white text-sm rounded px-2 py-1 border border-slate-600 focus:outline-none focus:border-blue-500" onchange="clearResults()">
+                        <option value="2">2 (Heads up)</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9" selected>9 (Full Ring)</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <!-- Tournament and Betting Settings -->
+                <div class="bg-slate-700/50 p-4 rounded-lg mb-8 border border-slate-600">
+                    <h3 class="text-sm font-semibold text-slate-300 mb-3 uppercase tracking-wider">Tournament & Betting Settings</h3>
+                    <div class="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-3">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Starting Stack</label>
+                            <input type="number" id="start-stack" value="10000" class="w-full bg-slate-800 text-white text-sm rounded px-2 py-1 border border-slate-600 focus:border-blue-500 outline-none" onchange="clearResults()">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Blinds (SB / BB)</label>
+                            <div class="flex gap-1">
+                                <input type="number" id="small-blind" value="50" class="w-1/2 bg-slate-800 text-white text-sm rounded px-2 py-1 border border-slate-600 focus:border-blue-500 outline-none" onchange="clearResults()">
+                                <input type="number" id="big-blind" value="100" class="w-1/2 bg-slate-800 text-white text-sm rounded px-2 py-1 border border-slate-600 focus:border-blue-500 outline-none" onchange="clearResults()">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Current Pot</label>
+                            <input type="number" id="current-pot" value="150" class="w-full bg-slate-800 text-white text-sm rounded px-2 py-1 border border-slate-600 focus:border-blue-500 outline-none" onchange="clearResults()">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">To Call</label>
+                            <input type="number" id="to-call" value="0" class="w-full bg-slate-800 text-white text-sm rounded px-2 py-1 border border-slate-600 focus:border-blue-500 outline-none" onchange="clearResults()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Picker (Deck) -->
+                <div class="flex justify-between items-center mb-4 mt-auto">
+                    <h2 class="text-xl font-semibold">Select card from deck</h2>
+                    <div class="text-sm">
+                        Selection: <span id="selection-mode-label" class="font-bold text-blue-400">Your cards</span>
+                    </div>
+                </div>
+            
+                <div class="flex flex-col gap-3" id="deck-container"></div>
+            </div>
+
+            <!-- RIGHT SIDE (Mobile: Bottom) - Selected Cards and Results -->
+            <div class="w-full lg:w-1/2 p-6 md:p-8 bg-slate-800/80 flex flex-col">
+            
+                <!-- Your cards (Hero) -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-end mb-3">
+                        <h2 class="text-xl font-semibold">Your Cards (Hole)</h2>
+                        <span class="text-xs font-medium px-2 py-1 bg-blue-900 text-blue-200 rounded">Select exactly 2</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 max-w-[250px]" id="hero-slots"></div>
+                </div>
+
+                <!-- Community Board Cards -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-end mb-3">
+                        <h2 class="text-xl font-semibold">Board (Community)</h2>
+                        <span class="text-xs font-medium px-2 py-1 bg-slate-700 text-slate-300 rounded">Select 0, 3, 4 or 5</span>
+                    </div>
+                    <div class="grid grid-cols-5 gap-2" id="board-slots"></div>
+                </div>
+
+                <!-- Controls and Results -->
+                <div class="bg-slate-900 p-6 rounded-xl mt-auto shadow-inner">
+                    <div class="flex gap-4 mb-6">
+                        <button id="calc-btn" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg transition flex justify-center items-center gap-2" onclick="calculateOdds()">
+                            <span id="calc-text">Calculate Odds</span>
+                            <div id="calc-loader" class="loader hidden"></div>
+                        </button>
+                        <button class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-4 rounded-lg transition" onclick="resetApp()">Reset</button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 text-center mb-2">
+                        <div class="bg-emerald-900/50 p-4 rounded-lg border border-emerald-800">
+                            <div class="text-sm text-emerald-400 mb-1">Win</div>
+                            <div class="text-2xl font-bold text-emerald-500" id="res-win">- %</div>
+                        </div>
+                        <div class="bg-amber-900/50 p-4 rounded-lg border border-amber-800">
+                            <div class="text-sm text-amber-400 mb-1">Tie</div>
+                            <div class="text-2xl font-bold text-amber-500" id="res-tie">- %</div>
+                        </div>
+                        <div class="bg-red-900/50 p-4 rounded-lg border border-red-800">
+                            <div class="text-sm text-red-400 mb-1">Loss</div>
+                            <div class="text-2xl font-bold text-red-500" id="res-loss">- %</div>
+                        </div>
+                    </div>
+
+                    <!-- Advice Section -->
+                    <div id="advice-section" class="mt-4 bg-slate-800 p-4 rounded-lg border border-slate-700 hidden">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-slate-400 text-sm">Pot Odds: <span id="pot-odds-text" class="font-bold text-white">-</span></span>
+                            <span class="text-slate-400 text-sm">Req. Equity: <span id="req-equity-text" class="font-bold text-white">-</span></span>
+                        </div>
+                        <div class="text-center pt-3 border-t border-slate-700">
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Algorithm Recommendation</div>
+                            <div id="action-advice" class="text-3xl font-black">-</div>
+                            <div id="action-reason" class="text-sm text-slate-400 mt-2">-</div>
+                        </div>
+                    </div>
+
+                    <!-- Best Cards Section -->
+                    <div id="best-cards-section" class="mt-4 border-t border-slate-700 pt-4 hidden">
+                        <h3 class="text-sm text-slate-300 mb-3 font-medium text-center">Best Helpful Cards (Top 5):</h3>
+                        <div id="best-cards-slots" class="flex flex-wrap gap-3 justify-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const SUITS = [
+                { id: "s", symbol: "♠", colorClass: "suit-spades" },
+                { id: "h", symbol: "♥", colorClass: "suit-hearts" },
+                { id: "c", symbol: "♣", colorClass: "suit-clubs" },
+                { id: "d", symbol: "♦", colorClass: "suit-diams" },
+            ];
+            const RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
+
+            let heroCards = [];
+            let boardCards = [];
+            let deck = [];
+            let selectionMode = "hero";
+
+            function generateDeck() {
+                let newDeck = [];
+                for (let suit of SUITS) {
+                    for (let i = 0; i < RANKS.length; i++) {
+                        newDeck.push({
+                            id: `${RANKS[i]}${suit.id}`,
+                            rankLabel: RANKS[i],
+                            rankValue: i + 2,
+                            suit: suit,
+                        });
+                    }
+                }
+                return newDeck;
+            }
+
+            function renderUI() {
+                const heroContainer = document.getElementById("hero-slots");
+                heroContainer.innerHTML = "";
+                for (let i = 0; i < 2; i++) {
+                    if (heroCards[i]) {
+                        heroContainer.appendChild(
+                            createCardElement(heroCards[i], () => removeCard("hero", i)),
+                        );
+                    } else {
+                        let emptySlot = document.createElement("div");
+                        emptySlot.className = `slot ${selectionMode === "hero" ? "border-blue-500 bg-blue-900/20" : ""}`;
+                        emptySlot.innerHTML = `<span class="text-slate-600 font-bold">Card ${i + 1}</span>`;
+                        heroContainer.appendChild(emptySlot);
+                    }
+                }
+
+                const boardContainer = document.getElementById("board-slots");
+                boardContainer.innerHTML = "";
+                for (let i = 0; i < 5; i++) {
+                    if (boardCards[i]) {
+                        boardContainer.appendChild(
+                            createCardElement(boardCards[i], () => removeCard("board", i)),
+                        );
+                    } else {
+                        let emptySlot = document.createElement("div");
+                        emptySlot.className = `slot ${selectionMode === "board" ? "border-blue-500 bg-blue-900/20" : ""}`;
+                        let label = i < 3 ? "Flop" : i === 3 ? "Turn" : "River";
+                        emptySlot.innerHTML = `<span class="text-slate-600 font-bold text-xs">${label}</span>`;
+                        boardContainer.appendChild(emptySlot);
+                    }
+                }
+
+                if (heroCards.length < 2) selectionMode = "hero";
+                else selectionMode = "board";
+
+                document.getElementById("selection-mode-label").innerText =
+                    selectionMode === "hero" ? "Your cards" : "Board (Community)";
+                document.getElementById("selection-mode-label").className =
+                    selectionMode === "hero"
+                        ? "font-bold text-blue-400"
+                        : "font-bold text-amber-400";
+
+                renderDeck();
+            }
+
+            function createCardElement(cardObj, onClickHandler) {
+                const div = document.createElement("div");
+                div.className =
+                    "card bg-white rounded-lg shadow-md w-full h-full min-h-[120px] flex flex-col justify-between p-2 relative";
+                div.onclick = onClickHandler;
+
+                const isRed = cardObj.suit.id === "h" || cardObj.suit.id === "d";
+                const colorClass = isRed ? "text-red-500" : "text-slate-800";
+                let displayRank = cardObj.rankLabel === "T" ? "10" : cardObj.rankLabel;
+
+                div.innerHTML = `
+                <div class="text-lg font-bold leading-none ${colorClass}">${displayRank}</div>
+                <div class="text-3xl text-center flex-1 flex items-center justify-center ${colorClass}">${cardObj.suit.symbol}</div>
+                <div class="text-lg font-bold leading-none ${colorClass} rotate-180">${displayRank}</div>
+            `;
+                return div;
+            }
+
+            function renderDeck() {
+                const container = document.getElementById("deck-container");
+                container.innerHTML = "";
+
+                SUITS.forEach((suit) => {
+                    const row = document.createElement("div");
+                    row.className = "flex gap-1 justify-between";
+
+                    RANKS.forEach((rankLabel) => {
+                        const cardId = `${rankLabel}${suit.id}`;
+                        const cardObj = deck.find((c) => c.id === cardId);
+
+                        const isSelected =
+                            heroCards.some((c) => c.id === cardId) ||
+                            boardCards.some((c) => c.id === cardId);
+
+                        const cardDiv = document.createElement("div");
+                        cardDiv.className = `bg-white rounded shadow-sm w-8 h-12 flex flex-col items-center justify-center text-xs font-bold card cursor-pointer hover:bg-slate-100 ${isSelected ? "disabled" : ""}`;
+                        if (!isSelected) cardDiv.onclick = () => selectCard(cardObj);
+
+                        const colorClass =
+                            suit.id === "h" || suit.id === "d"
+                                ? "text-red-500"
+                                : "text-slate-800";
+                        let displayRank = rankLabel === "T" ? "10" : rankLabel;
+
+                        cardDiv.innerHTML = `<span class="${colorClass}">${displayRank}</span><span class="${colorClass}">${suit.symbol}</span>`;
+                        row.appendChild(cardDiv);
+                    });
+                    container.appendChild(row);
+                });
+            }
+
+            function selectCard(cardObj) {
+                if (selectionMode === "hero" && heroCards.length < 2) {
+                    heroCards.push(cardObj);
+                } else if (selectionMode === "board" && boardCards.length < 5) {
+                    boardCards.push(cardObj);
+                }
+                renderUI();
+            }
+
+            function removeCard(type, index) {
+                if (type === "hero") heroCards.splice(index, 1);
+                if (type === "board") boardCards.splice(index, 1);
+
+                clearResults();
+                renderUI();
+            }
+
+            function resetApp() {
+                heroCards = [];
+                boardCards = [];
+                clearResults();
+                renderUI();
+            }
+
+            function clearResults() {
+                document.getElementById("res-win").innerText = "- %";
+                document.getElementById("res-tie").innerText = "- %";
+                document.getElementById("res-loss").innerText = "- %";
+                document.getElementById("best-cards-section").classList.add("hidden");
+                if (document.getElementById("advice-section")) {
+                    document.getElementById("advice-section").classList.add("hidden");
+                }
+            }
+
+            function evaluate5Cards(cards) {
+                cards.sort((a, b) => b.rankValue - a.rankValue);
+
+                const isFlush =
+                    cards[0].suit.id === cards[1].suit.id &&
+                    cards[1].suit.id === cards[2].suit.id &&
+                    cards[2].suit.id === cards[3].suit.id &&
+                    cards[3].suit.id === cards[4].suit.id;
+
+                let isStraight = false;
+
+                if (
+                    cards[0].rankValue - cards[4].rankValue === 4 &&
+                    new Set(cards.map((c) => c.rankValue)).size === 5
+                ) {
+                    isStraight = true;
+                } else if (
+                    cards[0].rankValue === 14 &&
+                    cards[1].rankValue === 5 &&
+                    cards[2].rankValue === 4 &&
+                    cards[3].rankValue === 3 &&
+                    cards[4].rankValue === 2
+                ) {
+                    isStraight = true;
+                    cards = [
+                        cards[1],
+                        cards[2],
+                        cards[3],
+                        cards[4],
+                        { ...cards[0], rankValue: 1 },
+                    ];
+                }
+
+                let counts = {};
+                cards.forEach(
+                    (c) => (counts[c.rankValue] = (counts[c.rankValue] || 0) + 1),
+                );
+                let freqs = Object.values(counts).sort((a, b) => b - a);
+
+                let handType = 0;
+                if (isStraight && isFlush)
+                    handType = 8;
+                else if (freqs[0] === 4)
+                    handType = 7;
+                else if (freqs[0] === 3 && freqs[1] === 2)
+                    handType = 6;
+                else if (isFlush)
+                    handType = 5;
+                else if (isStraight)
+                    handType = 4;
+                else if (freqs[0] === 3)
+                    handType = 3;
+                else if (freqs[0] === 2 && freqs[1] === 2)
+                    handType = 2;
+                else if (freqs[0] === 2) handType = 1;
+
+                let uniqueRanks = Object.keys(counts)
+                    .map(Number)
+                    .sort((a, b) => {
+                        if (counts[b] !== counts[a]) return counts[b] - counts[a];
+                        return b - a;
+                    });
+
+                let score = handType * 10000000000;
+                let multiplier = 10000000;
+                for (let i = 0; i < uniqueRanks.length; i++) {
+                    for (let j = 0; j < counts[uniqueRanks[i]]; j++) {
+                        score += uniqueRanks[i] * multiplier;
+                        multiplier /= 10;
+                    }
+                }
+                return score;
+            }
+
+            function evaluate7Cards(sevenCards) {
+                let bestScore = 0;
+                const combos = [
+                    [0, 1, 2, 3, 4], [0, 1, 2, 3, 5], [0, 1, 2, 3, 6],
+                    [0, 1, 2, 4, 5], [0, 1, 2, 4, 6], [0, 1, 2, 5, 6],
+                    [0, 1, 3, 4, 5], [0, 1, 3, 4, 6], [0, 1, 3, 5, 6],
+                    [0, 1, 4, 5, 6], [0, 2, 3, 4, 5], [0, 2, 3, 4, 6],
+                    [0, 2, 3, 5, 6], [0, 2, 4, 5, 6], [0, 3, 4, 5, 6],
+                    [1, 2, 3, 4, 5], [1, 2, 3, 4, 6], [1, 2, 3, 5, 6],
+                    [1, 2, 4, 5, 6], [1, 3, 4, 5, 6], [2, 3, 4, 5, 6]
+                ];
+
+                for (let i = 0; i < combos.length; i++) {
+                    let fiveCardCombo = [
+                        sevenCards[combos[i][0]],
+                        sevenCards[combos[i][1]],
+                        sevenCards[combos[i][2]],
+                        sevenCards[combos[i][3]],
+                        sevenCards[combos[i][4]],
+                    ];
+                    let score = evaluate5Cards(fiveCardCombo);
+                    if (score > bestScore) bestScore = score;
+                }
+                return bestScore;
+            }
+
+            function shuffle(array) {
+                let currentIndex = array.length,
+                    randomIndex;
+                while (currentIndex !== 0) {
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex--;
+                    [array[currentIndex], array[randomIndex]] = [
+                        array[randomIndex],
+                        array[currentIndex],
+                    ];
+                }
+                return array;
+            }
+
+            function evaluateStraight(cards) {
+                let values = [...new Set(cards.map((c) => c.val))].sort((a, b) => b - a);
+
+                let hasAce = values.includes(14);
+                let hasFive = values.includes(5);
+                let hasFour = values.includes(4);
+                let hasThree = values.includes(3);
+                let hasTwo = values.includes(2);
+
+                for (let i = 0; i <= values.length - 5; i++) {
+                    if (
+                        values[i] - values[i + 4] === 4 &&
+                        values[i] - values[i + 1] === 1 &&
+                        values[i + 1] - values[i + 2] === 1 &&
+                        values[i + 2] - values[i + 3] === 1 &&
+                        values[i + 3] - values[i + 4] === 1
+                    ) {
+                        return { rank: 4, score: values[i] };
+                    }
+                }
+
+                if (hasAce && hasFive && hasFour && hasThree && hasTwo) {
+                    return { rank: 4, score: 5 };
+                }
+
+                return null;
+            }
+
+            function runSimulation() {
+                if (heroCards.length !== 2) {
+                    alert("You must select exactly 2 cards for yourself!");
+                    resetUIState();
+                    return;
+                }
+
+                const ITERATIONS = 5000;
+                const NUM_PLAYERS = parseInt(
+                    document.getElementById("player-count").value,
+                    10,
+                );
+                const NUM_OPPONENTS = NUM_PLAYERS - 1;
+
+                let wins = 0;
+                let ties = 0;
+                let losses = 0;
+
+                let usedIds = [...heroCards, ...boardCards].map((c) => c.id);
+                let remainingDeck = deck.filter((c) => !usedIds.includes(c.id));
+
+                for (let i = 0; i < ITERATIONS; i++) {
+                    let tempDeck = shuffle([...remainingDeck]);
+                    let tempBoard = [...boardCards];
+
+                    let cardsNeededForBoard = 5 - tempBoard.length;
+                    for (let j = 0; j < cardsNeededForBoard; j++) {
+                        tempBoard.push(tempDeck.pop());
+                    }
+
+                    let heroScore = evaluate7Cards([...heroCards, ...tempBoard]);
+
+                    let heroWins = true;
+                    let isTie = false;
+
+                    for (let opp = 0; opp < NUM_OPPONENTS; opp++) {
+                        let oppCard1 = tempDeck.pop();
+                        let oppCard2 = tempDeck.pop();
+
+                        let oppScore = evaluate7Cards([oppCard1, oppCard2, ...tempBoard]);
+
+                        if (oppScore > heroScore) {
+                            heroWins = false;
+                            isTie = false;
+                            break;
+                        } else if (oppScore === heroScore) {
+                            heroWins = false;
+                            isTie = true;
+                        }
+                    }
+
+                    if (heroWins) wins++;
+                    else if (isTie) ties++;
+                    else losses++;
+                }
+
+                const winPct = ((wins / ITERATIONS) * 100).toFixed(1);
+                const tiePct = ((ties / ITERATIONS) * 100).toFixed(1);
+                const lossPct = ((losses / ITERATIONS) * 100).toFixed(1);
+
+                document.getElementById("res-win").innerText = `${winPct} %`;
+                document.getElementById("res-tie").innerText = `${tiePct} %`;
+                document.getElementById("res-loss").innerText = `${lossPct} %`;
+
+                const potSize =
+                    parseFloat(document.getElementById("current-pot").value) || 0;
+                const toCall = parseFloat(document.getElementById("to-call").value) || 0;
+                const startStack =
+                    parseFloat(document.getElementById("start-stack").value) || 10000;
+                const bb = parseFloat(document.getElementById("big-blind").value) || 100;
+
+                if (toCall > 0 && potSize > 0) {
+                    const potOddsRatio = (potSize / toCall).toFixed(1);
+                    const requiredEquity = (toCall / (potSize + toCall)) * 100;
+
+                    document.getElementById("pot-odds-text").innerText =
+                        `${potOddsRatio} : 1`;
+                    document.getElementById("req-equity-text").innerText =
+                        `${requiredEquity.toFixed(1)} %`;
+
+                    const adviceEl = document.getElementById("action-advice");
+                    const reasonEl = document.getElementById("action-reason");
+                    document.getElementById("advice-section").classList.remove("hidden");
+
+                    const totalEquity = parseFloat(winPct) + parseFloat(tiePct) / 2;
+
+                    let isPremiumPreflop = false;
+                    if (boardCards.length === 0 && heroCards.length === 2) {
+                        const r1 = heroCards[0].rankValue;
+                        const r2 = heroCards[1].rankValue;
+                        if (r1 === r2 && r1 >= 10) isPremiumPreflop = true;
+                        if (r1 + r2 >= 27) isPremiumPreflop = true;
+                    }
+
+                    if (isPremiumPreflop) {
+                        adviceEl.innerText = "RAISE (Premium Hand)";
+                        adviceEl.className = "text-3xl font-black text-emerald-500";
+                        reasonEl.innerText = `You have an elite starting hand! We don't just rely on standard Pot Odds here. Recommendation is RAISE to thin the field and aggressively build the pot.`;
+                    } else if (totalEquity > requiredEquity * 1.3) {
+                        adviceEl.innerText = "RAISE / CALL";
+                        adviceEl.className = "text-3xl font-black text-emerald-500";
+                        reasonEl.innerText = `Your equity (${totalEquity.toFixed(1)}%) is significantly higher than required (${requiredEquity.toFixed(1)}%). This is highly profitable.`;
+                    } else if (totalEquity >= requiredEquity) {
+                        adviceEl.innerText = "CALL";
+                        adviceEl.className = "text-3xl font-black text-blue-500";
+                        reasonEl.innerText = `Mathematically profitable move. The odds are in favor of your Pot Odds.`;
+                    } else {
+                        if (requiredEquity - totalEquity < 5 && startStack > bb * 50) {
+                            adviceEl.innerText = "FOLD (or risky Call)";
+                            adviceEl.className = "text-3xl font-black text-amber-500";
+                            reasonEl.innerText = `Odds are not quite enough. However, due to "Implied Odds" (deep stacks), if you are chasing a flush or straight (Draw), calling might make sense.`;
+                        } else {
+                            adviceEl.innerText = "FOLD";
+                            adviceEl.className = "text-3xl font-black text-red-500";
+                            reasonEl.innerText = `Unprofitable long-term. Your equity (${totalEquity.toFixed(1)}%) is less than required (${requiredEquity.toFixed(1)}%) to cover the bet.`;
+                        }
+                    }
+                } else if (potSize > 0 && toCall === 0) {
+                    document.getElementById("advice-section").classList.remove("hidden");
+                    document.getElementById("pot-odds-text").innerText = `-`;
+                    document.getElementById("req-equity-text").innerText = `0 %`;
+                    const adviceEl = document.getElementById("action-advice");
+                    const reasonEl = document.getElementById("action-reason");
+
+                    const totalEquity = parseFloat(winPct) + parseFloat(tiePct) / 2;
+                    const threshold = 100 / NUM_PLAYERS;
+
+                    let isPremiumPreflop = false;
+                    if (boardCards.length === 0 && heroCards.length === 2) {
+                        const r1 = heroCards[0].rankValue;
+                        const r2 = heroCards[1].rankValue;
+                        if (r1 === r2 && r1 >= 10) isPremiumPreflop = true;
+                        if (r1 + r2 >= 27) isPremiumPreflop = true;
+                    }
+
+                    if (isPremiumPreflop) {
+                        adviceEl.innerText = "BET / RAISE";
+                        adviceEl.className = "text-3xl font-black text-emerald-500";
+                        reasonEl.innerText = `This is a premium hand. Don't give others a free chance to see cards (flop). Make sure to raise for hand protection.`;
+                    } else if (totalEquity > threshold * 1.5) {
+                        adviceEl.innerText = "BET / RAISE";
+                        adviceEl.className = "text-3xl font-black text-emerald-500";
+                        reasonEl.innerText = `You have a better than average hand at the table. It pays off to "deny equity" to others.`;
+                    } else {
+                        adviceEl.innerText = "CHECK";
+                        adviceEl.className = "text-3xl font-black text-blue-500";
+                        reasonEl.innerText = `See the next card for free. No need for aggression with current hand strength.`;
+                    }
+                } else {
+                    document.getElementById("advice-section").classList.add("hidden");
+                }
+
+                if (boardCards.length < 5) {
+                    analyzeNextCards(remainingDeck);
+                } else {
+                    document.getElementById("best-cards-section").classList.add("hidden");
+                }
+
+                resetUIState();
+            }
+
+            function calculateOdds() {
+                if (heroCards.length !== 2) return;
+
+                document.getElementById("calc-text").innerText = "Calculating...";
+                document.getElementById("calc-loader").classList.remove("hidden");
+                document
+                    .getElementById("calc-btn")
+                    .classList.add("opacity-80", "cursor-not-allowed");
+
+                setTimeout(() => {
+                    runSimulation();
+                }, 50);
+            }
+
+            function resetUIState() {
+                document.getElementById("calc-text").innerText = "Calculate Odds";
+                document.getElementById("calc-loader").classList.add("hidden");
+                document
+                    .getElementById("calc-btn")
+                    .classList.remove("opacity-80", "cursor-not-allowed");
+            }
+
+            function analyzeNextCards(remainingDeck) {
+                const MINI_ITERATIONS = 150;
+                const NUM_PLAYERS = parseInt(
+                    document.getElementById("player-count").value,
+                    10,
+                );
+                const NUM_OPPONENTS = NUM_PLAYERS - 1;
+                let cardScores = [];
+
+                for (let i = 0; i < remainingDeck.length; i++) {
+                    let testCard = remainingDeck[i];
+                    let tempBoard = [...boardCards, testCard];
+                    let deckWithoutTest = remainingDeck.filter((c) => c.id !== testCard.id);
+
+                    let wins = 0;
+
+                    for (let j = 0; j < MINI_ITERATIONS; j++) {
+                        let tempDeck = shuffle([...deckWithoutTest]);
+                        let finalBoard = [...tempBoard];
+
+                        let cardsNeededForBoard = 5 - finalBoard.length;
+                        for (let k = 0; k < cardsNeededForBoard; k++) {
+                            finalBoard.push(tempDeck.pop());
+                        }
+
+                        let heroScore = evaluate7Cards([...heroCards, ...finalBoard]);
+                        let heroWins = true;
+
+                        for (let opp = 0; opp < NUM_OPPONENTS; opp++) {
+                            let oppScore = evaluate7Cards([
+                                tempDeck.pop(),
+                                tempDeck.pop(),
+                                ...finalBoard,
+                            ]);
+                            if (oppScore >= heroScore) {
+                                heroWins = false;
+                                break;
+                            }
+                        }
+                        if (heroWins) wins++;
+                    }
+
+                    cardScores.push({ card: testCard, winPct: wins / MINI_ITERATIONS });
+                }
+
+                cardScores.sort((a, b) => b.winPct - a.winPct);
+                renderBestCards(cardScores.slice(0, 5));
+            }
+
+            function renderBestCards(topCards) {
+                const section = document.getElementById("best-cards-section");
+                const container = document.getElementById("best-cards-slots");
+                container.innerHTML = "";
+
+                topCards.forEach((item) => {
+                    const cardDiv = document.createElement("div");
+                    cardDiv.className =
+                        "bg-white rounded shadow-md w-12 h-16 flex flex-col items-center justify-center text-base font-bold border border-slate-300 transform transition hover:scale-110";
+
+                    const isRed = item.card.suit.id === "h" || item.card.suit.id === "d";
+                    const colorClass = isRed ? "text-red-500" : "text-slate-800";
+                    let displayRank =
+                        item.card.rankLabel === "T" ? "10" : item.card.rankLabel;
+
+                    cardDiv.innerHTML = `
+                    <span class="${colorClass} leading-none">${displayRank}</span>
+                    <span class="${colorClass} leading-none text-xl">${item.card.suit.symbol}</span>
+                `;
+                    container.appendChild(cardDiv);
+                });
+
+                section.classList.remove("hidden");
+            }
+
+            deck = generateDeck();
+            renderUI();
+        </script>
+    </body>
+</html>
