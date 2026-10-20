@@ -16,7 +16,6 @@ import {
   PixelHeartHero,
   WMHeartLogo,
 } from "@/components/PixelArt.tsx";
-import Feature from "./Feature.tsx";
 
 const BentoLab = lazy(() => import("./BentoLab.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
@@ -61,7 +60,6 @@ const Home: React.FC = () => {
           t={t}
         />
         <Hero t={t} scrollToSection={scrollToSection} />
-        <Feature />
 
         <Mission t={t} />
         <Suspense fallback={<AtomLoader />}>
