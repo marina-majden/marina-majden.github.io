@@ -16,6 +16,7 @@ import {
   PixelHeartHero,
   WMHeartLogo,
 } from "@/components/PixelArt.tsx";
+import Feature from "./Feature.tsx";
 
 const BentoLab = lazy(() => import("./BentoLab.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
@@ -47,7 +48,7 @@ const Home: React.FC = () => {
 
   return (
     <ServicesProvider>
-      <div className="max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden text-text-main selection:bg-neon-pink selection:text-white">
+      <div className="max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden text-text-main selection:bg-card-bg selection:text-neon-cyan">
         <ToastHub />
         <CosmicBackground />
         <Navbar
@@ -60,6 +61,7 @@ const Home: React.FC = () => {
           t={t}
         />
         <Hero t={t} scrollToSection={scrollToSection} />
+        <Feature />
 
         <Mission t={t} />
         <Suspense fallback={<AtomLoader />}>

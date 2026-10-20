@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+@layer components {
+  /* Tematske varijable ovisno o stanju (mood) */
+  .theme-light {
+    --paper: #fff8e8;
+    --ink: #111111;
+    --accent: #ff4b1f;
+    --blue: #18b7ff;
+    --pink: #ff4f9a;
+    --muted: #8b867c;
+    --shadow: rgba(17, 17, 17, 0.9);
+  }
+
+  .theme-dark {
+    --paper: #101010;
+    --ink: #f8ffe8;
+    --accent: #ff4f9a;
+    --blue: #ccff00;
+    --pink: #18b7ff;
+    --muted: #777777;
+    --shadow: rgba(255, 79, 154, 0.95);
+  }
+
+  /* Specifični efekti i umjetnički elementi koje je nečitko pisati inline */
+  .bg-stage-light {
+    background:
+      radial-gradient(
+        circle at 15% 20%,
+        rgba(24, 183, 255, 0.16),
+        transparent 24%
+      ),
+      radial-gradient(
+        circle at 85% 76%,
+        rgba(255, 75, 31, 0.16),
+        transparent 24%
+      ),
+      linear-gradient(
+        135deg,
+        rgba(255, 248, 232, 0.1),
+        rgba(255, 248, 232, 0.04)
+      );
+  }
+
+  .bg-stage-dark {
+    background:
+      radial-gradient(
+        circle at 15% 20%,
+        rgba(204, 255, 0, 0.14),
+        transparent 24%
+      ),
+      radial-gradient(
+        circle at 86% 74%,
+        rgba(255, 79, 154, 0.18),
+        transparent 26%
+      ),
+      linear-gradient(135deg, rgba(16, 16, 16, 0.14), rgba(16, 16, 16, 0.05));
+  }
+
+  .bg-poster-light {
+    background:
+      radial-gradient(
+        circle at 88% 16%,
+        rgba(24, 183, 255, 0.18) 0 34px,
+        transparent 35px
+      ),
+      radial-gradient(
+        circle at 13% 72%,
+        rgba(255, 75, 31, 0.18) 0 42px,
+        transparent 43px
+      ),
+      linear-gradient(135deg, var(--paper), #fffdf4);
+  }
+
+  .bg-poster-dark {
+    background:
+      radial-gradient(
+        circle at 84% 18%,
+        rgba(204, 255, 0, 0.16) 0 35px,
+        transparent 36px
+      ),
+      radial-gradient(
+        circle at 16% 72%,
+        rgba(255, 79, 154, 0.22) 0 45px,
+        transparent 46px
+      ),
+      linear-gradient(135deg, #101010, #191919);
+  }
+
+  /* Zrnatost (Grain) i Mreža (Grid) */
+  .doodle-grain {
+    background-image:
+      radial-gradient(var(--ink) 0.7px, transparent 0.8px),
+      radial-gradient(var(--muted) 0.7px, transparent 0.9px);
+    background-size:
+      7px 7px,
+      11px 11px;
+    background-position:
+      0 0,
+      4px 6px;
+    animation: doodleproGrain 8s steps(5) infinite;
+  }
+
+  .doodle-grid {
+    background-image:
+      linear-gradient(to right, var(--ink) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--ink) 1px, transparent 1px);
+    background-size: 31px 31px;
+  }
+
+  /* Animacije prebačene iz starog koda */
+  @keyframes doodleproMarquee {
+    to {
+      transform: translateX(-33.33%);
+    }
+  }
+  @keyframes doodleproGrain {
+    0% {
+      background-position:
+        0 0,
+        4px 6px;
+    }
+    100% {
+      background-position:
+        14px 7px,
+        1px 18px;
+    }
+  }
+  @keyframes doodleproBlink {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: scale(0.72);
+      opacity: 0.45;
+    }
+  }
+  @keyframes doodleproFloat {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
+  @keyframes doodleproWiggle {
+    0%,
+    100% {
+      border-radius: 49% 51% 45% 55%;
+    }
+    50% {
+      border-radius: 55% 45% 52% 48%;
+    }
+  }
+  @keyframes doodleproSketchGlitch {
+    0%,
+    88%,
+    100% {
+      translate: 0 0;
+    }
+    89% {
+      translate: 2px -1px;
+    }
+    90% {
+      translate: -2px 1px;
+    }
+    91% {
+      translate: 0 0;
+    }
+  }
+}

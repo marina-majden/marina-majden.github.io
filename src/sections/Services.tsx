@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import { useLanguage } from "@/context/LanguageContext";
 
-const Accordion = lazy(() => import("@/components/Accordion.tsx"));
+const Accordion = lazy(() => import("@/components/Accordion"));
 
 interface ServiceItem {
   title: string;

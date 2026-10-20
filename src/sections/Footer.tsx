@@ -87,7 +87,7 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-neon-green shadow-[0_0_8px_var(--color-neon-green)] animate-pulse" />
             <span className="font-mono text-xs uppercase tracking-wider text-slate-400">
-              ALL SYSTEMS NOMINAL • 60 FPS • ZERO ASSET PIXELS
+              THE TIME IS NOW, LET'S GO!
             </span>
           </div>
 

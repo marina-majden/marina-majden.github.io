@@ -64,6 +64,15 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
               : "opacity-0 -translate-x-20"
           }`}
         >
+          {t.hero.line2}
+        </span>
+        <span
+          className={`block text-2xl text-slate-200 font-links uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
+            heroLoaded
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 -translate-x-20"
+          }`}
+        >
           {t.hero.line3}
         </span>
         <div
