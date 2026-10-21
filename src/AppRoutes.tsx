@@ -22,42 +22,40 @@ const Storybook = lazy(() => import("./showcase/Storybook.tsx"));
 const Unplugged = lazy(() => import("./showcase/Unplugged.tsx"));
 
 export default function AppRoutes() {
-    return (
-        <Suspense fallback={<AtomicLoader />}>
-            <Routes>
-                {/* Core Pages */}
-                <Route path='/' element={<Home />} />
-                <Route path='/webshop' element={<WebShop />} />
-                <Route path='/lab' element={<Lab />} />
+  return (
+    <Suspense fallback={<AtomicLoader />}>
+      <Routes>
+        {/* Core Pages */}
+        <Route path="/" element={<Home />} />
+        <Route path="/webshop" element={<WebShop />} />
+        <Route path="/lab" element={<Lab />} />
 
-                {/* Experimental Code Pages */}
-                <Route path='/pages/ChromaLab' element={<ChromaLab />} />
-                <Route
-                    path='/pages/NeuralNetwork'
-                    element={<NeuralNetwork />}
-                />
-                <Route path='/pages/liquid' element={<DesignSystem />} />
-                <Route path='/pages/design-system' element={<DesignSystem />} />
+        {/* Experimental Apps Pages */}
+        <Route path="/pages/ChromaLab" element={<ChromaLab />} />
+        <Route path="/pages/NeuralNetwork" element={<NeuralNetwork />} />
+        <Route path="/pages/liquid" element={<DesignSystem />} />
+        <Route path="/pages/design-system" element={<DesignSystem />} />
+        <Route path="/apps/diary" element={<DesignSystem />} />
 
-                {/* Dynamic App & Mini-Website Viewer */}
-                <Route path='/apps/:appId' element={<AppViewer />} />
-                <Route path='/pages/:appId' element={<AppViewer />} />
+        {/* Dynamic App & Mini-Website Viewer */}
+        <Route path="/apps/:appId" element={<AppViewer />} />
+        <Route path="/pages/:appId" element={<AppViewer />} />
 
-                {/* Project Showcase Deep Dives */}
-                <Route path='/showcase/litart' element={<Litart />} />
-                <Route path='/litart' element={<Litart />} />
-                <Route path='/showcase/needhelp' element={<NeedHelp />} />
-                <Route path='/needhelp' element={<NeedHelp />} />
-                <Route path='/showcase/songfinder' element={<SongFinder />} />
-                <Route path='/songfinder' element={<SongFinder />} />
-                <Route path='/showcase/storybook' element={<Storybook />} />
-                <Route path='/storybook' element={<Storybook />} />
-                <Route path='/showcase/unplugged' element={<Unplugged />} />
-                <Route path='/unplugged' element={<Unplugged />} />
+        {/* Project Showcase Deep Dives */}
+        <Route path="/showcase/litart" element={<Litart />} />
+        <Route path="/litart" element={<Litart />} />
+        <Route path="/showcase/needhelp" element={<NeedHelp />} />
+        <Route path="/needhelp" element={<NeedHelp />} />
+        <Route path="/showcase/songfinder" element={<SongFinder />} />
+        <Route path="/songfinder" element={<SongFinder />} />
+        <Route path="/showcase/storybook" element={<Storybook />} />
+        <Route path="/storybook" element={<Storybook />} />
+        <Route path="/showcase/unplugged" element={<Unplugged />} />
+        <Route path="/unplugged" element={<Unplugged />} />
 
-                {/* 404 Fallback */}
-                <Route path='*' element={<NotFound />} />
-            </Routes>
-        </Suspense>
-    );
+        {/* 404 Fallback */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+  );
 }

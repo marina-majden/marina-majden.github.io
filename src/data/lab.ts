@@ -1,10 +1,10 @@
 import {
-    MessageSquare,
-    PenTool,
-    Image,
-    Server,
-    ShieldCheck,
-    Rocket,
+  MessageSquare,
+  PenTool,
+  Image,
+  Server,
+  ShieldCheck,
+  Rocket,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -36,302 +36,313 @@ export const useNeuralNetwork = <T extends DataPoint>(
 
 // --- THEME TYPES ---
 interface Theme {
-    name: string;
-    bg: string;
-    cardBg: string;
-    text: string;
-    title: string;
-    primary: string;
-    accent: string;
-    border: string;
-    overlay: string;
+  name: string;
+  bg: string;
+  cardBg: string;
+  text: string;
+  title: string;
+  primary: string;
+  accent: string;
+  border: string;
+  overlay: string;
 }
 
 interface Themes {
-    [key: string]: Theme;
+  [key: string]: Theme;
 }
 
 interface VoteOption {
-    label: string;
-    votes: number;
+  label: string;
+  votes: number;
 }
 
 interface TasteTestQuestion {
-    id: number;
-    title: string;
-    desc: string;
-    optionA: VoteOption;
-    optionB: VoteOption;
+  id: number;
+  title: string;
+  desc: string;
+  optionA: VoteOption;
+  optionB: VoteOption;
 }
 
 interface WorkflowStep {
-    icon: LucideIcon;
-    title: string;
-    desc: string;
-    highlight?: string;
-    isLast?: boolean;
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+  highlight?: string;
+  isLast?: boolean;
 }
 
 // --- TEME ZA PLAYGROUND ---
 const themes: Themes = {
-    mediteran: {
-        name: "Mediteran",
-        bg: "bg-rose-100",
-        cardBg: "bg-rose-50",
-        text: "text-indigo-700",
-        title: "text-indigo-600",
-        primary: "bg-indigo-400",
-        accent: "text-indigo-600",
-        border: "border-indigo-300",
-        overlay: "bg-indigo-300",
-    },
-    cyberpunk: {
-        name: "Cyberpunk",
-        bg: "bg-indigo-950",
-        cardBg: "bg-gray-950/10",
-        text: "text-cyan-600",
-        title: "text-sky-600",
-        primary: "bg-fuchsia-500",
-        accent: "text-fuchsia-600",
-        border: "border-fuchsia-600",
-        overlay: "bg-fuchsia-600",
-    },
-    forest: {
-        name: "Forest",
-        bg: "bg-emerald-100",
-        cardBg: "bg-emerald-50",
-        text: "text-emerald-600",
-        title: "text-emerald-700",
-        primary: "bg-emerald-700",
-        accent: "text-emerald-600",
-        border: "border-emerald-100",
-        overlay: "bg-emerald-700",
-    },
+  mediteran: {
+    name: "Mediteran",
+    bg: "bg-rose-100",
+    cardBg: "bg-rose-50",
+    text: "text-indigo-700",
+    title: "text-indigo-600",
+    primary: "bg-indigo-400",
+    accent: "text-indigo-600",
+    border: "border-indigo-300",
+    overlay: "bg-indigo-300",
+  },
+  cyberpunk: {
+    name: "Cyberpunk",
+    bg: "bg-indigo-950",
+    cardBg: "bg-gray-950/10",
+    text: "text-cyan-600",
+    title: "text-sky-600",
+    primary: "bg-fuchsia-500",
+    accent: "text-fuchsia-600",
+    border: "border-fuchsia-600",
+    overlay: "bg-fuchsia-600",
+  },
+  forest: {
+    name: "Forest",
+    bg: "bg-emerald-100",
+    cardBg: "bg-emerald-50",
+    text: "text-emerald-600",
+    title: "text-emerald-700",
+    primary: "bg-emerald-700",
+    accent: "text-emerald-600",
+    border: "border-emerald-100",
+    overlay: "bg-emerald-700",
+  },
 };
 
 const fonts = {
-    sans: "font-sans",
-    serif: "font-serif",
-    mono: "font-mono",
+  sans: "font-sans",
+  serif: "font-serif",
+  mono: "font-mono",
 } as const;
 
 const radiuses = {
-    sharp: "rounded-none",
-    smooth: "rounded-xl",
-    full: "rounded-3xl",
+  sharp: "rounded-none",
+  smooth: "rounded-xl",
+  full: "rounded-3xl",
 } as const;
 
 const heroLayouts = {
-    background: "Pozadina",
-    split: "Split",
-    creative: "Kreativno",
+  background: "Pozadina",
+  split: "Split",
+  creative: "Kreativno",
 } as const;
 
 // --- PODACI ZA TASTE TEST (SUKUS UKUSA) ---
 const tasteTestQuestions: TasteTestQuestion[] = [
-    {
-        id: 1,
-        title: "Button Stil",
-        desc: "Koji poziv na akciju (CTA) vas više privlači da kliknete?",
-        optionA: { label: "Soft Shadow", votes: 1240 },
-        optionB: { label: "Hard Edge", votes: 856 },
-    },
-    {
-        id: 2,
-        title: "Dizajn Kartice",
-        desc: "Kako preferirate prikaz informacija?",
-        optionA: { label: "Glassmorphism", votes: 2100 },
-        optionB: { label: "Solid Minimal", votes: 1950 },
-    },
-    {
-        id: 3,
-        title: "Ikone",
-        desc: "Koji stil ikona vam djeluje profesionalnije?",
-        optionA: { label: "Thin Line", votes: 1500 },
-        optionB: { label: "Filled Color", votes: 600 },
-    },
-    {
-        id: 4,
-        title: "Navigacija",
-        desc: "Gdje očekujete navigaciju na desktopu?",
-        optionA: { label: "Top Bar", votes: 3200 },
-        optionB: { label: "Side Bar", votes: 1100 },
-    },
-    {
-        id: 5,
-        title: "Dark Mode",
-        desc: "Koja nijansa tamne teme je ugodnija?",
-        optionA: { label: "True Black", votes: 900 },
-        optionB: { label: "Deep Blue/Grey", votes: 2400 },
-    },
-    {
-        id: 6,
-        title: "Kutovi",
-        desc: "Kakav osjećaj preferirate?",
-        optionA: { label: "Playful Round", votes: 1800 },
-        optionB: { label: "Sharp & Serious", votes: 1300 },
-    },
+  {
+    id: 1,
+    title: "Button Stil",
+    desc: "Koji poziv na akciju (CTA) vas više privlači da kliknete?",
+    optionA: { label: "Soft Shadow", votes: 1240 },
+    optionB: { label: "Hard Edge", votes: 856 },
+  },
+  {
+    id: 2,
+    title: "Dizajn Kartice",
+    desc: "Kako preferirate prikaz informacija?",
+    optionA: { label: "Glassmorphism", votes: 2100 },
+    optionB: { label: "Solid Minimal", votes: 1950 },
+  },
+  {
+    id: 3,
+    title: "Ikone",
+    desc: "Koji stil ikona vam djeluje profesionalnije?",
+    optionA: { label: "Thin Line", votes: 1500 },
+    optionB: { label: "Filled Color", votes: 600 },
+  },
+  {
+    id: 4,
+    title: "Navigacija",
+    desc: "Gdje očekujete navigaciju na desktopu?",
+    optionA: { label: "Top Bar", votes: 3200 },
+    optionB: { label: "Side Bar", votes: 1100 },
+  },
+  {
+    id: 5,
+    title: "Dark Mode",
+    desc: "Koja nijansa tamne teme je ugodnija?",
+    optionA: { label: "True Black", votes: 900 },
+    optionB: { label: "Deep Blue/Grey", votes: 2400 },
+  },
+  {
+    id: 6,
+    title: "Kutovi",
+    desc: "Kakav osjećaj preferirate?",
+    optionA: { label: "Playful Round", votes: 1800 },
+    optionB: { label: "Sharp & Serious", votes: 1300 },
+  },
 ];
 
 // --- PODACI ZA HODOGRAM ---
 const workflowSteps: WorkflowStep[] = [
-    {
-        icon: MessageSquare,
-        title: "1. Inicijalni Razgovor & Opseg",
-        desc: "Definiramo vašu viziju. Trebate li 'ključ u ruke' (dizajn + razvoj) ili imate spreman dizajn? Utvrđujemo gabarite projekta i moju ulogu u vašem timu.",
-    },
-    {
-        icon: PenTool,
-        title: "2. Strategija Dizajna",
-        desc: "Biramo put: A) Brza implementacija provjerenog Templatea prilagođenog vama, ili B) Custom Made unikatno rješenje krojeno do najsitnijeg detalja. Kod custom rješenja, često ćemo komunicirati oko stilskih odluka.",
-        highlight: "Vaš izbor diktira tempo i budžet.",
-    },
-    {
-        icon: Image,
-        title: "3. Content & Materijali",
-        desc: "Prikupljamo tekstove i slike. Ako ih nemate, mogu vas povezati s vrhunskim copywriterima i fotografima ili koristiti placeholder sadržaj dok ne budete spremni.",
-    },
-    {
-        icon: Server,
-        title: "4. Domena i Hosting",
-        desc: "Tehnička baza. Imate li već domenu? Ako ne, pomažem vam u odabiru i zakupu. Postavljam hosting i brinem se za tehničku konfiguraciju servera (napomena: trošak hostinga je zaseban).",
-    },
-    {
-        icon: ShieldCheck,
-        title: "5. Mjesečno Održavanje",
-        desc: "Web stranica je živi organizam. Nudim uslugu redovitog ažuriranja, sigurnosnih kopija i sitnih izmjena. Plaćanje može biti mjesečno ili godišnje uz popust.",
-    },
-    {
-        icon: Rocket,
-        title: "6. Procjena & Start",
-        desc: "Nakon definiranja svih koraka, dobivate preciznu procjenu vremena i investicije. Nakon odobrenja, krećemo u izradu vaše digitalne priče!",
-        isLast: true,
-    },
+  {
+    icon: MessageSquare,
+    title: "1. Inicijalni Razgovor & Opseg",
+    desc: "Definiramo vašu viziju. Trebate li 'ključ u ruke' (dizajn + razvoj) ili imate spreman dizajn? Utvrđujemo gabarite projekta i moju ulogu u vašem timu.",
+  },
+  {
+    icon: PenTool,
+    title: "2. Strategija Dizajna",
+    desc: "Biramo put: A) Brza implementacija provjerenog Templatea prilagođenog vama, ili B) Custom Made unikatno rješenje krojeno do najsitnijeg detalja. Kod custom rješenja, često ćemo komunicirati oko stilskih odluka.",
+    highlight: "Vaš izbor diktira tempo i budžet.",
+  },
+  {
+    icon: Image,
+    title: "3. Content & Materijali",
+    desc: "Prikupljamo tekstove i slike. Ako ih nemate, mogu vas povezati s vrhunskim copywriterima i fotografima ili koristiti placeholder sadržaj dok ne budete spremni.",
+  },
+  {
+    icon: Server,
+    title: "4. Domena i Hosting",
+    desc: "Tehnička baza. Imate li već domenu? Ako ne, pomažem vam u odabiru i zakupu. Postavljam hosting i brinem se za tehničku konfiguraciju servera (napomena: trošak hostinga je zaseban).",
+  },
+  {
+    icon: ShieldCheck,
+    title: "5. Mjesečno Održavanje",
+    desc: "Web stranica je živi organizam. Nudim uslugu redovitog ažuriranja, sigurnosnih kopija i sitnih izmjena. Plaćanje može biti mjesečno ili godišnje uz popust.",
+  },
+  {
+    icon: Rocket,
+    title: "6. Procjena & Start",
+    desc: "Nakon definiranja svih koraka, dobivate preciznu procjenu vremena i investicije. Nakon odobrenja, krećemo u izradu vaše digitalne priče!",
+    isLast: true,
+  },
 ];
 
 export interface ExperimentalApp {
-    id: string;
-    title: string;
-    subtitle: string;
-    description: string;
-    tags: string[];
-    route: string;
-    directUrl: string;
-    badge?: string;
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  route: string;
+  directUrl: string;
+  github?: string;
+  badge?: string;
 }
 
 export const experimentalApps: ExperimentalApp[] = [
-     {
-        id: "cleanflow",
-        title: "CleanFlow",
-        subtitle: "Kako kućanske poslove učiniti zanimljivima?",
-        description: "Pretvorili smo čišćenje u izazov i igru! Dok riješavate izazove, aplikacija vodi računa da vaše kućanstvo bude sistematično pospremano. ",
-        tags: ["Igra", "Zadaci", "Organizator", "Kućanstvo", "Spremanje", "Synthwave", "8-bit Pixel Art"],
-        route: "/apps/cleanflow",
-        directUrl: "/apps/cleanflow.html",
-        badge: "Novo / New",
-    },
-    {
-        id: "elementos",
-        title: "Elementos",
-        subtitle: "Digitalni mikrosvijet elemenata",
-        description: "Bilingvalno interaktivno istraživanje elemenata s fluidnim animacijama i zvučnom kulisom.",
-        tags: ["Canvas", "Interactive", "Bilingual", "CSS Art"],
-        route: "/apps/elementos",
-        directUrl: "/apps/elementos/index.html",
-        badge: "Novo / New",
-    },
-    {
-        id: "dreamlike",
-        title: "Dreamlike",
-        subtitle: "Kreativni ambijentalni prostor",
-        description: "Eksperimentalni vizualni san s nestvarnim gradijentima i taktilnim pokretima.",
-        tags: ["Experimental", "Visual", "Ambient"],
-        route: "/apps/dreamlike",
-        directUrl: "/apps/dreamlike/index.html",
-        badge: "Novo / New",
-    },
-    {
-        id: "liquid",
-        title: "Liquid Cube",
-        subtitle: "Fluidna 3D kocka",
-        description: "Interaktivna simulacija tekućine unutar 3D kocke s fizikom u stvarnom vremenu.",
-        tags: ["3D", "Physics", "WebGL", "Simulation"],
-        route: "/apps/liquid",
-        directUrl: "/apps/liquid/liquid-cube.html",
-    },
-    {
-        id: "chromalab",
-        title: "ChromaLab",
-        subtitle: "Laboratorij spektralnih boja",
-        description: "Reaktivni eksperiment s modernim OKLCH bojama, CSS @property animacijama i prizmama.",
-        tags: ["React", "OKLCH", "CSS @property", "Shader-like"],
-        route: "/pages/ChromaLab",
-        directUrl: "/pages/ChromaLab",
-    },
-    {
-        id: "neural-network",
-        title: "Neural Network",
-        subtitle: "3D neuronska mreža",
-        description: "Trodimenzionalna vizualizacija sinaptičkih veza s Three.js-om i bloom postprocessingom.",
-        tags: ["Three.js", "Bloom", "3D", "Graph"],
-        route: "/pages/NeuralNetwork",
-        directUrl: "/pages/NeuralNetwork",
-    },
-    {
-        id: "color-chemist",
-        title: "Color Chemist",
-        subtitle: "Kemija pigmenata i tonova",
-        description: "Interaktivna miješalica tonova i vizualni laboratorij za testiranje paleta.",
-        tags: ["Color Science", "Tool", "Canvas"],
-        route: "/apps/color-chemist",
-        directUrl: "/apps/colorchemist.html",
-    },
-    {
-        id: "flowchart",
-        title: "Flowchart Labirint",
-        subtitle: "2D vizualna zagonetka",
-        description: "Proceduralni labirint dijagrama toka kroz koji navigirate logičkim koracima.",
-        tags: ["Game", "2D", "Puzzle"],
-        route: "/apps/flowchart",
-        directUrl: "/apps/flowchart/index.html",
-    },
-    {
-        id: "countdown",
-        title: "3D Countdown",
-        subtitle: "Vremenska skulptura",
-        description: "Skulpturalni brojač vremena s Three.js orbit kontrolama i proceduralnom geometrijom.",
-        tags: ["Three.js", "OrbitControls", "3D"],
-        route: "/apps/countdown",
-        directUrl: "/apps/countdown/index.html",
-    },
-    {
-        id: "tarot",
-        title: "Tarot Storytelling",
-        subtitle: "Kreativno koristimo tarot karte za stvaranje priče",
-        description: "Raspored nam donosi radnju, likove, njihove osobine, odnose i razvoj, a priču pričamo vodeći se slikama tarota!",
-        tags: ["Pixel Art", "Retro", "Interactive"],
-        route: "/apps/tarot",
-        directUrl: "/apps/tarot.html",
-    },
-    {
-        id: "plur",
-        title: "Plur Visualizer",
-        subtitle: "Audio-vizualni eksperiment",
-        description: "3D generativni visualizer s ritmičkim svjetlosnim efektima.",
-        tags: ["Audio-Visual", "Three.js", "Canvas"],
-        route: "/apps/plur",
-        directUrl: "/apps/plur/index.html",
-    },
+  {
+    id: "cleanflow",
+    title: "CleanQuest",
+    subtitle: "Kako kućanske poslove učiniti zanimljivima?",
+    description:
+      "Osim što nudi gotove planove i vodi vas kroz kućanske poslove korak po korak,apliakcija vam daje izazove koje nije baš lako pobjediti. Međutim, bez obzira na rezultat, posljedica je čist i uredan životni prostor. Stoga možemo reći da u ovoj igri zaista nema gubitnika.",
+    tags: [
+      "Igra",
+      "Zadaci",
+      "Organizator",
+      "Kućanstvo",
+      "Spremanje",
+      "Savjetnik",
+      "8-bit Retro",
+    ],
+    route: "/apps/cleanflow",
+    directUrl: "https://questsweeper.netlify.app/",
+    github: "https://github.com/marina-majden/quest-sweeper",
+    badge: "Novo / New",
+  },
+  {
+    id: "elementos",
+    title: "Elementos",
+    subtitle: "Digitalni mikrosvijet elemenata",
+    description:
+      "Bilingvalno interaktivno istraživanje elemenata s fluidnim animacijama i zvučnom kulisom.",
+    tags: ["Canvas", "Interactive", "Bilingual", "CSS Art"],
+    route: "/apps/elementos",
+    directUrl: "/apps/elementos/index.html",
+    badge: "Novo / New",
+  },
+  {
+    id: "dreamlike",
+    title: "Dreamlike",
+    subtitle: "Kreativni ambijentalni prostor",
+    description:
+      "Eksperimentalni vizualni san s nestvarnim gradijentima i taktilnim pokretima.",
+    tags: ["Experimental", "Visual", "Ambient"],
+    route: "/apps/dreamlike",
+    directUrl: "/apps/dreamlike/index.html",
+    badge: "Novo / New",
+  },
+  {
+    id: "liquid",
+    title: "Liquid Cube",
+    subtitle: "Fluidna 3D kocka",
+    description:
+      "Interaktivna simulacija tekućine unutar 3D kocke s fizikom u stvarnom vremenu.",
+    tags: ["3D", "Physics", "WebGL", "Simulation"],
+    route: "/apps/liquid",
+    directUrl: "/apps/liquid/liquid-cube.html",
+  },
+  {
+    id: "chromalab",
+    title: "ChromaLab",
+    subtitle: "Laboratorij spektralnih boja",
+    description:
+      "Reaktivni eksperiment s modernim OKLCH bojama, CSS @property animacijama i prizmama.",
+    tags: ["React", "OKLCH", "CSS @property", "Shader-like"],
+    route: "/pages/ChromaLab",
+    directUrl: "/pages/ChromaLab",
+  },
+  {
+    id: "neural-network",
+    title: "Neural Network",
+    subtitle: "3D neuronska mreža",
+    description:
+      "Trodimenzionalna vizualizacija sinaptičkih veza s Three.js-om i bloom postprocessingom.",
+    tags: ["Three.js", "Bloom", "3D", "Graph"],
+    route: "/pages/NeuralNetwork",
+    directUrl: "/pages/NeuralNetwork",
+  },
+  {
+    id: "color-chemist",
+    title: "Color Chemist",
+    subtitle: "Kemija pigmenata i tonova",
+    description:
+      "Interaktivna miješalica tonova i vizualni laboratorij za testiranje paleta.",
+    tags: ["Color Science", "Tool", "Canvas"],
+    route: "/apps/color-chemist",
+    directUrl: "/apps/colorchemist.html",
+  },
+  {
+    id: "diary",
+    title: "Diary",
+    subtitle: "Dnevnik za praktično bilježenje događaja i uspomena",
+    description:
+      "Osim standarnih tekstualnih zapisa, možete dodavati već izrađene multimedijalne interaktivne elemente jednim klikom.",
+    tags: ["Dnevnik", "Alat", "Osobno"],
+    route: "/apps/diary",
+    directUrl: "/apps/colorchemist.html",
+  },
+  {
+    id: "countdown",
+    title: "3D Countdown",
+    subtitle: "Vremenska skulptura",
+    description:
+      "Skulpturalni brojač vremena s Three.js orbit kontrolama i proceduralnom geometrijom.",
+    tags: ["Three.js", "OrbitControls", "3D"],
+    route: "/apps/countdown",
+    directUrl: "/apps/countdown/index.html",
+  },
+  {
+    id: "tarot",
+    title: "Tarot Storytelling",
+    subtitle: "Kreativno koristimo tarot karte za stvaranje priče",
+    description:
+      "Raspored nam donosi radnju, likove, njihove osobine, odnose i razvoj, a priču pričamo vodeći se slikama tarota!",
+    tags: ["Pixel Art", "Retro", "Interactive"],
+    route: "/apps/tarot",
+    directUrl: "/apps/tarot.html",
+  },
 ];
 
 export {
-    COMPLEX_CODE_SNIPPET,
-    themes,
-    fonts,
-    radiuses,
-    heroLayouts,
-    tasteTestQuestions,
-    workflowSteps,
+  COMPLEX_CODE_SNIPPET,
+  themes,
+  fonts,
+  radiuses,
+  heroLayouts,
+  tasteTestQuestions,
+  workflowSteps,
 };
 export type { Theme, Themes, TasteTestQuestion, WorkflowStep, VoteOption };

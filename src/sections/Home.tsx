@@ -17,7 +17,7 @@ import {
   WMHeartLogo,
 } from "@/components/PixelArt.tsx";
 
-const BentoLab = lazy(() => import("./BentoLab.tsx"));
+const BentoGrid = lazy(() => import("./BentoGrid.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
 const Services = lazy(() => import("./Services.tsx"));
 const Templates = lazy(() => import("./Templates.tsx"));
@@ -60,13 +60,12 @@ const Home: React.FC = () => {
           t={t}
         />
         <Hero t={t} scrollToSection={scrollToSection} />
-
         <Mission t={t} />
         <Suspense fallback={<AtomLoader />}>
           <Templates t={t} scrollToSection={scrollToSection} />
         </Suspense>
         <Suspense fallback={<AtomLoader />}>
-          <BentoLab />
+          <BentoGrid />
         </Suspense>
         <Suspense fallback={<AtomLoader />}>
           <Projects t={t} scrollToSection={scrollToSection} />

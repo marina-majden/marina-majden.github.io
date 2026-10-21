@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
-import { experimentalApps, ExperimentalApp } from "@/data/lab";
+import { experimentalApps, ExperimentalApp } from "@/data/apps";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   PixelMoon,
@@ -19,21 +20,29 @@ import {
   Compass,
   Timer,
   Music,
-  VenusAndMars
+  VenusAndMars,
+  X,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import cleanflowLogo from "@/assets/img/cleanflow-logo.png";
 
-export const BentoLab: React.FC = () => {
+export const BentoGrid: React.FC = () => {
   const { lang } = useLanguage();
+  const [activeScreenshot, setActiveScreenshot] = useState<number | null>(null);
 
   const getAppIcon = (id: string) => {
     switch (id) {
       case "cleanflow":
-        return <img src={cleanflowLogo} alt="cleanflow-logo" width="72px" height="72px" />;
+        return (
+          <img
+            src={cleanflow.logo}
+            alt="cleanflow-logo"
+            width="72px"
+            height="72px"
+          />
+        );
       case "elementos":
         return <PixelMoon scale={0.75} className="scale-75" />;
-      case "elementos":
-        return <PixelBrush scale={0.75} className="scale-75" />;
       case "tarot":
         return <VenusAndMars size={36} className="text-neon-violet" />;
       case "liquid":
@@ -96,6 +105,52 @@ export const BentoLab: React.FC = () => {
   const flowchart = appsById["flowchart"];
   const countdown = appsById["countdown"];
   const plur = appsById["plur"];
+  const screenshots = cleanflow?.images ?? [];
+  const isScreenshotOpen = activeScreenshot !== null;
+  const screenshotCount = screenshots.length;
+
+  useEffect(() => {
+    if (!isScreenshotOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveScreenshot(null);
+      if (event.key === "ArrowLeft") {
+        setActiveScreenshot((current) =>
+          current === null
+            ? null
+            : (current - 1 + screenshotCount) % screenshotCount,
+        );
+      }
+      if (event.key === "ArrowRight") {
+        setActiveScreenshot((current) =>
+          current === null ? null : (current + 1) % screenshotCount,
+        );
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isScreenshotOpen, screenshotCount]);
+
+  const showPreviousScreenshot = () => {
+    setActiveScreenshot((current) =>
+      current === null
+        ? null
+        : (current - 1 + screenshots.length) % screenshots.length,
+    );
+  };
+
+  const showNextScreenshot = () => {
+    setActiveScreenshot((current) =>
+      current === null ? null : (current + 1) % screenshots.length,
+    );
+  };
 
   return (
     <section id="lab" className="py-20 px-4 md:px-8 relative overflow-hidden">
@@ -112,13 +167,13 @@ export const BentoLab: React.FC = () => {
         <Reveal delay={100}>
           <p className="text-gray-300 max-w-2xl mx-auto text-base lg:text-lg text-center mt-3 mb-12">
             {lang === "hr"
-              ? "Prostor za moje autorske projekte rođene iz snova i mašte, razvijane u slobodno vrijeme, bez posebnog cilja. Ako vas ove besplatne aplikacije i stranice barem malo nasmiju i zabave, postigle su više nego smo se mogli nadati!"
-              : "A space for my personal projects born from dreams and imagination, developed in my free time, without any specific goal. If these free apps and websites bring you at least a little laughter and fun, they have achieved more than we could have hoped for!"}
+              ? "Prostor za moje autorske projekte. Sve aplikacije i alati su potpuno beslatni i možete ih koristiti direktno u pregledniku. Ako vam se nešto svidi, možete pomoći održavanju projekta donacijom ili doprinijeti razvoju suradnjom na GitHubu."
+              : "A space for my personal projects. All apps and tools are completely free to use and you can run them right here in the browser. If there is something you really like, you can support the project with donation. If you wish to engage, you can expand the project on the GitHub. "}
           </p>
         </Reveal>
 
         {/* 12-Column Editorial Bento Grid */}
-        <div className="bento-grid">
+        <div className="bento-grid w-screen max-w-5xl p-0 m-auto">
           {/* Bento Box 1: CleanFlow(Hero Featured - 7 cols) */}
           {cleanflow && (
             <div
@@ -135,7 +190,9 @@ export const BentoLab: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <span className="bento-eyebrow">
-                    01 // Housekeeping & Cleaning Organization & Motivation App
+                    {lang === "hr"
+                      ? "01 // Igrica za spremanje i organizaciju doma"
+                      : "01 // Gamified Cleaning & Housekeeping App"}
                   </span>
                   {cleanflow.badge && (
                     <span className="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold bg-[rgba(0,245,255,0.15)] text-neon-blue border border-neon-blue">
@@ -143,17 +200,44 @@ export const BentoLab: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <h3 className="text-3xl font-headings font-extrabold text-white mb-2">
-                  {cleanflow.title}
-                </h3>
-                <p className="text-sm text-slate-300 max-w-md leading-relaxed">
-                  {cleanflow.description}
-                </p>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="grow">
+                    {" "}
+                    <h3 className="text-3xl font-headings font-extrabold text-white mb-2">
+                      {cleanflow.title}
+                    </h3>
+                    <p className="text-sm text-slate-300 max-w-md leading-relaxed">
+                      {cleanflow.description}
+                    </p>
+                  </div>
+                  <div className="shrink">
+                    <img
+                      src={cleanflow.logo}
+                      alt="CleanQuest logo"
+                      width="92px"
+                      height="92px"
+                    />
+                  </div>
+                </div>
               </div>
 
-              {/* Center Pixel Emblem */}
-              <div className="my-auto flex items-center justify-center py-4">
-                {getAppIcon("cleanflow")}
+              {/* Screenshots Gallery */}
+              <div className="my-auto flex flex-wrap items-center justify-between object-fit">
+                {screenshots.map((image, index) => (
+                  <button
+                    key={image}
+                    type="button"
+                    onClick={() => setActiveScreenshot(index)}
+                    aria-label={`${lang === "hr" ? "Otvori cijelu sliku" : "View full image"} ${index + 1}`}
+                    className="w-1/3 cursor-zoom-in rounded-md focus-visible:outline-2 focus-visible:outline-neon-blue"
+                  >
+                    <img
+                      src={image}
+                      alt={`${cleanflow.title} screenshot ${index + 1}`}
+                      className="w-full rounded-md border-neon-blue"
+                    />
+                  </button>
+                ))}
               </div>
 
               <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-4">
@@ -314,9 +398,7 @@ export const BentoLab: React.FC = () => {
               }
             >
               <div>
-                <div className="bento-icon-circle">
-                  {getAppIcon("tarot")}
-                </div>
+                <div className="bento-icon-circle">{getAppIcon("tarot")}</div>
                 <span className="bento-eyebrow">Pixel Art • Retro</span>
                 <h3 className="text-xl font-headings font-bold text-white">
                   {tarot.title}
@@ -483,8 +565,64 @@ export const BentoLab: React.FC = () => {
           </div>
         </div>
       </div>
+      {activeScreenshot !== null &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${cleanflow?.title ?? "Screenshot"} gallery`}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) {
+                setActiveScreenshot(null);
+              }
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setActiveScreenshot(null)}
+              aria-label={lang === "hr" ? "Zatvori galeriju" : "Close gallery"}
+              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+            >
+              <X size={24} />
+            </button>
+
+            <img
+              src={screenshots[activeScreenshot]}
+              alt={`${cleanflow?.title ?? "Screenshot"} screenshot ${activeScreenshot + 1}`}
+              className="h-auto max-h-[90vh] w-screen object-contain"
+            />
+
+            {screenshots.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={showPreviousScreenshot}
+                  aria-label={
+                    lang === "hr" ? "Prethodna slika" : "Previous image"
+                  }
+                  className="absolute left-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white sm:left-6"
+                >
+                  <ChevronLeft size={30} />
+                </button>
+                <button
+                  type="button"
+                  onClick={showNextScreenshot}
+                  aria-label={lang === "hr" ? "Sljedeća slika" : "Next image"}
+                  className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white sm:right-6"
+                >
+                  <ChevronRight size={30} />
+                </button>
+              </>
+            )}
+            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-sm text-white/80">
+              {activeScreenshot + 1} / {screenshots.length}
+            </span>
+          </div>,
+          document.body,
+        )}
     </section>
   );
 };
 
-export default BentoLab;
+export default BentoGrid;
