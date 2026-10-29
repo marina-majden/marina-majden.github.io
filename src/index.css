@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @layer base {
     @font-face {
         font-family: "Another Typewriter";
@@ -101,12 +102,12 @@
     --color-neon-pink: #ff00aa;
     --color-neon-green: #00ff88;
     --color-neon-yellow: #ffd24d;
-     --color-neon-cyan: #00f5ff;
+    --color-neon-cyan: #00f5ff;
     --color-neon-blue: #00aaff;
     --color-neon-violet: #bf00ff;
-    --color-neon-pink:  #00FFEA;
-    --color-neon-green: #008CFF;
-    --color-neon-yellow: #B700FF;
+    --color-neon-pink: #00ffea;
+    --color-neon-green: #008cff;
+    --color-neon-yellow: #b700ff;
 
     --title-gradient:
         radial-gradient(
