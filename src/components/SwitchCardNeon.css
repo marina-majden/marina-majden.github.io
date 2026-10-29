@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@layer components {
+  /* 3D Perspective Stage for the Portal */
+  .switch-stage-3d {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+  }
+
+  /* Portal Aura breathing */
+  @keyframes portalAuraBreathe {
+    0%,
+    100% {
+      transform: scale(1.05);
+      opacity: 0.82;
+    }
+    50% {
+      transform: scale(1.11);
+      opacity: 0.98;
+    }
+  }
+
+  /* Portal Ring Orbit animations */
+  @keyframes portalRingSpinCw {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes portalRingSpinCcw {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes warpRipple {
+    0% {
+      opacity: 0.75;
+      transform: scale(0.85);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.35);
+    }
+  }
+
+  .animate-portal-aura {
+    animation: portalAuraBreathe 4s ease-in-out infinite;
+  }
+
+  .animate-portal-spin-cw {
+    animation: portalRingSpinCw 28s linear infinite;
+    transform-origin: center center;
+  }
+
+  .animate-portal-spin-ccw {
+    animation: portalRingSpinCcw 20s linear infinite;
+    transform-origin: center center;
+  }
+
+  .animate-warp-ripple {
+    animation: warpRipple 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}

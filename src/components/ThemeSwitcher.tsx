@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { showToast } from "./ToastHub";
 import { Sparkles, Copy, Palette } from "lucide-react";
 
@@ -37,13 +37,45 @@ const themeOptions: ThemeOption[] = [
   },
 ];
 
-export const ThemeSwitcher: React.FC<{
+export interface ThemeSwitcherProps {
   className?: string;
   compact?: boolean;
-}> = ({ className = "", compact = false }) => {
+  singleCycle?: boolean;
+}
+
+export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
+  className = "",
+  compact = false,
+  singleCycle = false,
+}) => {
   const [currentTheme, setCurrentTheme] = useState<ThemeId>("default");
   const [particlesActive, setParticlesActive] = useState<boolean>(true);
 
+  const applyTheme = useCallback((themeId: ThemeId, notify = true) => {
+    setCurrentTheme(themeId);
+    if (themeId === "default") {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("wm-theme", "default");
+    } else {
+      document.documentElement.setAttribute("data-theme", themeId);
+      localStorage.setItem("wm-theme", themeId);
+    }
+
+    // Broadcast change to other components on the page
+    window.dispatchEvent(
+      new CustomEvent("wm-theme-changed", {
+        detail: { themeId },
+      }),
+    );
+
+    if (notify) {
+      const themeLabel =
+        themeOptions.find((t) => t.id === themeId)?.label || themeId;
+      showToast(`Theme calibrated: ${themeLabel}`, "heart");
+    }
+  }, []);
+
+  // Initialize theme from storage
   useEffect(() => {
     const savedTheme = localStorage.getItem("wm-theme") as ThemeId;
     if (
@@ -54,29 +86,41 @@ export const ThemeSwitcher: React.FC<{
     ) {
       applyTheme(savedTheme, false);
     }
+  }, [applyTheme]);
+
+  // Sync across all ThemeSwitcher instances in real-time
+  useEffect(() => {
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ themeId: ThemeId }>;
+      if (customEvent.detail?.themeId) {
+        setCurrentTheme(customEvent.detail.themeId);
+      }
+    };
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (
+        e.key === "wm-theme" &&
+        e.newValue &&
+        ["default", "lovecore", "emerald-matrix", "solar-sunset"].includes(
+          e.newValue,
+        )
+      ) {
+        setCurrentTheme(e.newValue as ThemeId);
+      }
+    };
+
+    window.addEventListener("wm-theme-changed", handleThemeChange);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("wm-theme-changed", handleThemeChange);
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
-
-  const applyTheme = (themeId: ThemeId, notify = true) => {
-    setCurrentTheme(themeId);
-    if (themeId === "default") {
-      document.documentElement.removeAttribute("data-theme");
-      localStorage.setItem("wm-theme", "default");
-    } else {
-      document.documentElement.setAttribute("data-theme", themeId);
-      localStorage.setItem("wm-theme", themeId);
-    }
-
-    if (notify) {
-      const themeLabel =
-        themeOptions.find((t) => t.id === themeId)?.label || themeId;
-      showToast(`Theme calibrated: ${themeLabel}`, "heart");
-    }
-  };
 
   const toggleParticles = () => {
     const nextState = !particlesActive;
     setParticlesActive(nextState);
-    // Dispatch custom event for background particles controller if present
     window.dispatchEvent(
       new CustomEvent("toggle-particles", {
         detail: { enabled: nextState },
@@ -112,30 +156,119 @@ export const ThemeSwitcher: React.FC<{
       });
   };
 
+  // Mobile single-circle mode: displays current theme color, cycles on click
+  if (singleCycle) {
+    const currentIndex = Math.max(
+      0,
+      themeOptions.findIndex((t) => t.id === currentTheme),
+    );
+    const activeOption = themeOptions[currentIndex] || themeOptions[0];
+    const nextIndex = (currentIndex + 1) % themeOptions.length;
+    const nextOption = themeOptions[nextIndex];
+
+    const gradient = `linear-gradient(135deg, ${activeOption.colors[0]}, ${activeOption.colors[1]} 55%, ${activeOption.colors[2]})`;
+    const primaryGlow = activeOption.colors[0];
+
+    return (
+      <button
+        type="button"
+        onClick={() => applyTheme(nextOption.id)}
+        className={`relative z-10 grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${className}`}
+        title={`Theme: ${activeOption.label} (Tap to cycle to ${nextOption.label})`}
+        aria-label={`Current theme: ${activeOption.label}. Tap to cycle to ${nextOption.label}`}
+      >
+        {/* Glowing atmospheric halo */}
+        <span
+          className="absolute -inset-1 rounded-full blur-[6px] transition-all duration-300 opacity-90"
+          style={{
+            background: gradient,
+            boxShadow: `0 0 14px ${primaryGlow}`,
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Main colored circle */}
+        <span
+          className="absolute inset-[1px] rounded-full transition-all duration-300 border border-white/50 shadow-inner"
+          style={{
+            background: gradient,
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Specular ring & center micro-dot */}
+        <span
+          className="relative z-10 w-2 h-2 rounded-full bg-white shadow-[0_0_6px_#ffffff] transition-all duration-300"
+          aria-hidden="true"
+        />
+      </button>
+    );
+  }
+
+  // Desktop compact mode: displays 4 palette dots with active indicator
   if (compact) {
     return (
-      <div className={`flex items-center gap-1.5 ${className}`}>
-        {themeOptions.map((t) => (
-          <button
-            key={t.id}
-            type="button"
-            onClick={() => applyTheme(t.id)}
-            className={`w-5 h-5 rounded-full border transition-transform duration-200 cursor-pointer ${
-              currentTheme === t.id
-                ? "scale-125 border-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                : "border-transparent opacity-70 hover:opacity-100"
-            }`}
-            style={{
-              background: `linear-gradient(135deg, ${t.colors[0]}, ${t.colors[1]})`,
-            }}
-            title={t.label}
-            aria-label={`Select ${t.label} theme`}
-          />
-        ))}
+      <div
+        className={`flex items-center gap-1.5 p-1 rounded-full bg-white/5 border border-white/10 ${className}`}
+        role="group"
+        aria-label="Theme presets"
+      >
+        {themeOptions.map((t) => {
+          const isActive = currentTheme === t.id;
+          const gradient = `linear-gradient(135deg, ${t.colors[0]}, ${t.colors[1]} 55%, ${t.colors[2]})`;
+          const glow = t.colors[0];
+
+          return (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => applyTheme(t.id)}
+              aria-pressed={isActive}
+              className={`relative z-0 grid h-6 w-6 shrink-0 cursor-pointer place-items-center rounded-full transition-all duration-200 hover:scale-115 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+                isActive ? "scale-110 z-10" : "opacity-60 hover:opacity-100"
+              }`}
+              title={`${t.label}${isActive ? " (Active)" : ""}`}
+              aria-label={`Select ${t.label} theme`}
+            >
+              {/* Outer glow on active */}
+              <span
+                className="absolute -inset-1 rounded-full blur-[5px] transition-opacity duration-300"
+                style={{
+                  background: gradient,
+                  boxShadow: isActive ? `0 0 10px ${glow}` : undefined,
+                  opacity: isActive ? 1 : 0,
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Main circle */}
+              <span
+                className={`absolute inset-0 rounded-full transition-all duration-200 border ${
+                  isActive
+                    ? "border-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                    : "border-white/20 hover:border-white/60"
+                }`}
+                style={{
+                  background: gradient,
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Center indicator if active */}
+              {isActive && (
+                <span
+                  className="relative z-10 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_4px_#ffffff]"
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          );
+        })}
       </div>
     );
   }
 
+  // Full default mode with controls
   return (
     <div
       className={`w-full max-w-5xl mx-auto my-6 p-3 md:p-4 rounded-2xl bg-[rgba(14,15,28,0.85)] border border-(--border-subtle) backdrop-blur-xl shadow-lg flex flex-wrap items-center justify-between gap-4 select-none ${className}`}

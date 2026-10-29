@@ -9,13 +9,13 @@ const GradientButton: React.FC<GradientButtonProps> = ({
   ...props
 }) => {
   return (
-    <div className="relative group inline-block">
+    <div className="relative group block p-0 m-auto">
       <button
         className="relative inline-block p-px font-semibold tracking-widest font-stretch-150% uppercase leading-6 text-neon-cyan bg-gray-800 shadow-2xl cursor-pointer rounded-full shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95"
         {...props}
       >
         {/* Gradient Border (vidljiv na ) */}
-        <span className="absolute inset-0 rounded-full bg-linear-to-r from-teal-400 via-blue-500 to-purple-500 p-0.5 opacity-100" />
+        <span className="absolute inset-0 rounded-full bg-linear-45 from-teal-400 via-blue-500 to-purple-500 p-0.5 opacity-100 group-hover:bg-linear-135 transition-colors duration-300 ease-in-out" />
 
         {/* Unutarnja tamna pozadina i sadržaj */}
         <span className="relative z-10 block px-6 py-3 rounded-full bg-gray-950">

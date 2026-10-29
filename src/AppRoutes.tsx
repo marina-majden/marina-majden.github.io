@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { AtomicLoader } from "./components/SpinnerLoader.tsx";
+import LoaderFullscreen from "../unused/LoaderFullscreen.tsx";
 
 // Lazy-loaded main views
 const Home = lazy(() => import("./sections/Home.tsx"));
@@ -23,7 +24,7 @@ const Unplugged = lazy(() => import("./showcase/Unplugged.tsx"));
 
 export default function AppRoutes() {
   return (
-    <Suspense fallback={<AtomicLoader />}>
+    <Suspense fallback={<LoaderFullscreen />}>
       <Routes>
         {/* Core Pages */}
         <Route path="/" element={<Home />} />

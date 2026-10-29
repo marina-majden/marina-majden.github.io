@@ -568,7 +568,7 @@ export const BentoGrid: React.FC = () => {
       {activeScreenshot !== null &&
         createPortal(
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50"
+            className="fixed inset-0 z-100 flex items-center justify-center bg-black/50"
             role="dialog"
             aria-modal="true"
             aria-label={`${cleanflow?.title ?? "Screenshot"} gallery`}
@@ -582,7 +582,7 @@ export const BentoGrid: React.FC = () => {
               type="button"
               onClick={() => setActiveScreenshot(null)}
               aria-label={lang === "hr" ? "Zatvori galeriju" : "Close gallery"}
-              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+              className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-white"
             >
               <X size={24} />
             </button>
@@ -601,7 +601,7 @@ export const BentoGrid: React.FC = () => {
                   aria-label={
                     lang === "hr" ? "Prethodna slika" : "Previous image"
                   }
-                  className="absolute left-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white sm:left-6"
+                  className="absolute left-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-white sm:left-6"
                 >
                   <ChevronLeft size={30} />
                 </button>
@@ -609,7 +609,7 @@ export const BentoGrid: React.FC = () => {
                   type="button"
                   onClick={showNextScreenshot}
                   aria-label={lang === "hr" ? "Sljedeća slika" : "Next image"}
-                  className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white sm:right-6"
+                  className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-white sm:right-6"
                 >
                   <ChevronRight size={30} />
                 </button>

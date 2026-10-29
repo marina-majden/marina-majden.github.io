@@ -24,7 +24,7 @@
       content="https://marina-majden.github.io/logo-white.png"
     />
     <title>
-      WM | Web Mashina | Majdenić Marina | Web Developer / Creative Developer
+      WebMashina ✦ Web Design & Development ✦ Website Deployment & Maintenance"
     </title>
 
     <!-- Start Single Page Apps for GitHub Pages -->
@@ -47,13 +47,55 @@
       })(window.location);
     </script>
     <!-- End Single Page Apps for GitHub Pages -->
-    <script type="module" crossorigin src="/assets/index-CG_SKMVB.js"></script>
+
+    <style>
+      .startup-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: #021f33;
+      }
+
+      .startup-loader__spinner {
+        box-sizing: border-box;
+        width: 12rem;
+        height: 12rem;
+        padding: 0.75rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: linear-gradient(to bottom left, #f472b6, #c084fc, #4f46e5);
+        filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.25));
+        animation: startup-spin 1.2s linear infinite;
+      }
+
+      .startup-loader__center {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: #021f33;
+        backdrop-filter: blur(12px);
+      }
+
+      @keyframes startup-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-Dxw4t0zx.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-Cn8xt2Gj.js">
     <link rel="modulepreload" crossorigin href="/assets/vendor-CPadXvLK.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-BMb_63lm.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-BcBpSb6H.css">
   </head>
-
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="startup-loader" role="status" aria-label="Loading">
+        <div class="startup-loader__spinner" aria-hidden="true">
+          <div class="startup-loader__center"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

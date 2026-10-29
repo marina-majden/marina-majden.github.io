@@ -46,12 +46,11 @@
     background:
       radial-gradient(
         circle at 15% 20%,
-        rgba(204, 255, 0, 0.14),
-        transparent 24%
+        rgba(45 151 146 / 0.53) transparent 24%
       ),
       radial-gradient(
         circle at 86% 74%,
-        rgba(255, 79, 154, 0.18),
+        rgba(255 79 155 / 0.6),
         transparent 26%
       ),
       linear-gradient(135deg, rgba(16, 16, 16, 0.14), rgba(16, 16, 16, 0.05));
@@ -61,12 +60,12 @@
     background:
       radial-gradient(
         circle at 88% 16%,
-        rgba(24, 183, 255, 0.18) 0 34px,
+        rgba(8 210 236 / 0.26) 0 34px,
         transparent 35px
       ),
       radial-gradient(
         circle at 13% 72%,
-        rgba(255, 75, 31, 0.18) 0 42px,
+        rgba(247 165 203 / 0.56) 0 42px,
         transparent 43px
       ),
       linear-gradient(135deg, var(--paper), #fffdf4);
