@@ -1,0 +1,309 @@
+@import "tailwindcss";
+
+/* Dodavanje animacije izravno u Tailwindovu temu kako bi postala globalno dostupna (npr. kao klasa animate-cyber-move) */
+
+--animate-cyber-move: cyber-move 10s linear infinite;
+--animate-pulse-stream: pulse-stream 3s ease-in-out infinite;
+--animate-ring-zoom: ring-zoom 4s ease-in-out infinite both;
+--animate-ring-pan: ring-pan 4s ease-in-out infinite both;
+
+@keyframes ring-zoom {
+  0% {
+    transform: perspective(200px) translateZ(0);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(200px) translateZ(200px);
+    opacity: 0;
+  }
+}
+
+@keyframes ring-pan {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-50%, -45%, 0);
+  }
+  75% {
+    transform: translate3d(45%, 35%, 0);
+  }
+  85% {
+    transform: translate3d(-60%, 25%, 0);
+  }
+}
+
+/* Prilagođene klase za prstenove koje koriste Tailwind CSS v4 var i selektore */
+@utility ring-glow-cyan {
+  border-color: whitesmoke;
+  box-shadow:
+    0 0 4px cyan,
+    0 0 20px cyan,
+    inset 0 0 4px cyan,
+    inset 0 0 20px cyan;
+}
+
+@utility ring-glow-magenta {
+  border-color: whitesmoke;
+  box-shadow:
+    0 0 4px magenta,
+    0 0 20px magenta,
+    inset 0 0 4px magenta,
+    inset 0 0 20px magenta;
+}
+
+@keyframes cyber-move {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      0 0,
+      60px 60px,
+      60px 60px,
+      40px 40px,
+      40px 40px;
+  }
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(60%);
+  }
+}
+@keyframes flow2 {
+  0% {
+    transform: translateX(-75%);
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(75%);
+    opacity: 0.55;
+  }
+}
+@keyframes glint2 {
+  0% {
+    transform: translateX(-60%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(60%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-stream {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Pretvaranje tvog složenog koda u nativnu Tailwind utility klasu */
+@utility cyber-pattern {
+  background-color: #050505;
+  background-image: 
+    /* 1. La Vignette */
+    radial-gradient(circle at center, transparent 30%, #000 90%),
+    /* 2. GRILLE PRINCIPALE (Cyan - Grande) */
+      linear-gradient(rgba(3, 233, 244, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(3, 233, 244, 0.1) 1px, transparent 1px),
+    /* 3. GRILLE SECONDAIRE (Magenta - Petite) */
+      linear-gradient(rgba(217, 3, 244, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 3, 244, 0.05) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    60px 60px,
+    60px 60px,
+    20px 20px,
+    20px 20px;
+  /* Pozivanje animacije preko CSS varijable iz Tailwind teme */
+  animation: var(--animate-cyber-move);
+}
+
+.ticket-card {
+  --perforation-size: 12px;
+  --cutouts-adjust: 70px;
+  animation: ticket-hover 3s ease infinite;
+  will-change: transform, filter;
+  filter: drop-shadow(0 2px 1px #00000025) drop-shadow(0 4px 3px #00000025)
+    drop-shadow(0 10px 9px #00000025) drop-shadow(0 20px 20px #00000025)
+    drop-shadow(0 40px 40px #00000025);
+}
+
+@keyframes ticket-hover {
+  50% {
+    filter: drop-shadow(0 4px 3px #00000015) drop-shadow(0 6px 6px #00000015)
+      drop-shadow(0 16px 14px #00000015) drop-shadow(0 30px 28px #00000015)
+      drop-shadow(0 60px 60px #00000015);
+    transform: translateY(-7px) scale(1.02);
+  }
+}
+
+.ticket-bg {
+  filter: url(#bump);
+  /* Standard i WebKit maske za perforacije i ureze */
+  -webkit-mask:
+    radial-gradient(
+      circle at 50% 0,
+      #fff0 calc(var(--perforation-size) - 5px),
+      #000 calc(var(--perforation-size) - 4px)
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      #fff0 calc(var(--perforation-size) - 5px),
+      #000 calc(var(--perforation-size) - 4px)
+    ),
+    radial-gradient(circle 8px at left center, #000 98%, #0000 100%),
+    radial-gradient(circle 8px at right center, #000 98%, #0000 100%),
+    repeating-linear-gradient(
+      90deg,
+      #000 10px,
+      #000 15px,
+      #0000 16px,
+      #0000 24px
+    );
+  mask:
+    radial-gradient(
+      circle at 50% 0,
+      #fff0 calc(var(--perforation-size) - 5px),
+      #000 calc(var(--perforation-size) - 4px)
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      #fff0 calc(var(--perforation-size) - 5px),
+      #000 calc(var(--perforation-size) - 4px)
+    ),
+    radial-gradient(circle 8px at left center, #000 98%, #0000 100%),
+    radial-gradient(circle 8px at right center, #000 98%, #0000 100%),
+    repeating-linear-gradient(
+      90deg,
+      #000 10px,
+      #000 15px,
+      #0000 16px,
+      #0000 24px
+    );
+
+  -webkit-mask-repeat: repeat-x, repeat-x, no-repeat, no-repeat, repeat-x;
+  mask-repeat: repeat-x, repeat-x, no-repeat, no-repeat, repeat-x;
+
+  -webkit-mask-size:
+    calc(var(--perforation-size) * 2) 100%,
+    calc(var(--perforation-size) * 2) 100%,
+    16px 16px,
+    16px 16px,
+    10px 2px;
+  mask-size:
+    calc(var(--perforation-size) * 2) 100%,
+    calc(var(--perforation-size) * 2) 100%,
+    16px 16px,
+    16px 16px,
+    10px 2px;
+
+  -webkit-mask-position:
+    calc(0.5 * var(--perforation-size)) top,
+    calc(0.5 * var(--perforation-size)) bottom,
+    left var(--cutouts-adjust),
+    right var(--cutouts-adjust),
+    0 calc(var(--cutouts-adjust) + 7px);
+  mask-position:
+    calc(0.5 * var(--perforation-size)) top,
+    calc(0.5 * var(--perforation-size)) bottom,
+    left var(--cutouts-adjust),
+    right var(--cutouts-adjust),
+    0 calc(var(--cutouts-adjust) + 7px);
+}
+
+.ticket-holo {
+  background-image:
+    linear-gradient(to bottom, #fe58, 90%, #0002),
+    conic-gradient(
+      at 60% 50%,
+      #ccc,
+      #ff6bfe,
+      #00f9f8,
+      #ddd,
+      #0081fd,
+      #eef0bc,
+      #0081fd,
+      #ff6bfe,
+      #0002,
+      #0081fd,
+      #ddd,
+      #01fefb,
+      #ccc
+    );
+}
+
+.ticket-holo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 70% 20%, #f0f, #0000),
+    repeating-radial-gradient(circle at 30% 80%, #fff, #f4a 48px, #eeeeee 150px);
+  mix-blend-mode: color-burn;
+}
+
+.ticket-holo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, #f205, #f00, #0f0, #f205);
+  mix-blend-mode: difference;
+  animation: bg-pos 3s ease-in-out infinite alternate;
+  background-position: 0 0;
+  background-size: 100% 300%;
+  background-repeat: repeat;
+}
+
+@keyframes bg-pos {
+  to {
+    background-position: 0 500px;
+  }
+}
+
+.ticket-barcode {
+  box-shadow:
+    0px 0 0 1px #000,
+    5px 0 0 1px #000,
+    7px 0 0 1px #000,
+    11px 0 0 1px #000,
+    15px 0 0 1px #000,
+    16px 0 0 1px #000,
+    22px 0 0 1px #000,
+    27px 0 0 1px #000,
+    30px 0 0 1px #000,
+    35px 0 0 1px #000,
+    36px 0 0 1px #000,
+    39px 0 0 1px #000,
+    43px 0 0 1px #000,
+    47px 0 0 1px #000,
+    50px 0 0 1px #000,
+    55px 0 0 1px #000,
+    59px 0 0 1px #000,
+    60px 0 0 1px #000,
+    64px 0 0 1px #000,
+    69px 0 0 1px #000,
+    70px 0 0 1px #000,
+    74px 0 0 1px #000;
+}

@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>
+        /* ─── TOKENS ─── */
+        :root {
+            --bg: #060608;
+            --bg2: #0d0d12;
+            --bg3: #12121a;
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #d4cfc8;
+            --text-dim: #6b6870;
+            --amber: #f5c97a;
+            --amber-dim: #a8823a;
+            --amber-glow: rgba(245, 201, 122, 0.15);
+            --lavender: #b8a8d4;
+            --warm: #f0e8d8;
+            --radius: 4px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "DM Mono", monospace;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* ─── NOISE GRAIN ─── */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.5;
+        }
+
+        /* ─── CUSTOM CURSOR ─── */
+        body {
+            cursor: none;
+        }
+        #cur {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--amber);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition:
+                width 0.15s,
+                height 0.15s,
+                background 0.15s;
+        }
+        #cur-ring {
+            position: fixed;
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--amber);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition:
+                width 0.25s,
+                height 0.25s,
+                opacity 0.25s,
+                border-color 0.25s;
+            opacity: 0.35;
+        }
+        body:has(a:hover, button:hover) #cur {
+            width: 10px;
+            height: 10px;
+            background: var(--amber);
+        }
+        body:has(a:hover, button:hover) #cur-ring {
+            width: 44px;
+            height: 44px;
+            opacity: 0.6;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            padding: 22px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(
+                to bottom,
+                rgba(6, 6, 8, 0.92) 0%,
+                transparent 100%
+            );
+            backdrop-filter: blur(12px);
+        }
+        .nav-logo {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--warm);
+            letter-spacing: 0.15em;
+            text-decoration: none;
+        }
+        .nav-logo sup {
+            font-size: 10px;
+            color: var(--amber);
+            vertical-align: super;
+        }
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--amber);
+        }
+        .nav-cta {
+            padding: 9px 22px;
+            border: 1px solid var(--amber);
+            color: var(--amber);
+            font-family: "DM Mono", monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: transparent;
+            cursor: none;
+            transition:
+                background 0.2s,
+                color 0.2s;
+            border-radius: var(--radius);
+        }
+        .nav-cta:hover {
+            background: var(--amber);
+            color: var(--bg);
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: none;
+            padding: 4px;
+            z-index: 600;
+            position: relative;
+        }
+        .hamburger span {
+            width: 24px;
+            height: 1px;
+            background: var(--text);
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile nav overlay */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 400;
+            background: rgba(6, 6, 8, 0.97);
+            backdrop-filter: blur(16px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .mobile-nav.open {
+            opacity: 1;
+        }
+        .mobile-nav a {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(36px, 8vw, 56px);
+            font-weight: 300;
+            letter-spacing: 0.04em;
+            color: var(--warm);
+            text-decoration: none;
+            transition: color 0.2s;
+            padding: 8px 0;
+        }
+        .mobile-nav a:hover {
+            color: var(--amber);
+        }
+        .mobile-nav .mobile-cta {
+            margin-top: 32px;
+            padding: 14px 40px;
+            border: 1px solid var(--amber);
+            color: var(--amber);
+            font-family: "DM Mono", monospace;
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .mobile-nav .mobile-cta:hover {
+            background: var(--amber);
+            color: var(--bg);
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 160px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Radial glow orb */
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(245, 201, 122, 0.18) 0%,
+                rgba(240, 180, 80, 0.06) 35%,
+                transparent 70%
+            );
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: pulse-glow 4s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-glow {
+            from {
+                opacity: 0.7;
+                transform: translate(-50%, -55%) scale(1);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -55%) scale(1.08);
+            }
+        }
+
+        /* Floating ring decoration */
+        .hero-ring {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            width: 340px;
+            height: 340px;
+            border: 1px solid rgba(245, 201, 122, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate-ring 30s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .hero-ring::after {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: var(--amber);
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+        .hero-ring-2 {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            width: 520px;
+            height: 520px;
+            border: 1px dashed rgba(245, 201, 122, 0.05);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate-ring 60s linear infinite reverse;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes rotate-ring {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Particle dots */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--amber);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-particle linear infinite;
+        }
+        @keyframes float-particle {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            10% {
+                opacity: 0.6;
+                transform: translateY(-10px) scale(1);
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) scale(0.5);
+            }
+        }
+
+        /* eyebrow */
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: fade-up 0.8s 0.2s forwards;
+        }
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--amber-dim);
+        }
+
+        main h1 {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(56px, 8vw, 130px);
+            font-weight: 300;
+            line-height: 0.92;
+            color: var(--warm);
+            letter-spacing: -0.02em;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: fade-up 0.9s 0.35s forwards;
+        }
+        main h1 em {
+            font-style: italic;
+            color: var(--amber);
+        }
+
+        main p {
+            max-width: 480px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-dim);
+            margin: 0 auto 48px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: fade-up 0.9s 0.5s forwards;
+        }
+
+        /* signup form — THE challenge HTML */
+        .signup {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: fade-up 0.9s 0.65s forwards;
+        }
+        .signup-row {
+            display: flex;
+            width: 100%;
+            gap: 0;
+        }
+        .signup input[type="email"] {
+            flex: 1;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: none;
+            border-radius: var(--radius) 0 0 var(--radius);
+            color: var(--warm);
+            font-family: "DM Mono", monospace;
+            font-size: 13px;
+            outline: none;
+            transition:
+                border-color 0.25s,
+                background 0.25s;
+        }
+        .signup input[type="email"]::placeholder {
+            color: var(--text-dim);
+        }
+        .signup input[type="email"]:focus {
+            border-color: rgba(245, 201, 122, 0.5);
+            background: rgba(245, 201, 122, 0.04);
+        }
+        .signup button[type="submit"] {
+            padding: 14px 28px;
+            background: var(--amber);
+            border: 1px solid var(--amber);
+            color: var(--bg);
+            font-family: "DM Mono", monospace;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: none;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            white-space: nowrap;
+            transition:
+                background 0.2s,
+                opacity 0.2s;
+        }
+        .signup button[type="submit"]:hover {
+            background: #ffd98a;
+            border-color: #ffd98a;
+        }
+        .email-note {
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.06em;
+        }
+
+        /* scroll hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fade-up 0.6s 1.2s forwards;
+            z-index: 2;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--amber-dim), transparent);
+            animation: scroll-line 2s ease-in-out infinite;
+        }
+        @keyframes scroll-line {
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scaleY(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleY(0.6);
+            }
+        }
+
+        /* ─── MARQUEE STRIP ─── */
+        .marquee-strip {
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+            background: var(--bg2);
+        }
+        .marquee-inner {
+            display: flex;
+            gap: 0;
+            white-space: nowrap;
+            animation: marquee 22s linear infinite;
+        }
+        .marquee-inner span {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding: 0 40px;
+        }
+        .marquee-inner span.accent {
+            color: var(--amber);
+        }
+        @keyframes marquee {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ─── SECTION COMMONS ─── */
+        section {
+            padding: 120px 24px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-label::before {
+            content: "";
+            width: 20px;
+            height: 1px;
+            background: var(--amber-dim);
+        }
+        .section-title {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(36px, 5vw, 68px);
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -0.01em;
+            color: var(--warm);
+            margin-bottom: 64px;
+        }
+        .section-title em {
+            font-style: italic;
+            color: var(--amber);
+        }
+
+        /* ─── REVEAL ANIMATIONS ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition:
+                opacity 0.7s,
+                transform 0.7s;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-32px);
+            transition:
+                opacity 0.7s,
+                transform 0.7s;
+        }
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition:
+                opacity 0.7s,
+                transform 0.7s;
+        }
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── PRODUCT PREVIEW SECTION ─── */
+        .preview-section {
+            background: var(--bg2);
+            overflow: hidden;
+        }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            border: 1px solid var(--border);
+        }
+        .preview-card {
+            padding: 48px;
+            background: var(--bg3);
+            border-right: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .preview-card:last-child {
+            border-right: none;
+        }
+        .preview-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                ellipse at 20% 20%,
+                var(--amber-glow),
+                transparent 60%
+            );
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .preview-card:hover::before {
+            opacity: 1;
+        }
+        .preview-num {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            margin-bottom: 32px;
+            font-family: "DM Mono", monospace;
+        }
+        .preview-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--amber);
+            fill: none;
+            stroke-width: 1.2;
+        }
+        .preview-card h3 {
+            font-family: "Syne", sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--warm);
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+        }
+        .preview-card p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+
+        /* ─── FEATURES ─── */
+        .features-section {
+            background: var(--bg);
+        }
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            border: 1px solid var(--border);
+        }
+        .feat {
+            padding: 40px 36px;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+        .feat:nth-child(3n) {
+            border-right: none;
+        }
+        .feat:hover {
+            background: var(--bg3);
+        }
+        .feat-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border: 1px solid var(--border);
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+        .feat h3 {
+            font-family: "Syne", sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--warm);
+            margin-bottom: 10px;
+        }
+        .feat p {
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+        .feat-icon {
+            font-size: 24px;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        /* ─── SPECS ─── */
+        .specs-section {
+            background: var(--bg2);
+        }
+        .specs-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+        .specs-text p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-dim);
+            margin-bottom: 28px;
+        }
+        .specs-text .specs-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--amber);
+            text-decoration: none;
+            transition: gap 0.2s;
+        }
+        .specs-text .specs-cta:hover {
+            gap: 16px;
+        }
+        .specs-text .specs-cta::after {
+            content: "→";
+        }
+        .specs-table {
+            border: 1px solid var(--border);
+        }
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            transition: background 0.2s;
+        }
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+        .spec-row:hover {
+            background: rgba(245, 201, 122, 0.03);
+        }
+        .spec-key {
+            color: var(--text-dim);
+        }
+        .spec-val {
+            color: var(--warm);
+            font-weight: 400;
+        }
+        .spec-badge {
+            padding: 2px 8px;
+            border: 1px solid var(--amber);
+            border-radius: 2px;
+            color: var(--amber);
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* ─── WAITLIST CTA ─── */
+        .cta-section {
+            background: var(--bg);
+            text-align: center;
+            padding: 160px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-glow {
+            position: absolute;
+            bottom: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(
+                ellipse at center bottom,
+                rgba(245, 201, 122, 0.14) 0%,
+                transparent 65%
+            );
+            pointer-events: none;
+        }
+        .cta-section .section-title {
+            margin-bottom: 24px;
+        }
+        .cta-section > .container > p {
+            max-width: 460px;
+            margin: 0 auto 48px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-dim);
+        }
+        .cta-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+        .cta-form .signup-row {
+            width: 100%;
+        }
+        .cta-form input[type="email"] {
+            flex: 1;
+            padding: 16px 22px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: none;
+            border-radius: var(--radius) 0 0 var(--radius);
+            color: var(--warm);
+            font-family: "DM Mono", monospace;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.25s;
+        }
+        .cta-form input[type="email"]::placeholder {
+            color: var(--text-dim);
+        }
+        .cta-form input[type="email"]:focus {
+            border-color: rgba(245, 201, 122, 0.5);
+        }
+        .cta-form button[type="submit"] {
+            padding: 16px 32px;
+            background: var(--amber);
+            border: 1px solid var(--amber);
+            color: var(--bg);
+            font-family: "DM Mono", monospace;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: none;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            transition: background 0.2s;
+        }
+        .cta-form button[type="submit"]:hover {
+            background: #ffd98a;
+        }
+        .cta-note {
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.06em;
+        }
+        .counter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 48px;
+        }
+        .counter-dot {
+            width: 6px;
+            height: 6px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+        .counter-badge strong {
+            color: var(--amber);
+            font-family: "Syne", sans-serif;
+            font-size: 15px;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            background: var(--bg2);
+        }
+        .footer-logo {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--warm);
+            letter-spacing: 0.15em;
+        }
+        .footer-logo sup {
+            color: var(--amber);
+            font-size: 9px;
+            vertical-align: super;
+        }
+        footer p {
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.06em;
+        }
+        .footer-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+        .footer-links a {
+            font-size: 11px;
+            color: var(--text-dim);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--amber);
+        }
+
+        /* ─── IMAGE PLACEHOLDER ─── */
+        .img-placeholder {
+            background: var(--bg3);
+            border: 1px dashed rgba(245, 201, 122, 0.2);
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--amber-dim);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 20px;
+        }
+        .img-placeholder .ph-icon {
+            font-size: 28px;
+            opacity: 0.5;
+        }
+
+        /* ─── VISUAL DEMO STRIP ─── */
+        .demo-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            margin-bottom: 80px;
+        }
+        .demo-card {
+            aspect-ratio: 4/3;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+        .demo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        .demo-card .img-placeholder {
+            height: 100%;
+            border: none;
+            border-radius: 0;
+        }
+
+        /* warm scene mock */
+        .scene-warm {
+            background: radial-gradient(
+                ellipse at 50% 80%,
+                rgba(245, 150, 50, 0.25) 0%,
+                rgba(6, 6, 8, 0.9) 60%
+            );
+        }
+        .scene-cool {
+            background: radial-gradient(
+                ellipse at 50% 80%,
+                rgba(100, 150, 255, 0.2) 0%,
+                rgba(6, 6, 8, 0.9) 60%
+            );
+        }
+        .scene-focus {
+            background: radial-gradient(
+                ellipse at 50% 80%,
+                rgba(220, 220, 180, 0.18) 0%,
+                rgba(6, 6, 8, 0.9) 60%
+            );
+        }
+        .scene-label {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--amber);
+            padding: 4px 10px;
+            border: 1px solid rgba(245, 201, 122, 0.3);
+            border-radius: 2px;
+            background: rgba(6, 6, 8, 0.7);
+        }
+
+        /* App mockup lines */
+        .app-lines {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .app-line {
+            height: 3px;
+            border-radius: 2px;
+            background: rgba(245, 201, 122, 0.2);
+            transform-origin: left;
+            animation: line-grow 1.8s 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        .app-line:nth-child(1) {
+            width: 60%;
+        }
+        .app-line:nth-child(2) {
+            width: 40%;
+            animation-delay: 0.65s;
+        }
+        .app-line:nth-child(3) {
+            width: 75%;
+            animation-delay: 0.8s;
+        }
+        @keyframes line-grow {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        /* ─── HORIZONTAL SCROLL LOGOS (fake partners) ─── */
+        .logos-section {
+            padding: 60px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        .logos-label {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 36px;
+        }
+        .logos-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 56px;
+            flex-wrap: wrap;
+        }
+        .logo-item {
+            font-family: "Syne", sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.15);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* ─── TIMELINE / HOW IT WORKS ─── */
+        .how-section {
+            background: var(--bg2);
+        }
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            margin-top: 0;
+        }
+        .timeline-step {
+            padding: 40px 32px;
+            border-right: 1px solid var(--border);
+            position: relative;
+            transition: background 0.3s;
+        }
+        .timeline-step:last-child {
+            border-right: none;
+        }
+        .timeline-step:hover {
+            background: rgba(245, 201, 122, 0.02);
+        }
+        .step-num {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: var(--amber);
+            margin-bottom: 20px;
+            font-family: "DM Mono", monospace;
+        }
+        .timeline-step h3 {
+            font-family: "Syne", sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--warm);
+            margin-bottom: 10px;
+        }
+        .timeline-step p {
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+        .step-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: transparent;
+            overflow: hidden;
+        }
+        .step-line::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+            animation: slide-line 3s linear infinite;
+        }
+        @keyframes slide-line {
+            to {
+                left: 100%;
+            }
+        }
+        .timeline-step:nth-child(2) .step-line::after {
+            animation-delay: -0.75s;
+        }
+        .timeline-step:nth-child(3) .step-line::after {
+            animation-delay: -1.5s;
+        }
+        .timeline-step:nth-child(4) .step-line::after {
+            animation-delay: -2.25s;
+        }
+
+        /* ─── SUCCESS STATE ─── */
+        .success-msg {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #7ecfa0;
+            letter-spacing: 0.06em;
+        }
+        .success-msg.show {
+            display: flex;
+        }
+        .success-msg::before {
+            content: "✓";
+            font-size: 16px;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            nav {
+                padding: 18px 24px;
+            }
+            .nav-links,
+            .nav-cta {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+
+            section {
+                padding: 80px 20px;
+            }
+            .hero {
+                padding: 140px 20px 80px;
+            }
+            .hero-glow {
+                width: 400px;
+                height: 400px;
+            }
+            .hero-ring {
+                width: 280px;
+                height: 280px;
+            }
+            .hero-ring-2 {
+                width: 420px;
+                height: 420px;
+            }
+
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+            .preview-card {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .preview-card:last-child {
+                border-bottom: none;
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            .feat {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .feat:last-child {
+                border-bottom: none;
+            }
+
+            .specs-layout {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .timeline {
+                grid-template-columns: 1fr 1fr;
+            }
+            .timeline-step:nth-child(2n) {
+                border-right: none;
+            }
+            .timeline-step {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .demo-strip {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
+                padding: 36px 24px;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .logos-row {
+                gap: 32px;
+            }
+        }
+        @media (max-width: 560px) {
+            main h1 {
+                font-size: clamp(44px, 12vw, 72px);
+            }
+            .signup-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .signup input[type="email"] {
+                border-right: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: var(--radius);
+            }
+            .signup button[type="submit"] {
+                border-radius: var(--radius);
+                padding: 14px;
+            }
+            .cta-form .signup-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .cta-form input[type="email"] {
+                border-right: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: var(--radius);
+            }
+            .cta-form button[type="submit"] {
+                border-radius: var(--radius);
+            }
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+            .timeline-step {
+                border-right: none;
+            }
+            .preview-card {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+    <body>
+        <div id="cur"></div>
+        <div id="cur-ring"></div>
+
+        <!-- NAV -->
+        <nav>
+            <a href="#" class="nav-logo">LUMEN<sup>®</sup></a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how">How it Works</a></li>
+                <li><a href="#specs">Specs</a></li>
+                <li><a href="#waitlist" class="nav-cta">Join Waitlist</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Menu" onclick="toggleMenu(this)">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+
+        <!-- MOBILE NAV OVERLAY -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#features" onclick="closeMobileNav()">Features</a>
+            <a href="#how" onclick="closeMobileNav()">How it Works</a>
+            <a href="#specs" onclick="closeMobileNav()">Specs</a>
+            <a href="#waitlist" class="mobile-cta" onclick="closeMobileNav()">Join Waitlist</a>
+        </div>
+
+        <!-- ─── HERO (using required starter HTML inside <main>) ─── -->
+        <main class="hero">
+            <div class="particles" id="particles"></div>
+            <div class="hero-glow"></div>
+            <div class="hero-ring"></div>
+            <div class="hero-ring-2"></div>
+
+            <div class="eyebrow">Coming Summer 2026</div>
+
+            <h1>The Thing You<br><em>Want</em></h1>
+
+            <p>That thing you want to buy? We have it. And it's almost here. Intelligent light that reads your room, your mood, your moment.</p>
+
+            <form class="signup" onsubmit="handleSubmit(event, this)">
+                <div class="signup-row">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Notify Me</button>
+                </div>
+                <p class="email-note">Sign up to get notified when we launch.</p>
+                <p class="success-msg" id="hero-success">You're on the list — we'll be in touch.</p>
+            </form>
+
+            <div class="scroll-hint">
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
+            </div>
+        </main>
+
+        <!-- ─── MARQUEE ─── -->
+        <div class="marquee-strip" aria-hidden="true">
+            <div class="marquee-inner">
+                <span>Intelligent Light</span><span class="accent">◆</span>
+                <span>Adaptive Scenes</span><span class="accent">◆</span>
+                <span>Voice & App Control</span><span class="accent">◆</span>
+                <span>Sleep Science</span><span class="accent">◆</span>
+                <span>Works Offline</span><span class="accent">◆</span>
+                <span>No Subscription</span><span class="accent">◆</span>
+                <span>Summer 2026</span><span class="accent">◆</span>
+                <!-- duplicate for seamless loop -->
+                <span>Intelligent Light</span><span class="accent">◆</span>
+                <span>Adaptive Scenes</span><span class="accent">◆</span>
+                <span>Voice & App Control</span><span class="accent">◆</span>
+                <span>Sleep Science</span><span class="accent">◆</span>
+                <span>Works Offline</span><span class="accent">◆</span>
+                <span>No Subscription</span><span class="accent">◆</span>
+                <span>Summer 2026</span><span class="accent">◆</span>
+            </div>
+        </div>
+
+        <!-- ─── DEMO STRIP ─── -->
+        <section class="preview-section" id="preview" style="padding-top:80px; padding-bottom:0;">
+            <div class="container">
+                <div class="section-label reveal">01 — Atmosphere</div>
+                <h2 class="section-title reveal">Light that <em>feels</em><br>alive.</h2>
+                <div class="demo-strip">
+                    <div class="demo-card reveal" style="transition-delay:.1s">
+                        <img src="https://rassweiler-it.de/images/codepen/codepen_cpc_Warm-Evening-Scene.png" alt="Warm-Evening-Scene">
+                        <span class="scene-label">Warm · Evening</span>
+                    </div>
+                    <div class="demo-card reveal" style="transition-delay:.2s">
+                        <img src="https://rassweiler-it.de/images/codepen/codepen_cpc_Cool-Night-Scene.png" alt="Cool-Night-Scene">
+                        <span class="scene-label">Cool · Night</span>
+                    </div>
+                    <div class="demo-card reveal" style="transition-delay:.3s">
+                        <img src="https://rassweiler-it.de/images/codepen/codepen_cpc_Daylight-Focus-Scene.png" alt="Daylight-Focus-Scene">
+                        <span class="scene-label">Daylight · Focus</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── PRODUCT CARDS ─── -->
+        <section class="preview-section" style="padding-top:2px;">
+            <div class="container">
+                <div class="preview-grid">
+                    <div class="preview-card reveal">
+                        <div class="preview-num">01</div>
+                        <div class="preview-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                            </svg>
+                        </div>
+                        <h3>Adaptive Spectrum</h3>
+                        <p>LUMEN tracks sunlight cycles in real time and shifts your home's color temperature automatically — from energising 6500K mornings to amber 2200K evenings.</p>
+                    </div>
+                    <div class="preview-card reveal" style="transition-delay:.15s">
+                        <div class="preview-num">02</div>
+                        <div class="preview-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                            </svg>
+                        </div>
+                        <h3>Scene Memory</h3>
+                        <p>Set a scene once. LUMEN remembers it and reactivates it when you return home, detecting presence via your phone's location and local AI — no cloud needed.</p>
+                    </div>
+                    <div class="preview-card reveal" style="transition-delay:.3s">
+                        <div class="preview-num">03</div>
+                        <div class="preview-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                            </svg>
+                        </div>
+                        <h3>Voice & Gesture</h3>
+                        <p>Speak naturally or swipe in the app. No wake words, no cloud microphones. On-device speech recognition keeps your home conversations private, always.</p>
+                    </div>
+                    <div class="preview-card reveal" style="transition-delay:.1s">
+                        <div class="preview-num">04</div>
+                        <div class="preview-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 8h1a4 4 0 010 8h-1"/>
+                                <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                                <path d="M6 1v3M10 1v3M14 1v3"/>
+                            </svg>
+                        </div>
+                        <h3>Sleep Science</h3>
+                        <p>Integrated circadian engine built from published sleep research. Bedtime sequences that take 40 minutes to dim to blackout, tuned to your personal sleep schedule.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── FEATURES ─── -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-label reveal">02 — Features</div>
+                <h2 class="section-title reveal">Everything you <em>need.</em><br>Nothing you don't.</h2>
+
+                <div class="features-list">
+                    <div class="feat reveal">
+                        <div class="feat-tag">Lighting</div>
+                        <div class="feat-icon">✦</div>
+                        <h3>16 Million Colors</h3>
+                        <p>Full RGB + warm white in every bulb. Match any palette, artwork, or season.</p>
+                    </div>
+                    <div class="feat reveal" style="transition-delay:.08s">
+                        <div class="feat-tag">Privacy</div>
+                        <div class="feat-icon">◈</div>
+                        <h3>100% Local</h3>
+                        <p>No account required to operate lights. Everything runs on your router. Your home data never leaves.</p>
+                    </div>
+                    <div class="feat reveal" style="transition-delay:.16s">
+                        <div class="feat-tag">AI</div>
+                        <div class="feat-icon">◉</div>
+                        <h3>Presence Detection</h3>
+                        <p>Learns your routines in 7 days. Turns off lights in empty rooms. Welcomes you home automatically.</p>
+                    </div>
+                    <div class="feat reveal" style="transition-delay:.24s">
+                        <div class="feat-tag">Energy</div>
+                        <div class="feat-icon">⟁</div>
+                        <h3>Smart Dimming</h3>
+                        <p>Automatic brightness that reacts to daylight. Save up to 60% on lighting energy annually.</p>
+                    </div>
+                    <div class="feat reveal" style="transition-delay:.32s">
+                        <div class="feat-tag">Ecosystem</div>
+                        <div class="feat-icon">◎</div>
+                        <h3>Open Protocol</h3>
+                        <p>Works with Matter, Thread, Apple Home, Google Home, and Amazon Alexa out of the box.</p>
+                    </div>
+                    <div class="feat reveal" style="transition-delay:.4s">
+                        <div class="feat-tag">Updates</div>
+                        <div class="feat-icon">△</div>
+                        <h3>Lifetime Software</h3>
+                        <p>Free firmware updates forever. No subscription, no paywalled scenes. Buy once, own it fully.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── LOGOS ─── -->
+        <div class="logos-section container" style="max-width:none; border-bottom:1px solid var(--border);">
+            <p class="logos-label">Compatible Ecosystem</p>
+            <div class="logos-row">
+                <span class="logo-item">Apple Home</span>
+                <span class="logo-item">Google Home</span>
+                <span class="logo-item">Amazon Alexa</span>
+                <span class="logo-item">Matter</span>
+                <span class="logo-item">Thread</span>
+                <span class="logo-item">HomeKit</span>
+            </div>
+        </div>
+
+        <!-- ─── HOW IT WORKS ─── -->
+        <section class="how-section" id="how">
+            <div class="container">
+                <div class="section-label reveal">03 — Process</div>
+                <h2 class="section-title reveal">Setup in <em>four minutes</em>,<br>smart in seven days.</h2>
+
+                <div class="timeline">
+                    <div class="timeline-step reveal" style="transition-delay:.0s">
+                        <div class="step-line"></div>
+                        <div class="step-num">Step 01</div>
+                        <h3>Screw & Connect</h3>
+                        <p>Replace any standard E27 or GU10 bulb. LUMEN connects to your Wi-Fi automatically. No hub required.</p>
+                    </div>
+                    <div class="timeline-step reveal" style="transition-delay:.1s">
+                        <div class="step-line"></div>
+                        <div class="step-num">Step 02</div>
+                        <h3>Open the App</h3>
+                        <p>Rooms auto-discover. Name them. The app runs entirely on your local network — offline capable from day one.</p>
+                    </div>
+                    <div class="timeline-step reveal" style="transition-delay:.2s">
+                        <div class="step-line"></div>
+                        <div class="step-num">Step 03</div>
+                        <h3>Pick a Scene</h3>
+                        <p>Choose from curated presets or build your own. Set schedules, moods, and wake-up routines in seconds.</p>
+                    </div>
+                    <div class="timeline-step reveal" style="transition-delay:.3s">
+                        <div class="step-line"></div>
+                        <div class="step-num">Step 04</div>
+                        <h3>LUMEN Learns</h3>
+                        <p>After one week of observation, the AI adapts your lights automatically. You just live. It handles the rest.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── SPECS ─── -->
+        <section class="specs-section" id="specs">
+            <div class="container">
+                <div class="section-label reveal">04 — Technical</div>
+                <h2 class="section-title reveal">Built for<br><em>performance.</em></h2>
+
+                <div class="specs-layout">
+                    <div class="specs-text reveal-left">
+                        <p>Every LUMEN bulb contains a custom ARM Cortex-M33 processor running our on-device inference engine. No cloud call, no latency. Your lights respond in under 80 milliseconds.</p>
+                        <p>The app is built in SwiftUI and Jetpack Compose — native on every platform. Local mesh networking means your lights work even when the internet is down.</p>
+                        <!-- REPLACE: AI Image — Prompt #4 -->
+                        <img src="https://rassweiler-it.de/images/codepen/codepen_cpc_Product-Cutaway.png" alt="Product-Cutaway" style="width:100%;height:220px;object-fit:cover;object-position:center;display:block;border-radius:4px;margin:32px 0;">
+                        <a href="#waitlist" class="specs-cta">Join the waitlist</a>
+                    </div>
+                    <div class="reveal" style="transition-delay:.2s">
+                        <div class="specs-table">
+                            <div class="spec-row"><span class="spec-key">Processor</span><span class="spec-val">ARM Cortex-M33 @ 120 MHz</span></div>
+                            <div class="spec-row"><span class="spec-key">Color Range</span><span class="spec-val">2200 K – 6500 K + RGB</span></div>
+                            <div class="spec-row"><span class="spec-key">Protocol</span><span class="spec-val"><span class="spec-badge">Matter</span> · Thread · Wi-Fi 6</span></div>
+                            <div class="spec-row"><span class="spec-key">Response Time</span><span class="spec-val">&lt; 80 ms local</span></div>
+                            <div class="spec-row"><span class="spec-key">Cloud Required</span><span class="spec-val">Never</span></div>
+                            <div class="spec-row"><span class="spec-key">Lifespan</span><span class="spec-val">25,000 hrs</span></div>
+                            <div class="spec-row"><span class="spec-key">Power</span><span class="spec-val">7 W (equiv. 60 W)</span></div>
+                            <div class="spec-row"><span class="spec-key">Fits</span><span class="spec-val">E27 · E14 · GU10</span></div>
+                            <div class="spec-row"><span class="spec-key">App</span><span class="spec-val">iOS 16+ · Android 12+</span></div>
+                            <div class="spec-row"><span class="spec-key">Ships</span><span class="spec-val"><span class="spec-badge">Summer 2026</span></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── WAITLIST CTA ─── -->
+        <section class="cta-section" id="waitlist">
+            <div class="cta-glow"></div>
+            <div class="container" style="position:relative;z-index:2;">
+                <div class="counter-badge reveal">
+                    <span class="counter-dot"></span>
+                    <strong id="counter">2,847</strong>
+                    <span>people already on the waitlist</span>
+                </div>
+                <div class="section-label" style="justify-content:center;" class="reveal">05 — Early Access</div>
+                <h2 class="section-title reveal" style="margin-bottom:16px;">Be the first to<br>live in <em>the light.</em></h2>
+                <p class="reveal" style="transition-delay:.1s">Early supporters get founding member pricing — locked in for life. Plus, you'll help shape which features ship first.</p>
+
+                <form class="cta-form reveal" style="transition-delay:.2s" onsubmit="handleSubmit(event, this)">
+                    <div class="signup-row">
+                        <input type="email" placeholder="Enter your email address" required>
+                        <button type="submit">Notify Me</button>
+                    </div>
+                    <p class="cta-note">Sign up to get notified when we launch. No spam, ever.</p>
+                    <p class="success-msg" id="cta-success">You're on the list — we'll be in touch.</p>
+                </form>
+            </div>
+        </section>
+
+        <!-- ─── FOOTER ─── -->
+        <footer>
+            <div class="footer-logo">LUMEN<sup>®</sup></div>
+            <p>© 2026 Lumen Technologies GmbH. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </footer>
+    </body>
+    <script>
+        /* ─── CURSOR ─── */
+        const cur = document.getElementById("cur");
+        const ring = document.getElementById("cur-ring");
+        let mx = 0,
+            my = 0,
+            rx = 0,
+            ry = 0;
+        document.addEventListener("mousemove", (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            cur.style.left = mx + "px";
+            cur.style.top = my + "px";
+        });
+        (function loop() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.left = rx + "px";
+            ring.style.top = ry + "px";
+            requestAnimationFrame(loop);
+        })();
+        document.querySelectorAll("a,button").forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+                ring.style.width = "44px";
+                ring.style.height = "44px";
+                ring.style.opacity = ".7";
+            });
+            el.addEventListener("mouseleave", () => {
+                ring.style.width = "28px";
+                ring.style.height = "28px";
+                ring.style.opacity = ".35";
+            });
+        });
+
+        /* ─── PARTICLES ─── */
+        const container = document.getElementById("particles");
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement("div");
+            p.className = "particle";
+            p.style.cssText = `left:${Math.random() * 100}%;top:${
+                60 + Math.random() * 40
+            }%;animation-duration:${4 + Math.random() * 8}s;animation-delay:${
+                Math.random() * 6
+            }s;opacity:0;`;
+            container.appendChild(p);
+        }
+
+        /* ─── SCROLL REVEAL ─── */
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((e, i) => {
+                    if (e.isIntersecting)
+                        setTimeout(() => e.target.classList.add("visible"), i * 60);
+                });
+            },
+            { threshold: 0.08 },
+        );
+        document
+            .querySelectorAll(".reveal,.reveal-left,.reveal-scale")
+            .forEach((el) => obs.observe(el));
+
+        /* ─── COUNTER TICK ─── */
+        const counterEl = document.getElementById("counter");
+        let base = 2847;
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                base += Math.floor(Math.random() * 3) + 1;
+                counterEl.textContent = base.toLocaleString();
+            }
+        }, 8000);
+
+        /* ─── FORM SUBMIT ─── */
+        function handleSubmit(e, form) {
+            e.preventDefault();
+            const successId =
+                form.closest("section,main") === document.querySelector("main")
+                    ? "hero-success"
+                    : "cta-success";
+            const successEl = document.getElementById(successId);
+            if (successEl) {
+                successEl.classList.add("show");
+            }
+            form.querySelector("input").value = "";
+            base += Math.floor(Math.random() * 3) + 1;
+            counterEl.textContent = base.toLocaleString();
+        }
+
+        /* ─── MOBILE MENU ─── */
+        const mobileNav = document.getElementById("mobileNav");
+        let menuOpen = false;
+
+        function toggleMenu(btn) {
+            menuOpen = !menuOpen;
+            const spans = btn.querySelectorAll("span");
+            if (menuOpen) {
+                mobileNav.style.display = "flex";
+                requestAnimationFrame(() => mobileNav.classList.add("open"));
+                spans[0].style.transform = "rotate(45deg) translate(4px, 4px)";
+                spans[1].style.opacity = "0";
+                spans[2].style.transform = "rotate(-45deg) translate(4px, -4px)";
+                document.body.style.overflow = "hidden";
+            } else {
+                closeMobileNav();
+            }
+        }
+
+        function closeMobileNav() {
+            menuOpen = false;
+            mobileNav.classList.remove("open");
+            setTimeout(() => {
+                mobileNav.style.display = "none";
+            }, 300);
+            document.body.style.overflow = "";
+            const spans = document.querySelector(".hamburger").querySelectorAll("span");
+            spans[0].style.transform = "";
+            spans[1].style.opacity = "";
+            spans[2].style.transform = "";
+        }
+
+        /* ─── PARALLAX on hero glow ─── */
+        document.addEventListener("mousemove", (e) => {
+            const glow = document.querySelector(".hero-glow");
+            if (!glow) return;
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            glow.style.transform = `translate(calc(-50% + ${x}px), calc(-55% + ${y}px))`;
+        });
+    </script>
+</html>

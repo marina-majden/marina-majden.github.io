@@ -153,9 +153,9 @@ const content: ContentData = {
       contact: "Kontakt",
     },
     hero: {
-      line1: "web mashina",
-      line2: "povratak načelima i izvorima iz davnina",
-      line3: "radimo stranice sa stilom i dušom",
+      line1: "web ex machinae",
+      line2: "",
+      line3: "sve pripada vama, a mi ćemo vam pomoći s izvedbom",
       subtitle:
         "Tko je bio budan, sjeća se početaka interneta i kako je mreža bila puna čuda... Stranice, ne samo blogovi, prštale su od kreativnosti i jedinstvenih osobnosti. Nikada niste znali što možete očekivati kada ukucate adresu i pritisnete ENTER, kao da gledate intergalaktičku televiziju, ništa od današnjeg minimalizma i uniformnosti. Ne možemo se vratiti u prošlost, ali možemo graditi na njenim temeljima. Zato gradimo web prema vama, kao vaš unikatni izraz, vaš jedinstveni digitalni identitet koji govori vašim vizualnim jezikom i od prvog dojma privlači nove osobe i odnose, dovodi vam klijente, partnere i prijatelje i prospekte!",
       cta: "Stvorimo nešto posebno!",
@@ -574,7 +574,7 @@ const content: ContentData = {
     contact: {
       title: "Kontakt",
       instruction: "Imate ideju? Prenesimo Vašu priču u stvarnost.",
-      text: "Bilo da tražite pojačanje Vašeg tima ili trebate nekoga tko će vašu viziju pretvoriti u pomno osmišljeno web rješenje – tu sam. Radit ćemo dok ne pretvorimo sav kofein u kod.",
+      text: "Bilo da tražite pojačanje Vašeg tima ili trebate nekoga tko će vašu viziju pretvoriti u pomno osmišljeno web rješenje - tu sam. Radit ćemo dok ne pretvorimo sav kofein u kod.",
       cta: "Pošalji poruku",
       sender: "Ime i prezime",
       email: "E-mail adresa",

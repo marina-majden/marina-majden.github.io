@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-blue: #00f3ff;
+  --color-neon-pink: #ff00c1;
+  --color-neon-cyan: #00fff9;
+}
+
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* --- Kompleksni pozadinski gridovi --- */
+@utility cyber-grid {
+  &::before {
+    content: "";
+    @apply absolute inset-0 opacity-50 z-10 pointer-events-none;
+    background-image:
+      linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    mask-image: radial-gradient(circle at center, white, transparent 80%);
+  }
+
+  &::after {
+    content: "";
+    @apply absolute w-[200%] h-[200%] top-[-50%] left-[-50%] opacity-0 transition-all duration-300 z-0 pointer-events-none;
+    background-image: radial-gradient(
+      circle at center,
+      rgba(0, 243, 255, 0.2),
+      transparent 50%
+    );
+  }
+}
+
+/* --- Glitch Animacija --- */
+@utility glitch-text {
+  &::before,
+  &::after {
+    content: attr(data-text);
+    @apply absolute top-0 left-0 w-full h-full bg-neutral-950/80;
+  }
+
+  &::before {
+    left: 2px;
+    text-shadow: -1px 0 var(--color-neon-pink);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+  }
+
+  &::after {
+    left: -2px;
+    text-shadow: -1px 0 var(--color-neon-cyan);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+  }
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(15px, 9999px, 81px, 0);
+  }
+  5% {
+    clip: rect(72px, 9999px, 24px, 0);
+  }
+  10% {
+    clip: rect(4px, 9999px, 88px, 0);
+  }
+  15% {
+    clip: rect(66px, 9999px, 14px, 0);
+  }
+  20% {
+    clip: rect(25px, 9999px, 96px, 0);
+  }
+  100% {
+    clip: rect(50px, 9999px, 50px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(80px, 9999px, 4px, 0);
+  }
+  5% {
+    clip: rect(30px, 9999px, 100px, 0);
+  }
+  10% {
+    clip: rect(10px, 9999px, 20px, 0);
+  }
+  100% {
+    clip: rect(90px, 9999px, 90px, 0);
+  }
+}

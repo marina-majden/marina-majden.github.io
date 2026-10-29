@@ -337,4 +337,4 @@ export const Accordion: React.FC = () => {
     );
 };
 
-export default Accordion;
+export default HorizontalAccordion;

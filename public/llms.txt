@@ -1,0 +1,34 @@
+# Marina Majdenic | WebMashina
+
+> WebMashina is the portfolio of Marina Majdenic, a Croatian web designer and developer. It presents custom web design and development services, original website templates, selected projects, and interactive browser-based experiments.
+
+The site is available in Croatian and English. Its focus is distinctive, human-centered digital experiences rather than generic website templates. The portfolio also includes information about services such as website design, development, deployment, and maintenance.
+
+## Main Pages
+
+- [Portfolio home](https://marina-majden.github.io/): Overview of the portfolio, mission, services, projects, templates, and digital lab.
+- [Website templates](https://marina-majden.github.io/#webshop): Original website templates and information about the web shop.
+- [Services](https://marina-majden.github.io/#services): Web design and development, deployment, and maintenance services.
+- [Projects](https://marina-majden.github.io/#projects): Selected client and personal projects.
+- [Lab](https://marina-majden.github.io/lab): Interactive experiments and browser-based tools.
+- [Contact](https://marina-majden.github.io/#contact): Contact form and inquiry information.
+
+## Project Showcases
+
+- [LitArt](https://marina-majden.github.io/showcase/litart): Interactive platform exploring literature and art learning.
+- [Need Help](https://marina-majden.github.io/showcase/needhelp): Community-focused platform for asking questions and receiving human guidance.
+- [Digital Storybook](https://marina-majden.github.io/showcase/storybook): Personalized interactive children's storybook with generated artwork and narration.
+- [Unplugged App](https://marina-majden.github.io/showcase/unplugged): Concept for strengthening real-world community and reducing unnecessary social media use.
+- [SongFinder](https://marina-majden.github.io/showcase/songfinder): Music discovery experiment using the iTunes API.
+
+## Interactive Experiments
+
+- [CleanQuest](https://marina-majden.github.io/apps/cleanflow): Gamified household task and cleaning organizer.
+- [Elementos](https://marina-majden.github.io/apps/elementos): Bilingual interactive exploration of elements with animation and sound.
+- [ChromaLab](https://marina-majden.github.io/pages/ChromaLab): Interactive color experiment using OKLCH and CSS color features.
+- [Neural Network](https://marina-majden.github.io/pages/NeuralNetwork): Three-dimensional visualization of a neural network.
+- [Liquid Cube](https://marina-majden.github.io/pages/liquid): Interactive 3D fluid simulation experiment.
+
+## Optional
+
+- [Standalone web shop](https://marina-majden.github.io/webshop): Browse website templates.

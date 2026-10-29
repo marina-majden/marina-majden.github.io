@@ -10,8 +10,15 @@ import Mission from "./Mission.tsx";
 import { useLanguage } from "@/context/LanguageContext.tsx";
 import { ServicesProvider } from "@/context/ServicesContext";
 import ToastHub from "@/components/ToastHub";
+import {
+  MiniPixelHeart,
+  PixelHeart,
+  PixelHeartHero,
+  WMHeartLogo,
+} from "@/components/PixelArt.tsx";
+import Newbies from "./Newbies.tsx";
 
-const BentoLab = lazy(() => import("./BentoLab.tsx"));
+const BentoGrid = lazy(() => import("./BentoGrid.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
 const Services = lazy(() => import("./Services.tsx"));
 const Templates = lazy(() => import("./Templates.tsx"));
@@ -41,7 +48,7 @@ const Home: React.FC = () => {
 
   return (
     <ServicesProvider>
-      <div className="max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden text-text-main selection:bg-neon-pink selection:text-white">
+      <div className="max-w-screen w-full min-h-screen p-0 m-0 overflow-x-hidden text-text-main selection:bg-card-bg selection:text-neon-cyan">
         <ToastHub />
         <CosmicBackground />
         <Navbar
@@ -54,12 +61,13 @@ const Home: React.FC = () => {
           t={t}
         />
         <Hero t={t} scrollToSection={scrollToSection} />
-        <Mission t={t} />   
+        <Mission t={t} />
+        <Newbies />
         <Suspense fallback={<AtomLoader />}>
           <Templates t={t} scrollToSection={scrollToSection} />
         </Suspense>
         <Suspense fallback={<AtomLoader />}>
-          <BentoLab />
+          <BentoGrid />
         </Suspense>
         <Suspense fallback={<AtomLoader />}>
           <Projects t={t} scrollToSection={scrollToSection} />

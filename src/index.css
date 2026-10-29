@@ -89,7 +89,7 @@
     --color-card-bg-raised: rgba(20, 22, 38, 0.85);
     --color-card-border: rgba(255, 255, 255, 0.12);
     --color-border-medium: rgba(0, 245, 255, 0.24);
-    --color-border-strong: rgba(191, 0, 255, 0.42);
+    --color-border-strong: #bf00ff59;
 
     --color-text-main: #f7fbff;
     --color-text-soft: #d7e3f2;
@@ -155,6 +155,14 @@
 @layer base {
     body {
         @apply bg-page-bg text-text-main font-sans;
+        overflow-x: hidden;
+        line-height: 1.2;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    h2.feature {
+        font-size: clamp(6rem, 12vw - 2vh, 160px);
+        text-shadow: 3px 3px 20px var(--color-pink-800);
     }
 }
 
@@ -349,6 +357,8 @@
     @keyframes spin {
         0%,
         100% {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             box-shadow: 0.2em 0 0 0 currentcolor;
         }
         12% {
@@ -400,6 +410,109 @@
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-family: "JetBrains Mono", monospace;
+}
+
+@-webkit-keyframes heartBeat {
+    0% {
+        zoom: 100%;
+        transform: translateX(2px);
+        transform: translateY(2px);
+    }
+    15% {
+        zoom: 110%;
+    }
+    25% {
+        zoom: 105%;
+        transform: translateX(-8px);
+        transform: translateY(-8px);
+    }
+    35% {
+        zoom: 115%;
+    }
+    100% {
+        zoom: 100%;
+    }
+}
+@keyframes heartBeat {
+    0% {
+        zoom: 100%;
+        transform: translateX(0);
+        transform: translateY(0);
+    }
+    15% {
+        zoom: 110%;
+        transform: translateX(-8px);
+        transform: translateY(-8px);
+    }
+    25% {
+        zoom: 105%;
+        transform: translateX(-2px);
+        transform: translateY(-2px);
+    }
+    35% {
+        zoom: 115%;
+        transform: translateX(-10px);
+        transform: translateY(-10px);
+    }
+    100% {
+        zoom: 100%;
+        transform: translateX(-2px);
+        transform: translateY(-2px);
+    }
+}
+.pixel-heart {
+    position: relative;
+    width: 126px;
+    height: 108px;
+    padding: 1em;
+    margin: 0 auto;
+}
+
+.heart-pixel {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #ff3caa13;
+    box-shadow:
+        18px 0 #ff3cac,
+        36px 0 #ff4f9b,
+        72px 0 #a855f7,
+        90px 0 #8158ff,
+        0 18px #ff3cac,
+        18px 18px #ff5c92,
+        36px 18px #ff7a72,
+        54px 18px #ffa24b,
+        72px 18px #d85cff,
+        90px 18px #885aff,
+        108px 18px #4e7dff,
+        0 36px #ff4b97,
+        18px 36px #ff6b7b,
+        36px 36px #ff914d,
+        54px 36px #ffd24d,
+        72px 36px #56e6c4,
+        90px 36px #00cef5,
+        108px 36px #5877ff,
+        18px 54px #ff5d93,
+        36px 54px #ff846b,
+        54px 54px #ffc84c,
+        72px 54px #59dec4,
+        90px 54px #22bff2,
+        36px 72px #ff7583,
+        54px 72px #ffad4c,
+        72px 72px #38dbc9,
+        54px 90px #c767ff;
+    filter: drop-shadow(0 0 8px rgba(255, 60, 180, 0.85));
+    animation: hearteat 2s infinite ease;
+}
+
+.heart-pixel::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 20px;
+    top: 20px;
+    background: rgba(255 255 255 / 0.68);
 }
 
 @utility mini-pixel-heart {
@@ -476,6 +589,42 @@
 }
 
 /* Standardizirane glass i card komponente */
+@utility glass-section {
+    width: min(80rem, calc(100% - 2.5rem));
+    margin: 4.5rem auto;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: var(--color-card-bg-raised);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--duration-base) var(--ease-smooth);
+
+    &:hover {
+        border-color: rgba(0, 245, 255, 0.28);
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 2rem;
+        right: 2rem;
+        height: 1px;
+        background-image: linear-gradient(
+            90deg,
+            transparent,
+            var(--color-neon-blue),
+            var(--color-neon-violet),
+            var(--color-neon-pink),
+            transparent
+        );
+        opacity: 0.35;
+        pointer-events: none;
+    }
+}
 @utility glass-panel {
     border: 1px solid var(--color-card-border);
     backdrop-filter: blur(20px);
@@ -523,7 +672,7 @@
         inset: 0;
         border-radius: inherit;
         padding: 1.25px;
-        background: linear-gradient(
+        background-image: linear-gradient(
             135deg,
             rgba(0, 245, 255, 0.85),
             rgba(255, 255, 255, 0.08) 30%,
@@ -541,6 +690,27 @@
         pointer-events: none;
     }
 }
+
+/* CUSTOM SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 18px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        var(--color-neon-blue),
+        var(--color-neon-violet)
+    );
+    border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(7, 7, 14, 0.55);
+}
+/* BUTTONS, ICON-BUTTONS AND LINK-BUTTONS */
 
 @utility button-base {
     display: inline-flex;

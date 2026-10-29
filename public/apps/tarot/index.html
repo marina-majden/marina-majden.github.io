@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Storytelling Framework - Archetypal Weaving</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: '#090814',
+                            800: '#121026',
+                            700: '#1d193d',
+                            600: '#2d275e',
+                            gold: '#d4af37',
+                            goldHover: '#f3c846',
+                            accent: '#8b5cf6',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #090814;
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Perspective for card flipping */
+        .card-container {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090814;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d275e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+
+        /* Subtle glowing effects */
+        .gold-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+        }
+        .purple-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .node-pulse {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 22px rgba(212, 175, 55, 0.5); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-mystic-accent selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-mystic-600/40 bg-mystic-900/90 backdrop-blur sticky top-0 z-50 px-4 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-mystic-gold to-purple-700 flex items-center justify-center text-mystic-900 font-bold text-xl shadow-lg">
+                <i class="fa-solid me-0 fa-hat-wizard"></i>
+            </div>
+            <div>
+                <h1 class="font-serif text-lg lg:text-xl font-bold tracking-wide text-mystic-gold">Archetypal Weaving</h1>
+                <p class="text-xs text-slate-400">Tarot Storytelling Generator & Interactive Spread</p>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+            <button id="btn-quick-draw" onclick="quickDrawAll()" class="px-3 py-1.5 rounded-lg bg-mystic-gold hover:bg-mystic-goldHover text-mystic-900 font-semibold text-xs lg:text-sm transition flex items-center gap-2 shadow-md">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Draw Entire Spread
+            </button>
+            <button id="btn-reset" onclick="resetSpread()" class="px-3 py-1.5 rounded-lg bg-mystic-700 hover:bg-mystic-600 text-slate-200 text-xs lg:text-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-rotate-left"></i> Clear
+            </button>
+            <button id="btn-toggle-summary" onclick="toggleSummaryModal()" class="px-3 py-1.5 rounded-lg bg-purple-900/60 hover:bg-purple-800 border border-purple-500/30 text-purple-200 text-xs lg:text-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-scroll"></i> Story Outline
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 flex flex-col lg:flex-row relative">
+        
+        <!-- Left Panel: Interactive Visual Spread Canvas -->
+        <section class="flex-1 p-4 lg:p-8 flex flex-col items-center justify-center relative min-h-[700px] overflow-auto bg-gradient-to-b from-mystic-900 via-mystic-800 to-mystic-900" id="canvas-container">
+            
+            <!-- Connection Lines SVG Overlay -->
+            <svg id="svg-connections" class="absolute inset-0 w-full h-full pointer-events-none z-0 stroke-mystic-gold/20" stroke-width="2" stroke-dasharray="4 4"></svg>
+
+            <!-- Grid Structure for Core Spread -->
+            <div id="spread-grid" class="relative z-10 grid grid-cols-3 gap-4 lg:gap-8 max-w-4xl w-full my-auto py-8">
+                
+                <!-- ROW 1: [4] ENVIRONMENT (Top Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-4" class="spread-node" data-id="4"></div>
+                </div>
+
+                <!-- ROW 2: [5] ALLIES (Left), [1] THEME (Center), [6] OBSTACLES (Right) -->
+                <div class="col-start-1 flex justify-center items-center">
+                    <div id="node-5" class="spread-node" data-id="5"></div>
+                </div>
+                <div class="col-start-2 flex justify-center items-center">
+                    <div id="node-1" class="spread-node" data-id="1"></div>
+                </div>
+                <div class="col-start-3 flex justify-center items-center">
+                    <div id="node-6" class="spread-node" data-id="6"></div>
+                </div>
+
+                <!-- ROW 3: [2] PROTAGONIST (Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-2" class="spread-node" data-id="2"></div>
+                </div>
+
+                <!-- ROW 4: [3] PAST / LEGACY (Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-3" class="spread-node" data-id="3"></div>
+                </div>
+
+                <!-- ROW 5: [7] CATALYST (Bottom Middle) -->
+                <div class="col-start-2 flex justify-center">
+                    <div id="node-7" class="spread-node" data-id="7"></div>
+                </div>
+            </div>
+
+            <!-- Satellites Container Overlay -->
+            <div id="satellites-container" class="w-full max-w-5xl mt-6 border-t border-mystic-600/30 pt-4 hidden">
+                <h3 class="font-serif text-sm font-semibold text-mystic-gold mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-diagram-project"></i> Satellite Cards (Detailed Element Elaboration)
+                </h3>
+                <div id="satellites-list" class="flex flex-wrap gap-4 justify-center"></div>
+            </div>
+        </section>
+
+        <!-- Right Drawer: Active Card Inspector / Inspector Panel -->
+        <aside id="inspector-panel" class="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-mystic-600/40 bg-mystic-800/80 backdrop-blur p-5 flex flex-col justify-between z-20">
+            <div id="inspector-content">
+                <div class="text-center py-12 text-slate-400">
+                    <i class="fa-solid fa-hand-pointer text-3xl mb-3 text-mystic-600"></i>
+                    <p class="text-sm">Click on any position in the spread to draw a card or explore its meaning in the story.</p>
+                </div>
+            </div>
+            
+            <!-- Bottom Helper Info -->
+            <div class="mt-6 p-3 rounded-lg bg-mystic-900/60 border border-mystic-700/50 text-xs text-slate-400 flex items-start gap-2">
+                <i class="fa-solid fa-circle-info text-mystic-gold mt-0.5"></i>
+                <p><strong>Tip:</strong> You can use the <em>"Draw Entire Spread"</em> button for quick idea generation, or click position by position to gradually build the narrative.</p>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Modal: Story Outline Summary -->
+    <div id="modal-summary" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-mystic-800 border border-mystic-gold/40 rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-mystic-600/40 flex items-center justify-between bg-mystic-900/50">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-scroll text-mystic-gold"></i>
+                    <h2 class="font-serif text-lg font-bold text-slate-100">Generated Story Outline (Synopsis)</h2>
+                </div>
+                <button onclick="toggleSummaryModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 text-sm text-slate-300" id="summary-content">
+                <!-- Dynamically filled -->
+            </div>
+            <div class="p-4 border-t border-mystic-600/40 bg-mystic-900/50 flex justify-between items-center">
+                <button onclick="copySummaryText()" class="px-4 py-2 rounded-lg bg-mystic-700 hover:bg-mystic-600 text-xs font-semibold text-white transition flex items-center gap-2">
+                    <i class="fa-solid fa-copy"></i> Copy Outline
+                </button>
+                <button onclick="toggleSummaryModal()" class="px-4 py-2 rounded-lg bg-mystic-gold hover:bg-mystic-goldHover text-xs font-bold text-mystic-900 transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Select Manual Card -->
+    <div id="modal-select-card" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-mystic-800 border border-mystic-600/50 rounded-xl max-w-xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-mystic-600/40 flex items-center justify-between">
+                <h3 class="font-serif text-base font-bold text-mystic-gold">Manual Card Selection</h3>
+                <button onclick="closeSelectCardModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-3 border-b border-mystic-700/50">
+                <input type="text" id="card-search-input" onkeyup="filterCardSelection()" placeholder="Search deck (e.g., Knight, Tower, Cups)..." class="w-full px-3 py-2 rounded bg-mystic-900 border border-mystic-600 text-sm text-white focus:outline-none focus:border-mystic-gold">
+            </div>
+            <div class="p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 gap-2" id="card-selection-grid">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        /* ==========================================================================
+           1. DATA STRUCTURES: TAROT DECK & CORE SPREAD POSITIONS
+           ========================================================================== */
+        
+        const CORE_POSITIONS = {
+            1: {
+                id: 1,
+                title: "1. Central Theme / Motif",
+                subtitle: "The seed of the story and inner conflict",
+                desc: "Determines the genre, main motif, and fundamental question of the story (e.g., revenge, redemption, forbidden love, mystery).",
+                question: "What is this story truly about? What archetypal struggle are we witnessing?",
+                icon: "fa-compass"
+            },
+            2: {
+                id: 2,
+                title: "2. Protagonist",
+                subtitle: "Essence, nature, and inner desire",
+                desc: "Determines the personality, psyche, and internal goal of the main character.",
+                question: "Who is the main character? What do they desire most, and what do they fear above all?",
+                icon: "fa-user-ninja"
+            },
+            3: {
+                id: 3,
+                title: "3. Past and Legacy",
+                subtitle: "Roots, family, and background",
+                desc: "The family background, tradition, origins, or societal expectations with which the character begins.",
+                question: "From what milieu does the character originate? What burden or tradition do they carry with them?",
+                icon: "fa-anchor"
+            },
+            4: {
+                id: 4,
+                title: "4. Environment and World",
+                subtitle: "Place, time, and atmosphere",
+                desc: "Provides the physical and social context in which the plot unfolds (e.g., a stormy sea, a corrupt city).",
+                question: "Where are we? What rules and atmosphere govern this world?",
+                icon: "fa-mountain-city"
+            },
+            5: {
+                id: 5,
+                title: "5. Mitigating Circumstances",
+                subtitle: "Allies, resources, and fortune",
+                desc: "Helpers, inner strengths, or unforeseen fortunate circumstances the character can rely upon.",
+                question: "Who or what gives the character strength or hope when times get tough?",
+                icon: "fa-shield-halved"
+            },
+            6: {
+                id: 6,
+                title: "6. Aggravating Circumstances",
+                subtitle: "Adversary, obstacle, or flaw",
+                desc: "The main obstacle – this could be an enemy, a societal system, a storm, or an internal flaw.",
+                question: "What or who actively stands between the protagonist and their goal?",
+                icon: "fa-skull"
+            },
+            7: {
+                id: 7,
+                title: "7. Catalyst (Inciting Incident)",
+                subtitle: "The trigger of the plot",
+                desc: "An extraordinary event that throws the character out of their daily routine and sets the story in motion.",
+                question: "What happens at the very beginning that shatters the existing peace or order?",
+                icon: "fa-bolt"
+            }
+        };
+
+        const SATELLITE_QUESTIONS = {
+            character: [
+                { id: 'secret', label: 'Shadow / Secret', q: 'What is this character hiding from others or themselves?' },
+                { id: 'weakness', label: 'Vulnerability / Weakness', q: 'Where is this person most vulnerable?' },
+                { id: 'loyalty', label: 'Loyalty / Motivation', q: 'To whom or what is this character unconditionally loyal?' }
+            ],
+            environment: [
+                { id: 'rule', label: 'Rule of the World', q: 'What is the key written or unwritten rule of this place?' },
+                { id: 'hidden_place', label: 'Hidden Location', q: 'What secret location is hidden here?' },
+                { id: 'hazard', label: 'Constant Threat', q: 'What threat constantly hangs in the air?' }
+            ],
+            event: [
+                { id: 'aftermath', label: 'Aftermath', q: 'What mark does this event leave on the surroundings?' },
+                { id: 'hidden_motive', label: 'Hidden Cause', q: 'Who actually caused this event from the shadows?' }
+            ]
+        };
+
+        // Complete 78 Tarot Cards Database with Narrative Attributes
+        const TAROT_DECK = [
+            // MAJOR ARCANA
+            { id: 'm0', name: '0. The Fool', type: 'major', archetype: 'Outsider, wanderer, a naive soul setting off blindly', location: 'Uncharted paths, cliff edges, crossroads', event: 'A sudden leap into the unknown, the beginning of an unplanned adventure' },
+            { id: 'm1', name: 'I. The Magician', type: 'major', archetype: 'Manipulator, master craftsman, illusionist', location: 'Workshop, laboratory, stage', event: 'Utilizing all available resources, a trick or deception' },
+            { id: 'm2', name: 'II. The High Priestess', type: 'major', archetype: 'Keeper of secrets, prophetess, silent observer', location: 'Temple, library, secret chamber', event: 'Uncovering a hidden truth, a dream or vision' },
+            { id: 'm3', name: 'III. The Empress', type: 'major', archetype: 'Maternal figure, ruler, protector', location: 'Lush nature, estate, castle', event: 'The birth of something new, abundance, nurturing' },
+            { id: 'm4', name: 'IV. The Emperor', type: 'major', archetype: 'Strict authority, commander, father, ruler', location: 'Fortress, seat of power, military command camp', event: 'Imposing order by force, enacting laws, dictation' },
+            { id: 'm5', name: 'V. The Hierophant', type: 'major', archetype: 'Mentor, traditionalist, cult or religious leader', location: 'Cathedral, academy, courthouse', event: 'Adhering to tradition, taking an oath' },
+            { id: 'm6', name: 'VI. The Lovers', type: 'major', archetype: 'Soulmate, companion, a crucial choice', location: 'Garden, secret meeting place', event: 'A fateful choice between two paths, uniting of allies' },
+            { id: 'm7', name: 'VII. The Chariot', type: 'major', archetype: 'Ambitious leader, warrior, conqueror', location: 'Battlefield, racetrack, a journey', event: 'Victory through sheer will, a high-speed chase/escape' },
+            { id: 'm8', name: 'VIII. Strength', type: 'major', archetype: 'Tamer, a gentle yet unwavering person', location: 'Wilderness, arena, sanctuary', event: 'Taming the beast within, gentleness overcoming brute force' },
+            { id: 'm9', name: 'IX. The Hermit', type: 'major', archetype: 'Outcast, sage, solitary seeker', location: 'Mountain peak, cave, abandoned tower', event: 'Withdrawal from society, the search for inner light' },
+            { id: 'm10', name: 'X. Wheel of Fortune', type: 'major', archetype: 'Gambler, fate, an unexpected passerby', location: 'Casino, marketplace, crossroads of destiny', event: 'A dramatic reversal of fortune, economic collapse or windfall' },
+            { id: 'm11', name: 'XI. Justice', type: 'major', archetype: 'Judge, arbiter, blackmailer using the law', location: 'Courthouse, town square, archives', event: 'Settling of accounts, judgment, facing consequences' },
+            { id: 'm12', name: 'XII. The Hanged Man', type: 'major', archetype: 'Martyr, prisoner, visionary', location: 'Prison, gallows, a waiting place', event: 'Sacrifice for a higher cause, a standstill that alters perspective' },
+            { id: 'm13', name: 'XIII. Death', type: 'major', archetype: 'Harbinger of change, gravedigger, inexorable force', location: 'Cemetery, abandoned town, battlefield', event: 'The inevitable end of an era, transformation, loss' },
+            { id: 'm14', name: 'XIV. Temperance', type: 'major', archetype: 'Healer, alchemist, diplomat', location: 'Water spring, sanctuary, bridge', event: 'Reconciling warring factions, finding balance' },
+            { id: 'm15', name: 'XV. The Devil', type: 'major', archetype: 'Blackmailer, underworld boss, addict, taskmaster', location: 'Dark club, dungeon, city underworld', event: 'Falling into temptation, making a deal with the devil, enslavement' },
+            { id: 'm16', name: 'XVI. The Tower', type: 'major', archetype: 'Destroyer, anarchist, victim of catastrophe', location: 'Burning tower, fortress under siege, ruins', event: 'Judgment day, sudden collapse of structure or lies, catastrophe' },
+            { id: 'm17', name: 'XVII. The Star', type: 'major', archetype: 'Inspiration, visionary, healer', location: 'Oasis beneath the night sky, sacred spring', event: 'Finding hope in the darkness, receiving spiritual guidance' },
+            { id: 'm18', name: 'XVIII. The Moon', type: 'major', archetype: 'Forger, illusionist, someone living in delusion', location: 'Foggy harbor, forest at night, labyrinth', event: 'Betrayal in the dark, deception, confronting hallucinations/fear' },
+            { id: 'm19', name: 'XIX. The Sun', type: 'major', archetype: 'Hero, child, celebrated figure', location: 'Sunlit field, palace, square of celebration', event: 'Uncovering the truth, a great victory, public recognition' },
+            { id: 'm20', name: 'XX. Judgement', type: 'major', archetype: 'Avenger, ghost from the past, awakened hero', location: 'Valley of echoes, courthouse, birthplace', event: 'A wake-up call, confronting an old sin' },
+            { id: 'm21', name: 'XXI. The World', type: 'major', archetype: 'World traveler, unifier, ruler', location: 'Metropolis, the edge of the world, grand harbor', event: 'The end of a long journey, coming full circle' },
+
+            // SWORDS (Air - Mind, Conflict, Truth, Sword)
+            { id: 's_ace', name: 'Ace of Swords', type: 'swords', archetype: 'Uncompromising thinker', location: 'Windswept peak, tower', event: 'A realization sharp as a razor, a declaration of war' },
+            { id: 's_2', name: 'Two of Swords', type: 'swords', archetype: 'Person in a dilemma, hesitant guard', location: 'Dead end, foggy shore', event: 'Stalemate, deliberately turning a blind eye to the truth' },
+            { id: 's_3', name: 'Three of Swords', type: 'swords', archetype: 'Grieving person, traitor', location: 'Rainy square, battlefield', event: 'Heartbreak, severe betrayal, an emotional blow' },
+            { id: 's_7', name: 'Seven of Swords', type: 'swords', archetype: 'Spy, thief, deceiver', location: 'Enemy camp, the shadows', event: 'Covert operation, theft of documents, escape' },
+            { id: 's_10', name: 'Ten of Swords', type: 'swords', archetype: 'Defeated fighter, victim of a conspiracy', location: 'Dark alley, wasteland', event: 'Final breakdown, a stab in the back' },
+            { id: 's_page', name: 'Page of Swords', type: 'swords', archetype: 'Inquisitive scout, young informant', location: 'Guardhouse, rooftops', event: 'Intercepting a message, espionage' },
+            { id: 's_knight', name: 'Knight of Swords', type: 'swords', archetype: 'Impulsive fighter, fanatic', location: 'Battlefield, assault course', event: 'A sudden violent attack, conflict without forethought' },
+            { id: 's_queen', name: 'Queen of Swords', type: 'swords', archetype: 'Pragmatic, sharp-witted widow/judge', location: 'High court, study', event: 'Making a cold but just decision' },
+            { id: 's_king', name: 'King of Swords', type: 'swords', archetype: 'Military commander, strict lawmaker', location: 'Fortress, military academy', event: 'Issuing a harsh command, establishing martial law' },
+
+            // CUPS (Water - Emotions, Relationships, Intuition)
+            { id: 'c_ace', name: 'Ace of Cups', type: 'cups', archetype: 'Romantic, healer', location: 'Tranquil spring, lake', event: 'Surges of deep love, forgiveness' },
+            { id: 'c_2', name: 'Two of Cups', type: 'cups', archetype: 'Lovers, devoted partners', location: 'Wedding hall, tavern', event: 'Forging an alliance or engagement' },
+            { id: 'c_5', name: 'Five of Cups', type: 'cups', archetype: 'Person consumed by sorrow, former ally', location: 'Ruins, grave', event: 'Mourning a loss, focusing on what has perished' },
+            { id: 'c_8', name: 'Eight of Cups', type: 'cups', archetype: 'Wanderer leaving everything behind', location: 'Night path in the mountains', event: 'A quiet departure and abandoning of one\'s former life' },
+            { id: 'c_page', name: 'Page of Cups', type: 'cups', archetype: 'Dreamer, young poet, bearer of good news', location: 'Coast, art studio', event: 'An unexpected emotional message' },
+            { id: 'c_knight', name: 'Knight of Cups', type: 'cups', archetype: 'Noble savior, seducer', location: 'Ship, bridge', event: 'Arrival with an offer of reconciliation or love' },
+            { id: 'c_queen', name: 'Queen of Cups', type: 'cups', archetype: 'Empathetic mother, clairvoyant', location: 'Coastal house, sanctuary', event: 'Providing refuge and emotional support' },
+            { id: 'c_king', name: 'King of Cups', type: 'cups', archetype: 'Diplomat, calm family patriarch', location: 'Harbor, town hall', event: 'Calming passions in a dangerous conflict' },
+
+            // WANDS (Fire - Action, Passion, Ambition)
+            { id: 'w_ace', name: 'Ace of Wands', type: 'wands', archetype: 'Pioneer, enthusiast', location: 'Workshop, volcanic terrain', event: 'The spark of a new idea, the beginning of creation' },
+            { id: 'w_4', name: 'Four of Wands', type: 'wands', archetype: 'Celebrant, villager', location: 'Village, celebration square', event: 'A grand feast, finding a safe haven' },
+            { id: 'w_5', name: 'Five of Wands', type: 'wands', archetype: 'Rival, street fighter', location: 'Alleyway, training arena', event: 'An unregulated clash, a struggle for dominance' },
+            { id: 'w_10', name: 'Ten of Wands', type: 'wands', archetype: 'Overburdened worker, porter', location: 'Long steep slope, mine', event: 'Burnout under the weight of obligations' },
+            { id: 'w_page', name: 'Page of Wands', type: 'wands', archetype: 'Inquisitive explorer, messenger', location: 'Campfire, desert', event: 'Exciting news about a new opportunity' },
+            { id: 'w_knight', name: 'Knight of Wands', type: 'wands', archetype: 'Adventurer, thrill-seeker, restless spirit', location: 'The road, the wild west/frontier', event: 'A sudden departure into an adventure without thinking' },
+            { id: 'w_queen', name: 'Queen of Wands', type: 'wands', archetype: 'Charismatic leader, passionate ruler', location: 'Theater, estate in flames', event: 'Inspiring the masses to rebellion or action' },
+            { id: 'w_king', name: 'King of Wands', type: 'wands', archetype: 'Visionary leader, entrepreneur', location: 'Construction site, captain\'s bridge', event: 'Taking command over a project' },
+
+            // PENTACLES (Earth - Material, Family, Tradition, Trade)
+            { id: 'p_ace', name: 'Ace of Pentacles', type: 'pentacles', archetype: 'Investor, merchant', location: 'Vault, fertile field', event: 'Receiving a precious gift or gold coins' },
+            { id: 'p_4', name: 'Four of Pentacles', type: 'pentacles', archetype: 'Miser, hoard guardian, person in power', location: 'Bank, fortified treasury', event: 'Refusal to share resources, financial blackmail' },
+            { id: 'p_6', name: 'Six of Pentacles', type: 'pentacles', archetype: 'Benefactor or debtor', location: 'Marketplace, orphanage', event: 'Securing a loan or repaying a debt' },
+            { id: 'p_page', name: 'Page of Pentacles', type: 'pentacles', archetype: 'Diligent student, apprentice', location: 'Workshop, farm', event: 'Commencing a long apprenticeship' },
+            { id: 'p_knight', name: 'Knight of Pentacles', type: 'pentacles', archetype: 'Reliable soldier, laborer', location: 'Trade route, agricultural estate', event: 'Persistent work, slow but steady progress' },
+            { id: 'p_queen', name: 'Queen of Pentacles', type: 'pentacles', archetype: 'Family provider, noblewoman', location: 'Large manor house', event: 'Providing material security' },
+            { id: 'p_king', name: 'King of Pentacles', type: 'pentacles', archetype: 'Powerful tycoon, head of a banking family', location: 'Bank, manor', event: 'Assuming financial control' }
+        ];
+
+        /* ==========================================================================
+           2. STATE MANAGEMENT
+           ========================================================================== */
+        
+        let spreadState = {
+            // Core nodes 1-7: { card: TarotObject | null }
+            core: { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null },
+            // Satellites: array of { id, parentId, questionLabel, questionText, card }
+            satellites: [],
+            // Selected active node ID
+            activeNodeId: null
+        };
+
+        /* ==========================================================================
+           3. UI INITIALIZATION & RENDERING
+           ========================================================================== */
+
+        window.onload = function() {
+            renderCoreGrid();
+            drawConnectionLines();
+            window.addEventListener('resize', drawConnectionLines);
+        };
+
+        function renderCoreGrid() {
+            for (let i = 1; i <= 7; i++) {
+                const nodeEl = document.getElementById(`node-${i}`);
+                if (!nodeEl) continue;
+
+                const posData = CORE_POSITIONS[i];
+                const card = spreadState.core[i];
+
+                let nodeHtml = `
+                    <div onclick="selectNode(${i})" class="cursor-pointer group relative w-32 sm:w-36 lg:w-40 flex flex-col items-center">
+                        <div class="text-[10px] sm:text-xs font-serif uppercase tracking-wider text-mystic-gold mb-1 font-semibold text-center truncate w-full">
+                            ${posData.title.split('.')[1] || posData.title}
+                        </div>
+                        
+                        <div class="w-full h-44 sm:h-52 rounded-xl border-2 ${card ? 'border-mystic-gold gold-glow bg-mystic-800' : 'border-mystic-600/60 hover:border-mystic-gold/80 bg-mystic-900/80'} transition-all duration-300 flex flex-col items-center justify-center p-2 text-center relative overflow-hidden shadow-lg">
+                `;
+
+                if (card) {
+                    nodeHtml += `
+                        <div class="absolute inset-0 bg-gradient-to-b from-mystic-700/50 to-mystic-900/90 flex flex-col justify-between p-2 sm:p-3">
+                            <span class="text-[9px] sm:text-[10px] font-bold text-mystic-gold uppercase tracking-widest text-left">${card.type}</span>
+                            <div class="my-auto">
+                                <i class="fa-solid ${card.type === 'major' ? 'fa-crown text-mystic-gold' : 'fa-gem text-purple-400'} text-xl sm:text-2xl mb-1"></i>
+                                <h4 class="font-serif text-xs sm:text-sm font-bold text-white leading-tight">${card.name}</h4>
+                            </div>
+                            <span class="text-[9px] text-slate-300 italic truncate">Click for details</span>
+                        </div>
+                    `;
+                } else {
+                    nodeHtml += `
+                        <i class="fa-solid ${posData.icon} text-2xl text-mystic-600 group-hover:text-mystic-gold transition mb-2"></i>
+                        <span class="text-xs text-slate-400 group-hover:text-slate-200 font-medium px-1">${posData.subtitle}</span>
+                        <span class="mt-2 px-2 py-0.5 rounded bg-mystic-700/50 text-[10px] text-mystic-gold border border-mystic-600/40">Draw</span>
+                    `;
+                }
+
+                nodeHtml += `
+                        </div>
+                    </div>
+                `;
+
+                nodeEl.innerHTML = nodeHtml;
+            }
+
+            renderSatellitesList();
+        }
+
+        /* Draw visual connection lines between core cards in SVG */
+        function drawConnectionLines() {
+            const svg = document.getElementById('svg-connections');
+            if (!svg) return;
+            svg.innerHTML = '';
+
+            const connections = [
+                [1, 4], // Theme to Environment
+                [1, 2], // Theme to Protagonist
+                [1, 5], // Theme to Helper
+                [1, 6], // Theme to Obstacle
+                [2, 3], // Protagonist to Past
+                [3, 7]  // Past to Catalyst
+            ];
+
+            const canvasRect = document.getElementById('canvas-container').getBoundingClientRect();
+
+            connections.forEach(([fromId, toId]) => {
+                const elFrom = document.getElementById(`node-${fromId}`);
+                const elTo = document.getElementById(`node-${toId}`);
+
+                if (elFrom && elTo) {
+                    const rectFrom = elFrom.getBoundingClientRect();
+                    const rectTo = elTo.getBoundingClientRect();
+
+                    const x1 = rectFrom.left + rectFrom.width / 2 - canvasRect.left;
+                    const y1 = rectFrom.top + rectFrom.height / 2 - canvasRect.top;
+                    const x2 = rectTo.left + rectTo.width / 2 - canvasRect.left;
+                    const y2 = rectTo.top + rectTo.height / 2 - canvasRect.top;
+
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', x1);
+                    line.setAttribute('y1', y1);
+                    line.setAttribute('x2', x2);
+                    line.setAttribute('y2', y2);
+                    line.setAttribute('stroke', 'rgba(212, 175, 55, 0.25)');
+                    line.setAttribute('stroke-width', '2');
+                    line.setAttribute('stroke-dasharray', '4 4');
+
+                    svg.appendChild(line);
+                }
+            });
+        }
+
+        /* ==========================================================================
+           4. CARD DRAWING & INSPECTION LOGIC
+           ========================================================================== */
+
+        function selectNode(id) {
+            spreadState.activeNodeId = id;
+            renderInspector();
+        }
+
+        function drawCardForActiveNode() {
+            if (!spreadState.activeNodeId) return;
+            
+            // Pick a random card from remaining deck
+            const usedCardIds = Object.values(spreadState.core)
+                .filter(c => c !== null)
+                .map(c => c.id)
+                .concat(spreadState.satellites.map(s => s.card.id));
+
+            const available = TAROT_DECK.filter(c => !usedCardIds.includes(c.id));
+            if (available.length === 0) {
+                alert("All cards from the deck have already been drawn!");
+                return;
+            }
+
+            const randomCard = available[Math.floor(Math.random() * available.length)];
+            spreadState.core[spreadState.activeNodeId] = randomCard;
+
+            renderCoreGrid();
+            renderInspector();
+            drawConnectionLines();
+        }
+
+        function quickDrawAll() {
+            let usedIds = [];
+            for (let i = 1; i <= 7; i++) {
+                const available = TAROT_DECK.filter(c => !usedIds.includes(c.id));
+                const randomCard = available[Math.floor(Math.random() * available.length)];
+                spreadState.core[i] = randomCard;
+                usedIds.push(randomCard.id);
+            }
+            spreadState.satellites = [];
+            renderCoreGrid();
+            if (spreadState.activeNodeId) {
+                renderInspector();
+            } else {
+                selectNode(1);
+            }
+            drawConnectionLines();
+        }
+
+        function resetSpread() {
+            spreadState.core = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null };
+            spreadState.satellites = [];
+            spreadState.activeNodeId = null;
+            renderCoreGrid();
+            document.getElementById('inspector-content').innerHTML = `
+                <div class="text-center py-12 text-slate-400">
+                    <i class="fa-solid fa-hand-pointer text-3xl mb-3 text-mystic-600"></i>
+                    <p class="text-sm">Click on any position in the spread to draw a card or explore its meaning in the story.</p>
+                </div>
+            `;
+            drawConnectionLines();
+        }
+
+        /* Render Inspector Drawer Content */
+        function renderInspector() {
+            const id = spreadState.activeNodeId;
+            if (!id) return;
+
+            const pos = CORE_POSITIONS[id];
+            const card = spreadState.core[id];
+            const container = document.getElementById('inspector-content');
+
+            let html = `
+                <div class="space-y-4">
+                    <div class="border-b border-mystic-600/40 pb-3">
+                        <span class="text-xs font-bold text-mystic-gold uppercase tracking-wider">${pos.title}</span>
+                        <h3 class="text-lg font-serif font-bold text-white">${pos.subtitle}</h3>
+                        <p class="text-xs text-slate-400 mt-1">${pos.desc}</p>
+                    </div>
+
+                    <div class="p-3 rounded-lg bg-mystic-900/70 border border-mystic-700/50">
+                        <span class="text-[11px] font-semibold text-purple-300 block mb-1"><i class="fa-solid fa-circle-question"></i> Storytelling Guide:</span>
+                        <p class="text-xs text-slate-200 italic font-serif">"${pos.question}"</p>
+                    </div>
+            `;
+
+            if (card) {
+                html += `
+                    <!-- Card Details Box -->
+                    <div class="p-4 rounded-xl bg-gradient-to-br from-mystic-700/60 to-mystic-900 border border-mystic-gold/50 shadow-xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-serif font-bold text-mystic-gold text-base">${card.name}</h4>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-900/60 text-purple-200 border border-purple-500/30">${card.type.toUpperCase()}</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs">
+                            <div>
+                                <strong class="text-slate-300 block"><i class="fa-solid fa-user-tag text-mystic-gold"></i> Archetype / Role:</strong>
+                                <p class="text-slate-200">${card.archetype}</p>
+                            </div>
+                            <div>
+                                <strong class="text-slate-300 block"><i class="fa-solid fa-location-dot text-mystic-gold"></i> Place / Setting:</strong>
+                                <p class="text-slate-200">${card.location}</p>
+                            </div>
+                            <div>
+                                <strong class="text-slate-300 block"><i class="fa-solid fa-bolt text-mystic-gold"></i> Event / Action:</strong>
+                                <p class="text-slate-200">${card.event}</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex gap-2">
+                            <button onclick="drawCardForActiveNode()" class="flex-1 py-1.5 rounded bg-mystic-700 hover:bg-mystic-600 text-xs font-semibold text-slate-200 transition">
+                                <i class="fa-solid fa-shuffle"></i> Swap Card
+                            </button>
+                            <button onclick="openSelectCardModal()" class="py-1.5 px-3 rounded bg-mystic-900 hover:bg-black text-xs font-semibold text-slate-300 border border-mystic-600 transition">
+                                Manual
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Satellites / Zoom options -->
+                    <div class="pt-2">
+                        <h4 class="text-xs font-bold text-slate-300 mb-2 flex items-center gap-1">
+                            <i class="fa-solid fa-magnifying-glass-plus text-mystic-gold"></i> Zoom In / Add Satellite:
+                        </h4>
+                        <div class="grid grid-cols-1 gap-1.5">
+                `;
+
+                // Add satellite question options based on position category
+                let qCategory = 'character';
+                if (id === 4) qCategory = 'environment';
+                if (id === 1 || id === 7) qCategory = 'event';
+
+                SATELLITE_QUESTIONS[qCategory].forEach(sq => {
+                    html += `
+                        <button onclick="addSatellite('${sq.label}', '${sq.q}', ${id})" class="text-left p-2 rounded bg-mystic-900/60 hover:bg-mystic-700/80 border border-mystic-700/40 text-xs text-slate-300 hover:text-white transition flex justify-between items-center group">
+                            <span>${sq.label}</span>
+                            <i class="fa-solid fa-plus text-mystic-gold group-hover:scale-110 transition"></i>
+                        </button>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="pt-4 flex flex-col gap-2">
+                        <button onclick="drawCardForActiveNode()" class="w-full py-2.5 rounded-lg bg-mystic-gold hover:bg-mystic-goldHover text-mystic-900 font-bold text-xs sm:text-sm transition shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Draw Card Randomly
+                        </button>
+                        <button onclick="openSelectCardModal()" class="w-full py-2 rounded-lg bg-mystic-700 hover:bg-mystic-600 text-xs font-semibold text-slate-200 transition">
+                            Select From Deck Manually
+                        </button>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        /* ==========================================================================
+           5. SATELLITE SYSTEM (ZOOMING IN ON ELEMENTS)
+           ========================================================================== */
+
+        function addSatellite(label, question, parentId) {
+            const usedCardIds = Object.values(spreadState.core)
+                .filter(c => c !== null)
+                .map(c => c.id)
+                .concat(spreadState.satellites.map(s => s.card.id));
+
+            const available = TAROT_DECK.filter(c => !usedCardIds.includes(c.id));
+            if (available.length === 0) {
+                alert("There are no more free cards in the deck!");
+                return;
+            }
+
+            const card = available[Math.floor(Math.random() * available.length)];
+            const satId = Date.now();
+
+            spreadState.satellites.push({
+                id: satId,
+                parentId: parentId,
+                label: label,
+                question: question,
+                card: card
+            });
+
+            renderCoreGrid();
+            renderInspector();
+        }
+
+        function removeSatellite(satId) {
+            spreadState.satellites = spreadState.satellites.filter(s => s.id !== satId);
+            renderCoreGrid();
+            renderInspector();
+        }
+
+        function renderSatellitesList() {
+            const container = document.getElementById('satellites-container');
+            const list = document.getElementById('satellites-list');
+
+            if (spreadState.satellites.length === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            list.innerHTML = '';
+
+            spreadState.satellites.forEach(sat => {
+                const parentPos = CORE_POSITIONS[sat.parentId];
+                const card = sat.card;
+
+                const itemHtml = `
+                    <div class="bg-mystic-800 border border-mystic-gold/40 rounded-lg p-3 w-60 text-xs relative shadow-lg flex flex-col justify-between space-y-2">
+                        <button onclick="removeSatellite(${sat.id})" class="absolute top-2 right-2 text-slate-400 hover:text-red-400">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <div>
+                            <span class="text-[9px] font-bold text-mystic-gold uppercase tracking-wider block">
+                                Linked to: ${parentPos.title.split('.')[1]}
+                            </span>
+                            <h5 class="font-serif font-bold text-white text-sm mt-0.5">${sat.label}</h5>
+                            <p class="text-[11px] text-slate-400 italic mb-2 font-serif">"${sat.question}"</p>
+                        </div>
+                        
+                        <div class="bg-mystic-900/80 p-2 rounded border border-mystic-700/50">
+                            <div class="font-bold text-mystic-gold">${card.name}</div>
+                            <p class="text-[11px] text-slate-300 mt-1">${card.archetype}</p>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += itemHtml;
+            });
+        }
+
+        /* ==========================================================================
+           6. MANUAL CARD SELECTION MODAL
+           ========================================================================== */
+
+        function openSelectCardModal() {
+            document.getElementById('modal-select-card').classList.remove('hidden');
+            filterCardSelection();
+        }
+
+        function closeSelectCardModal() {
+            document.getElementById('modal-select-card').classList.add('hidden');
+        }
+
+        function filterCardSelection() {
+            const query = document.getElementById('card-search-input').value.toLowerCase();
+            const grid = document.getElementById('card-selection-grid');
+            grid.innerHTML = '';
+
+            const usedCardIds = Object.values(spreadState.core)
+                .filter(c => c !== null)
+                .map(c => c.id)
+                .concat(spreadState.satellites.map(s => s.card.id));
+
+            TAROT_DECK.forEach(card => {
+                const isUsed = usedCardIds.includes(card.id);
+                if (card.name.toLowerCase().includes(query) || card.archetype.toLowerCase().includes(query)) {
+                    const cardBtn = document.createElement('button');
+                    cardBtn.className = `p-2 rounded text-left border text-xs transition ${isUsed ? 'bg-mystic-900/40 border-mystic-800 text-slate-600 cursor-not-allowed' : 'bg-mystic-900 hover:bg-mystic-700 border-mystic-600 text-slate-200'}`;
+                    cardBtn.disabled = isUsed;
+                    cardBtn.innerHTML = `
+                        <div class="font-bold text-mystic-gold truncate">${card.name}</div>
+                        <div class="text-[10px] text-slate-400 truncate">${card.archetype}</div>
+                    `;
+                    cardBtn.onclick = () => {
+                        if (spreadState.activeNodeId) {
+                            spreadState.core[spreadState.activeNodeId] = card;
+                            renderCoreGrid();
+                            renderInspector();
+                            closeSelectCardModal();
+                        }
+                    };
+                    grid.appendChild(cardBtn);
+                }
+            });
+        }
+
+        /* ==========================================================================
+           7. STORY SUMMARY GENERATOR
+           ========================================================================== */
+
+        function toggleSummaryModal() {
+            const modal = document.getElementById('modal-summary');
+            if (modal.classList.contains('hidden')) {
+                generateSummaryText();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function generateSummaryText() {
+            const content = document.getElementById('summary-content');
+            const c = spreadState.core;
+
+            let html = `<div class="space-y-4">`;
+
+            if (!c[1] && !c[2] && !c[4]) {
+                html += `<p class="italic text-slate-400">Draw at least a few cards in the spread to generate a story outline.</p>`;
+            } else {
+                html += `
+                    <div class="p-3 bg-mystic-900/80 rounded border border-mystic-gold/30">
+                        <h4 class="font-serif font-bold text-mystic-gold text-base">Basic Story Synopsis</h4>
+                        <p class="mt-2 text-xs leading-relaxed text-slate-200">
+                `;
+
+                if (c[2]) html += `The story follows a protagonist who embodies the <strong>${c[2].archetype}</strong> (${c[2].name}). `;
+                if (c[3]) html += `The melody of their past is dominated by the <strong>${c[3].archetype}</strong> (${c[3].name}), setting their familial or societal expectations. `;
+                if (c[4]) html += `The plot unfolds in an environment akin to a <strong>${c[4].location}</strong> (${c[4].name}). `;
+                if (c[1]) html += `The central theme and motif woven throughout the story is the <strong>${c[1].archetype}</strong> (${c[1].name}). `;
+                if (c[7]) html += `The status quo is disrupted by an event: <strong>${c[7].event}</strong> (${c[7].name}). `;
+                if (c[5]) html += `Serving as the main pillar of support and a mitigating circumstance is the <strong>${c[5].archetype}</strong> (${c[5].name}). `;
+                if (c[6]) html += `However, the greatest obstacle is presented by the <strong>${c[6].archetype}</strong> (${c[6].name}).`;
+
+                html += `
+                        </p>
+                    </div>
+
+                    <h4 class="font-serif font-bold text-slate-200 text-sm pt-2">Breakdown by Positions:</h4>
+                    <ul class="space-y-2 text-xs">
+                `;
+
+                for (let i = 1; i <= 7; i++) {
+                    const card = c[i];
+                    const pos = CORE_POSITIONS[i];
+                    if (card) {
+                        html += `
+                            <li class="p-2 bg-mystic-900/50 rounded border border-mystic-700/40">
+                                <strong class="text-mystic-gold">${pos.title}:</strong> ${card.name} – <em>${card.archetype}</em>
+                            </li>
+                        `;
+                    }
+                }
+
+                if (spreadState.satellites.length > 0) {
+                    html += `</ul><h4 class="font-serif font-bold text-slate-200 text-sm pt-2">Satellite Details:</h4><ul class="space-y-2 text-xs">`;
+                    spreadState.satellites.forEach(s => {
+                        html += `
+                            <li class="p-2 bg-mystic-900/50 rounded border border-mystic-700/40">
+                                <strong class="text-purple-300">${s.label} (${CORE_POSITIONS[s.parentId].title.split('.')[1]}):</strong> ${s.card.name} – <em>${s.card.archetype}</em>
+                            </li>
+                        `;
+                    });
+                }
+
+                html += `</ul>`;
+            }
+
+            html += `</div>`;
+            content.innerHTML = html;
+        }
+
+        function copySummaryText() {
+            const content = document.getElementById('summary-content');
+            const textToCopy = content.innerText;
+            
+            // Clipboard fallback for iframe execution
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                alert("The story outline has been copied to your clipboard!");
+            } catch (err) {
+                alert("Copy failed.");
+            }
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+</html>
