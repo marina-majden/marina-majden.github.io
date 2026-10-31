@@ -27,9 +27,9 @@
     "unused/InteractiveCard.tsx",
     "unused/Templates.tsx",
     "unused/Contact.tsx",
-    "unused/LoaderFullscreen.tsx",
+    "src/components/LoaderFullscreen.tsx",
     "unused/Pattern.tsx",
-    "unused/Accord.tsx",
+    "src/components/Accord.tsx",
     "unused/Sign.tsx"
   ]
 }

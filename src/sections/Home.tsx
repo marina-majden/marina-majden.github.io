@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { AtomLoader } from "@/components/SpinnerLoader.tsx";
+import { SkeletonCard } from "@/components/SkeletonCard.tsx";
 import Footer from "./Footer.tsx";
 import Navbar from "@/components/Navbar.tsx";
 import Contact from "./Contact.tsx";
@@ -16,7 +16,6 @@ import {
   PixelHeartHero,
   WMHeartLogo,
 } from "@/components/PixelArt.tsx";
-
 const BentoGrid = lazy(() => import("./BentoGrid.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
 const Services = lazy(() => import("./Services.tsx"));
@@ -62,16 +61,16 @@ const Home: React.FC = () => {
         <Hero t={t} scrollToSection={scrollToSection} />
         <Mission t={t} />
 
-        <Suspense fallback={<AtomLoader />}>
+        <Suspense fallback={<SkeletonCard />}>
           <Templates t={t} scrollToSection={scrollToSection} />
         </Suspense>
-        <Suspense fallback={<AtomLoader />}>
+        <Suspense fallback={<SkeletonCard />}>
           <BentoGrid />
         </Suspense>
-        <Suspense fallback={<AtomLoader />}>
+        <Suspense fallback={<SkeletonCard />}>
           <Projects t={t} scrollToSection={scrollToSection} />
         </Suspense>
-        <Suspense fallback={<AtomLoader />}>
+        <Suspense fallback={<SkeletonCard />}>
           <Services t={t} />
         </Suspense>
         <Contact t={t} />

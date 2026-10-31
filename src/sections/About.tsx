@@ -8,7 +8,7 @@ import {
 import SectionTitle from "../components/SectionTitle";
 import { Translation } from "../types";
 import Reveal from "@/components/Reveal";
-import { Spinner } from "@/components/SpinnerLoader.tsx";
+import { SkeletonCard } from "@/components/SkeletonCard.tsx";
 
 const CardScanner = lazy(() => import("@/components/CardScanner.tsx"));
 interface AboutProps {
@@ -95,7 +95,7 @@ const About: React.FC<AboutProps> = ({ t }) => {
         <AnimatedLine text={t.about.p1} index={0} />
         <AnimatedLine text={t.about.p2} index={1} />
 
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<SkeletonCard />}>
           <CardScanner />
         </Suspense>
       </div>

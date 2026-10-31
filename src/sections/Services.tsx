@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { Spinner } from "@/components/SpinnerLoader.tsx";
+import { SkeletonCard } from "@/components/SkeletonCard.tsx";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import { useLanguage } from "@/context/LanguageContext";
@@ -66,7 +66,7 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
         </Reveal>
 
         <Reveal delay={250}>
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<SkeletonCard />}>
             <Accordion />
           </Suspense>
         </Reveal>

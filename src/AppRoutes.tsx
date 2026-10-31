@@ -1,7 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import { AtomicLoader } from "./components/SpinnerLoader.tsx";
-import LoaderFullscreen from "../unused/LoaderFullscreen.tsx";
+import LoaderFullscreen from "./components/LoaderFullscreen.tsx";
 
 // Lazy-loaded main views
 const Home = lazy(() => import("./sections/Home.tsx"));
