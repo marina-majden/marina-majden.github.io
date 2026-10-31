@@ -173,7 +173,7 @@ export const BentoGrid: React.FC = () => {
         </Reveal>
 
         {/* 12-Column Editorial Bento Grid */}
-        <div className="bento-grid w-screen max-w-5xl p-0 m-auto">
+        <div className="bento-grid w-screen max-w-6xl p-0 m-auto">
           {/* Bento Box 1: CleanFlow(Hero Featured - 7 cols) */}
           {cleanflow && (
             <div

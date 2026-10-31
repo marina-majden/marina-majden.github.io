@@ -16,7 +16,6 @@ import {
   PixelHeartHero,
   WMHeartLogo,
 } from "@/components/PixelArt.tsx";
-import Newbies from "./Newbies.tsx";
 
 const BentoGrid = lazy(() => import("./BentoGrid.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
@@ -62,7 +61,7 @@ const Home: React.FC = () => {
         />
         <Hero t={t} scrollToSection={scrollToSection} />
         <Mission t={t} />
-        <Newbies />
+
         <Suspense fallback={<AtomLoader />}>
           <Templates t={t} scrollToSection={scrollToSection} />
         </Suspense>

@@ -228,7 +228,8 @@ export default function CosmicPortals() {
     window.addEventListener("dblclick", onDoubleClick);
 
     // 6. Animacijska Loop Petlja
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
     let targetCameraPos = new THREE.Vector3(0, 0, 8);
     let targetCameraLook = new THREE.Vector3(0, 0, 0);
     const currentCameraLook = new THREE.Vector3(0, 0, 0);
@@ -236,8 +237,9 @@ export default function CosmicPortals() {
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const delta = clock.getDelta();
-      const time = clock.getElapsedTime();
+      timer.update();
+      const delta = timer.getDelta();
+      const time = timer.getElapsed();
 
       // Rotacija svemirske maglice/prašine
       starsMesh.rotation.y = time * 0.02;
@@ -325,6 +327,7 @@ export default function CosmicPortals() {
       window.removeEventListener("dblclick", onDoubleClick);
       window.removeEventListener("resize", onWindowResize);
       cancelAnimationFrame(animationFrameId);
+      timer.dispose();
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }

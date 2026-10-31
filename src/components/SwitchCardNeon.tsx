@@ -565,12 +565,14 @@ export const SwitchCardNeon: React.FC<SwitchCardNeonProps> = ({
     };
 
     // 5. Animation & Morph Loop
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
 
     const renderLoop = () => {
       animationFrameId = requestAnimationFrame(renderLoop);
 
-      const elapsedTime = clock.getElapsedTime();
+      timer.update();
+      const elapsedTime = timer.getElapsed();
 
       // Particle Position & Color Morphing
       if (isTransitioning) {
@@ -640,6 +642,7 @@ export const SwitchCardNeon: React.FC<SwitchCardNeonProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
+      timer.dispose();
       particleGeo.dispose();
       particleMat.dispose();
       starsGeo.dispose();

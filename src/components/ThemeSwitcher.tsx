@@ -105,7 +105,13 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
           e.newValue,
         )
       ) {
-        setCurrentTheme(e.newValue as ThemeId);
+        const themeId = e.newValue as ThemeId;
+        setCurrentTheme(themeId);
+        if (themeId === "default") {
+          document.documentElement.removeAttribute("data-theme");
+        } else {
+          document.documentElement.setAttribute("data-theme", themeId);
+        }
       }
     };
 
@@ -157,7 +163,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   };
 
   // Mobile single-circle mode: displays current theme color, cycles on click
-  if (singleCycle) {
+  if (compact || singleCycle) {
     const currentIndex = Math.max(
       0,
       themeOptions.findIndex((t) => t.id === currentTheme),
@@ -166,7 +172,6 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     const nextIndex = (currentIndex + 1) % themeOptions.length;
     const nextOption = themeOptions[nextIndex];
 
-    const gradient = `linear-gradient(135deg, ${activeOption.colors[0]}, ${activeOption.colors[1]} 55%, ${activeOption.colors[2]})`;
     const primaryGlow = activeOption.colors[0];
 
     return (
@@ -181,7 +186,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         <span
           className="absolute -inset-1 rounded-full blur-[6px] transition-all duration-300 opacity-90"
           style={{
-            background: gradient,
+            background: primaryGlow,
             boxShadow: `0 0 14px ${primaryGlow}`,
           }}
           aria-hidden="true"
@@ -189,9 +194,9 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 
         {/* Main colored circle */}
         <span
-          className="absolute inset-[1px] rounded-full transition-all duration-300 border border-white/50 shadow-inner"
+          className="absolute inset-px rounded-full transition-all duration-300 border border-white/50 shadow-inner"
           style={{
-            background: gradient,
+            background: primaryGlow,
           }}
           aria-hidden="true"
         />
@@ -202,69 +207,6 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
           aria-hidden="true"
         />
       </button>
-    );
-  }
-
-  // Desktop compact mode: displays 4 palette dots with active indicator
-  if (compact) {
-    return (
-      <div
-        className={`flex items-center gap-1.5 p-1 rounded-full bg-white/5 border border-white/10 ${className}`}
-        role="group"
-        aria-label="Theme presets"
-      >
-        {themeOptions.map((t) => {
-          const isActive = currentTheme === t.id;
-          const gradient = `linear-gradient(135deg, ${t.colors[0]}, ${t.colors[1]} 55%, ${t.colors[2]})`;
-          const glow = t.colors[0];
-
-          return (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => applyTheme(t.id)}
-              aria-pressed={isActive}
-              className={`relative z-0 grid h-6 w-6 shrink-0 cursor-pointer place-items-center rounded-full transition-all duration-200 hover:scale-115 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                isActive ? "scale-110 z-10" : "opacity-60 hover:opacity-100"
-              }`}
-              title={`${t.label}${isActive ? " (Active)" : ""}`}
-              aria-label={`Select ${t.label} theme`}
-            >
-              {/* Outer glow on active */}
-              <span
-                className="absolute -inset-1 rounded-full blur-[5px] transition-opacity duration-300"
-                style={{
-                  background: gradient,
-                  boxShadow: isActive ? `0 0 10px ${glow}` : undefined,
-                  opacity: isActive ? 1 : 0,
-                }}
-                aria-hidden="true"
-              />
-
-              {/* Main circle */}
-              <span
-                className={`absolute inset-0 rounded-full transition-all duration-200 border ${
-                  isActive
-                    ? "border-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                    : "border-white/20 hover:border-white/60"
-                }`}
-                style={{
-                  background: gradient,
-                }}
-                aria-hidden="true"
-              />
-
-              {/* Center indicator if active */}
-              {isActive && (
-                <span
-                  className="relative z-10 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_4px_#ffffff]"
-                  aria-hidden="true"
-                />
-              )}
-            </button>
-          );
-        })}
-      </div>
     );
   }
 

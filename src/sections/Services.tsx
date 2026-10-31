@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import { useLanguage } from "@/context/LanguageContext";
 
-const Accordion = lazy(() => import("@/components/Accordion"));
+const Accordion = lazy(() => import("@/components/Accord"));
 
 interface ServiceItem {
   title: string;
@@ -53,8 +53,8 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
         <Reveal delay={100}>
           <p className="text-gray-300 max-w-2xl mx-auto text-base lg:text-lg text-center mt-3 mb-6">
             {lang === "hr"
-              ? "Odaberite usluge koje su Vam potrebne — odabrane stavke automatski se prenose u poruku u kontakt formi ispod!"
-              : "Choose the services you need — selected options will automatically pre-fill your inquiry message in the contact form below!"}
+              ? "Odaberite usluge koje su Vam potrebne;  odabrane stavke automatski se prenose u poruku u kontakt formi ispod!"
+              : "Choose the services you need; selected options will automatically pre-fill your inquiry message in the contact form below!"}
           </p>
         </Reveal>
 
