@@ -169,19 +169,19 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
             </span>
           ))}
         </div>
-        <div className="container relative z-10 mx-auto flex min-h-full flex-col items-center justify-center gap-6 px-6 text-center">
+        <div className="w-full h-full relative z-10 mx-auto flex min-h-full flex-col items-center justify-center gap-6 px-6 text-center">
           <div className="my-4 inline-block rounded-full border border-cyan-300/70 bg-black/70 px-3 py-1 backdrop-blur-sm">
             <span className="flex items-center gap-2 font-mono text-xs text-cyan-200">
               <Terminal size={12} /> v3.0.0 // Portfolio initialized
             </span>
           </div>
-          <h1 className="w-full bg-linear-to-r from-cyan-100 via-cyan-300 to-fuchsia-300 bg-clip-text font-display text-6xl leading-loose text-transparent md:text-8xl lg:text-9xl">
+          <h1 className="bg-linear-to-r from-cyan-100 via-cyan-300 to-fuchsia-300 bg-clip-text font-display text-mega leading-loose text-transparent select-none">
             {t.hero.line1}
           </h1>
-          <span className="mt-6 block font-links text-2xl font-semibold uppercase leading-none tracking-[0.2em] text-cyan-100">
+          <span className="mt-6 block font-links text-2xl font-semibold uppercase leading-none tracking-[0.2em] text-cyan-100 select-none">
             {t.hero.line2}
           </span>
-          <span className="mt-6 block font-links text-2xl font-semibold uppercase leading-none tracking-[0.2em] text-fuchsia-200">
+          <span className="mt-6 block font-links text-2xl font-semibold uppercase leading-none tracking-[0.2em] text-fuchsia-200 select-none">
             {t.hero.line3}
           </span>
           <div className="mt-2 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -211,7 +211,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
           </span>
         </div>
         <h1
-          className={`w-full font-display bg-title-gradient bg-clip-text text-6xl leading-loose text-transparent animate-gradient-x transition-all duration-300 delay-300 md:text-8xl lg:text-9xl ${
+          className={`w-full font-display bg-title-gradient bg-clip-text text-7xl md:text-8xl lg:text-9xl leading-none text-transparent animate-gradient-x transition-all duration-300 delay-300 select-none ${
             heroLoaded
               ? "translate-x-0 opacity-100"
               : "-translate-x-10 opacity-0"
@@ -220,7 +220,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
           {t.hero.line1}
         </h1>
         <span
-          className={`block text-2xl text-slate-200 font-links uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
+          className={`block text-2xl text-slate-200 font-links uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 select-none ${
             heroLoaded
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-20"
@@ -229,7 +229,7 @@ const Hero: React.FC<HeroProps> = ({ t, scrollToSection }) => {
           {t.hero.line2}
         </span>
         <span
-          className={`block text-2xl text-slate-200 font-links uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 ${
+          className={`block text-2xl text-slate-200 font-links uppercase mt-6 font-semibold z-30 tracking-[0.2em] leading-none transition-all duration-700 delay-500 select-none ${
             heroLoaded
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-20"

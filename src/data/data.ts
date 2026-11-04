@@ -153,7 +153,7 @@ const content: ContentData = {
       contact: "Kontakt",
     },
     hero: {
-      line1: "web ex machinae",
+      line1: "web mashina",
       line2: "",
       line3: "sve pripada vama, a mi ćemo vam pomoći s izvedbom",
       subtitle:

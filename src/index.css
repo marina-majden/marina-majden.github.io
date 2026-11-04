@@ -63,7 +63,7 @@
 
   body {
     font-size: 16px;
-    line-height: 1.4;
+    line-height: 1.2;
   }
 }
 
@@ -80,6 +80,9 @@
 
 @theme {
   --animate-gradient-x: gradient-x 2s ease-in-out infinite alternate;
+  --container-8xl: 88rem;
+  --container-9xl: 96rem;
+  --text-mega: clamp(6rem, calc(34vw - 4vh), 180px);
 
   --color-page-bg: #07070e;
   --color-page-bg-soft: #0d1020;
@@ -1198,7 +1201,7 @@
   border-radius: var(--radius-md);
   box-shadow:
     var(--shadow-lg),
-    0 0 20px rgba(0, 245, 255, 0.2);
+    0 0 20px rgba(0 247 255 / 0.47);
   backdrop-filter: blur(16px);
   opacity: 0;
   transform: translateY(12px) scale(0.96);

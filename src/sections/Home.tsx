@@ -7,6 +7,7 @@ import Hero from "./Hero.tsx";
 import { content, type ContentSection } from "../data/data";
 import CosmicBackground from "@/components/CosmicBackground.tsx";
 import Mission from "./Mission.tsx";
+import Templates from "./Templates.tsx";
 import { useLanguage } from "@/context/LanguageContext.tsx";
 import { ServicesProvider } from "@/context/ServicesContext";
 import ToastHub from "@/components/ToastHub";
@@ -19,7 +20,6 @@ import {
 const BentoGrid = lazy(() => import("./BentoGrid.tsx"));
 const Projects = lazy(() => import("./Projects.tsx"));
 const Services = lazy(() => import("./Services.tsx"));
-const Templates = lazy(() => import("./Templates.tsx"));
 
 const Home: React.FC = () => {
   const { lang, setLang } = useLanguage();
