@@ -108,12 +108,12 @@ const Templates: React.FC<TemplatesProps> = ({ t }) => {
     >
       <div className="pointer-events-none absolute left-1/2 top-1/4 -z-10 h-150 w-[min(50rem,100vw)] -translate-x-1/2 bg-[radial-gradient(circle,rgba(0,245,255,0.06)_0%,rgba(191,0,255,0.04)_50%,transparent_70%)] blur-3xl" />
 
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-9xl">
         <Reveal>
           <SectionTitle>{t.templates.title}</SectionTitle>
         </Reveal>
         <Reveal delay={100}>
-          <p className="mx-auto mb-10 mt-3 max-w-2xl text-center font-sans text-base text-gray-300 lg:text-lg">
+          <p className="mx-auto mb-10 mt-3 max-w-4xl text-center font-sans text-base text-gray-300 lg:text-lg">
             {t.templates.subtitle}
           </p>
         </Reveal>

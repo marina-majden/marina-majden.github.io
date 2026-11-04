@@ -28,9 +28,9 @@ const RetroTv: React.FC<RetroTvProps> = ({
 }) => (
   <div className="relative mx-auto w-full max-w-5xl px-3 pb-4 sm:px-8">
     <div
-      className="relative z-20 rounded-[2rem] border border-white/70 bg-gradient-to-br from-slate-100 via-slate-300 to-slate-500 p-3 shadow-[inset_-10px_-10px_24px_rgba(0,0,0,0.2),inset_8px_8px_18px_rgba(255,255,255,0.9),0_24px_50px_rgba(0,0,0,0.55)] sm:rounded-[2.75rem] sm:p-5"
+      className="relative z-20 rounded-[2rem] border border-[#c4c9ce] bg-[#aeb4bb] p-3 shadow-[inset_-10px_-10px_24px_rgba(0,0,0,0.2),inset_8px_8px_18px_rgba(255,255,255,0.55),0_24px_50px_rgba(0,0,0,0.55)] sm:rounded-[2.75rem] sm:p-5"
       style={{
-        boxShadow: `inset -10px -10px 24px rgba(0,0,0,.2), inset 8px 8px 18px rgba(255,255,255,.9), 0 24px 50px rgba(0,0,0,.55), 0 0 34px color-mix(in srgb, ${accent} 28%, transparent)`,
+        boxShadow: `inset -10px -10px 24px rgba(0,0,0,.2), inset 8px 8px 18px rgba(255,255,255,.55), 0 24px 50px rgba(0,0,0,.55), 0 0 34px color-mix(in srgb, ${accent} 28%, transparent)`,
       }}
     >
       <button
@@ -89,7 +89,7 @@ const RetroTv: React.FC<RetroTvProps> = ({
     </div>
 
     <div
-      className="relative z-10 mx-auto -mt-1 flex h-16 w-[64%] max-w-80 items-center justify-center border-x border-white/20 bg-gradient-to-b from-slate-700 to-slate-950 px-4 shadow-[inset_0_8px_14px_rgba(255,255,255,0.06),0_10px_18px_rgba(0,0,0,0.55)] sm:h-20"
+      className="relative z-10 mx-auto -mt-1 flex h-16 w-[64%] max-w-80 items-center justify-center border-x border-[#c4c9ce] bg-[#aeb4bb] px-4 shadow-[inset_0_8px_14px_rgba(255,255,255,0.18),0_10px_18px_rgba(0,0,0,0.55)] sm:h-20"
       style={{ clipPath: "polygon(34% 0, 66% 0, 88% 100%, 12% 100%)" }}
     >
       <div
@@ -121,7 +121,7 @@ const RetroTv: React.FC<RetroTvProps> = ({
     </div>
 
     <div
-      className="relative z-10 mx-auto -mt-px flex h-18 w-[min(80%,25rem)] items-center justify-between rounded-t-[16px] rounded-b-lg border border-t-0 border-slate-500/70 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-950 px-5 shadow-[inset_-5px_-5px_15px_rgba(0,0,0,0.35),inset_3px_3px_10px_rgba(255,255,255,0.08),0_12px_20px_rgba(0,0,0,0.65)] sm:h-20 sm:px-8"
+      className="relative z-10 mx-auto -mt-px flex h-18 w-[min(80%,25rem)] items-center justify-between rounded-t-[16px] rounded-b-lg border border-t-0 border-[#c4c9ce] bg-[#aeb4bb] px-5 shadow-[inset_-5px_-5px_15px_rgba(0,0,0,0.24),inset_3px_3px_10px_rgba(255,255,255,0.3),0_12px_20px_rgba(0,0,0,0.65)] sm:h-20 sm:px-8"
       style={{ clipPath: "polygon(8% 0, 92% 0, 100% 100%, 0 100%)" }}
     >
       <button
