@@ -178,7 +178,7 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
       <button
         type="button"
         onClick={() => applyTheme(nextOption.id)}
-        className={`relative z-10 grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${className}`}
+        className={`relative z-10 grid h-5 w-5 shrink-0 cursor-pointer place-items-center rounded-full transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:outline-none focus-visible:ring focus-visible:ring-white/20 animate-pulse ${className}`}
         title={`Theme: ${activeOption.label} (Tap to cycle to ${nextOption.label})`}
         aria-label={`Current theme: ${activeOption.label}. Tap to cycle to ${nextOption.label}`}
       >
@@ -194,16 +194,10 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 
         {/* Main colored circle */}
         <span
-          className="absolute inset-px rounded-full transition-all duration-300 border border-white/50 shadow-inner"
+          className="absolute inset-px rounded-full transition-all duration-300 border border-white/20 shadow-inner"
           style={{
             background: primaryGlow,
           }}
-          aria-hidden="true"
-        />
-
-        {/* Specular ring & center micro-dot */}
-        <span
-          className="relative z-10 w-2 h-2 rounded-full bg-white shadow-[0_0_6px_#ffffff] transition-all duration-300"
           aria-hidden="true"
         />
       </button>
