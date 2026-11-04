@@ -59,8 +59,8 @@ const Services: React.FC<ServicesProps> = ({ t }) => {
         </Reveal>
 
         <Reveal delay={150}>
-          <div className="w-fit flex items-center justify-center gap-2 text-[10px] font-mono text-neon-green mx-auto px-3.5 py-1 border border-white/10 rounded-full bg-[rgba(14,15,28,0.7)] backdrop-blur-md tracking-[0.2em] uppercase mb-8 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-neon-green shadow-[0_0_8px_var(--color-neon-green)] animate-pulse" />
+          <div className="w-fit flex items-center justify-center gap-2 text-[10px] font-mono text-neon-cyan mx-auto px-3.5 py-1 border border-white/10 rounded-full bg-[rgba(14,15,28,0.7)] backdrop-blur-md tracking-[0.2em] uppercase mb-8 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-neon-cyan shadow-[0_0_8px_var(--color-neon-cyan)] animate-pulse" />
             {t.services.subtitle || "Interdisciplinary Studio"}
           </div>
         </Reveal>

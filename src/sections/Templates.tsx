@@ -1,9 +1,13 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
 import Reveal from "@/components/Reveal";
 import SectionTitle from "@/components/SectionTitle";
 import TemplateModal from "@/components/TemplateModal";
 import { FALLBACK_IMAGE } from "@/data/constants";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
+import RetroTv from "@/components/RetroTv";
 
 export interface TemplateItem {
   id: string;
@@ -37,54 +41,48 @@ interface TemplatesProps {
   scrollToSection: (section: string) => void;
 }
 
-const ACCENT_COLORS = [
-  "var(--color-neon-blue)",
-  "var(--color-neon-pink)",
-  "var(--color-neon-yellow)",
-  "var(--color-neon-green)",
-  "var(--color-neon-violet)",
-  "var(--color-neon-yellow)",
-];
+const FEATURED_TEMPLATE_IDS = ["zen", "rhythm", "neonvinyl"];
+const FEATURED_ACCENT = "var(--color-neon-cyan)";
+const PILL_ACCENTS = {
+  tags: "var(--color-neon-cyan)",
+  features: "var(--color-neon-pink)",
+  styles: "var(--color-neon-green)",
+  purposes: "var(--color-neon-violet)",
+};
 
 const Templates: React.FC<TemplatesProps> = ({ t }) => {
   const { lang } = useLanguage();
+  const reduceMotion = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedItem, setSelectedItem] = useState<TemplateItem | null>(null);
 
-  const [visibleCount, setVisibleCount] = useState(6);
-  const [selecteditem, setSelecteditem] = useState<TemplateItem | null>(null);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const featuredItems = FEATURED_TEMPLATE_IDS.map((id) =>
+    t.templates.items.find((item) => item.id === id),
+  ).filter((item): item is TemplateItem => Boolean(item));
+  const activeItem = featuredItems[activeIndex];
+  const activeAccent = FEATURED_ACCENT;
+  const activePoster = activeItem?.screenshotHome
+    ? activeItem.screenshotHome.startsWith("/")
+      ? activeItem.screenshotHome
+      : `/templates/images/${activeItem.screenshotHome}`
+    : FALLBACK_IMAGE;
+  const featureItems = activeItem
+    ? [
+        ...activeItem.highlights.features.split(/,\s*/).filter(Boolean),
+        ...(activeItem.highlights.special
+          ? [activeItem.highlights.special]
+          : []),
+      ]
+    : [];
+  const purposeItems = activeItem
+    ? activeItem.highlights.purpose.split(/,\s*/).filter(Boolean)
+    : [];
+  const styleItems = activeItem
+    ? activeItem.highlights.style.split(/,\s*/).filter(Boolean)
+    : [];
 
-  const allTags = useMemo(() => {
-    const tags = new Set<string>();
-    t.templates.items.forEach((item) => {
-      if (item.tags) {
-        item.tags.forEach((tag) => tags.add(tag));
-      }
-    });
-    return Array.from(tags);
-  }, [t.templates.items]);
-
-  const filteredItems = useMemo(() => {
-    return t.templates.items.filter((item) => {
-      const matchesTags =
-        selectedTags.length === 0 ||
-        item.tags?.some((tag) => selectedTags.includes(tag));
-
-      return matchesTags;
-    });
-  }, [t.templates.items, selectedTags]);
-
-  const visibleProducts = filteredItems.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredItems.length;
-
-  const handleLoadMore = () => setVisibleCount((prev) => prev + 6);
-
-  const openModal = (item: TemplateItem) => {
-    setSelecteditem(item);
-  };
-
-  const closeModal = () => {
-    setSelecteditem(null);
-  };
+  const openModal = (item: TemplateItem) => setSelectedItem(item);
+  const closeModal = () => setSelectedItem(null);
 
   const handleOrder = () => {
     closeModal();
@@ -96,282 +94,230 @@ const Templates: React.FC<TemplatesProps> = ({ t }) => {
     }
   };
 
-  const toggleTag = (tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+  const showPrevious = () =>
+    setActiveIndex((index) =>
+      index === 0 ? featuredItems.length - 1 : index - 1,
     );
-    setVisibleCount(6);
-  };
-
-  const clearTags = () => {
-    setSelectedTags([]);
-    setVisibleCount(6);
-  };
-
-  const isAllChecked =
-    selectedTags.length === 0 || selectedTags.length === allTags.length;
-
-  // Filter tags styled like BentoLab tags
-  const getFilterTagClass = (isActive: boolean) =>
-    `px-3 py-1.5 rounded-lg font-mono text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer select-none flex items-center gap-2 ${
-      isActive
-        ? "bg-[rgba(0,245,255,0.14)] text-neon-blue border border-neon-blue shadow-[0_0_12px_rgba(0,245,255,0.25)] scale-[1.02]"
-        : "bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20"
-    }`;
+  const showNext = () =>
+    setActiveIndex((index) => (index + 1) % featuredItems.length);
 
   return (
     <section
-      className="py-20 px-4 md:px-8 bg-transparent min-h-screen relative overflow-hidden"
+      className="relative min-h-screen overflow-hidden bg-transparent px-4 py-20 md:px-8"
       id="webshop"
     >
-      {/* Background Ambience */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-200 h-150 bg-[radial-gradient(circle,rgba(0,245,255,0.06)_0%,rgba(191,0,255,0.04)_50%,transparent_70%)] pointer-events-none blur-3xl -z-10" />
+      <div className="pointer-events-none absolute left-1/2 top-1/4 -z-10 h-150 w-[min(50rem,100vw)] -translate-x-1/2 bg-[radial-gradient(circle,rgba(0,245,255,0.06)_0%,rgba(191,0,255,0.04)_50%,transparent_70%)] blur-3xl" />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         <Reveal>
           <SectionTitle>{t.templates.title}</SectionTitle>
         </Reveal>
         <Reveal delay={100}>
-          <p className="text-gray-300 max-w-2xl mx-auto text-base lg:text-lg text-center mt-3 mb-10 leading-relaxed font-sans">
+          <p className="mx-auto mb-10 mt-3 max-w-2xl text-center font-sans text-base text-gray-300 lg:text-lg">
             {t.templates.subtitle}
           </p>
         </Reveal>
 
-        {/* Filter Tags beneath Title (Designed like BentoLab tags) */}
-        <div className="max-w-4xl mb-12 mx-auto flex flex-col items-center">
-          <Reveal delay={200}>
-            <div className="flex flex-wrap justify-center gap-2 md:gap-2.5">
-              <button
-                type="button"
-                onClick={clearTags}
-                className={getFilterTagClass(isAllChecked)}
-              >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full transition-all ${
-                    isAllChecked
-                      ? "bg-neon-blue shadow-[0_0_6px_var(--color-neon-blue)] animate-pulse"
-                      : "bg-white/20"
-                  }`}
-                />
-                <span>{lang === "hr" ? "Sve" : "All"}</span>
-              </button>
-              {allTags.map((tag) => {
-                const isActive = selectedTags.includes(tag);
-                return (
-                  <button
-                    type="button"
-                    key={tag}
-                    onClick={() => toggleTag(tag)}
-                    className={getFilterTagClass(isActive)}
+        {activeItem && (
+          <Reveal delay={180}>
+            <div className="relative py-8 sm:py-10">
+              <motion.article className="mx-auto max-w-360">
+                <div className="mb-6 flex justify-center">
+                  <span
+                    className="inline-flex w-fit items-center justify-center gap-2 rounded-full border border-white/10 bg-[rgba(14,15,28,0.7)] px-3.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] backdrop-blur-md shadow-sm"
+                    style={{ color: activeAccent }}
                   >
                     <span
-                      className={`w-1.5 h-1.5 rounded-full transition-all ${
-                        isActive
-                          ? "bg-neon-blue shadow-[0_0_6px_var(--color-neon-blue)] animate-pulse"
-                          : "bg-white/20"
-                      }`}
+                      className="h-2 w-2 animate-pulse rounded-full"
+                      style={{
+                        backgroundColor: activeAccent,
+                        boxShadow: `0 0 8px ${activeAccent}`,
+                      }}
+                      aria-hidden="true"
                     />
-                    <span>{tag}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </Reveal>
-        </div>
-
-        {/* No results message */}
-        {filteredItems.length === 0 && (
-          <div className="text-center py-16 px-6 max-w-md mx-auto rounded-2xl bg-[rgba(14,15,28,0.7)] border border-white/10 backdrop-blur-md shadow-lg">
-            <p className="text-sm text-slate-300 font-sans mb-4 leading-relaxed">
-              {lang === "hr"
-                ? "Nije pronađen nijedan predložak za vaš odabir oznaka."
-                : "No templates found matching the selected tags."}
-            </p>
-            <button
-              type="button"
-              onClick={clearTags}
-              className="button-base button-ghost text-xs px-5 py-2"
-            >
-              {lang === "hr" ? "Poništi filtere" : "Clear filters"}
-            </button>
-          </div>
-        )}
-
-        {/* Structured Identity Profile Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {visibleProducts.map((item: TemplateItem, id: number) => {
-            const accent = ACCENT_COLORS[id % ACCENT_COLORS.length];
-            const initials = item.title
-              .split(" ")
-              .map((w) => w[0])
-              .slice(0, 2)
-              .join("")
-              .toUpperCase();
-
-            return (
-              <article
-                key={item.id}
-                className="cyber-profile-card group"
-                style={
-                  {
-                    "--card-accent": accent,
-                  } as React.CSSProperties
-                }
-              >
-                {/* Card Header with Monogram Avatar & Spec Tag */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="profile-card-header">
-                    <div className="profile-avatar">{initials}</div>
-                    <div className="profile-names">
-                      <h3 className="profile-name font-headings text-xl md:text-2xl text-white">
-                        {item.title}
-                      </h3>
-                      <p className="profile-role line-clamp-1">
-                        {item.highlights.style}
-                      </p>
-                    </div>
-                  </div>
-                  <span
-                    className="font-mono font-bold text-[11px] px-2.5 py-1 rounded-full border shrink-0 tracking-wider shadow-xs"
-                    style={{
-                      color: accent,
-                      borderColor: `color-mix(in srgb, ${accent} 40%, transparent)`,
-                      backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`,
-                    }}
-                  >
-                    0{id + 1} // TM
+                    {lang === "hr"
+                      ? "Izdvojeni predložak"
+                      : "Featured template"}
                   </span>
                 </div>
 
-                {/* Tags in the box (BentoLab style in all caps) */}
-                <div className="flex flex-wrap gap-1.5">
-                  {item.tags?.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider rounded-md bg-white/5 border border-white/10 text-slate-300 group-hover:border-white/20 transition-colors"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Viewport Mockup Window */}
-                <div
-                  onMouseEnter={(e) => {
-                    const video = e.currentTarget.querySelector("video");
-                    if (video) video.play().catch(() => {});
-                  }}
-                  onMouseLeave={(e) => {
-                    const video = e.currentTarget.querySelector("video");
-                    if (video) video.pause();
-                  }}
-                  onClick={() => openModal(item)}
-                  className="relative h-48 rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-(--card-accent) transition-all duration-300 shadow-inner flex flex-col cursor-pointer"
-                >
-                  <div className="h-6 bg-[rgba(14,15,28,0.9)] border-b border-white/10 px-3 flex items-center gap-1.5 shrink-0 z-10">
-                    <span className="w-2 h-2 rounded-full bg-rose-500/80" />
-                    <span className="w-2 h-2 rounded-full bg-amber-500/80" />
-                    <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
-                    <span className="ml-2 font-mono text-[9px] text-slate-400 truncate opacity-70">
-                      wm://templates/{item.id}
-                    </span>
-                  </div>
-
-                  <div className="relative w-full flex-1 overflow-hidden">
-                    {item.videoUrl ? (
-                      <video
-                        src={`/templates/videos/${item.videoUrl}#t=0.1`}
-                        preload="metadata"
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <img
-                        src={
-                          item.screenshotHome
-                            ? `/templates/images/${item.screenshotHome}`
-                            : FALLBACK_IMAGE
-                        }
-                        alt={item.title}
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => {
-                          e.currentTarget.src = FALLBACK_IMAGE;
-                        }}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-60" />
-                  </div>
-                </div>
-
-                {/* Structured Specification Details */}
-                <dl className="profile-details-list">
-                  <div className="profile-row">
-                    <dt>{lang === "hr" ? "Namjena" : "Purpose"}</dt>
-                    <dd className="text-xs line-clamp-1 font-sans text-slate-200">
-                      {item.highlights.purpose}
-                    </dd>
-                  </div>
-                  <div className="profile-row">
-                    <dt>{lang === "hr" ? "Stil" : "Style"}</dt>
-                    <dd className="text-xs line-clamp-1 font-sans text-slate-200">
-                      {item.highlights.style}
-                    </dd>
-                  </div>
-                  {item.highlights.special && (
-                    <div className="profile-row">
-                      <dt>{lang === "hr" ? "Posebno" : "Special"}</dt>
-                      <dd className="text-xs line-clamp-1 font-sans text-slate-200">
-                        {item.highlights.special}
-                      </dd>
+                <div className="grid items-start gap-x-4 gap-y-6 lg:grid-cols-[minmax(12rem,0.82fr)_minmax(0,2.4fr)_minmax(12rem,0.82fr)] lg:content-start lg:gap-8">
+                  <motion.div
+                    key={`left-${activeItem.id}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="order-2 col-span-2 flex min-w-0 flex-col content-start items-start gap-5 px-1 py-2 lg:order-1 lg:col-span-1 lg:items-end"
+                  >
+                    <div className="flex flex-wrap justify-start gap-2 lg:justify-end">
+                      {(activeItem.tags || []).map((tag, index) => (
+                        <motion.span
+                          key={tag}
+                          animate={reduceMotion ? undefined : { y: [0, -4, 0] }}
+                          transition={{
+                            duration: 3.2 + (index % 3) * 0.55,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.12,
+                          }}
+                          className="relative rounded-xl border bg-[rgba(13,16,30,0.52)] px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-wide text-slate-200 shadow-[0_10px_24px_rgba(0,0,0,0.32)] backdrop-blur-sm transition-shadow hover:shadow-[0_12px_28px_rgba(0,0,0,0.42)]"
+                          style={{
+                            borderColor: `color-mix(in srgb, ${PILL_ACCENTS.tags} 42%, rgba(255,255,255,0.12))`,
+                            boxShadow: `0 8px 22px rgba(0,0,0,0.28), 0 0 16px color-mix(in srgb, ${PILL_ACCENTS.tags} 18%, transparent)`,
+                            transform: `rotate(${(index % 3) - 1}deg)`,
+                          }}
+                        >
+                          <span
+                            className="absolute inset-x-3 top-0 h-px"
+                            style={{
+                              background: `linear-gradient(90deg, transparent, ${PILL_ACCENTS.tags}, transparent)`,
+                            }}
+                            aria-hidden="true"
+                          />
+                          {tag}
+                        </motion.span>
+                      ))}
                     </div>
-                  )}
-                </dl>
+                    <div className="flex flex-col items-start gap-2.5 lg:items-end">
+                      {purposeItems.map((purpose, index) => (
+                        <motion.span
+                          key={`${purpose}-${index}`}
+                          animate={reduceMotion ? undefined : { y: [0, -3, 0] }}
+                          transition={{
+                            duration: 3.6 + (index % 3) * 0.5,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.14,
+                          }}
+                          className={`relative max-w-full rounded-2xl border bg-[rgba(13,16,30,0.52)] px-3.5 py-2.5 text-xs leading-relaxed text-slate-200 shadow-[0_10px_24px_rgba(0,0,0,0.32)] backdrop-blur-sm ${index % 2 ? "ml-3 lg:ml-0 lg:mr-3" : "mr-2 lg:mr-0 lg:ml-2"}`}
+                          style={{
+                            borderColor: `color-mix(in srgb, ${PILL_ACCENTS.purposes} 40%, rgba(255,255,255,0.12))`,
+                            boxShadow: `0 8px 22px rgba(0,0,0,0.28), 0 0 16px color-mix(in srgb, ${PILL_ACCENTS.purposes} 16%, transparent)`,
+                          }}
+                        >
+                          <span
+                            className="absolute inset-x-4 top-0 h-px"
+                            style={{
+                              background: `linear-gradient(90deg, transparent, ${PILL_ACCENTS.purposes}, transparent)`,
+                            }}
+                            aria-hidden="true"
+                          />
+                          {purpose}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
 
-                {/* Action Buttons */}
-                <div className="flex items-center justify-between gap-3 mt-auto pt-1">
-                  <button
-                    type="button"
-                    onClick={() => openModal(item)}
-                    className="button-base button-ghost flex-1 text-xs py-2.5 min-h-0 cursor-pointer"
+                  <div className="order-1 col-span-2 flex min-w-0 flex-col lg:order-2 lg:col-span-1">
+                    <RetroTv
+                      title={activeItem.title}
+                      videoSrc={
+                        activeItem.videoUrl
+                          ? `/templates/videos/${activeItem.videoUrl}#t=0.1`
+                          : undefined
+                      }
+                      posterSrc={activePoster}
+                      accent={activeAccent}
+                      onPreview={() => openModal(activeItem)}
+                      onPrevious={showPrevious}
+                      onNext={showNext}
+                      activeIndex={activeIndex}
+                      slideCount={featuredItems.length}
+                      onSelectSlide={setActiveIndex}
+                    />
+                  </div>
+
+                  <motion.div
+                    key={`right-${activeItem.id}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="order-3 col-span-2 flex min-w-0 flex-col items-start gap-2.5 px-1 py-2 lg:col-span-1 lg:justify-start lg:pt-8"
                   >
-                    {lang === "hr" ? "Pogledaj" : "Inspect"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleOrder}
-                    className="button-base button-primary flex-1 text-xs py-2.5 min-h-0 cursor-pointer"
-                  >
-                    {lang === "hr" ? "Naruči" : "Order"}
-                  </button>
+                    {featureItems.map((feature, index) => (
+                      <motion.span
+                        key={`${feature}-${index}`}
+                        animate={reduceMotion ? undefined : { y: [0, -3, 0] }}
+                        transition={{
+                          duration: 3.8 + (index % 3) * 0.6,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: index * 0.15,
+                        }}
+                        className={`relative max-w-full rounded-2xl border bg-[rgba(13,16,30,0.42)] px-3.5 py-2.5 text-xs leading-relaxed text-slate-200 shadow-[0_10px_24px_rgba(0,0,0,0.32)] backdrop-blur-sm ${index % 2 ? "ml-3" : "mr-2"}`}
+                        style={{
+                          borderColor: `color-mix(in srgb, ${PILL_ACCENTS.features} 40%, rgba(255,255,255,0.12))`,
+                          boxShadow: `0 8px 22px rgba(0,0,0,0.28), 0 0 16px color-mix(in srgb, ${PILL_ACCENTS.features} 16%, transparent)`,
+                        }}
+                      >
+                        <span
+                          className="absolute inset-x-4 top-0 h-px"
+                          style={{
+                            background: `linear-gradient(90deg, transparent, ${PILL_ACCENTS.features}, transparent)`,
+                          }}
+                          aria-hidden="true"
+                        />
+                        {feature}
+                      </motion.span>
+                    ))}
+                    <div className="flex flex-wrap justify-start gap-2 pt-2">
+                      {styleItems.map((style, index) => (
+                        <motion.span
+                          key={`${style}-${index}`}
+                          animate={reduceMotion ? undefined : { y: [0, -4, 0] }}
+                          transition={{
+                            duration: 3.4 + (index % 3) * 0.5,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.13,
+                          }}
+                          className="relative rounded-xl border bg-[rgba(13,16,30,0.52)] px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-wide text-slate-200 shadow-[0_10px_24px_rgba(0,0,0,0.32)] backdrop-blur-sm"
+                          style={{
+                            borderColor: `color-mix(in srgb, ${PILL_ACCENTS.styles} 42%, rgba(255,255,255,0.12))`,
+                            boxShadow: `0 8px 22px rgba(0,0,0,0.28), 0 0 16px color-mix(in srgb, ${PILL_ACCENTS.styles} 18%, transparent)`,
+                            transform: `rotate(${(index % 3) - 1}deg)`,
+                          }}
+                        >
+                          <span
+                            className="absolute inset-x-3 top-0 h-px"
+                            style={{
+                              background: `linear-gradient(90deg, transparent, ${PILL_ACCENTS.styles}, transparent)`,
+                            }}
+                            aria-hidden="true"
+                          />
+                          {style}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
                 </div>
-              </article>
-            );
-          })}
-        </div>
 
-        {/* Pagination / Load more */}
-        {hasMore && (
-          <div className="mt-14 text-center">
-            <button
-              type="button"
-              onClick={handleLoadMore}
-              className="button-base button-ghost px-8 py-3 text-xs font-mono font-semibold tracking-wider uppercase cursor-pointer hover:border-neon-blue hover:text-white transition-all"
-            >
-              {lang === "hr" ? "Prikaži još ✦" : "Load more ✦"}
-            </button>
-          </div>
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => openModal(activeItem)}
+                    className="button-base button-ghost min-h-11 px-5 text-xs"
+                  >
+                    {lang === "hr" ? "Istraži predložak" : "Explore template"}
+                  </button>
+                  <Link
+                    to="/webshop"
+                    className="button-base button-primary min-h-11 px-5 text-xs no-underline"
+                  >
+                    {lang === "hr" ? "Pogledaj webshop" : "Visit the webshop"}
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </motion.article>
+            </div>
+          </Reveal>
         )}
       </div>
 
-      {/* Render fullscreen Modal */}
-      {selecteditem && (
+      {selectedItem && (
         <TemplateModal
-          product={selecteditem}
-          isOpen={!!selecteditem}
+          product={selectedItem}
+          isOpen={!!selectedItem}
           standard={t.templates.standard}
           onClose={closeModal}
           onOrder={handleOrder}
