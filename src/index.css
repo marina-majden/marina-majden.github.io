@@ -149,29 +149,29 @@
 :root[data-theme="lovecore"] {
   --color-neon-cyan: #ff3cac;
   --color-neon-blue: #ff758c;
-  --color-neon-violet: #c9184a;
-  --color-neon-pink: #ff1361;
+  --color-neon-violet: #ce3a6b;
+  --color-neon-pink: #f58ccb;
   --color-neon-green: #f45b9a;
-  --color-neon-yellow: #ffd6e0;
+  --color-neon-yellow: rgb(243 139 165);
   --color-border-medium: color-mix(in srgb, #ff3cac 28%, transparent);
-  --color-border-strong: color-mix(in srgb, #c9184a 42%, transparent);
+  --color-border-strong: color-mix(in srgb, #ce3a6b 42%, transparent);
   --shadow-md:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 0 20px color-mix(in srgb, #ff3cac 18%, transparent);
   --shadow-lg:
     0 24px 64px rgba(0, 0, 0, 0.7),
-    0 0 35px color-mix(in srgb, #c9184a 24%, transparent);
+    0 0 35px color-mix(in srgb, #ce3a6b 24%, transparent);
 }
 
 :root[data-theme="emerald-matrix"] {
   --color-neon-cyan: #00ff88;
-  --color-neon-blue: #00d26a;
-  --color-neon-violet: #20e3b2;
-  --color-neon-pink: #66ffc2;
-  --color-neon-green: #00d26a;
-  --color-neon-yellow: #b7ffcf;
-  --color-border-medium: color-mix(in srgb, #00ff88 28%, transparent);
-  --color-border-strong: color-mix(in srgb, #20e3b2 42%, transparent);
+  --color-neon-blue: #23b436;
+  --color-neon-violet: #5bc587;
+  --color-neon-pink: #67e491;
+  --color-neon-green: #026d44;
+  --color-neon-yellow: #a1df92;
+  --color-border-medium: color-mix(in srgb, #4ef3a6 28%, transparent);
+  --color-border-strong: color-mix(in srgb, #30d39d 42%, transparent);
   --shadow-md:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 0 20px color-mix(in srgb, #00ff88 18%, transparent);
@@ -182,19 +182,23 @@
 
 :root[data-theme="solar-sunset"] {
   --color-neon-cyan: #ff9100;
-  --color-neon-blue: #ff3d00;
-  --color-neon-violet: #ff0077;
-  --color-neon-pink: #ffb000;
-  --color-neon-green: #ff5e00;
-  --color-neon-yellow: #ffe066;
-  --color-border-medium: color-mix(in srgb, #ff9100 28%, transparent);
-  --color-border-strong: color-mix(in srgb, #ff0077 42%, transparent);
+  --color-neon-blue: #fcb826;
+  --color-neon-violet: #ff7b00;
+  --color-neon-pink: rgb(241 195 95);
+  --color-neon-green: #f8b930;
+  --color-neon-yellow: #f5d142;
+  --color-border-medium: color-mix(
+    in srgb,
+    hsl(33.9 86.52% 65.1%) 28%,
+    transparent
+  );
+  --color-border-strong: color-mix(in srgb, rgb(247 145 13) 42%, transparent);
   --shadow-md:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 0 20px color-mix(in srgb, #ff9100 18%, transparent);
   --shadow-lg:
     0 24px 64px rgba(0, 0, 0, 0.7),
-    0 0 35px color-mix(in srgb, #ff0077 24%, transparent);
+    0 0 35px color-mix(in srgb, rgb(250 117 39) 24%, transparent);
 }
 
 @layer base {
