@@ -157,7 +157,7 @@ export const BentoGrid: React.FC = () => {
       {/* Background Ambience */}
       <div className="absolute top-1/3 right-10 w-137.5 h-137.5 bg-[radial-gradient(circle,rgba(0,245,255,0.08)_0%,rgba(191,0,255,0.06)_50%,transparent_70%)] pointer-events-none blur-3xl -z-10" />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-9xl mx-auto">
         <Reveal>
           <SectionTitle>
             {lang === "hr" ? "Igralište" : "Playground"}
@@ -165,7 +165,7 @@ export const BentoGrid: React.FC = () => {
         </Reveal>
 
         <Reveal delay={100}>
-          <p className="text-gray-300 max-w-2xl mx-auto text-base lg:text-lg text-center mt-3 mb-12">
+          <p className="text-gray-300 max-w-5xl mx-auto text-base lg:text-lg text-center mt-3 mb-12">
             {lang === "hr"
               ? "Prostor za moje autorske projekte. Sve aplikacije i alati su potpuno beslatni i možete ih koristiti direktno u pregledniku. Ako vam se nešto svidi, možete pomoći održavanju projekta donacijom ili doprinijeti razvoju suradnjom na GitHubu."
               : "A space for my personal projects. All apps and tools are completely free to use and you can run them right here in the browser. If there is something you really like, you can support the project with donation. If you wish to engage, you can expand the project on the GitHub. "}
@@ -173,7 +173,7 @@ export const BentoGrid: React.FC = () => {
         </Reveal>
 
         {/* 12-Column Editorial Bento Grid */}
-        <div className="bento-grid w-screen max-w-6xl p-0 m-auto">
+        <div className="bento-grid w-screen max-w-8xl p-0 m-auto">
           {/* Bento Box 1: CleanFlow(Hero Featured - 7 cols) */}
           {cleanflow && (
             <div
