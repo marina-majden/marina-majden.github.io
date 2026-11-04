@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Code,
   Palette,
@@ -168,22 +168,10 @@ export const Accordion: React.FC = () => {
     }
   };
 
-  // Auto cycle
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveId((prevId) => {
-        const currentIndex = panels.findIndex((p) => p.id === prevId);
-        const nextIndex = (currentIndex + 1) % panels.length;
-        return panels[nextIndex].id;
-      });
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [activeId, panels]);
-
   return (
-    <div className="flex flex-col items-center justify-center overflow-hidden bg-transparent p-2 md:p-4 font-sans text-slate-100 gap-8 w-full max-w-6xl mx-auto">
+    <div className="relative left-1/2 flex w-[96vw] max-w-none -translate-x-1/2 flex-col items-center justify-center gap-8 overflow-hidden bg-transparent p-1 font-sans text-slate-100 md:static md:left-auto md:mx-auto md:w-full md:max-w-6xl md:translate-x-0 md:p-4">
       {/* Main Accordion Stage */}
-      <div className="flex min-h-115 h-full w-full max-w-275 flex-col md:flex-row items-stretch overflow-hidden gap-3">
+      <div className="flex h-115 min-h-115 w-full max-w-275 flex-col items-stretch gap-1.5 overflow-hidden md:flex-row md:gap-3">
         {panels.map((panel) => {
           const isActive = activeId === panel.id;
           const isSelected = isServiceSelected(panel.title);
@@ -193,16 +181,17 @@ export const Accordion: React.FC = () => {
               key={panel.id}
               onClick={() => setActiveId(panel.id)}
               style={{
-                flexGrow: isActive ? 5 : 1,
                 borderColor: isActive
                   ? panel.accentToken
                   : "var(--color-card-border)",
                 boxShadow: isActive
-                  ? `0 12px 32px rgba(0,0,0,0.7), 0 0 24px ${panel.accentToken}33`
+                  ? `0 12px 32px rgba(0,0,0,0.7), 0 0 24px color-mix(in srgb, ${panel.accentToken} 24%, transparent)`
                   : "none",
               }}
-              className={`relative cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl border transition-all duration-500 ease-smooth bg-[rgba(14,15,28,0.85)] backdrop-blur-xl ${
-                isActive ? "min-h-70 md:min-h-0" : "min-h-17.5 md:min-h-0"
+              className={`relative flex min-h-0 min-w-0 cursor-pointer overflow-hidden rounded-2xl border bg-[rgba(14,15,28,0.85)] backdrop-blur-xl transition-all duration-500 ease-smooth md:rounded-3xl ${
+                isActive
+                  ? "flex-1 md:flex-[5_1_0%]"
+                  : "flex-[0_0_3rem] md:flex-[1_1_0%]"
               }`}
             >
               {/* Radial Glow Overlay (No heavy photos, pure clean light) */}
@@ -215,47 +204,82 @@ export const Accordion: React.FC = () => {
 
               {/* Top Accent Strip */}
               <div
-                style={{ background: panel.accentToken }}
-                className="absolute top-0 left-0 right-0 h-1 z-10"
+                aria-hidden="true"
+                style={{
+                  background: `linear-gradient(to bottom, color-mix(in srgb, ${panel.accentToken} 48%, transparent), color-mix(in srgb, ${panel.accentToken} 18%, transparent) 30%, transparent 100%)`,
+                }}
+                className="pointer-events-none absolute -top-3 left-2 right-2 z-1 h-32 blur-2xl"
+              />
+
+              <div
+                style={{
+                  background: panel.accentToken,
+                  boxShadow: `0 0 10px ${panel.accentToken}, 0 0 24px ${panel.accentToken}, 0 10px 36px color-mix(in srgb, ${panel.accentToken} 72%, transparent)`,
+                }}
+                className="absolute top-0 left-0 right-0 z-10 h-1.5 shadow-[0_0_24px_currentColor]"
               />
 
               {/* Content Layout */}
-              <div className="relative z-10 flex flex-col md:flex-row items-start md:items-end justify-between h-full w-full p-4 md:p-6 gap-4">
+              <div className="relative z-10 flex h-full min-h-0 w-full flex-col md:flex-row">
                 {/* Header / Label */}
-                <div className="flex items-center md:items-end gap-3">
+                <div className="relative flex h-15 min-h-15 shrink-0 items-center gap-3 px-3 py-2 md:h-full md:min-h-0 md:w-20 md:flex-col md:justify-end md:gap-0 md:p-3">
+                  <div className="order-2 flex min-w-0 flex-col text-left md:absolute md:left-1/2 md:top-1/2 md:order-0 md:w-70 md:-translate-x-1/2 md:-translate-y-1/2 md:-rotate-90">
+                    <span className="truncate text-sm font-headings font-bold tracking-[0.16em] text-white uppercase sm:text-base md:whitespace-nowrap">
+                      {panel.title}
+                    </span>
+                    <span className="truncate text-xs tracking-wide text-slate-400 md:whitespace-nowrap">
+                      {panel.sub}
+                    </span>
+                  </div>
                   <div
-                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 border border-white/10 shrink-0 shadow-md transition-colors"
+                    className="order-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 shadow-md transition-colors md:absolute md:bottom-4 md:left-1/2 md:order-0 md:h-11 md:w-11 md:-translate-x-1/2 md:rounded-xl"
                     style={{ color: panel.accentToken }}
                   >
                     {panel.icon}
                   </div>
-
-                  <div className="flex flex-col text-left">
-                    <span className="text-base sm:text-lg font-headings font-bold text-white tracking-wide">
-                      {panel.title}
-                    </span>
-                    <span className="text-xs text-slate-400">{panel.sub}</span>
-                  </div>
+                  <span
+                    className={`absolute right-3 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-white/10 transition-opacity md:right-auto md:left-1/2 md:top-3 md:-translate-x-1/2 md:translate-y-0 ${
+                      isSelected ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={{ color: panel.accentToken }}
+                    aria-label={
+                      isSelected
+                        ? lang === "hr"
+                          ? "Usluga odabrana"
+                          : "Service selected"
+                        : undefined
+                    }
+                    aria-hidden={!isSelected}
+                    title={
+                      isSelected
+                        ? lang === "hr"
+                          ? "Usluga odabrana"
+                          : "Service selected"
+                        : undefined
+                    }
+                  >
+                    <Check size={14} strokeWidth={3} aria-hidden="true" />
+                  </span>
                 </div>
 
                 {/* Expanded Description & Select Button */}
                 <div
-                  className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col justify-end w-full md:w-auto ${
+                  className={`min-h-0 min-w-0 flex-1 overflow-hidden px-3 pb-3 transition-all duration-500 ease-in-out md:px-5 md:py-6 ${
                     isActive
-                      ? "max-h-75 opacity-100 mt-2 md:mt-0"
-                      : "max-h-0 opacity-0 hidden md:flex"
+                      ? "flex flex-col justify-end gap-4 opacity-100"
+                      : "hidden opacity-0"
                   }`}
                 >
-                  <div className="bg-black/50 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-lg mb-3 max-w-md">
+                  <div className="min-h-0 max-w-2xl overflow-y-auto">
                     <span
-                      className="block text-base font-mono font-bold mb-1"
+                      className="mb-3 block text-base font-mono font-bold"
                       style={{
                         color: panel.accentToken,
                       }}
                     >
                       {panel.price}
                     </span>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+                    <p className="text-sm leading-relaxed text-slate-300 font-sans md:text-base">
                       {panel.description}
                     </p>
                   </div>
@@ -266,7 +290,7 @@ export const Accordion: React.FC = () => {
                       e.stopPropagation();
                       handleServiceToggle(panel.title);
                     }}
-                    className={`button-base text-xs py-2 px-4 rounded-full transition-all duration-300 w-full sm:w-auto min-h-0 ${
+                    className={`button-base min-h-0 w-full shrink-0 rounded-full px-4 py-2 text-xs transition-all duration-300 sm:w-fit ${
                       isSelected
                         ? "button-primary shadow-[0_0_15px_rgba(0,245,255,0.4)]"
                         : "button-ghost"
