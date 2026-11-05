@@ -82,7 +82,7 @@
   --animate-gradient-x: gradient-x 2s ease-in-out infinite alternate;
   --container-8xl: 88rem;
   --container-9xl: 96rem;
-  --text-mega: clamp(6rem, calc(34vw - 4vh), 180px);
+  --text-mega: clamp(8rem, calc(32vw - 2vh), 140px);
 
   --color-page-bg: #07070e;
   --color-page-bg-soft: #0d1020;
@@ -106,12 +106,19 @@
   --color-text-muted: #9aaac0;
   --color-text-secondary: #94a3b8;
   --color-text-dim: #64748b;
-  --color-neon-cyan: #00f5ff;
+  --color-neon-cyan: #06e8e2;
+  --color-neon-blue: #d53caa;
+  --color-neon-violet: #7376ef;
+  --color-neon-pink: #ee33a4;
+  --color-neon-green: #5b8eec;
+  --color-neon-yellow: #0cb8e0;
+
+  /*   --color-neon-cyan: #00f5ff;
   --color-neon-blue: #00aaff;
   --color-neon-violet: #bf00ff;
   --color-neon-pink: #ff00aa;
   --color-neon-green: #00ffd5;
-  --color-neon-yellow: #fc90c6;
+  --color-neon-yellow: #fc90c6; */
   --color-accent-soft: color-mix(
     in srgb,
     var(--color-neon-cyan) 10%,
@@ -182,58 +189,54 @@
 }
 
 :root[data-theme="lovecore"] {
-  --color-neon-cyan: #ff3cac;
-  --color-neon-blue: #ff758c;
-  --color-neon-violet: #ce3a6b;
-  --color-neon-pink: #f58ccb;
-  --color-neon-green: #f45b9a;
-  --color-neon-yellow: rgb(243 139 165);
-  --color-border-medium: color-mix(in srgb, #ff3cac 28%, transparent);
-  --color-border-strong: color-mix(in srgb, #ce3a6b 42%, transparent);
+  --color-neon-cyan: #ef47f5;
+  --color-neon-blue: #f99297;
+  --color-neon-violet: #f64d8c;
+  --color-neon-pink: #ff3cac;
+  --color-neon-green: #de0ce5;
+  --color-neon-yellow: #fa9fa8;
+  --color-border-medium: color-mix(in srgb, #ef47f5 28%, transparent);
+  --color-border-strong: color-mix(in srgb, #f64d8c 42%, transparent);
   --shadow-md:
     0 12px 32px rgba(0, 0, 0, 0.5),
-    0 0 20px color-mix(in srgb, #ff3cac 18%, transparent);
+    0 0 20px color-mix(in srgb, #ef47f5 18%, transparent);
   --shadow-lg:
     0 24px 64px rgba(0, 0, 0, 0.7),
-    0 0 35px color-mix(in srgb, #ce3a6b 24%, transparent);
+    0 0 35px color-mix(in srgb, #f64d8c 24%, transparent);
 }
 
 :root[data-theme="emerald-matrix"] {
   --color-neon-cyan: #00ff88;
-  --color-neon-blue: #23b436;
-  --color-neon-violet: #5bc587;
-  --color-neon-pink: #67e491;
-  --color-neon-green: #026d44;
-  --color-neon-yellow: #a1df92;
-  --color-border-medium: color-mix(in srgb, #4ef3a6 28%, transparent);
-  --color-border-strong: color-mix(in srgb, #30d39d 42%, transparent);
+  --color-neon-blue: #a1f56d;
+  --color-neon-violet: #dcea6d;
+  --color-neon-pink: #ffe081;
+  --color-neon-green: #00bf4f;
+  --color-neon-yellow: #00992c;
+  --color-border-medium: color-mix(in srgb, #00ff88 28%, transparent);
+  --color-border-strong: color-mix(in srgb, #dcea6d 42%, transparent);
   --shadow-md:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 0 20px color-mix(in srgb, #00ff88 18%, transparent);
   --shadow-lg:
     0 24px 64px rgba(0, 0, 0, 0.7),
-    0 0 35px color-mix(in srgb, #20e3b2 24%, transparent);
+    0 0 35px color-mix(in srgb, #dcea6d 24%, transparent);
 }
 
 :root[data-theme="solar-sunset"] {
   --color-neon-cyan: #ff9100;
-  --color-neon-blue: #fcb826;
-  --color-neon-violet: #ff7b00;
-  --color-neon-pink: rgb(241 195 95);
-  --color-neon-green: #f8b930;
-  --color-neon-yellow: #f5d142;
-  --color-border-medium: color-mix(
-    in srgb,
-    hsl(33.9 86.52% 65.1%) 28%,
-    transparent
-  );
-  --color-border-strong: color-mix(in srgb, rgb(247 145 13) 42%, transparent);
+  --color-neon-blue: #ff615c;
+  --color-neon-violet: #ff806a;
+  --color-neon-pink: #ffab55;
+  --color-neon-green: #ffd356;
+  --color-neon-yellow: #f9f871;
+  --color-border-medium: color-mix(in srgb, #ff9100 28%, transparent);
+  --color-border-strong: color-mix(in srgb, #ff806a 42%, transparent);
   --shadow-md:
     0 12px 32px rgba(0, 0, 0, 0.5),
     0 0 20px color-mix(in srgb, #ff9100 18%, transparent);
   --shadow-lg:
     0 24px 64px rgba(0, 0, 0, 0.7),
-    0 0 35px color-mix(in srgb, rgb(250 117 39) 24%, transparent);
+    0 0 35px color-mix(in srgb, #ff806a 24%, transparent);
 }
 
 @layer base {
@@ -252,6 +255,10 @@
 
 @utility bg-title-gradient {
   background-image: var(--title-gradient);
+}
+@utility main-title {
+  font-size: var(--text-mega);
+  line-height: 1;
 }
 @utility title-gradient {
   background: linear-gradient(
